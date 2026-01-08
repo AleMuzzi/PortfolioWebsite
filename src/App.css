@@ -447,6 +447,7 @@ html, body {
 
 .education-section {
   margin-top: 3rem;
+  margin-bottom: 2rem;
   padding-top: 2rem;
   border-top: 1px solid var(--border-subtle);
 }
@@ -478,6 +479,7 @@ html, body {
   color: var(--accent);
   font-size: 1rem;
   line-height: 1.3;
+  white-space: pre-line;
 }
 
 .edu-period {

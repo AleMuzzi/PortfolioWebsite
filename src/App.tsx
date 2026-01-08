@@ -96,7 +96,7 @@ function App() {
         {isSidebarOpen && <div className="sidebar-overlay" onClick={closeSidebar} />}
         <aside className={`sidebar ${isSidebarOpen ? 'open' : ''}`} aria-label="Navigation sidebar">
           <div className="sidebar-header">
-            <button 
+            <button
               className={`home-button ${selectedId === null ? 'active' : ''}`}
               onClick={() => handleSelect(null, null)}
             >
@@ -165,25 +165,25 @@ function App() {
                       <div className="skill-category">
                         <h4>{t.softwareDev}</h4>
                         <ul>
-                          <li><strong>{t.languages}:</strong> Kotlin, Java, Python, C#, Dart, TypeScript, C++</li>
-                          <li><strong>{t.frameworks}:</strong> React, Flutter, Android SDK, .NET, Unity Engine</li>
-                          <li><strong>{t.backend}:</strong> Dedicated Servers (TCP/Sockets), REST APIs</li>
+                          <li><strong>{t.languages}:</strong> Python, Kotlin, C++, C#, Java, Dart, TypeScript, Lua, Swift</li>
+                          <li><strong>{t.frameworks}:</strong> React, Node.js, Flutter, Unity, Android SDK, Spring, .NET</li>
+                          <li><strong>{t.backend}:</strong> Software Architecture, System Design, Infrastructure, Team Management</li>
                         </ul>
                       </div>
                       <div className="skill-category">
                         <h4>{t.hardwareEmbedded}</h4>
                         <ul>
-                          <li><strong>{t.microcontrollers}:</strong> Arduino, ESP32, STM32</li>
-                          <li><strong>{t.firmware}:</strong> Marlin 2.x, Custom State Machines</li>
-                          <li><strong>{t.robotics}:</strong> PID Tuning, Motion Control, Telemetry Systems</li>
-                          <li><strong>{t.digitalFabrication}:</strong> 3D Printing (FDM), Slicing, 3D Modeling (Blender, 3ds Max)</li>
+                          <li><strong>{t.microcontrollers}:</strong> Arduino, ESP32, STM32, OpenWRT</li>
+                          <li><strong>{t.firmware}:</strong> Marlin 2.x, Custom State Machines, Custom C++, DJI SDK</li>
+                          <li><strong>{t.robotics}:</strong> PID Tuning, Motion Control, Telemetry Systems, PTZ Management</li>
+                          <li><strong>{t.digitalFabrication}:</strong> 3D Printing (FDM), Slicing, 3D Modeling (Fusion 360, Blender)</li>
                         </ul>
                       </div>
                       <div className="skill-category">
                         <h4>{t.dataAI}</h4>
                         <ul>
-                          <li><strong>{t.libraries}:</strong> Pandas, NumPy, Scikit-learn, DepthAI</li>
-                          <li><strong>{t.domains}:</strong> Financial Market Analysis, AI-assisted Investing, Computer Vision</li>
+                          <li><strong>{t.libraries}:</strong> Pandas, NumPy, Scikit-learn, BERT, Elasticsearch, DepthAI</li>
+                          <li><strong>{t.domains}:</strong> Active Inference, Semantic Search, Financial Engineering, Computer Vision</li>
                         </ul>
                       </div>
                     </div>
@@ -203,12 +203,12 @@ function App() {
                     <h3>{t.education}</h3>
                     <div className="education-container">
                       <div className="education-item">
-                        <div className="edu-header">
-                          <h4>{t.masters}</h4>
-                          <span className="edu-period">2019 — 2022</span>
-                        </div>
-                        <p className="edu-org">Università degli Studi di Parma</p>
-                        <p className="edu-grade">{t.grade}: 110/110</p>
+                          <div className="edu-header">
+                              <h4>{t.highschool}</h4>
+                              <span className="edu-period">2010 — 2015</span>
+                          </div>
+                          <p className="edu-org">ITIS Leonardo Da Vinci, Parma</p>
+                          <p className="edu-grade">{t.grade}: 100/100</p>
                       </div>
                       <div className="education-item">
                         <div className="edu-header">
@@ -217,15 +217,14 @@ function App() {
                         </div>
                         <p className="edu-org">Università degli Studi di Parma</p>
                         <p className="edu-grade">{t.grade}: 93/110</p>
-                        <p className="edu-activity">{t.activities}: Arrampicata (Climbing)</p>
                       </div>
                       <div className="education-item">
-                        <div className="edu-header">
-                          <h4>{t.highschool}</h4>
-                          <span className="edu-period">2010 — 2015</span>
-                        </div>
-                        <p className="edu-org">ITIS Leonardo Da Vinci, Parma</p>
-                        <p className="edu-grade">{t.grade}: 100/100</p>
+                          <div className="edu-header">
+                              <h4>{t.masters}</h4>
+                              <span className="edu-period">2019 — 2022</span>
+                          </div>
+                          <p className="edu-org">Università degli Studi di Parma</p>
+                          <p className="edu-grade">{t.grade}: 110/110</p>
                       </div>
                     </div>
                   </section>
