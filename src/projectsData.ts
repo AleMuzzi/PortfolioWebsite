@@ -1,10 +1,11 @@
-interface Project {
+export interface Project {
   id: string;
   name: string;
   summary: string;
   overview: string;
   how: string;
   technologies: string[];
+  lang: 'en' | 'it';
 }
 
 export interface Experience {
@@ -14,6 +15,7 @@ export interface Experience {
   period: string;
   details: string;
   technologies: string[];
+  lang: 'en' | 'it';
 }
 
 interface MarkdownModule {
@@ -24,6 +26,7 @@ const projectModules = import.meta.glob('./summaries/*.md', { query: '?raw', eag
 const experienceModules = import.meta.glob('./experiences/*.md', { query: '?raw', eager: true }) as Record<string, MarkdownModule>;
 
 function parseProject(filename: string, content: unknown): Project {
+  const lang = filename.endsWith('.it.md') ? 'it' : 'en';
   if (typeof content !== 'string') {
     return {
       id: filename,
@@ -31,14 +34,16 @@ function parseProject(filename: string, content: unknown): Project {
       summary: '',
       overview: '',
       how: '',
-      technologies: []
+      technologies: [],
+      lang
     };
   }
   const id = filename
     .split('/')
     .pop()!
     .replace('Readme_', '')
-    .replace('.md', '')
+    .replace('.en.md', '')
+    .replace('.it.md', '')
     .toLowerCase()
     .replace(/_/g, '-');
 
@@ -59,11 +64,11 @@ function parseProject(filename: string, content: unknown): Project {
 
     if (header.includes('summary')) {
       summary = body;
-    } else if (header.includes('what this project is')) {
+    } else if (header.includes('what this project is') || header.includes('project overview')) {
       overview = body;
-    } else if (header.includes('how it works')) {
+    } else if (header.includes('how it works') || header.includes('come funziona')) {
       how = body;
-    } else if (header.includes('technologies and tools')) {
+    } else if (header.includes('technologies and tools') || header.includes('tecnologie e strumenti')) {
       technologies = body
         .split('\n')
         .map(line => {
@@ -83,11 +88,13 @@ function parseProject(filename: string, content: unknown): Project {
     summary,
     overview,
     how,
-    technologies
+    technologies,
+    lang
   };
 }
 
 function parseExperience(filename: string, content: unknown): Experience {
+  const lang = filename.endsWith('.it.md') ? 'it' : 'en';
   if (typeof content !== 'string') {
     return {
       id: filename,
@@ -95,13 +102,15 @@ function parseExperience(filename: string, content: unknown): Experience {
       summary: '',
       period: '',
       details: '',
-      technologies: []
+      technologies: [],
+      lang
     };
   }
   const id = filename
     .split('/')
     .pop()!
-    .replace('.md', '')
+    .replace('.en.md', '')
+    .replace('.it.md', '')
     .toLowerCase()
     .replace(/_/g, '-');
 
@@ -122,11 +131,11 @@ function parseExperience(filename: string, content: unknown): Experience {
 
     if (header.includes('summary')) {
       summary = body;
-    } else if (header.includes('period')) {
+    } else if (header.includes('period') || header.includes('periodo')) {
       period = body;
-    } else if (header.includes('what i did')) {
+    } else if (header.includes('what i did') || header.includes('cosa ho fatto')) {
       details = body;
-    } else if (header.includes('technologies and tools')) {
+    } else if (header.includes('technologies and tools') || header.includes('tecnologie e strumenti')) {
       technologies = body
         .split('\n')
         .map(line => {
@@ -146,7 +155,8 @@ function parseExperience(filename: string, content: unknown): Experience {
     summary,
     period,
     details,
-    technologies
+    technologies,
+    lang
   };
 }
 
@@ -156,6 +166,4 @@ export const projects: Project[] = Object.entries(projectModules)
 
 export const experiences: Experience[] = Object.entries(experienceModules)
   .map(([path, module]) => parseExperience(path, module.default))
-  // We might want to sort experiences by period, but for now name is fine or just leave it as is.
-  // Assuming filenames might have numbers or we just sort them.
   .sort((a, b) => a.name.localeCompare(b.name));
