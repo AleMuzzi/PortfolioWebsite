@@ -228,6 +228,33 @@ function App() {
                       </div>
                     </div>
                   </section>
+
+                  <section className="contact-section">
+                    <h3>{t.contactTitle}</h3>
+                    <div className="contact-grid">
+                      <a href="mailto:alessandromuzzi17@gmail.com" className="contact-card">
+                        <span className="contact-icon">✉️</span>
+                        <div className="contact-info">
+                          <span className="contact-label">{t.email}</span>
+                          <span className="contact-value">alessandromuzzi17@gmail.com</span>
+                        </div>
+                      </a>
+                      <a href="https://www.linkedin.com/in/alessandro-muzzi" target="_blank" rel="noopener noreferrer" className="contact-card">
+                        <span className="contact-icon">🔗</span>
+                        <div className="contact-info">
+                          <span className="contact-label">{t.linkedin}</span>
+                          <span className="contact-value">linkedin.com/in/alessandro-muzzi</span>
+                        </div>
+                      </a>
+                      <a href="https://github.com/AleMuzzi" target="_blank" rel="noopener noreferrer" className="contact-card">
+                        <span className="contact-icon">💻</span>
+                        <div className="contact-info">
+                          <span className="contact-label">{t.github}</span>
+                          <span className="contact-value">github.com/AleMuzzi</span>
+                        </div>
+                      </a>
+                    </div>
+                  </section>
                 </div>
               </article>
             ) : selectedType === 'experience' && selectedExperience ? (
