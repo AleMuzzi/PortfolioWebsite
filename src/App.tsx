@@ -20,6 +20,42 @@ function App() {
 
   const filteredProjects = useMemo(() => projects.filter(p => p.lang === lang), [lang]);
   const filteredExperiences = useMemo(() => experiences.filter(e => e.lang === lang), [lang]);
+  
+  // Ordina le scuole in modo coerente con le esperienze lavorative
+  const filteredExperiencesSorted = useMemo(() => {
+    return [...filteredExperiences].sort((a, b) => {
+      // Ordina per anno di inizio decrescente (più recente in alto)
+      const ay = a.period.match(/\d{4}/g);
+      const by = b.period.match(/\d{4}/g);
+      const aStart = ay ? Number.parseInt(ay[0]) : 0;
+      const bStart = by ? Number.parseInt(by[0]) : 0;
+      return bStart - aStart;
+    });
+  }, [filteredExperiences]);
+
+  // Ordina le scuole in base all'ordine temporale delle esperienze lavorative
+  const educationPeriods = useMemo(() => {
+    // Array scuole
+    const schools = [
+      { period: '2010 — 2015', label: t.highschool.split('\n')[0], color: '#f59e0b', startYear: 2010, endYear: 2015 },
+      { period: '2015 — 2018', label: t.bachelors.split('\n')[0], color: '#10b981', startYear: 2015, endYear: 2018 },
+      { period: '2019 — 2022', label: t.masters.split('\n')[0], color: '#3b82f6', startYear: 2019, endYear: 2022 }
+    ];
+    // Ordina per startYear coerente con le esperienze lavorative
+    const allYears = filteredExperiencesSorted.map(exp => {
+      const years = exp.period.match(/\d{4}/g);
+      return years ? Number.parseInt(years[0]) : 0;
+    });
+    // Ordina le scuole in modo che la loro sequenza sia coerente con la timeline delle esperienze
+    schools.sort((a, b) => {
+      // Trova la distanza temporale minima tra la scuola e le esperienze
+      const aDist = Math.min(...allYears.map(y => Math.abs(a.startYear - y)));
+      const bDist = Math.min(...allYears.map(y => Math.abs(b.startYear - y)));
+      // Se la scuola inizia dopo la maggior parte delle esperienze, va più in alto
+      return a.startYear - b.startYear;
+    });
+    return schools;
+  }, [t, filteredExperiencesSorted]);
 
   const handleFooterClick = () => {
     const newCount = clickCount + 1;
@@ -120,20 +156,131 @@ function App() {
                     <button className="back-button" onClick={() => handleSelect(null, 'home')}>←</button>
                     <h2>{t.workTitle}</h2>
                   </div>
-                  <div className="timeline-container">
-                    {filteredExperiences.map((exp, index) => (
-                      <div key={exp.id} className={`timeline-item ${index % 2 === 0 ? 'timeline-item-left' : 'timeline-item-right'}`} onClick={() => handleSelect(exp.id, 'experience')}>
-                        <div className="timeline-dot">
-                          <span className="timeline-period">{exp.period}</span>
-                        </div>
-                        <div className="timeline-content">
-                          <div className="timeline-header">
-                            <h3>{exp.name}</h3>
-                          </div>
-                          <p className="timeline-summary">{exp.summary}</p>
-                        </div>
-                      </div>
-                    ))}
+                  <div className="timeline-container" style={{position: 'relative'}}>
+                    {/* Calcolo posizioni per tutti gli item e branch SVG */}
+                    {(() => {
+                      // Ottieni tutti gli anni da esperienze e periodi educativi
+                      const allYears: number[] = [];
+                      filteredExperiences.forEach(exp => {
+                        const years = exp.period.match(/\d{4}/g);
+                        if (years) {
+                          allYears.push(parseInt(years[0]));
+                          if (years[1]) allYears.push(parseInt(years[1]));
+                        }
+                      });
+                      educationPeriods.forEach(edu => {
+                        allYears.push(edu.startYear, edu.endYear);
+                      });
+                      const minYear = Math.min(...allYears, 2010);
+                      const maxYear = Math.max(...allYears, new Date().getFullYear());
+                      const yearRange = maxYear - minYear;
+                      // Funzione per calcolare la posizione verticale in percentuale
+                      const getYearPosition = (year: number) => ((year - minYear) / yearRange) * 100;
+
+                      // Calcola le posizioni delle esperienze lavorative
+                      const workItems = filteredExperiences.map((exp, index) => {
+                        const years = exp.period.match(/\d{4}/g);
+                        const expStartYear = years ? parseInt(years[0]) : 2020;
+                        const topPos = getYearPosition(expStartYear);
+                        return {
+                          ...exp,
+                          index,
+                          topPos,
+                          side: index % 2 === 0 ? 'left' : 'right',
+                        };
+                      });
+
+                      // Calcola le branch SVG per ogni periodo educativo
+                      const svgWidth = 1000; // px, come max-width della timeline
+                      const svgHeight = 1200; // px, arbitrario, sarà scalato in base al contenuto
+                      const timelineX = svgWidth / 2;
+                      // Offset orizzontale massimo per le branch (ancora più vicino)
+                      const branchMaxOffset = 24;
+                      // Spessore branch più sottile
+                      const branchStroke = 2;
+                      // Funzione per trovare la card esperienza più vicina a un certo anno
+                      function findClosestWorkItem(year: number) {
+                        let minDiff = Infinity;
+                        let closest = workItems[0];
+                        for (const item of workItems) {
+                          const years = item.period.match(/\d{4}/g);
+                          const expStartYear = years ? parseInt(years[0]) : 2020;
+                          const diff = Math.abs(expStartYear - year);
+                          if (diff < minDiff) {
+                            minDiff = diff;
+                            closest = item;
+                          }
+                        }
+                        return closest;
+                      }
+                      // Disegna le branch SVG
+                      const educationBranches = educationPeriods.map((edu) => {
+                        const startY = (getYearPosition(edu.startYear) / 100) * svgHeight;
+                        const endY = (getYearPosition(edu.endYear) / 100) * svgHeight;
+                        // Trova la card esperienza più vicina all'inizio e alla fine
+                        const closestStart = findClosestWorkItem(edu.startYear);
+                        const closestEnd = findClosestWorkItem(edu.endYear);
+                        // Offset orizzontale: tra main branch e card esperienza (più vicino al centro)
+                        const offsetXStart = timelineX + (closestStart.side === 'right' ? branchMaxOffset : -branchMaxOffset);
+                        const offsetXEnd = timelineX + (closestEnd.side === 'right' ? branchMaxOffset : -branchMaxOffset);
+                        // Colore branch
+                        const color = edu.color;
+                        // Path SVG: curva Bezier dal centro verso offset, parallelo, poi rientra
+                        const path = `M${timelineX},${startY}
+                          C${timelineX},${startY+20} ${offsetXStart},${startY+20} ${offsetXStart},${startY+40}
+                          L${offsetXStart},${endY-40}
+                          C${offsetXStart},${endY-20} ${timelineX},${endY-20} ${timelineX},${endY}`;
+                        // Etichetta a lato del ramo (non sopra la curva)
+                        const labelY = (startY + endY) / 2;
+                        const labelX = offsetXStart + (offsetXStart > timelineX ? 18 : -178); // a destra o sinistra del branch
+                        return (
+                          <g key={edu.label}>
+                            <path d={path} stroke={color} strokeWidth={branchStroke} fill="none" filter="url(#branchShadow)" />
+                            {/* Etichetta a lato */}
+                            <foreignObject x={labelX} y={labelY - 24} width={160} height={48} style={{overflow:'visible'}}>
+                              <div className="education-branch-content" style={{borderColor: color, minWidth: 120, background: 'rgba(15,23,42,0.95)'}}>
+                                <div className="education-branch-label" style={{color}}>{edu.label}</div>
+                                <div className="education-branch-period">{edu.period}</div>
+                              </div>
+                            </foreignObject>
+                          </g>
+                        );
+                      });
+
+                      // SVG per le branch educative
+                      // La height viene scalata in base al contenuto della timeline
+                      return (
+                        <>
+                          <svg width="100%" height={svgHeight} viewBox={`0 0 ${svgWidth} ${svgHeight}`} style={{position:'absolute', left:0, top:0, pointerEvents:'none', zIndex:0}}>
+                            <defs>
+                              <filter id="branchShadow" x="-20%" y="-20%" width="140%" height="140%">
+                                <feDropShadow dx="0" dy="0" stdDeviation="4" floodColor="#000" floodOpacity="0.3" />
+                              </filter>
+                            </defs>
+                            {educationBranches}
+                          </svg>
+                          {/* Work experience items */}
+                          {workItems.map((exp, index) => (
+                            <div
+                              key={exp.id}
+                              className={`timeline-item ${exp.side === 'left' ? 'timeline-item-left' : 'timeline-item-right'}`}
+                              style={{ top: `${exp.topPos}%` }}
+                              onClick={() => handleSelect(exp.id, 'experience')}
+                            >
+                              <div className="timeline-dot">
+                                <span className="timeline-period">{exp.period}</span>
+                              </div>
+                              <div className="timeline-content">
+                                <div className="timeline-header">
+                                  <h3>{exp.name}</h3>
+                                </div>
+                                <p className="timeline-summary">{exp.summary}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </>
+                      );
+                    })()}
                   </div>
                 </article>
               ) : selectedType === 'project' ? (

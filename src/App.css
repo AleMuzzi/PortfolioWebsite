@@ -684,6 +684,125 @@ html, body::before {
   );
   transform: translateX(-50%);
   box-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+  z-index: 1;
+}
+
+/* Education branches - Git-like structure */
+.timeline-education-branch {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+  width: 100%;
+}
+
+/* Branch out: horizontal line from main timeline */
+.education-branch-out {
+  position: absolute;
+  left: 50%;
+  top: var(--branch-start);
+  width: calc(var(--branch-offset) - 8px);
+  height: 2px;
+  background: var(--branch-color, #3b82f6);
+  box-shadow: 0 0 8px var(--branch-color, #3b82f6);
+  transform: translateY(-50%);
+}
+
+/* Smooth curve: horizontal to vertical (rounded corner) */
+.education-branch-out::after {
+  content: '';
+  position: absolute;
+  right: -8px;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--branch-color, #3b82f6);
+  border-top: none;
+  border-left: none;
+  border-radius: 0 0 16px 0;
+  transform: translate(50%, -50%);
+  box-shadow: 0 0 8px var(--branch-color, #3b82f6);
+  background: transparent;
+}
+
+/* Parallel branch: vertical line running during education period */
+.education-branch-parallel {
+  position: absolute;
+  left: calc(50% + var(--branch-offset));
+  top: var(--branch-start);
+  width: 2px;
+  height: var(--branch-height);
+  background: var(--branch-color, #3b82f6);
+  box-shadow: 0 0 10px var(--branch-color, #3b82f6);
+  border-radius: 2px;
+}
+
+/* Smooth curve: vertical to horizontal (rounded corner) */
+.education-branch-parallel::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--branch-color, #3b82f6);
+  border-bottom: none;
+  border-right: none;
+  border-radius: 16px 0 0 0;
+  transform: translate(-50%, 50%);
+  box-shadow: 0 0 8px var(--branch-color, #3b82f6);
+  background: transparent;
+}
+
+/* Branch in: horizontal line from parallel branch back to main timeline */
+.education-branch-in {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--branch-start) + var(--branch-height));
+  width: calc(var(--branch-offset) - 8px);
+  height: 2px;
+  background: var(--branch-color, #3b82f6);
+  box-shadow: 0 0 8px var(--branch-color, #3b82f6);
+  transform: translateY(-50%);
+}
+
+/* Education content label */
+.education-branch-content {
+  position: absolute;
+  left: calc(50% + var(--branch-offset) + 0.5rem);
+  top: calc(var(--branch-start) + var(--branch-height) / 2);
+  transform: translateY(-50%);
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid var(--branch-color, #3b82f6);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  min-width: 140px;
+  transition: all 0.3s ease;
+  pointer-events: auto;
+}
+
+.timeline-education-branch:hover .education-branch-content {
+  border-color: var(--branch-color, #3b82f6);
+  box-shadow: 0 0 20px var(--branch-color, #3b82f6);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.education-branch-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--branch-color, #3b82f6);
+  margin-bottom: 0.2rem;
+  white-space: nowrap;
+}
+
+.education-branch-period {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-weight: 600;
 }
 
 .timeline-item {
@@ -1000,7 +1119,6 @@ html, body::before {
   position: relative;
   display: flex;
   flex-direction: column;
-  max-width: 1200px;
   margin: 0 auto;
   width: 100%;
   justify-content: center;
