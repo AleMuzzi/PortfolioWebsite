@@ -121,13 +121,14 @@ function App() {
                     <h2>{t.workTitle}</h2>
                   </div>
                   <div className="timeline-container">
-                    {filteredExperiences.map((exp) => (
-                      <div key={exp.id} className="timeline-item" onClick={() => handleSelect(exp.id, 'experience')}>
-                        <div className="timeline-dot" />
+                    {filteredExperiences.map((exp, index) => (
+                      <div key={exp.id} className={`timeline-item ${index % 2 === 0 ? 'timeline-item-left' : 'timeline-item-right'}`} onClick={() => handleSelect(exp.id, 'experience')}>
+                        <div className="timeline-dot">
+                          <span className="timeline-period">{exp.period}</span>
+                        </div>
                         <div className="timeline-content">
                           <div className="timeline-header">
                             <h3>{exp.name}</h3>
-                            <span className="timeline-period">{exp.period}</span>
                           </div>
                           <p className="timeline-summary">{exp.summary}</p>
                         </div>
