@@ -1,6 +1,6 @@
 export const translations = {
   en: {
-    heroTitle: "Alessandro's Portfolio",
+    heroTitle: "Alessandro Muzzi",
     heroDesc: "A curated collection of professional experiences, hardware builds, mobile apps, and tools. Explore the sections on the left to learn more about my journey and technical background.",
     profileButton: "Profile & Skills",
     workTitle: "Work Experience",
@@ -51,7 +51,7 @@ export const translations = {
     vibeClose: "Stay Chill ✌️"
   },
   it: {
-    heroTitle: "Il Portfolio di Alessandro",
+    heroTitle: "Alessandro Muzzi",
     heroDesc: "Una raccolta curata di esperienze professionali, costruzioni hardware, app mobili e strumenti. Esplora le sezioni a sinistra per saperne di più sul mio percorso e sul mio background tecnico.",
     profileButton: "Profilo e Competenze",
     workTitle: "Esperienza Lavorativa",

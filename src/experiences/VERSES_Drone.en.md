@@ -7,7 +7,7 @@ Development of e2e drone management systems for autonomous flight with DJI SDK i
 April 2022 — August 2024
 
 ## What i did
-- Development of e2e drone management system for autonomous flight with the DJI SDK for the FF2020 project, with integration of multiple third-party systems.
+Development of e2e drone management system for autonomous flight with the DJI SDK for the FF2020 project, with integration of multiple third-party systems.
 
 ## Technologies and tools
 - **Kotlin**

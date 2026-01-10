@@ -160,10 +160,19 @@ function parseExperience(filename: string, content: unknown): Experience {
   };
 }
 
+function parsePeriodStart(period: string): number {
+  const match = period.match(/\d{4}/);
+  return match ? parseInt(match[0]) : 0;
+}
+
 export const projects: Project[] = Object.entries(projectModules)
   .map(([path, module]) => parseProject(path, module.default))
   .sort((a, b) => a.name.localeCompare(b.name));
 
 export const experiences: Experience[] = Object.entries(experienceModules)
   .map(([path, module]) => parseExperience(path, module.default))
-  .sort((a, b) => a.name.localeCompare(b.name));
+  .sort((a, b) => {
+    const startA = parsePeriodStart(a.period);
+    const startB = parsePeriodStart(b.period);
+    return startB - startA;
+  });
