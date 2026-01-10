@@ -33,29 +33,17 @@ function App() {
     });
   }, [filteredExperiences]);
 
-  // Ordina le scuole in base all'ordine temporale delle esperienze lavorative
+  // Ordina le scuole dalla meno recente alla più recente (top-down, come le esperienze lavorative)
   const educationPeriods = useMemo(() => {
-    // Array scuole
     const schools = [
       { period: '2010 — 2015', label: t.highschool.split('\n')[0], color: '#f59e0b', startYear: 2010, endYear: 2015 },
       { period: '2015 — 2018', label: t.bachelors.split('\n')[0], color: '#10b981', startYear: 2015, endYear: 2018 },
       { period: '2019 — 2022', label: t.masters.split('\n')[0], color: '#3b82f6', startYear: 2019, endYear: 2022 }
     ];
-    // Ordina per startYear coerente con le esperienze lavorative
-    const allYears = filteredExperiencesSorted.map(exp => {
-      const years = exp.period.match(/\d{4}/g);
-      return years ? Number.parseInt(years[0]) : 0;
-    });
-    // Ordina le scuole in modo che la loro sequenza sia coerente con la timeline delle esperienze
-    schools.sort((a, b) => {
-      // Trova la distanza temporale minima tra la scuola e le esperienze
-      const aDist = Math.min(...allYears.map(y => Math.abs(a.startYear - y)));
-      const bDist = Math.min(...allYears.map(y => Math.abs(b.startYear - y)));
-      // Se la scuola inizia dopo la maggior parte delle esperienze, va più in alto
-      return a.startYear - b.startYear;
-    });
+    // Ordina per startYear crescente (meno recente in alto)
+    schools.sort((a, b) => a.startYear - b.startYear);
     return schools;
-  }, [t, filteredExperiencesSorted]);
+  }, [t]);
 
   const handleFooterClick = () => {
     const newCount = clickCount + 1;
@@ -191,12 +179,11 @@ function App() {
                       });
 
                       // Calcola le branch SVG per ogni periodo educativo
+                      // Definizioni necessarie per la mappatura
                       const svgWidth = 1000; // px, come max-width della timeline
                       const svgHeight = 1200; // px, arbitrario, sarà scalato in base al contenuto
                       const timelineX = svgWidth / 2;
-                      // Offset orizzontale massimo per le branch (ancora più vicino)
-                      const branchMaxOffset = 24;
-                      // Spessore branch più sottile
+                      const branchMaxOffset = 14;
                       const branchStroke = 2;
                       // Funzione per trovare la card esperienza più vicina a un certo anno
                       function findClosestWorkItem(year: number) {
@@ -213,30 +200,50 @@ function App() {
                         }
                         return closest;
                       }
-                      // Disegna le branch SVG
-                      const educationBranches = educationPeriods.map((edu) => {
-                        const startY = (getYearPosition(edu.startYear) / 100) * svgHeight;
-                        const endY = (getYearPosition(edu.endYear) / 100) * svgHeight;
+                      const educationBranches = educationPeriods.map((edu, eduIdx) => {
+                        // Calcola le Y dal basso verso l'alto
+                        const startY = svgHeight - (getYearPosition(edu.startYear) / 100) * svgHeight;
+                        const endY = svgHeight - (getYearPosition(edu.endYear) / 100) * svgHeight;
                         // Trova la card esperienza più vicina all'inizio e alla fine
                         const closestStart = findClosestWorkItem(edu.startYear);
-                        const closestEnd = findClosestWorkItem(edu.endYear);
-                        // Offset orizzontale: tra main branch e card esperienza (più vicino al centro)
-                        const offsetXStart = timelineX + (closestStart.side === 'right' ? branchMaxOffset : -branchMaxOffset);
-                        const offsetXEnd = timelineX + (closestEnd.side === 'right' ? branchMaxOffset : -branchMaxOffset);
-                        // Colore branch
+                        // Etichetta: calcola la posizione centrale del branch (dal basso)
+                        let labelY = (startY + endY) / 2;
+                        // Trova la work experience più vicina a questa Y
+                        let minDiff = Infinity;
+                        let closestWork = workItems[0];
+                        for (const wi of workItems) {
+                          const wiY = svgHeight - (wi.topPos / 100) * svgHeight;
+                          const diff = Math.abs(wiY - labelY);
+                          if (diff < minDiff) {
+                            minDiff = diff;
+                            closestWork = wi;
+                          }
+                        }
+                        // Se la work experience più vicina è a sinistra, metti il branch a destra, e viceversa
+                        const preferRight = closestWork.side === 'left';
+                        const offsetXStart = timelineX + (preferRight ? branchMaxOffset : -branchMaxOffset);
                         const color = edu.color;
-                        // Path SVG: curva Bezier dal centro verso offset, parallelo, poi rientra
+                        // Path SVG: curva Bezier dal centro verso offset, parallelo, poi rientra (tutte Y ribaltate)
                         const path = `M${timelineX},${startY}
-                          C${timelineX},${startY+20} ${offsetXStart},${startY+20} ${offsetXStart},${startY+40}
-                          L${offsetXStart},${endY-40}
-                          C${offsetXStart},${endY-20} ${timelineX},${endY-20} ${timelineX},${endY}`;
+                          C${timelineX},${startY-20} ${offsetXStart},${startY-20} ${offsetXStart},${startY-40}
+                          L${offsetXStart},${endY+40}
+                          C${offsetXStart},${endY+20} ${timelineX},${endY+20} ${timelineX},${endY}`;
                         // Etichetta a lato del ramo (non sopra la curva)
-                        const labelY = (startY + endY) / 2;
-                        const labelX = offsetXStart + (offsetXStart > timelineX ? 18 : -178); // a destra o sinistra del branch
+                        const labelX = offsetXStart + (preferRight ? 18 : -178);
+                        // Evita sovrapposizione con esperienze lavorative
+                        const labelHeight = 48;
+                        const overlap = workItems.some(wi => {
+                          const wiY = svgHeight - (wi.topPos / 100) * svgHeight;
+                          return Math.abs(wiY - labelY) < labelHeight;
+                        });
+                        if (overlap) {
+                          // Se c'è sovrapposizione, sposta l'etichetta verso l'alto o il basso
+                          const direction = eduIdx % 2 === 0 ? -1 : 1;
+                          labelY += direction * (labelHeight + 12);
+                        }
                         return (
                           <g key={edu.label}>
                             <path d={path} stroke={color} strokeWidth={branchStroke} fill="none" filter="url(#branchShadow)" />
-                            {/* Etichetta a lato */}
                             <foreignObject x={labelX} y={labelY - 24} width={160} height={48} style={{overflow:'visible'}}>
                               <div className="education-branch-content" style={{borderColor: color, minWidth: 120, background: 'rgba(15,23,42,0.95)'}}>
                                 <div className="education-branch-label" style={{color}}>{edu.label}</div>
