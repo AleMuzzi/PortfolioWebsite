@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef, useLayoutEffect } from 'react';
+import { useState, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import './App.css';
 import { projects, experiences } from './projectsData';
@@ -8,14 +8,20 @@ import printerWithRobot from './assets/printer_with_robot.png';
 import laptop from './assets/laptop.png';
 import solderingIron from './assets/soldering_iron.png';
 import laptopCables from './assets/laptop_cables.png';
+import dji_m300 from './assets/dji_m300.png';
+import active_inference_brain from './assets/active_inference_brain.png';
+import text_embeddings_visualization from './assets/text_embeddings_visualization.png';
 
-interface Rect {
-    top: number;
-    bottom: number;
-    left: number;
-    right: number;
-    type: 'card' | 'date-label' | 'edu-label';
-}
+// --- PLACEHOLDER LIST FOR BACKGROUND IMAGES ---
+// The code will map these images to timeline items based on their index.
+// Item 0 gets the 1st image, Item 1 gets the 2nd, etc.
+const workBackgrounds = [
+    active_inference_brain, // Index 0
+    dji_m300,     // Index 1
+    text_embeddings_visualization,    // Index 2
+    laptop,           // Index 3
+    // Add more images here as needed
+];
 
 function App() {
     const [lang, setLang] = useState<Language>('en');
@@ -24,11 +30,6 @@ function App() {
     const [showVibeModal, setShowVibeModal] = useState(false);
     const [clickCount, setClickCount] = useState(0);
 
-    const workItemRefs = useRef<Map<string, HTMLDivElement>>(new Map());
-    const timelineContainerRef = useRef<HTMLDivElement>(null);
-
-    const [staticObstacles, setStaticObstacles] = useState<Rect[]>([]);
-
     const t = translations[lang];
 
     const filteredProjects = useMemo(() => projects.filter(p => p.lang === lang), [lang]);
@@ -36,13 +37,52 @@ function App() {
 
     const educationPeriods = useMemo(() => {
         const schools = [
-            { period: '2010 — 2015', label: t.highschool.split('\n')[0], color: '#f59e0b', startYear: 2010, endYear: 2015 },
-            { period: '2015 — 2018', label: t.bachelors.split('\n')[0], color: '#10b981', startYear: 2015, endYear: 2018 },
-            { period: '2019 — 2022', label: t.masters.split('\n')[0], color: '#3b82f6', startYear: 2019, endYear: 2022 }
+            {
+                period: '2010 — 2015',
+                degree: 'High School degree',
+                field: 'Information Technology',
+                school: 'ITIS Leonardo Da Vinci, Parma',
+                grade: '100/100',
+                color: '#f59e0b',
+                startYear: 2010,
+                endYear: 2015,
+                side: 'left' as 'left' | 'right',
+                bottomOffset: -10,
+                width: 350,
+                height: 100
+            },
+            {
+                period: '2015 — 2018',
+                degree: "Bachelor's degree",
+                field: 'Computer Engineering',
+                school: 'Università degli Studi di Parma',
+                grade: '93/110',
+                color: '#10b981',
+                startYear: 2015,
+                endYear: 2018,
+                side: 'left' as 'left' | 'right',
+                bottomOffset: -70,
+                width: 330,
+                height: 100
+            },
+            {
+                period: '2019 — 2022',
+                degree: "Master's degree",
+                field: 'Computer Engineering',
+                school: 'Università degli Studi di Parma',
+                grade: '110/110',
+                color: '#3b82f6',
+                startYear: 2019,
+                endYear: 2022,
+                side: 'right' as 'left' | 'right',
+                bottomOffset: -10,
+                width: 300,
+                height: 100
+            }
         ];
         schools.sort((a, b) => a.startYear - b.startYear);
         return schools;
-    }, [t]);
+    }, []);
 
     const { workItems, minYear, maxYear, yearRange, svgHeight } = useMemo(() => {
         const _allYears: number[] = [];
@@ -87,154 +127,25 @@ function App() {
 
     const getYearPosition = (year: number) => ((maxYear - year) / yearRange) * 100;
 
-    useLayoutEffect(() => {
-        if (selectedType !== 'experience' || !timelineContainerRef.current) return;
-
-        const containerRect = timelineContainerRef.current.getBoundingClientRect();
-        const currentObstacles: Rect[] = [];
-        const BUFFER = 40;
-
-        const scaleX = 1000 / containerRect.width;
-
-        workItems.forEach(item => {
-            const el = workItemRefs.current.get(item.id);
-            if (el) {
-                const rect = el.getBoundingClientRect();
-                const domTop = rect.top - containerRect.top;
-                const domBottom = rect.bottom - containerRect.top;
-                const domLeft = rect.left - containerRect.left;
-                const domRight = rect.right - containerRect.left;
-
-                currentObstacles.push({
-                    top: domTop - BUFFER,
-                    bottom: domBottom + BUFFER,
-                    left: domLeft * scaleX - BUFFER,
-                    right: domRight * scaleX + BUFFER,
-                    type: 'card'
-                });
-
-                const dateEl = el.querySelector('.timeline-period');
-                if (dateEl) {
-                    const dateRect = dateEl.getBoundingClientRect();
-                    const dLeft = dateRect.left - containerRect.left;
-                    const dRight = dateRect.right - containerRect.left;
-                    const dTop = dateRect.top - containerRect.top;
-                    const dBottom = dateRect.bottom - containerRect.top;
-
-                    currentObstacles.push({
-                        top: dTop - BUFFER,
-                        bottom: dBottom + BUFFER,
-                        left: dLeft * scaleX - BUFFER,
-                        right: dRight * scaleX + BUFFER,
-                        type: 'date-label'
-                    });
-                }
-            }
-        });
-
-        // Widen the Central Spine Obstacle to prevent tight squeezes
-        currentObstacles.push({
-            top: 0,
-            bottom: svgHeight,
-            left: 450, // Widened from 480
-            right: 550, // Widened from 520
-            type: 'date-label'
-        });
-
-        setStaticObstacles(prev => {
-            if (prev.length !== currentObstacles.length) return currentObstacles;
-            return currentObstacles;
-        });
-
-    }, [workItems, selectedType, lang, svgHeight]);
-
     const educationBranches = useMemo(() => {
         const svgWidth = 1000;
         const timelineX = svgWidth / 2;
-
-        // 1. TIGHTER TRACK (As requested)
         const branchOffset = 15;
-
-        // 2. SAFETY MARGIN
-        // Ensure label starts at least 70px from center to avoid hitting date labels
-        const minCenterClearance = 70;
-        const trackToLabelMargin = Math.max(20, minCenterClearance - branchOffset);
-
-        const labelW = 180;
-        const labelH = 90;
-
-        const allObstacles = [...staticObstacles];
-
-        const isOverlapping = (testRect: Rect) => {
-            return allObstacles.some(obs => {
-                return !(testRect.right < obs.left ||
-                    testRect.left > obs.right ||
-                    testRect.bottom < obs.top ||
-                    testRect.top > obs.bottom);
-            });
-        };
+        const trackToLabelMargin = 15;
 
         return educationPeriods.map((edu) => {
             const bottomY = (getYearPosition(edu.startYear) / 100) * svgHeight;
             const topY = (getYearPosition(edu.endYear) / 100) * svgHeight;
-
-            // Search Start: Bottom of visual bracket (Oldest date)
-            const searchStartY = Math.max(bottomY, topY);
-            const searchLimitY = 0;
-
-            let bestY = searchStartY;
-            let bestSide: 'left' | 'right' = 'right';
-            let found = false;
-
-            const step = 15;
-
-            // Bottom-Up Scan
-            for (let currentY = searchStartY; currentY >= searchLimitY; currentY -= step) {
-                const sides: ('right' | 'left')[] = ['right', 'left'];
-
-                for (const side of sides) {
-                    const xLeft = side === 'right'
-                        ? timelineX + branchOffset + trackToLabelMargin
-                        : timelineX - branchOffset - trackToLabelMargin - labelW;
-
-                    const candidateRect: Rect = {
-                        top: currentY - (labelH / 2),
-                        bottom: currentY + (labelH / 2),
-                        left: xLeft,
-                        right: xLeft + labelW,
-                        type: 'edu-label'
-                    };
-
-                    if (candidateRect.bottom > svgHeight || candidateRect.top < 0) {
-                        continue;
-                    }
-
-                    if (!isOverlapping(candidateRect)) {
-                        bestY = currentY;
-                        bestSide = side;
-                        found = true;
-
-                        allObstacles.push({
-                            ...candidateRect,
-                            top: candidateRect.top - 10,
-                            bottom: candidateRect.bottom + 10
-                        });
-                        break;
-                    }
-                }
-                if (found) break;
-            }
-
-            const isRight = bestSide === 'right';
-            const spineX = timelineX;
-            const trackX = spineX + (isRight ? branchOffset : -branchOffset);
-
             const yStart = Math.min(topY, bottomY);
             const yEnd = Math.max(topY, bottomY);
 
-            // Curve Logic:
-            // Since the track is tighter (15px), we reduce the curve height slightly
-            // so it doesn't look too stretched.
+            const isRight = edu.side === 'right';
+            const manualY = yEnd + edu.bottomOffset;
+            const itemWidth = edu.width;
+            const itemHeight = edu.height;
+
+            const spineX = timelineX;
+            const trackX = spineX + (isRight ? branchOffset : -branchOffset);
             const curveK = 20;
 
             const path = `
@@ -246,30 +157,52 @@ function App() {
 
             const labelX = isRight
                 ? trackX + trackToLabelMargin
-                : trackX - trackToLabelMargin - 160;
+                : trackX - trackToLabelMargin - itemWidth;
+            const labelTop = manualY - (itemHeight / 2);
 
             return (
-                <g key={edu.label}>
+                <g key={edu.degree}>
                     <path d={path} stroke={edu.color} strokeWidth={3} fill="none" strokeLinecap="round" filter="url(#branchShadow)" />
-
-                    <foreignObject x={labelX} y={bestY - 40} width={160} height={100} style={{overflow:'visible'}}>
+                    <foreignObject x={labelX} y={labelTop} width={itemWidth} height={itemHeight} style={{overflow:'visible'}}>
                         <div className={`education-branch-content ${!isRight ? 'align-right' : ''}`}
                              style={{
                                  borderColor: edu.color,
                                  background: 'rgba(15,23,42,0.95)',
                                  textAlign: isRight ? 'left' : 'right',
-                                 flexDirection: isRight ? 'row' : 'row-reverse'
+                                 flexDirection: isRight ? 'row' : 'row-reverse',
+                                 padding: '12px',
+                                 display: 'flex',
+                                 alignItems: 'center',
+                                 height: '100%',
+                                 boxSizing: 'border-box'
                              }}>
-                            <div className="education-info">
-                                <div className="education-branch-label" style={{color: edu.color}}>{edu.label}</div>
-                                <div className="education-branch-period">{edu.period}</div>
+                            <div className="education-info" style={{width: '100%'}}>
+                                <div className="education-branch-label" style={{color: edu.color, fontSize: '0.95em', fontWeight: 'bold', marginBottom: '4px', lineHeight: '1.2'}}>
+                                    {edu.degree}, <span style={{color: '#fff', fontWeight: '500'}}>{edu.field}</span>
+                                </div>
+                                <div style={{color: '#94a3b8', fontSize: '0.75em', marginBottom: '6px', lineHeight: '1.2'}}>
+                                    {edu.school}
+                                </div>
+                                <div style={{
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    marginTop: '2px',
+                                    width: '100%'
+                                }}>
+                                    <span className="education-branch-period" style={{fontSize: '0.7em', opacity: 0.8}}>{edu.period}</span>
+                                    <span style={{fontSize: '0.7em', color: edu.color, border: `1px solid ${edu.color}`, padding: '1px 5px', borderRadius: '4px'}}>
+                                        {edu.grade.includes('100') ? '100/100' : edu.grade.split(': ')[1] || edu.grade}
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </foreignObject>
                 </g>
             );
         });
-    }, [educationPeriods, staticObstacles, svgHeight, minYear, maxYear, yearRange]);
+    }, [educationPeriods, svgHeight, maxYear, yearRange]);
 
     const handleFooterClick = () => {
         const newCount = clickCount + 1;
@@ -299,8 +232,61 @@ function App() {
         setLang(prev => prev === 'en' ? 'it' : 'en');
     };
 
+    const renderWorkHeader = (rawName: string) => {
+        const separator = lang === 'en' ? ' at ' : ' presso ';
+        const parts = rawName.split(separator);
+        if (parts.length >= 2) {
+            const role = parts[0];
+            const company = parts.slice(1).join(separator);
+            return (
+                <div className="timeline-header-split">
+                    <h3>{role}</h3>
+                    <div style={{fontSize: '0.9em', color: '#94a3b8', fontWeight: '500', marginTop: '2px', fontStyle: 'italic'}}>{company}</div>
+                </div>
+            );
+        }
+        return <h3>{rawName}</h3>;
+    };
+
     return (
         <div className={`app-root ${selectedType === 'home' ? 'is-home' : ''}`}>
+            {/* --- INJECTED STYLES FOR POP-OUT EFFECT --- */}
+            <style>{`
+                .timeline-item {
+                    position: relative;
+                    z-index: 1;
+                    overflow: visible !important;
+                }
+                
+                /* The container for the background image */
+                .timeline-popout-bg {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%) scale(0.5); /* Start small */
+                    width: 300px;
+                    height: auto;
+                    opacity: 0;
+                    z-index: -1; /* Behind text */
+                    pointer-events: none;
+                    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+                }
+
+                .timeline-item-left .timeline-popout-bg {
+                    left: 30%;
+                }
+                .timeline-item-right .timeline-popout-bg {
+                    left: 70%;
+                }
+
+                /* Hover State */
+                .timeline-item:hover .timeline-popout-bg {
+                    opacity: 0.25; 
+                    transform: translate(-50%, -50%) scale(1.5) rotate(-5deg);
+                }
+            `}</style>
+
             <div className="header-actions-floating">
                 <button className="lang-toggle" onClick={toggleLanguage} aria-label="Toggle language">
                     {lang === 'en' ? '🇮🇹 IT' : '🇬🇧 EN'}
@@ -330,40 +316,18 @@ function App() {
                                     <div className="interactive-landing">
                                         <div className="printer-container">
                                             <img src={printerWithRobot} alt="Printer with robot" className="printer-robot-img" />
-
-                                            <div
-                                                className="clickable-item laptop-item"
-                                                onClick={() => handleSelect(null, 'experience')}
-                                                role="button"
-                                                tabIndex={0}
-                                                onKeyDown={(e) => e.key === 'Enter' && handleSelect(null, 'experience')}
-                                            >
+                                            <div className="clickable-item laptop-item" onClick={() => handleSelect(null, 'experience')}>
                                                 <img src={laptop} alt="Laptop" />
                                                 <span className="tooltip">{t.workTitle}</span>
                                             </div>
-
                                             <div className="non-clickable-item laptop-cables-item">
                                                 <img src={laptopCables} alt="Laptop Cables" />
                                             </div>
-
-                                            <div
-                                                className="clickable-item soldering-iron-item"
-                                                onClick={() => handleSelect(null, 'project')}
-                                                role="button"
-                                                tabIndex={0}
-                                                onKeyDown={(e) => e.key === 'Enter' && handleSelect(null, 'project')}
-                                            >
+                                            <div className="clickable-item soldering-iron-item" onClick={() => handleSelect(null, 'project')}>
                                                 <img src={solderingIron} alt="Soldering Iron" />
                                                 <span className="tooltip">{t.personalTitle}</span>
                                             </div>
-
-                                            <div
-                                                className="clickable-item robot-head-item"
-                                                onClick={() => handleSelect(null, 'about')}
-                                                role="button"
-                                                tabIndex={0}
-                                                onKeyDown={(e) => e.key === 'Enter' && handleSelect(null, 'about')}
-                                            >
+                                            <div className="clickable-item robot-head-item" onClick={() => handleSelect(null, 'about')}>
                                                 <span className="tooltip">{t.profileButton}</span>
                                             </div>
                                         </div>
@@ -377,8 +341,7 @@ function App() {
                                         <button className="back-button" onClick={() => handleSelect(null, 'home')}>←</button>
                                         <h2>{t.workTitle}</h2>
                                     </div>
-                                    <div className="timeline-container" ref={timelineContainerRef} style={{position: 'relative'}}>
-
+                                    <div className="timeline-container" style={{position: 'relative'}}>
                                         <svg width="100%" height={svgHeight} viewBox={`0 0 1000 ${svgHeight}`} style={{position:'absolute', left:0, top:0, pointerEvents:'none', zIndex:0}}>
                                             <defs>
                                                 <filter id="branchShadow" x="-20%" y="-20%" width="140%" height="140%">
@@ -388,31 +351,39 @@ function App() {
                                             {educationBranches}
                                         </svg>
 
-                                        {workItems.map((exp) => (
-                                            <div
-                                                key={exp.id}
-                                                ref={(el) => {
-                                                    if (el) workItemRefs.current.set(exp.id, el);
-                                                    else workItemRefs.current.delete(exp.id);
-                                                }}
-                                                className={`timeline-item ${exp.side === 'left' ? 'timeline-item-left' : 'timeline-item-right'}`}
-                                                style={{ top: `${exp.topPos}%` }}
-                                                onClick={() => handleSelect(exp.id, 'experience')}
-                                                role="button"
-                                                tabIndex={0}
-                                                onKeyDown={(e) => e.key === 'Enter' && handleSelect(exp.id, 'experience')}
-                                            >
-                                                <div className="timeline-dot">
-                                                    <span className="timeline-period">{exp.period}</span>
-                                                </div>
-                                                <div className="timeline-content">
-                                                    <div className="timeline-header">
-                                                        <h3>{exp.name}</h3>
+                                        {workItems.map((exp, index) => {
+                                            // Select image based on index, cycling if list is too short
+                                            const bgImage = workBackgrounds[index % workBackgrounds.length];
+
+                                            return (
+                                                <div
+                                                    key={exp.id}
+                                                    className={`timeline-item ${exp.side === 'left' ? 'timeline-item-left' : 'timeline-item-right'}`}
+                                                    style={{ top: `${exp.topPos}%` }}
+                                                    onClick={() => handleSelect(exp.id, 'experience')}
+                                                    role="button"
+                                                    tabIndex={0}
+                                                    onKeyDown={(e) => e.key === 'Enter' && handleSelect(exp.id, 'experience')}
+                                                >
+                                                    {/* --- POP OUT IMAGE (Mapped by Index) --- */}
+                                                    <img
+                                                        src={bgImage}
+                                                        alt=""
+                                                        className="timeline-popout-bg"
+                                                    />
+
+                                                    <div className="timeline-dot">
+                                                        <span className="timeline-period">{exp.period}</span>
                                                     </div>
-                                                    <p className="timeline-summary">{exp.summary}</p>
+                                                    <div className="timeline-content">
+                                                        <div className="timeline-header">
+                                                            {renderWorkHeader(exp.name)}
+                                                        </div>
+                                                        <p className="timeline-summary">{exp.summary}</p>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        ))}
+                                            );
+                                        })}
                                     </div>
                                 </article>
                             ) : selectedType === 'project' ? (
@@ -539,60 +510,62 @@ function App() {
                                         </section>
                                     </div>
                                 </article>
-                            ) : (
-                                <article className="profile-view">
-                                    <h2>{t.aboutMeTitle}</h2>
-                                    <p className="bio">{t.bio}</p>
-                                    {/* Fallback duplicate content */}
-                                    <div className="profile-grid">
-                                        {/* ... same content ... */}
-                                    </div>
-                                </article>
-                            )
-                        ) : selectedType === 'experience' && selectedExperience ? (
-                            <article className="project-details">
+                            ) : null
+                        ) : (
+                            <article className="detail-view">
                                 <div className="view-header">
-                                    <button className="back-button" onClick={() => handleSelect(null, 'experience')}>←</button>
-                                    <h2>{selectedExperience.name}</h2>
+                                    <button className="back-button" onClick={() => handleSelect(null, selectedType)}>←</button>
+                                    <h2>{selectedType === 'project' ? t.personalTitle : t.workTitle}</h2>
                                 </div>
-                                <p className="experience-period">{selectedExperience.period}</p>
-                                <section>
-                                    <h3>{t.whatIDid}</h3>
-                                    <ReactMarkdown>{selectedExperience.details}</ReactMarkdown>
-                                </section>
-                                <section>
-                                    <h3>{t.technologies}</h3>
-                                    <ul className="tech-list">
-                                        {selectedExperience.technologies.map((tech: string) => (
-                                            <li key={tech}>{tech}</li>
-                                        ))}
-                                    </ul>
-                                </section>
-                            </article>
-                        ) : selectedType === 'project' && selectedProject ? (
-                            <article className="project-details">
-                                <div className="view-header">
-                                    <button className="back-button" onClick={() => handleSelect(null, 'project')}>←</button>
-                                    <h2>{selectedProject.name}</h2>
+                                <div className="detail-content">
+                                    {selectedType === 'experience' && selectedExperience && (
+                                        <div className="fade-in-content">
+                                            <div className="detail-title-block">
+                                                <h3>{selectedExperience.name}</h3>
+                                                <span className="detail-period">{selectedExperience.period}</span>
+                                            </div>
+                                            <div className="markdown-body">
+                                                <ReactMarkdown>
+                                                    {(selectedExperience as any).description || selectedExperience.summary}
+                                                </ReactMarkdown>
+                                                <div style={{marginTop: '1.5rem'}}>
+                                                    <h4>Techniques & Tools:</h4>
+                                                    <div className="tech-stack-detail">
+                                                        {selectedExperience.technologies.map(tech => (
+                                                            <span key={tech} className="tech-tag">{tech}</span>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                    {selectedType === 'project' && selectedProject && (
+                                        <div className="fade-in-content">
+                                            <div className="detail-title-block">
+                                                <h3>{selectedProject.name}</h3>
+                                                <div className="tech-stack-detail">
+                                                    {selectedProject.technologies.map((tech) => (
+                                                        <span key={tech} className="tech-tag">{tech}</span>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                            <div className="markdown-body">
+                                                <ReactMarkdown>
+                                                    {selectedProject.overview || (selectedProject as any).description}
+                                                </ReactMarkdown>
+                                                {(selectedProject as any).link && (
+                                                    <div className="project-links" style={{marginTop:'20px'}}>
+                                                        <a href={(selectedProject as any).link} target="_blank" rel="noreferrer" className="cta-button">
+                                                            View Project
+                                                        </a>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
-                                <section>
-                                    <h3>{t.overview}</h3>
-                                    <ReactMarkdown>{selectedProject.overview}</ReactMarkdown>
-                                </section>
-                                <section>
-                                    <h3>{t.howItWorks}</h3>
-                                    <ReactMarkdown>{selectedProject.how}</ReactMarkdown>
-                                </section>
-                                <section>
-                                    <h3>{t.technologies}</h3>
-                                    <ul className="tech-list">
-                                        {selectedProject.technologies.map((tech: string) => (
-                                            <li key={tech}>{tech}</li>
-                                        ))}
-                                    </ul>
-                                </section>
                             </article>
-                        ) : null}
+                        )}
                     </section>
                 </div>
             </main>
