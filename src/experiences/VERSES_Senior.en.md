@@ -1,7 +1,7 @@
 # Senior Software Engineer at VERSES
 
 ## Summary
-Architecting and developing complex 3D mesh management systems and active inference frameworks.
+Architecting and developing complex 3D mesh management systems and Active Inference frameworks.
 
 ## Period
 June 2024 — Present

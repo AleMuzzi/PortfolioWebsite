@@ -11,16 +11,19 @@ import laptopCables from './assets/laptop_cables.png';
 import dji_m300 from './assets/dji_m300.png';
 import active_inference_brain from './assets/active_inference_brain.png';
 import text_embeddings_visualization from './assets/text_embeddings_visualization.png';
+import ptz_camera from './assets/ptz_camera.png';
+import iot from './assets/iot.png';
 
-// --- PLACEHOLDER LIST FOR BACKGROUND IMAGES ---
+// --- LIST FOR BACKGROUND IMAGES ---
 // The code will map these images to timeline items based on their index.
 // Item 0 gets the 1st image, Item 1 gets the 2nd, etc.
 const workBackgrounds = [
     active_inference_brain, // Index 0
     dji_m300,     // Index 1
     text_embeddings_visualization,    // Index 2
-    laptop,           // Index 3
-    // Add more images here as needed
+    ptz_camera,           // Index 3
+    laptop,           // Index 4
+    iot            // Index 5
 ];
 
 function App() {
@@ -46,24 +49,29 @@ function App() {
                 color: '#f59e0b',
                 startYear: 2010,
                 endYear: 2015,
-                side: 'left' as 'left' | 'right',
-                bottomOffset: -10,
+                side: 'left',
+                bottomOffset: -100,
                 width: 350,
-                height: 100
+                height: 100,
+                // --- MANUAL OVERRIDES (0% = Top of SVG, 100% = Bottom) ---
+                manualTop: 84,    // Where the branch starts on the spine (top Y)
+                manualBottom: 105  // Where the branch ends on the spine (bottom Y)
             },
             {
-                period: '2015 — 2018',
+                period: '2015 — 2019',
                 degree: "Bachelor's degree",
                 field: 'Computer Engineering',
                 school: 'Università degli Studi di Parma',
                 grade: '93/110',
                 color: '#10b981',
                 startYear: 2015,
-                endYear: 2018,
-                side: 'left' as 'left' | 'right',
-                bottomOffset: -70,
+                endYear: 2019,
+                side: 'right',
+                bottomOffset: -40,
                 width: 330,
-                height: 100
+                height: 100,
+                manualTop: 56,
+                manualBottom: 84
             },
             {
                 period: '2019 — 2022',
@@ -75,11 +83,14 @@ function App() {
                 startYear: 2019,
                 endYear: 2022,
                 side: 'right' as 'left' | 'right',
-                bottomOffset: -10,
+                bottomOffset: -45,
                 width: 300,
-                height: 100
+                height: 100,
+                manualTop: 35,
+                manualBottom: 53
             }
         ];
+
         schools.sort((a, b) => a.startYear - b.startYear);
         return schools;
     }, []);
@@ -121,7 +132,7 @@ function App() {
             minYear: _minYear,
             maxYear: _maxYear,
             yearRange: _yearRange,
-            svgHeight: 1200
+            svgHeight: 1600
         };
     }, [filteredExperiences, educationPeriods]);
 
@@ -133,13 +144,30 @@ function App() {
         const branchOffset = 15;
         const trackToLabelMargin = 15;
 
-        return educationPeriods.map((edu) => {
-            const bottomY = (getYearPosition(edu.startYear) / 100) * svgHeight;
-            const topY = (getYearPosition(edu.endYear) / 100) * svgHeight;
+        return educationPeriods.map((edu: any) => {
+            // --- UPDATED LOGIC START ---
+            // If manual overrides exist, use them. Otherwise, calculate based on years.
+            // Values are percentages (0-100).
+
+            // Calculate automatic positions based on years
+            const autoTopPerc = getYearPosition(edu.endYear);
+            const autoBottomPerc = getYearPosition(edu.startYear);
+
+            // Use manual override if provided, otherwise use automatic
+            const finalTopPerc = edu.manualTop !== undefined ? edu.manualTop : autoTopPerc;
+            const finalBottomPerc = edu.manualBottom !== undefined ? edu.manualBottom : autoBottomPerc;
+
+            // Convert percentage to pixels
+            const topY = (finalTopPerc / 100) * svgHeight;
+            const bottomY = (finalBottomPerc / 100) * svgHeight;
+            // --- UPDATED LOGIC END ---
+
             const yStart = Math.min(topY, bottomY);
             const yEnd = Math.max(topY, bottomY);
 
             const isRight = edu.side === 'right';
+
+            // The rest remains exactly the same to preserve UI
             const manualY = yEnd + edu.bottomOffset;
             const itemWidth = edu.width;
             const itemHeight = edu.height;
@@ -380,6 +408,36 @@ function App() {
                                                             {renderWorkHeader(exp.name)}
                                                         </div>
                                                         <p className="timeline-summary">{exp.summary}</p>
+
+                                                        {/* --- UPDATED: Tech Stack Tags with Dynamic Alignment --- */}
+                                                        {exp.technologies && exp.technologies.length > 0 && (
+                                                            <div style={{
+                                                                display: 'flex',
+                                                                flexWrap: 'wrap',
+                                                                gap: '8px',
+                                                                marginTop: '14px',
+                                                                alignItems: 'center',
+                                                                // If item is on the left, align tags to the right (flex-end).
+                                                                // If item is on the right, align tags to the left (flex-start).
+                                                                justifyContent: exp.side === 'left' ? 'flex-end' : 'flex-start'
+                                                            }}>
+                                                                {exp.technologies.slice(0, 5).map((tech) => (
+                                                                    <span key={tech} style={{
+                                                                        fontSize: '0.8em',
+                                                                        fontWeight: '500',
+                                                                        padding: '4px 10px',
+                                                                        borderRadius: '6px',
+                                                                        background: 'rgba(139, 92, 246, 0.15)',
+                                                                        border: '1px solid rgba(167, 139, 250, 0.4)',
+                                                                        color: '#f3e8ff',
+                                                                        fontFamily: 'monospace',
+                                                                        letterSpacing: '0.02em'
+                                                                    }}>
+                                                                    {tech}
+                                                                </span>
+                                                                ))}
+                                                            </div>
+                                                        )}
                                                     </div>
                                                 </div>
                                             );
@@ -519,22 +577,39 @@ function App() {
                                 </div>
                                 <div className="detail-content">
                                     {selectedType === 'experience' && selectedExperience && (
-                                        <div className="fade-in-content">
-                                            <div className="detail-title-block">
-                                                <h3>{selectedExperience.name}</h3>
-                                                <span className="detail-period">{selectedExperience.period}</span>
+                                        <div className="fade-in-content experience-detail-container">
+                                            {/* HEADER SECTION */}
+                                            <div className="exp-header">
+                                                <h3 className="exp-role">{selectedExperience.name.split(lang === 'en' ? ' at ' : ' presso ')[0]}</h3>
+
+                                                <div className="exp-meta-row">
+                                                    <div className="exp-chip chip-company">
+                                                        <span style={{marginRight:'6px'}}>🏢</span>
+                                                        {selectedExperience.name.split(lang === 'en' ? ' at ' : ' presso ')[1] || 'VERSES'}
+                                                    </div>
+                                                    <div className="exp-chip chip-date">
+                                                        <span style={{marginRight:'6px'}}>🗓</span>
+                                                        {selectedExperience.period}
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div className="markdown-body">
+
+                                            {/* BODY CONTENT */}
+                                            <div className="markdown-body exp-body">
                                                 <ReactMarkdown>
                                                     {(selectedExperience as any).description || selectedExperience.summary}
                                                 </ReactMarkdown>
-                                                <div style={{marginTop: '1.5rem'}}>
-                                                    <h4>Techniques & Tools:</h4>
-                                                    <div className="tech-stack-detail">
-                                                        {selectedExperience.technologies.map(tech => (
-                                                            <span key={tech} className="tech-tag">{tech}</span>
-                                                        ))}
-                                                    </div>
+                                            </div>
+
+                                            {/* TOOLS FOOTER */}
+                                            <div className="tools-section">
+                                                <span className="tools-title">Techniques & Tools</span>
+                                                <div className="tools-grid">
+                                                    {selectedExperience.technologies.map(tech => (
+                                                        <span key={tech} className="tool-badge">
+                                                        {tech}
+                                                    </span>
+                                                    ))}
                                                 </div>
                                             </div>
                                         </div>

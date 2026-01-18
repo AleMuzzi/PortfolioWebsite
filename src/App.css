@@ -1709,3 +1709,108 @@ html, body::before {
     gap: 1.5rem;
   }
 }
+
+/* --- EXPERIENCE DETAIL VIEW STYLES --- */
+.experience-detail-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: rgba(30, 41, 59, 0.4); /* Semi-transparent dark slate */
+    border: 1px solid rgba(148, 163, 184, 0.1);
+    border-radius: 16px;
+    padding: 40px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+.exp-header {
+    margin-bottom: 30px;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    padding-bottom: 20px;
+}
+
+.exp-role {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+    background: linear-gradient(to right, #f3e8ff, #c084fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.1;
+}
+
+.exp-meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.exp-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-family: 'monospace';
+    font-weight: 500;
+}
+
+.chip-company {
+    background: rgba(59, 130, 246, 0.15);
+    color: #93c5fd;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.chip-date {
+    background: rgba(245, 158, 11, 0.1);
+    color: #fcd34d;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.exp-body {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #cbd5e1;
+    margin-bottom: 40px;
+}
+
+.tools-section {
+    background: rgba(15, 23, 42, 0.6);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.tools-title {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    margin-bottom: 15px;
+    font-weight: 700;
+    display: block;
+}
+
+.tools-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tool-badge {
+    padding: 6px 14px;
+    background: rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    color: #e9d5ff;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.tool-badge:hover {
+    background: rgba(139, 92, 246, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
+}
