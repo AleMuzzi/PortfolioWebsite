@@ -1,18 +1,25 @@
-# Dipartimento di ricerca e sviluppo at Spark Security
+# Developer / Designer in R&D sector at Spark Security
 
 ## Summary
-Software development for PTZ cameras management, alarms, and communication SDKs.
+Development of software related to the management of PTZ cameras, alarms, and communication SDKs.
+
+## Company
+Spark Security Srl - https://www.spark-security.com/
 
 ## Period
 May 2018 — October 2019
 
 ## What i did
-- Development of software related to the management of PTZ cameras, alarms, SDK for communication with the DB, memory leak resolution, code review activities, code optimization.
+Development of software related to
+- Integration in the platform and management and of PTZ cameras
+- Alarms management and synchronization
+- SDK for communication with the DB
+- Memory leak resolution (C# interop with C++)
+- Code review activities
+- Code optimization, refactoring, and performance improvements
 
 ## Technologies and tools
-- **C#**
-- **XAML**
-- **Model-view-viewmodel (MVVM)**
-- **Git**
-- **Radical Framework**
-- **TFS**
+
+- **Languages:** C#, C++
+- **Frameworks & UI:** XAML, Radical Framework, MVVM
+- **Management & Versioning:** TFS, Git

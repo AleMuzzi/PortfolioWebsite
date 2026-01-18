@@ -250,10 +250,13 @@ function App() {
         setSelectedId(id);
         setSelectedType(type);
 
-        const detailsElement = document.querySelector('.details');
-        if (detailsElement) {
-            detailsElement.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        // Use setTimeout to ensure the element is rendered and accessible
+        setTimeout(() => {
+            const detailsElement = document.querySelector('.details');
+            if (detailsElement) {
+                detailsElement.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+            }
+        }, 0);
     };
 
     const toggleLanguage = () => {
@@ -482,6 +485,7 @@ function App() {
                                                         <li><strong>{t.languages}:</strong> Python, Kotlin, C++, C#, Java, Dart, TypeScript, Lua, Swift</li>
                                                         <li><strong>{t.frameworks}:</strong> React, Node.js, Flutter, Unity, Android SDK, Spring, .NET</li>
                                                         <li><strong>{t.backend}:</strong> Software Architecture, System Design, Infrastructure, Team Management</li>
+                                                        <li><strong>{t.scraping}:</strong> Web Scraping, Data Extraction</li>
                                                     </ul>
                                                 </div>
                                                 <div className="skill-category">
@@ -576,44 +580,91 @@ function App() {
                                     <h2>{selectedType === 'project' ? t.personalTitle : t.workTitle}</h2>
                                 </div>
                                 <div className="detail-content">
-                                    {selectedType === 'experience' && selectedExperience && (
-                                        <div className="fade-in-content experience-detail-container">
-                                            {/* HEADER SECTION */}
-                                            <div className="exp-header">
-                                                <h3 className="exp-role">{selectedExperience.name.split(lang === 'en' ? ' at ' : ' presso ')[0]}</h3>
+                                    {selectedType === 'experience' && selectedExperience && (() => {
+                                        // --- LOGIC FOR PARSING COMPANY & LINK ---
+                                        const separator = lang === 'en' ? ' at ' : ' presso ';
+                                        const parts = selectedExperience.name.split(separator);
 
-                                                <div className="exp-meta-row">
-                                                    <div className="exp-chip chip-company">
-                                                        <span style={{marginRight:'6px'}}>🏢</span>
-                                                        {selectedExperience.name.split(lang === 'en' ? ' at ' : ' presso ')[1] || 'VERSES'}
-                                                    </div>
-                                                    <div className="exp-chip chip-date">
-                                                        <span style={{marginRight:'6px'}}>🗓</span>
-                                                        {selectedExperience.period}
+                                        // 1. Get Role
+                                        const roleName = parts[0];
+
+                                        // 2. Get Company (Try explicit property first, then parse title)
+                                        const companyName = (selectedExperience as any).company
+                                            || (parts.length > 1 ? parts[1] : 'Unknown Company');
+
+                                        // 3. Get URL (Try explicit property)
+                                        const companyUrl = (selectedExperience as any).companyUrl;
+
+                                        return (
+                                            <div className="fade-in-content experience-detail-container">
+                                                {/* HEADER SECTION */}
+                                                <div className="exp-header">
+                                                    <h3 className="exp-role">{roleName}</h3>
+
+                                                    <div className="exp-meta-row">
+                                                        {companyUrl ? (
+                                                            <a
+                                                                href={companyUrl}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="exp-chip chip-company clickable-chip"
+                                                            >
+                                                                <span style={{marginRight:'6px'}}>🏢</span>
+                                                                {companyName}
+                                                                <span style={{marginLeft:'6px', fontSize:'0.8em', opacity: 0.7}}>↗</span>
+                                                            </a>
+                                                        ) : (
+                                                            <div className="exp-chip chip-company">
+                                                                <span style={{marginRight:'6px'}}>🏢</span>
+                                                                {companyName}
+                                                            </div>
+                                                        )}
+
+                                                        <div className="exp-chip chip-date">
+                                                            <span style={{marginRight:'6px'}}>🗓</span>
+                                                            {selectedExperience.period}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            {/* BODY CONTENT */}
-                                            <div className="markdown-body exp-body">
-                                                <ReactMarkdown>
-                                                    {(selectedExperience as any).description || selectedExperience.summary}
-                                                </ReactMarkdown>
-                                            </div>
+                                                {/* BODY CONTENT */}
+                                                <div className="markdown-body exp-body">
+                                                    <ReactMarkdown>
+                                                        {(selectedExperience as any).details || selectedExperience.summary}
+                                                    </ReactMarkdown>
+                                                </div>
 
-                                            {/* TOOLS FOOTER */}
-                                            <div className="tools-section">
-                                                <span className="tools-title">Techniques & Tools</span>
-                                                <div className="tools-grid">
-                                                    {selectedExperience.technologies.map(tech => (
-                                                        <span key={tech} className="tool-badge">
-                                                        {tech}
-                                                    </span>
-                                                    ))}
+                                                {/* TOOLS FOOTER */}
+                                                <div className="tools-section">
+                                                    <span className="tools-title">Techniques & Tools</span>
+                                                    {selectedExperience.categorizedTech ? (
+                                                        <div className="categorized-tools">
+                                                            {Object.entries(selectedExperience.categorizedTech).map(([category, items]) => (
+                                                                <div key={category} className="tech-category-group">
+                                                                    <h4 className="tech-category-name">{category}</h4>
+                                                                    <div className="tools-grid">
+                                                                        {(items as string[]).map(tech => (
+                                                                            <span key={tech} className="tool-badge">
+                                                                            {tech}
+                                                                        </span>
+                                                                        ))}
+                                                                    </div>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    ) : (
+                                                        <div className="tools-grid">
+                                                            {selectedExperience.technologies.map(tech => (
+                                                                <span key={tech} className="tool-badge">
+                                                                {tech}
+                                                            </span>
+                                                            ))}
+                                                        </div>
+                                                    )}
                                                 </div>
                                             </div>
-                                        </div>
-                                    )}
+                                        );
+                                    })()}
                                     {selectedType === 'project' && selectedProject && (
                                         <div className="fade-in-content">
                                             <div className="detail-title-block">

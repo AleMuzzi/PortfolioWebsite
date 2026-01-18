@@ -1084,7 +1084,7 @@ html, body::before {
 .details {
   position: relative;
   overflow-y: auto;
-  padding: 0 1rem 2rem 0;
+  padding: 0 1rem 2rem 0; /* Increased bottom padding */
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -1710,14 +1710,48 @@ html, body::before {
   }
 }
 
+.detail-view {
+  animation: fadeIn 0.4s ease-out;
+  position: relative;
+  pointer-events: auto;
+  z-index: 10;
+  width: 100%;
+}
+
+.detail-content {
+  width: 100%;
+  padding-bottom: 100px; /* Extra space for the gradient overlay */
+}
+
+.detail-title-block {
+  margin-bottom: 2rem;
+}
+
+.detail-title-block h3 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  background: linear-gradient(to right, #fff, var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.tech-stack-detail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
 /* --- EXPERIENCE DETAIL VIEW STYLES --- */
 .experience-detail-container {
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto;
     background: rgba(30, 41, 59, 0.4); /* Semi-transparent dark slate */
     border: 1px solid rgba(148, 163, 184, 0.1);
     border-radius: 16px;
     padding: 40px;
+    padding-bottom: 60px; /* Increased bottom padding */
     backdrop-filter: blur(10px);
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
 }
@@ -1754,6 +1788,21 @@ html, body::before {
     font-size: 0.85rem;
     font-family: 'monospace';
     font-weight: 500;
+}
+
+.clickable-chip {
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: rgba(59, 130, 246, 0.25); /* Slightly brighter bg for links */
+    border-color: rgba(59, 130, 246, 0.5);
+}
+
+.clickable-chip:hover {
+    background: rgba(59, 130, 246, 0.35);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+    color: #bfdbfe;
 }
 
 .chip-company {
@@ -1796,6 +1845,21 @@ html, body::before {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+}
+
+.tech-category-group {
+    margin-bottom: 20px;
+}
+
+.tech-category-group:last-child {
+    margin-bottom: 0;
+}
+
+.tech-category-name {
+    font-size: 0.9rem;
+    color: #a78bfa;
+    margin: 0 0 10px 0;
+    font-weight: 600;
 }
 
 .tool-badge {
