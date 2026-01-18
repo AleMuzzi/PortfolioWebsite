@@ -95,7 +95,7 @@ function App() {
         return schools;
     }, []);
 
-    const { workItems, minYear, maxYear, yearRange, svgHeight } = useMemo(() => {
+    const { workItems, maxYear, yearRange, svgHeight } = useMemo(() => {
         const _allYears: number[] = [];
         filteredExperiences.forEach(exp => {
             const years = exp.period.match(/\d{4}/g);
@@ -232,6 +232,7 @@ function App() {
         });
     }, [educationPeriods, svgHeight, maxYear, yearRange]);
 
+    // @ts-ignore
     const handleFooterClick = () => {
         const newCount = clickCount + 1;
         if (newCount === 5) {
