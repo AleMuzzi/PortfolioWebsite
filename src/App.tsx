@@ -8,7 +8,7 @@ import printerWithRobot from './assets/printer_with_robot.png';
 import laptop from './assets/laptop.png';
 import solderingIron from './assets/soldering_iron.png';
 import laptopCables from './assets/laptop_cables.png';
-import dji_m300 from './assets/dji_m300.png';
+import dji_m300 from './assets/DJI_M300.png';
 import active_inference_brain from './assets/active_inference_brain.png';
 import text_embeddings_visualization from './assets/text_embeddings_visualization.png';
 import ptz_camera from './assets/ptz_camera.png';
