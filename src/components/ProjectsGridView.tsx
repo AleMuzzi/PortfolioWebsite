@@ -1,5 +1,6 @@
 import { Project } from '../projectsData';
 import { translations, Language } from '../i18n';
+import './ProjectsGridView.css';
 
 interface ProjectsGridViewProps {
     lang: Language;

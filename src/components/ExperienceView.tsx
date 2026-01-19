@@ -1,5 +1,6 @@
 import { Experience } from '../projectsData';
 import { translations, Language } from '../i18n';
+import './ExperienceView.css';
 
 interface ExperienceViewProps {
     lang: Language;

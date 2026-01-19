@@ -1,6 +1,7 @@
 import ReactMarkdown from 'react-markdown';
 import { Project, Experience } from '../projectsData';
 import { translations, Language } from '../i18n';
+import './DetailsView.css';
 
 interface DetailsViewProps {
     selectedType: 'project' | 'experience' | 'about' | 'home' | null;

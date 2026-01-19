@@ -2,6 +2,7 @@ import printerWithRobot from '../assets/printer_with_robot.png';
 import laptop from '../assets/laptop.png';
 import solderingIron from '../assets/soldering_iron.png';
 import laptopCables from '../assets/laptop_cables.png';
+import './HomeView.css';
 
 interface HomeViewProps {
     t: any;

@@ -1,11 +1,12 @@
 import { useState, useMemo } from 'react';
-import './App.css';
 import { projects, experiences } from './projectsData';
 import { translations, Language } from './i18n';
 import { DetailsView } from './components/DetailsView';
 import { ExperienceView } from './components/ExperienceView';
 import { ProjectsGridView } from './components/ProjectsGridView';
 import { HomeView } from './components/HomeView';
+
+import './App.css';
 
 import laptop from './assets/laptop.png';
 import dji_m300 from './assets/DJI_M300.png';
