@@ -5,11 +5,9 @@ import { translations, Language } from './i18n';
 import { DetailsView } from './components/DetailsView';
 import { ExperienceView } from './components/ExperienceView';
 import { ProjectsGridView } from './components/ProjectsGridView';
+import { HomeView } from './components/HomeView';
 
-import printerWithRobot from './assets/printer_with_robot.png';
 import laptop from './assets/laptop.png';
-import solderingIron from './assets/soldering_iron.png';
-import laptopCables from './assets/laptop_cables.png';
 import dji_m300 from './assets/DJI_M300.png';
 import active_inference_brain from './assets/active_inference_brain.png';
 import text_embeddings_visualization from './assets/text_embeddings_visualization.png';
@@ -315,43 +313,7 @@ function App() {
                 <div className="details-wrapper">
                     <section className="details" aria-label="Content details">
                         {selectedType === 'home' ? (
-                            <article className="home-view">
-                                <div className="home-visuals">
-                                    <div className="blob blob-1" />
-                                    <div className="blob blob-2" />
-                                    <div className="blob blob-3" />
-                                </div>
-
-                                <div className="home-content-split">
-                                    <div className="home-intro">
-                                        <h2 className="home-title">{t.heroTitle}</h2>
-                                        <p className="home-description">{t.heroDesc}</p>
-                                        <div className="home-cta">
-                                            <span className="cta-hint">Explore by clicking on the items</span>
-                                        </div>
-                                    </div>
-
-                                    <div className="interactive-landing">
-                                        <div className="printer-container">
-                                            <img src={printerWithRobot} alt="Printer with robot" className="printer-robot-img" />
-                                            <div className="clickable-item laptop-item" onClick={() => handleSelect(null, 'experience')}>
-                                                <img src={laptop} alt="Laptop" />
-                                                <span className="tooltip">{t.workTitle}</span>
-                                            </div>
-                                            <div className="non-clickable-item laptop-cables-item">
-                                                <img src={laptopCables} alt="Laptop Cables" />
-                                            </div>
-                                            <div className="clickable-item soldering-iron-item" onClick={() => handleSelect(null, 'project')}>
-                                                <img src={solderingIron} alt="Soldering Iron" />
-                                                <span className="tooltip">{t.personalTitle}</span>
-                                            </div>
-                                            <div className="clickable-item robot-head-item" onClick={() => handleSelect(null, 'about')}>
-                                                <span className="tooltip">{t.profileButton}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
+                            <HomeView t={t} handleSelect={handleSelect} />
                         ) : !selectedId ? (
                             selectedType === 'experience' ? (
                                 <ExperienceView
