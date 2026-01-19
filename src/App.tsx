@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { projects, experiences } from './projectsData';
 import { translations, Language } from './i18n';
 import { DetailsView } from './components/DetailsView';
@@ -248,9 +248,13 @@ function App() {
     const selectedProject = selectedType === 'project' ? filteredProjects.find((p) => p.id === selectedId) : null;
     const selectedExperience = selectedType === 'experience' ? filteredExperiences.find((e) => e.id === selectedId) : null;
 
-    const handleSelect = (id: string | null, type: 'project' | 'experience' | 'about' | 'home' | null) => {
+    const handleSelect = (id: string | null, type: 'project' | 'experience' | 'about' | 'home' | null, pushState = true) => {
         setSelectedId(id);
         setSelectedType(type);
+
+        if (pushState) {
+            window.history.pushState({ id, type }, '');
+        }
 
         // Use setTimeout to ensure the element is rendered and accessible
         setTimeout(() => {
@@ -260,6 +264,23 @@ function App() {
             }
         }, 0);
     };
+
+    useEffect(() => {
+        // Initial state
+        window.history.replaceState({ id: selectedId, type: selectedType }, '');
+
+        const handlePopState = (event: PopStateEvent) => {
+            if (event.state) {
+                handleSelect(event.state.id, event.state.type, false);
+            } else {
+                // Default to home if no state
+                handleSelect(null, 'home', false);
+            }
+        };
+
+        window.addEventListener('popstate', handlePopState);
+        return () => window.removeEventListener('popstate', handlePopState);
+    }, []);
 
     const toggleLanguage = () => {
         setLang(prev => prev === 'en' ? 'it' : 'en');
