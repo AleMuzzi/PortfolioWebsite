@@ -340,7 +340,7 @@ html, body::before {
 
 .profile-view h2, 
 .timeline-view h2, 
-.projects-grid-view h2,
+.projects-view h2,
 .project-details h2 {
   margin: 0;
   font-size: clamp(1.8rem, 4vw, 2.5rem);
@@ -354,7 +354,7 @@ html, body::before {
 
 .profile-view h2::before,
 .timeline-view h2::before,
-.projects-grid-view h2::before,
+.projects-view h2::before,
 .project-details h2::before {
   content: '';
   display: block;
@@ -700,14 +700,9 @@ html, body::before {
 }
 
 @media (max-width: 880px) {
-  .menu-toggle {
-    display: block;
-  }
-
   .layout {
-    grid-template-columns: minmax(0, 1fr);
+    display: block;
     padding-top: 1rem;
-    gap: 1rem;
   }
 
   .sidebar {

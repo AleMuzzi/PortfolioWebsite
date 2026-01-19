@@ -1,4 +1,4 @@
-# Domo
+# 🏠 Domo
 
 ## Summary
 A Material Design UI library for Android, bringing modern aesthetics to legacy devices.

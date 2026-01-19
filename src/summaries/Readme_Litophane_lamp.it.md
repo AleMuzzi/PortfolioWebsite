@@ -1,4 +1,4 @@
-# Lampada Litofania
+# 💡 Lampada Litofania
 
 ## Summary
 Lampade personalizzate stampate in 3D che rivelano fotografie ad alto dettaglio quando illuminate.

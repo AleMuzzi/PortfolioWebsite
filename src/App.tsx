@@ -68,7 +68,7 @@ function App() {
                 startYear: 2015,
                 endYear: 2019,
                 side: 'right',
-                bottomOffset: -150,
+                bottomOffset: -160,
                 width: 330,
                 height: 100,
                 manualTop: 56,

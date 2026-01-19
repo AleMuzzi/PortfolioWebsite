@@ -1,4 +1,4 @@
-# Cellar Pump Controller
+# 💧 Cellar Pump Controller
 
 ## Summary
 Arduino-based automated pump controller with dual-level sensors and state-machine logic.

@@ -1,4 +1,4 @@
-# Controllore Pompa Cantina
+# 💧 Controllore Pompa Cantina
 
 ## Summary
 Controllore di pompa automatizzato basato su Arduino con sensori a doppio livello e logica a macchina a stati.

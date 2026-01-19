@@ -1,4 +1,4 @@
-# Omnibot
+# 🤖 Omnibot
 
 ## Summary
 Telecomando Android e dashboard di telemetria in tempo reale per robot omnidirezionali.

@@ -1,4 +1,4 @@
-# Gargantua - Large scale 3D Printer
+# 🖨️ Gargantua - Large scale 3D Printer
 
 ## Summary
 Custom 32-bit Marlin firmware and optimized slicing profiles for a large-format 3D printer.

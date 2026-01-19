@@ -1,4 +1,4 @@
-# SmartSprinkler
+# 🚿 SmartSprinkler
 
 ## Summary
 Applicazione Flutter multipiattaforma per il controllo remoto dell'irrigazione e la gestione delle zone.

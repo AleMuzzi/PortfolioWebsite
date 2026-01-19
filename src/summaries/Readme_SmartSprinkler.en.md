@@ -1,4 +1,4 @@
-# SmartSprinkler
+# 🚿 SmartSprinkler
 
 ## Summary
 Cross-platform Flutter application for remote irrigation control and zone management.

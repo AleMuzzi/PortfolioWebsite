@@ -353,3 +353,7 @@
   color: var(--text-main);
 }
 
+
+.timeline-summary p {
+  margin: 0;
+}

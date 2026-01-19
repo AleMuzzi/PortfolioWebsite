@@ -1,3 +1,4 @@
+import ReactMarkdown from 'react-markdown';
 import { Experience } from '../projectsData';
 import { translations, Language } from '../i18n';
 import './ExperienceView.css';
@@ -81,7 +82,9 @@ export function ExperienceView({
                                 <div className="timeline-header">
                                     {renderWorkHeader(exp.name)}
                                 </div>
-                                <p className="timeline-summary">{exp.summary}</p>
+                                <div className="timeline-summary">
+                                    <ReactMarkdown>{exp.summary}</ReactMarkdown>
+                                </div>
 
                                 {/* --- UPDATED: Tech Stack Tags with Dynamic Alignment --- */}
                                 {exp.technologies && exp.technologies.length > 0 && (

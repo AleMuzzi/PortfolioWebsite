@@ -1,4 +1,4 @@
-# Omnibot
+# 🤖 Omnibot
 
 ## Summary
 Android remote control and real-time telemetry dashboard for omnidirectional robots.

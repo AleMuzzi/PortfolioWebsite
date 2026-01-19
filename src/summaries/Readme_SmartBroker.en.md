@@ -1,4 +1,4 @@
-# SmartBroker
+# 📈 SmartBroker
 
 ## Summary
 AI-driven investment framework for market analysis and automated income strategies.

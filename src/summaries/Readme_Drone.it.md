@@ -1,4 +1,4 @@
-# Drone
+# 🚁 Drone
 
 ## Summary
 Una piattaforma drone personalizzata dotata di un'app di telemetria Android e controllo di volo ottimizzato.

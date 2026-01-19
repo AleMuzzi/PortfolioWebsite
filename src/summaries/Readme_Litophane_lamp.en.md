@@ -1,4 +1,4 @@
-# Lithophane Lamp
+# 💡 Lithophane Lamp
 
 ## Summary
 Personalized 3D-printed lamps that reveal high-detail photographs when illuminated.

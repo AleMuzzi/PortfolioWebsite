@@ -1,4 +1,4 @@
-# Gargantua - Stampante 3D di grande formato
+# 🖨️ Gargantua - Stampante 3D di grande formato
 
 ## Summary
 Firmware Marlin a 32 bit personalizzato e profili di slicing ottimizzati per una stampante 3D di grande formato.

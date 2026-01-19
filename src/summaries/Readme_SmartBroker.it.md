@@ -1,4 +1,4 @@
-# SmartBroker
+# 📈 SmartBroker
 
 ## Summary
 Framework di investimento guidato dall'IA per l'analisi di mercato e strategie di reddito automatizzate.

@@ -1,4 +1,4 @@
-# Zombiecide
+# 🧟 Zombiecide
 
 ## Summary
 Multiplayer survival game featuring a Unity 3D client and a dedicated C# server.
