@@ -228,7 +228,7 @@
   -webkit-user-select: none;
 }
 
-.clickable-item, .non-clickable-item {
+.clickable-item, .non-clickable-item, .printer-panel-item-easter-egg {
   position: absolute;
   transition: transform 0.3s ease, filter 0.3s ease;
   z-index: 20;
@@ -241,6 +241,7 @@
   filter: brightness(0.9);
   pointer-events: none;
 }
+
 
 .clickable-item:hover {
   filter: drop-shadow(0 0 20px var(--accent)) brightness(1.2);
@@ -309,11 +310,17 @@
   z-index: 10;
 }
 
-.printer-panel-item {
+.printer-panel-item-easter-egg {
   top: 69%;
   right: 9%;
   width: 12%;
   z-index: 15;
+}
+
+.printer-panel-item-easter-egg img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* Robot head hitbox */

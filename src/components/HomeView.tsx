@@ -37,7 +37,7 @@ export const HomeView = ({ t, handleSelect }: HomeViewProps) => {
                     <div className="printer-container">
                         <img src={printerWithRobot} alt="Printer with robot" className="printer-robot-img" />
                         
-                        <div className="clickable-item printer-panel-item" onClick={() => setIsTerminalOpen(true)}>
+                        <div className="printer-panel-item-easter-egg" onClick={() => setIsTerminalOpen(true)}>
                             <img src={printerControlPanel} alt="Printer Control Panel" />
                         </div>
 
