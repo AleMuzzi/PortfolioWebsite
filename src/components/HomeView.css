@@ -283,6 +283,13 @@
   width: 20%;
 }
 
+.book-item {
+  top: 76%;
+  left: 55%;
+  width: 20%;
+  z-index: 10;
+}
+
 /* Robot head hitbox */
 .robot-head-item {
   top: 15%;

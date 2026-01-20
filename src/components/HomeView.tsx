@@ -1,5 +1,6 @@
 import printerWithRobot from '../assets/printer_with_robot.png';
 import laptop from '../assets/laptop.png';
+import book from '../assets/book.png';
 import solderingIron from '../assets/soldering_iron.png';
 import laptopCables from '../assets/laptop_cables.png';
 import './HomeView.css';
@@ -40,6 +41,10 @@ export const HomeView = ({ t, handleSelect }: HomeViewProps) => {
                         <div className="clickable-item soldering-iron-item" onClick={() => handleSelect(null, 'project')}>
                             <img src={solderingIron} alt="Soldering Iron" />
                             <span className="tooltip">{t.personalTitle}</span>
+                        </div>
+                        <div className="clickable-item book-item" onClick={() => handleSelect(null, 'about')}>
+                            <img src={book} alt="Book" />
+                            <span className="tooltip">{t.profileButton}</span>
                         </div>
                         <div className="clickable-item robot-head-item" onClick={() => handleSelect(null, 'about')}>
                             <span className="tooltip">{t.profileButton}</span>
