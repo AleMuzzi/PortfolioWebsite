@@ -120,11 +120,12 @@
 }
 
 @media (max-width: 1240px) {
-  .tooltip {
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: translate(-50%, -20px) !important;
-  }
+  /*TODO REVERT*/
+  /*.tooltip {*/
+  /*  opacity: 1 !important;*/
+  /*  visibility: visible !important;*/
+  /*  transform: translate(-50%, -20px) !important;*/
+  /*}*/
 
   .home-view {
     padding: 2rem 0;
@@ -306,6 +307,13 @@
   left: 55%;
   width: 20%;
   z-index: 10;
+}
+
+.printer-panel-item {
+  top: 69%;
+  right: 9%;
+  width: 12%;
+  z-index: 15;
 }
 
 /* Robot head hitbox */

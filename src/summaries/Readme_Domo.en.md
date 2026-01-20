@@ -27,7 +27,7 @@ The library implements a variety of custom views, each encapsulated with its own
 Integrating the library involves adding the module as a project dependency. Once included, developers can use the widgets directly in their XML layout files by referencing the library's package. This approach allows for a clean separation between the UI component definitions and the application's business logic.
 
 ## Technologies and tools
-- **Android Library Module** (Gradle-based).
+- **Frameworks**: Android
 - **NineOldAndroids & AndroidX Legacy Support** for backported animations.
 - **Custom View Drawing:** Implementation of Material Design visual patterns.
 - **Gradle Publishing:** Configuration for library distribution and version management.

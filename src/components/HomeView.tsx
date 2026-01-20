@@ -1,9 +1,12 @@
+import React, { useState } from 'react';
 import printerWithRobot from '../assets/printer_with_robot.png';
+import printerControlPanel from '../assets/printer_control_panel.png';
 import laptop from '../assets/laptop.png';
 import book from '../assets/book.png';
 import solderingIron from '../assets/soldering_iron.png';
 import laptopCables from '../assets/laptop_cables.png';
 import './HomeView.css';
+import { TerminalModal } from './TerminalModal';
 
 interface HomeViewProps {
     t: any;
@@ -11,6 +14,8 @@ interface HomeViewProps {
 }
 
 export const HomeView = ({ t, handleSelect }: HomeViewProps) => {
+    const [isTerminalOpen, setIsTerminalOpen] = useState(false);
+
     return (
         <article className="home-view">
             <div className="home-visuals">
@@ -31,6 +36,11 @@ export const HomeView = ({ t, handleSelect }: HomeViewProps) => {
                 <div className="interactive-landing">
                     <div className="printer-container">
                         <img src={printerWithRobot} alt="Printer with robot" className="printer-robot-img" />
+                        
+                        <div className="clickable-item printer-panel-item" onClick={() => setIsTerminalOpen(true)}>
+                            <img src={printerControlPanel} alt="Printer Control Panel" />
+                        </div>
+
                         <div className="clickable-item laptop-item" onClick={() => handleSelect(null, 'experience')}>
                             <img src={laptop} alt="Laptop" />
                             <span className="tooltip">{t.workTitle}</span>
@@ -49,6 +59,12 @@ export const HomeView = ({ t, handleSelect }: HomeViewProps) => {
                     </div>
                 </div>
             </div>
+
+            <TerminalModal 
+                isOpen={isTerminalOpen} 
+                onClose={() => setIsTerminalOpen(false)} 
+                t={t} 
+            />
         </article>
     );
 };

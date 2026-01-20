@@ -37,6 +37,7 @@ The integrated media archive includes both onboard and ground-based footage. The
 - Documenting successful missions and testing new software or hardware iterations.
 
 ## Technologies and tools
+- **Frameworks**: Android
 - **Android Development:** Gradle-based application architecture for mobile control.
 - **Flight Control Hardware:** Multi-rotor flight controllers (e.g., KK2), ESCs, and brushless motors.
 - **Wireless Communication:** Implementation of protocols for real-time telemetry and command link.
