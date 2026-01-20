@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import printerWithRobot from '../assets/printer_with_robot.png';
 import printerControlPanel from '../assets/printer_control_panel.png';
 import laptop from '../assets/laptop.png';
