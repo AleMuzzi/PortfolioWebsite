@@ -5,6 +5,8 @@ export interface Project {
     overview: string;
     how: string;
     technologies: string[];
+    categorizedTech?: Record<string, string[]>;
+    link?: string;
     lang: 'en' | 'it';
 }
 
@@ -58,7 +60,9 @@ function parseProject(filename: string, content: unknown): Project {
     let summary = '';
     let overview = '';
     let how = '';
+    let link = '';
     let technologies: string[] = [];
+    let categorizedTech: Record<string, string[]> = {};
 
     sections.forEach(section => {
         const lines = section.trim().split('\n');
@@ -71,17 +75,32 @@ function parseProject(filename: string, content: unknown): Project {
             overview = body;
         } else if (header.includes('how it works') || header.includes('come funziona')) {
             how = body;
+        } else if (header.includes('link')) {
+            const urlMatch = body.match(/(https?:\/\/[^\s]+)/);
+            if (urlMatch) {
+                link = urlMatch[0];
+            }
         } else if (header.includes('technologies and tools') || header.includes('tecnologie e strumenti')) {
-            technologies = body
-                .split('\n')
-                .map(line => {
-                    return line
-                        .replace(/^[-*+]\s+/, '')
-                        .replace(/\*\*(.*?)\*\*/g, '$1')
-                        .split(':')[0]
-                        .trim();
-                })
-                .filter(line => line.length > 0);
+            const techLines = body.split('\n').filter(line => line.trim().length > 0);
+
+            techLines.forEach(line => {
+                const cleanLine = line.replace(/^[-*+]\s+/, '').trim();
+                if (cleanLine.includes(':')) {
+                    const [category, items] = cleanLine.split(':');
+                    const categoryName = category.replace(/\*\*/g, '').trim();
+                    const itemsList = items.split(',').map(i => i.replace(/\*\*/g, '').trim()).filter(i => i.length > 0);
+
+                    if (categoryName && itemsList.length > 0) {
+                        categorizedTech[categoryName] = itemsList;
+                        technologies.push(...itemsList);
+                    }
+                } else {
+                    const techName = cleanLine.replace(/\*\*/g, '').trim();
+                    if (techName) {
+                        technologies.push(techName);
+                    }
+                }
+            });
         }
     });
 
@@ -91,7 +110,9 @@ function parseProject(filename: string, content: unknown): Project {
         summary,
         overview,
         how,
-        technologies,
+        technologies: Array.from(new Set(technologies)),
+        categorizedTech: Object.keys(categorizedTech).length > 0 ? categorizedTech : undefined,
+        link: link || undefined,
         lang
     };
 }

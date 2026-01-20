@@ -36,8 +36,8 @@ The workflow from digital model to physical object follows a structured pipeline
 The configuration is optimized for a large‑format "Gargantua"‑style printer. Every aspect—from physical dimensions and acceleration limits to stepper currents and bed leveling—is precisely defined in the firmware and slicer presets to match the machine's mechanical capabilities.
 
 ## Technologies and tools
-- **Marlin 2.x** firmware (customized for STM32F407).
-- **MKS Monster8** 32-bit controller board.
-- **PrusaSlicer** with custom-tuned printer and material profiles.
-- **Precision Hardware:** Stepper motors, high-power heaters, and bed leveling sensors.
-- **Media Tools:** Digital imaging for print monitoring and time-lapse creation.
+- **Firmware**: Marlin 2.x (customized for STM32F407)
+- **Controller**: MKS Monster8 32-bit
+- **Slicing**: PrusaSlicer (with custom profiles)
+- **Hardware**: Stepper motors, high-power heaters, bed leveling sensors
+- **Monitoring**: Digital imaging for time-lapse creation

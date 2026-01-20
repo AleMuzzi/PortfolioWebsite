@@ -103,7 +103,13 @@
   z-index: 1;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 880px) {
+  .tooltip {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translate(-50%, -20px) !important;
+  }
+
   .home-view {
     padding: 2rem 0;
     height: auto;

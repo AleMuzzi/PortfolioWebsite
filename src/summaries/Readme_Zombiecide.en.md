@@ -36,8 +36,8 @@ The project leverages industry-standard tools to ensure a scalable and maintaina
 - **Modular Utilities:** Includes reusable C# components for logging, unique ID generation, and network protocol handling.
 
 ## Technologies and tools
-- **Game Engine:** Unity for 3D client-side gameplay and rendering.
-- **Backend Language:** C# / .NET for the dedicated multiplayer server.
-- **Networking:** Custom TCP socket implementation for real-time synchronization.
-- **Data Modeling:** Object-oriented representation of complex game entities and board states.
-- **Serialization:** Efficient data transfer protocols for client-server communication.
+- **Game Engine**: Unity
+- **Backend Language**: C# / .NET
+- **Networking**: Custom TCP socket implementation
+- **Data Modeling**: Object-oriented board states
+- **Serialization**: Custom data transfer protocols

@@ -27,20 +27,24 @@ export function DetailsView({
                 <h2>{selectedType === 'project' ? t.personalTitle : t.workTitle}</h2>
             </div>
             <div className="detail-content">
-                {selectedType === 'experience' && selectedExperience && (() => {
-                    // --- LOGIC FOR PARSING COMPANY & LINK ---
-                    const separator = lang === 'en' ? ' at ' : ' presso ';
-                    const parts = selectedExperience.name.split(separator);
+                {(selectedType === 'experience' && selectedExperience) || (selectedType === 'project' && selectedProject) ? (() => {
+                    const isExp = selectedType === 'experience';
+                    const item = isExp ? selectedExperience! : selectedProject!;
+                    
+                    // Experience specific logic
+                    let roleName = item.name;
+                    let companyName = (item as any).company;
+                    let companyUrl = (item as any).companyUrl || (item as any).link;
+                    let period = (item as any).period;
 
-                    // 1. Get Role
-                    const roleName = parts[0];
-
-                    // 2. Get Company (Try explicit property first, then parse title)
-                    const companyName = (selectedExperience as any).company
-                        || (parts.length > 1 ? parts[1] : 'Unknown Company');
-
-                    // 3. Get URL (Try explicit property)
-                    const companyUrl = (selectedExperience as any).companyUrl;
+                    if (isExp) {
+                        const separator = lang === 'en' ? ' at ' : ' presso ';
+                        const parts = item.name.split(separator);
+                        roleName = parts[0];
+                        if (!companyName) {
+                            companyName = parts.length > 1 ? parts[1] : 'Unknown Company';
+                        }
+                    }
 
                     return (
                         <div className="fade-in-content experience-detail-container">
@@ -49,44 +53,61 @@ export function DetailsView({
                                 <h3 className="exp-role">{roleName}</h3>
 
                                 <div className="exp-meta-row">
-                                    {companyUrl ? (
-                                        <a
-                                            href={companyUrl}
+                                    {companyName && (
+                                        companyUrl ? (
+                                            <a
+                                                href={companyUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="exp-chip chip-company clickable-chip"
+                                            >
+                                                <span style={{marginRight:'6px'}}>🏢</span>
+                                                {companyName}
+                                                <span style={{marginLeft:'6px', fontSize:'0.8em', opacity: 0.7}}>↗</span>
+                                            </a>
+                                        ) : (
+                                            <div className="exp-chip chip-company">
+                                                <span style={{marginRight:'6px'}}>🏢</span>
+                                                {companyName}
+                                            </div>
+                                        )
+                                    )}
+
+                                    {period && (
+                                        <div className="exp-chip chip-date">
+                                            <span style={{marginRight:'6px'}}>🗓</span>
+                                            {period}
+                                        </div>
+                                    )}
+                                    
+                                    {!isExp && (item as Project).link && !companyName && (
+                                         <a
+                                            href={(item as Project).link}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="exp-chip chip-company clickable-chip"
                                         >
-                                            <span style={{marginRight:'6px'}}>🏢</span>
-                                            {companyName}
+                                            <span style={{marginRight:'6px'}}>🔗</span>
+                                            View Project
                                             <span style={{marginLeft:'6px', fontSize:'0.8em', opacity: 0.7}}>↗</span>
                                         </a>
-                                    ) : (
-                                        <div className="exp-chip chip-company">
-                                            <span style={{marginRight:'6px'}}>🏢</span>
-                                            {companyName}
-                                        </div>
                                     )}
-
-                                    <div className="exp-chip chip-date">
-                                        <span style={{marginRight:'6px'}}>🗓</span>
-                                        {selectedExperience.period}
-                                    </div>
                                 </div>
                             </div>
 
                             {/* BODY CONTENT */}
                             <div className="markdown-body exp-body">
                                 <ReactMarkdown>
-                                    {(selectedExperience as any).details || selectedExperience.summary}
+                                    {(item as any).details || (item as any).overview || (item as any).summary}
                                 </ReactMarkdown>
                             </div>
 
                             {/* TOOLS FOOTER */}
                             <div className="tools-section">
                                 <span className="tools-title">Techniques & Tools</span>
-                                {selectedExperience.categorizedTech ? (
+                                {item.categorizedTech ? (
                                     <div className="categorized-tools">
-                                        {Object.entries(selectedExperience.categorizedTech).map(([category, items]) => (
+                                        {Object.entries(item.categorizedTech).map(([category, items]) => (
                                             <div key={category} className="tech-category-group">
                                                 <h4 className="tech-category-name">{category}</h4>
                                                 <div className="tools-grid">
@@ -101,7 +122,7 @@ export function DetailsView({
                                     </div>
                                 ) : (
                                     <div className="tools-grid">
-                                        {selectedExperience.technologies.map(tech => (
+                                        {item.technologies.map(tech => (
                                             <span key={tech} className="tool-badge">
                                                                 {tech}
                                                             </span>
@@ -111,31 +132,7 @@ export function DetailsView({
                             </div>
                         </div>
                     );
-                })()}
-                {selectedType === 'project' && selectedProject && (
-                    <div className="fade-in-content">
-                        <div className="detail-title-block">
-                            <h3>{selectedProject.name}</h3>
-                            <div className="tech-stack-detail">
-                                {selectedProject.technologies.map((tech) => (
-                                    <span key={tech} className="tech-tag">{tech}</span>
-                                ))}
-                            </div>
-                        </div>
-                        <div className="markdown-body">
-                            <ReactMarkdown>
-                                {selectedProject.overview || (selectedProject as any).description}
-                            </ReactMarkdown>
-                            {(selectedProject as any).link && (
-                                <div className="project-links" style={{marginTop:'20px'}}>
-                                    <a href={(selectedProject as any).link} target="_blank" rel="noreferrer" className="cta-button">
-                                        View Project
-                                    </a>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                )}
+                })() : null}
             </div>
         </article>
     );

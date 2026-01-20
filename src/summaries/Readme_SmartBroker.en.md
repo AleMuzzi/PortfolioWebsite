@@ -39,8 +39,8 @@ SmartBroker goes beyond simple price simulations by modeling real-world constrai
 Integrated notification modules allow the system to transmit model signals and portfolio alerts directly to messaging platforms (like Telegram), enabling a seamless transition from research to monitoring.
 
 ## Technologies and tools
-- **Language:** Python 3.13+
-- **Data Science:** `pandas`, `NumPy`, and `scikit-learn` for modeling and analysis.
-- **Financial Analysis:** `yfinance` for data sourcing and `pandas-ta` for technical indicators.
-- **Integration:** Telegram Bot API for automated alerts and monitoring.
-- **Visualization:** `matplotlib` for performance and risk-reward charting.
+- **Data Science**: pandas, NumPy, scikit-learn
+- **Financial Analysis**: yfinance, pandas-ta
+- **Integration**: Telegram Bot API
+- **Visualization**: matplotlib
+- **Language**: Python 3.13+

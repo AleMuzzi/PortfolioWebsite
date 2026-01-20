@@ -32,8 +32,8 @@ The interaction between the app and the irrigation hardware is designed for reli
 The application is designed to be backend-agnostic, communicating over a standard HTTP interface. This allows it to interface with a variety of hardware controllers, from custom ESP32/Arduino-based solutions to small servers, provided they implement the documented command API.
 
 ## Technologies and tools
-- **Frontend Framework:** Flutter & Dart for a consistent cross-platform experience.
-- **Networking:** `package:http` for robust API communication and data exchange.
-- **State Management:** Listenable-based reactive patterns for real-time UI updates.
-- **User Feedback:** `Fluttertoast` for non-intrusive status and error notifications.
-- **Design Pattern:** ViewModel-based separation of concerns.
+- **Frontend**: Flutter, Dart
+- **Networking**: package:http
+- **State Management**: Listenable-based reactive patterns
+- **User Feedback**: Fluttertoast
+- **Pattern**: ViewModel-based separation of concerns

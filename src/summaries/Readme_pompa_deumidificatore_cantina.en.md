@@ -30,8 +30,8 @@ The system operates on a robust state machine logic to ensure reliable pump cycl
 The logic is optimized for standalone deployment, requiring no external computer connection once the firmware is uploaded.
 
 ## Technologies and tools
-- **Microcontroller:** Arduino platform (Atmel AVR or similar).
-- **Sensors:** Mechanical or optical liquid level sensors (Float switches).
-- **Power Electronics:** Relay modules or high-current MOSFET drivers for pump control.
-- **Firmware:** Custom C++ (Arduino sketch) implementing state-based control logic.
-- **Visual Indicators:** LED-based status and power monitoring.
+- **Microcontroller**: Arduino (Atmel AVR)
+- **Sensors**: Float switches
+- **Power Electronics**: Relay modules, MOSFET drivers
+- **Firmware**: Custom C++ (Arduino sketch)
+- **Visuals**: LED status monitoring
