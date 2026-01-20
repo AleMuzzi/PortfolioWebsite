@@ -608,6 +608,17 @@ html, body::before {
   opacity: 0.9;
 }
 
+.tag-modal-portal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.tag-modal-portal > * {
+  pointer-events: auto;
+}
+
 .vibe-overlay {
   position: fixed;
   inset: 0;

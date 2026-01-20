@@ -5,6 +5,7 @@ import { DetailsView } from './components/DetailsView';
 import { ExperienceView } from './components/ExperienceView';
 import { ProjectsGridView } from './components/ProjectsGridView';
 import { HomeView } from './components/HomeView';
+import { TagModal } from './components/TagModal';
 
 import './App.css';
 
@@ -31,6 +32,7 @@ function App() {
     const [lang, setLang] = useState<Language>('en');
     const [selectedId, setSelectedId] = useState<string | null>(null);
     const [selectedType, setSelectedType] = useState<'project' | 'experience' | 'about' | 'home' | null>('home');
+    const [activeTagName, setActiveTagName] = useState<string | null>(null);
     const [showVibeModal, setShowVibeModal] = useState(false);
     const [clickCount, setClickCount] = useState(0);
 
@@ -251,6 +253,7 @@ function App() {
     const handleSelect = (id: string | null, type: 'project' | 'experience' | 'about' | 'home' | null, pushState = true) => {
         setSelectedId(id);
         setSelectedType(type);
+        setActiveTagName(null);
 
         if (pushState) {
             window.history.pushState({ id, type }, '');
@@ -345,12 +348,14 @@ function App() {
                                     workItems={workItems}
                                     workBackgrounds={workBackgrounds}
                                     handleSelect={handleSelect}
+                                    onTagClick={(tagName) => setActiveTagName(tagName)}
                                 />
                             ) : selectedType === 'project' ? (
                                 <ProjectsGridView
                                     lang={lang}
                                     filteredProjects={filteredProjects}
                                     handleSelect={handleSelect}
+                                    onTagClick={(tagName) => setActiveTagName(tagName)}
                                 />
                             ) : selectedType === 'about' ? (
                                 <article className="profile-view">
@@ -464,11 +469,25 @@ function App() {
                                 selectedExperience={selectedExperience}
                                 lang={lang}
                                 handleSelect={handleSelect}
+                                onTagClick={(tagName) => setActiveTagName(tagName)}
                             />
                         )}
                     </section>
                 </div>
             </main>
+
+            {activeTagName && (
+                <div className="tag-modal-portal">
+                    <TagModal
+                        tagName={activeTagName}
+                        projects={projects.filter(p => p.lang === lang)}
+                        experiences={experiences.filter(e => e.lang === lang)}
+                        onClose={() => setActiveTagName(null)}
+                        onItemClick={(id, type) => handleSelect(id, type)}
+                        t={t}
+                    />
+                </div>
+            )}
 
             {showVibeModal && (
                 <div className="vibe-overlay">

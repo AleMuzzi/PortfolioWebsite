@@ -9,6 +9,7 @@ interface DetailsViewProps {
     selectedExperience: Experience | null | undefined;
     lang: Language;
     handleSelect: (id: string | null, type: 'project' | 'experience' | 'about' | 'home' | null) => void;
+    onTagClick?: (tagName: string) => void;
 }
 
 export function DetailsView({
@@ -16,7 +17,8 @@ export function DetailsView({
     selectedProject,
     selectedExperience,
     lang,
-    handleSelect
+    handleSelect,
+    onTagClick
 }: DetailsViewProps) {
     const t = translations[lang];
 
@@ -112,9 +114,13 @@ export function DetailsView({
                                                 <h4 className="tech-category-name">{category}</h4>
                                                 <div className="tools-grid">
                                                     {(items as string[]).map(tech => (
-                                                        <span key={tech} className="tool-badge">
-                                                                            {tech}
-                                                                        </span>
+                                                        <span 
+                                                            key={tech} 
+                                                            className="tool-badge clickable-tag"
+                                                            onClick={() => onTagClick?.(tech)}
+                                                        >
+                                                            {tech}
+                                                        </span>
                                                     ))}
                                                 </div>
                                             </div>
@@ -123,9 +129,13 @@ export function DetailsView({
                                 ) : (
                                     <div className="tools-grid">
                                         {item.technologies.map(tech => (
-                                            <span key={tech} className="tool-badge">
-                                                                {tech}
-                                                            </span>
+                                            <span 
+                                                key={tech} 
+                                                className="tool-badge clickable-tag"
+                                                onClick={() => onTagClick?.(tech)}
+                                            >
+                                                {tech}
+                                            </span>
                                         ))}
                                     </div>
                                 )}

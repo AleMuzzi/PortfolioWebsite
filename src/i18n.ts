@@ -49,7 +49,9 @@ export const translations = {
     vibeP1: "I don't actually like building websites. I much prefer doing backend work, building engines or creating complex and fast algorithms.",
     vibeP2: "So, even though I always focus on code quality and optimization, this entire website was vibe-coded into existence.",
     vibeMeta: "Vibe Level: 100% · Bugs: Hopefully 0 · Fun: Infinite",
-    vibeClose: "Stay Chill ✌️"
+    vibeClose: "Stay Chill ✌️",
+    projects: "Projects",
+    experience: "Experience"
   },
   it: {
     heroTitle: "Alessandro Muzzi",
@@ -101,7 +103,9 @@ export const translations = {
     vibeP1: "In realtà non mi piace costruire siti web. Preferisco di gran lunga il lavoro backend, costruire motori o creare algoritmi complessi ma veloci.",
     vibeP2: "Quindi, anche se mi concentro sempre sulla qualità del codice e sull'ottimizzazione, questo intero sito web è stato vibe-coded (codificato a sensazione).",
     vibeMeta: "Livello Vibe: 100% · Bug: Speriamo 0 · Divertimento: Infinito",
-    vibeClose: "Stay Chill ✌️"
+    vibeClose: "Stay Chill ✌️",
+    projects: "Progetti",
+    experience: "Esperienza"
   }
 };
 

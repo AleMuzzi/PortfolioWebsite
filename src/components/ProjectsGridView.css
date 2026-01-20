@@ -199,6 +199,14 @@
   border-radius: 0.3rem;
   font-size: 0.7rem;
   border: 1px solid var(--border-subtle);
+  transition: all 0.2s ease;
+}
+
+.tech-tag.clickable-tag:hover {
+  background: rgba(139, 92, 246, 0.2) !important;
+  color: #fff !important;
+  border-color: rgba(139, 92, 246, 0.5) !important;
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.3);
 }
 
 /* Right Side: Details */

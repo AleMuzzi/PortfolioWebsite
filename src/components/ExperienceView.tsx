@@ -10,6 +10,7 @@ interface ExperienceViewProps {
     workItems: (Experience & { topPos: number; side: 'left' | 'right' })[];
     workBackgrounds: string[];
     handleSelect: (id: string | null, type: 'project' | 'experience' | 'about' | 'home' | null) => void;
+    onTagClick?: (tagName: string) => void;
 }
 
 export function ExperienceView({
@@ -18,7 +19,8 @@ export function ExperienceView({
     educationBranches,
     workItems,
     workBackgrounds,
-    handleSelect
+    handleSelect,
+    onTagClick
 }: ExperienceViewProps) {
     const t = translations[lang];
 
@@ -99,17 +101,25 @@ export function ExperienceView({
                                         justifyContent: exp.side === 'left' ? 'flex-end' : 'flex-start'
                                     }}>
                                         {exp.technologies.slice(0, 5).map((tech) => (
-                                            <span key={tech} style={{
-                                                fontSize: '0.8em',
-                                                fontWeight: '500',
-                                                padding: '4px 10px',
-                                                borderRadius: '6px',
-                                                background: 'rgba(139, 92, 246, 0.15)',
-                                                border: '1px solid rgba(167, 139, 250, 0.4)',
-                                                color: '#f3e8ff',
-                                                fontFamily: 'monospace',
-                                                letterSpacing: '0.02em'
-                                            }}>
+                                            <span 
+                                                key={tech} 
+                                                className="clickable-tag"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    onTagClick?.(tech);
+                                                }}
+                                                style={{
+                                                    fontSize: '0.8em',
+                                                    fontWeight: '500',
+                                                    padding: '4px 10px',
+                                                    borderRadius: '6px',
+                                                    background: 'rgba(139, 92, 246, 0.15)',
+                                                    border: '1px solid rgba(167, 139, 250, 0.4)',
+                                                    color: '#f3e8ff',
+                                                    fontFamily: 'monospace',
+                                                    letterSpacing: '0.02em'
+                                                }}
+                                            >
                                                 {tech}
                                             </span>
                                         ))}

@@ -9,12 +9,14 @@ interface ProjectsGridViewProps {
     lang: Language;
     filteredProjects: Project[];
     handleSelect: (id: string | null, type: 'project' | 'experience' | 'about' | 'home' | null) => void;
+    onTagClick?: (tagName: string) => void;
 }
 
 export function ProjectsGridView({
     lang,
     filteredProjects,
-    handleSelect
+    handleSelect,
+    onTagClick
 }: ProjectsGridViewProps) {
     const t = translations[lang];
     const [searchQuery, setSearchQuery] = useState('');
@@ -97,7 +99,16 @@ export function ProjectsGridView({
                                     </div>
                                     <div className="project-item-footer">
                                         {project.technologies.slice(0, 3).map(tech => (
-                                            <span key={tech} className="tech-tag">{tech}</span>
+                                            <span 
+                                                key={tech} 
+                                                className="tech-tag clickable-tag"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    onTagClick?.(tech);
+                                                }}
+                                            >
+                                                {tech}
+                                            </span>
                                         ))}
                                         {project.technologies.length > 3 && (
                                             <span className="tech-tag">+{project.technologies.length - 3}</span>
@@ -117,6 +128,7 @@ export function ProjectsGridView({
                             selectedExperience={null}
                             lang={lang}
                             handleSelect={() => setLocalSelectedId(null)}
+                            onTagClick={onTagClick}
                         />
                     ) : (
                         <div className="no-selection">
