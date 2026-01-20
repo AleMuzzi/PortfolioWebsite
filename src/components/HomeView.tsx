@@ -46,9 +46,6 @@ export const HomeView = ({ t, handleSelect }: HomeViewProps) => {
                             <img src={book} alt="Book" />
                             <span className="tooltip">{t.profileButton}</span>
                         </div>
-                        <div className="clickable-item robot-head-item" onClick={() => handleSelect(null, 'about')}>
-                            <span className="tooltip">{t.profileButton}</span>
-                        </div>
                     </div>
                 </div>
             </div>
