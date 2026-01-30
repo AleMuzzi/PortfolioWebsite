@@ -84,7 +84,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose, t
             <div className="terminal-window" onClick={e => e.stopPropagation()}>
                 <div className="terminal-header">
                     <div className="terminal-dots">
-                        <span className="dot red"></span>
+                      <span className="dot red" onClick={onClose} style={{ cursor: 'pointer' }}></span>
                         <span className="dot yellow"></span>
                         <span className="dot green"></span>
                     </div>

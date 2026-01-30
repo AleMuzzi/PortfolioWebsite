@@ -66,7 +66,11 @@ export const translations = {
     terminalHelpExit: "Terminate session",
     terminalError: "Command not found",
     projects: "Projects",
-    experience: "Experience"
+    experience: "Experience",
+    filterByTags: "Filter by Tags",
+    apply: "Apply",
+    clear: "Clear",
+    scrollToBottom: "Scroll to the beginning"
   },
   it: {
     heroTitle: "Alessandro Muzzi",
@@ -135,7 +139,11 @@ export const translations = {
     terminalHelpExit: "Termina la sessione",
     terminalError: "Comando non trovato",
     projects: "Progetti",
-    experience: "Esperienza"
+    experience: "Esperienza",
+    filterByTags: "Filtra per Tag",
+    apply: "Applica",
+    clear: "Pulisci",
+    scrollToBottom: "Vai all'inizio"
   }
 };
 

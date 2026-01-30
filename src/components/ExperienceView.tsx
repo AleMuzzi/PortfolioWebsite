@@ -1,3 +1,4 @@
+import React, { useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Experience } from '../projectsData';
 import { translations, Language } from '../i18n';
@@ -23,6 +24,11 @@ export function ExperienceView({
     onTagClick
 }: ExperienceViewProps) {
     const t = translations[lang];
+    const bottomRef = useRef<HTMLDivElement>(null);
+
+    const scrollToBottom = () => {
+        bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
 
     const renderWorkHeader = (rawName: string) => {
         const separator = lang === 'en' ? ' at ' : ' presso ';
@@ -46,6 +52,9 @@ export function ExperienceView({
                 <button className="back-button" onClick={() => handleSelect(null, 'home')}>←</button>
                 <h2>{t.workTitle}</h2>
             </div>
+          <button className="scroll-to-bottom-btn" onClick={scrollToBottom} style={{ position: 'absolute', top: '100px', right: '-20px', zIndex: 1000 }}>
+            <span className="scroll-icon">↓</span> {t.scrollToBottom}
+          </button>
             <div className="timeline-container" style={{ position: 'relative' }}>
                 <svg width="100%" height={svgHeight} viewBox={`0 0 1000 ${svgHeight}`} style={{ position: 'absolute', left: 0, top: 0, pointerEvents: 'none', zIndex: 0 }}>
                     <defs>
@@ -129,6 +138,7 @@ export function ExperienceView({
                         </div>
                     );
                 })}
+                <div ref={bottomRef} style={{ height: '1px' }} />
             </div>
         </article>
     );

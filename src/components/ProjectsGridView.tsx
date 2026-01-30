@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import { Project } from '../projectsData';
 import { translations, Language } from '../i18n';
 import { DetailsView } from './DetailsView';
+import { FilterModal } from './FilterModal';
 import './ProjectsGridView.css';
 
 interface ProjectsGridViewProps {
@@ -21,6 +22,7 @@ export function ProjectsGridView({
     const t = translations[lang];
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
+    const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
     const [localSelectedId, setLocalSelectedId] = useState<string | null>(filteredProjects.length > 0 ? filteredProjects[0].id : null);
 
     const allTags = useMemo(() => {
@@ -51,6 +53,10 @@ export function ProjectsGridView({
         );
     };
 
+    const clearFilters = () => {
+        setSelectedTags([]);
+    };
+
     const selectedProject = filteredProjects.find(p => p.id === localSelectedId);
 
     return (
@@ -63,23 +69,24 @@ export function ProjectsGridView({
             <div className="projects-container">
                 <div className="projects-list-side">
                     <div className="filters">
-                        <input 
-                            type="text" 
-                            placeholder="Search projects..." 
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="search-input"
-                        />
-                        <div className="tags-filter">
-                            {allTags.map(tag => (
-                                <button 
-                                    key={tag}
-                                    onClick={() => toggleTag(tag)}
-                                    className={`tag-filter-btn ${selectedTags.includes(tag) ? 'active' : ''}`}
-                                >
-                                    {tag}
-                                </button>
-                            ))}
+                        <div className="search-bar-container">
+                            <input 
+                                type="text" 
+                                placeholder="Search projects..." 
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="search-input"
+                            />
+                            <button 
+                                className={`filter-icon-btn ${selectedTags.length > 0 ? 'has-filters' : ''}`}
+                                onClick={() => setIsFilterModalOpen(true)}
+                                title="Filter by tags"
+                            >
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                                    <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/>
+                                </svg>
+                                {selectedTags.length > 0 && <span className="filter-badge"></span>}
+                            </button>
                         </div>
                     </div>
 
@@ -137,6 +144,15 @@ export function ProjectsGridView({
                     )}
                 </div>
             </div>
+            <FilterModal 
+                isOpen={isFilterModalOpen}
+                onClose={() => setIsFilterModalOpen(false)}
+                allTags={allTags}
+                selectedTags={selectedTags}
+                toggleTag={toggleTag}
+                clearFilters={clearFilters}
+                t={t}
+            />
         </article>
     );
 }
