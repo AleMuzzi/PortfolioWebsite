@@ -324,8 +324,9 @@ function App() {
 
                 /* Hover State */
                 .timeline-item:hover .timeline-popout-bg {
-                    opacity: 0.25; 
+                    opacity: 0.12; 
                     transform: translate(-50%, -50%) scale(1.5) rotate(-5deg);
+                    filter: brightness(0.6) drop-shadow(0 10px 15px rgba(0,0,0,0.5));
                 }
             `}</style>
 
