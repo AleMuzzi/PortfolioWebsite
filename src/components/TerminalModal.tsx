@@ -7,30 +7,53 @@ interface TerminalModalProps {
     t: any;
 }
 
+interface TerminalLine {
+    timestamp: string;
+    type?: string;
+    content: string;
+    isCommand?: boolean;
+}
+
 export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose, t }) => {
     const getTimestamp = () => {
-        return `[${new Date().toLocaleTimeString('en-GB', { hour12: false })}]`;
+        return new Date().toLocaleTimeString('en-GB', { hour12: false });
     };
 
-    const initialLines = [
-        `${getTimestamp()} [SYS] ${t.terminalInit1}`,
-        `${getTimestamp()} [SYS] ${t.terminalInit2}`,
-        `${getTimestamp()} [SYS] ${t.terminalInit3}`,
-        `${getTimestamp()} [AUTH] ${t.terminalAuth}`,
-        `${getTimestamp()} [INFO] ${t.terminalInfo}`,
-        `${getTimestamp()} [HINT] ${t.terminalHint}`,
+    const initialLines: TerminalLine[] = [
+        { timestamp: getTimestamp(), type: 'SYS', content: t.terminalInit1 },
+        { timestamp: getTimestamp(), type: 'SYS', content: t.terminalInit2 },
+        { timestamp: getTimestamp(), type: 'SYS', content: t.terminalInit3 },
+        { timestamp: getTimestamp(), type: 'AUTH', content: t.terminalAuth },
+        { timestamp: getTimestamp(), type: 'INFO', content: t.terminalInfo },
+        { timestamp: getTimestamp(), type: 'HINT', content: t.terminalHint },
     ];
 
-    const [lines, setLines] = useState<string[]>(initialLines);
+    const [lines, setLines] = useState<TerminalLine[]>([]);
     const [inputValue, setInputValue] = useState('');
     const [isRevealed, setIsRevealed] = useState(false);
+    const [isBooting, setIsBooting] = useState(false);
     const terminalEndRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (isOpen) {
-            setLines(initialLines);
+            setLines([initialLines[0]]);
             setIsRevealed(false);
             setInputValue('');
+            setIsBooting(true);
+
+            const timer = setInterval(() => {
+                setLines(prev => {
+                    if (prev.length < initialLines.length) {
+                        return [...prev, initialLines[prev.length]];
+                    } else {
+                        clearInterval(timer);
+                        setIsBooting(false);
+                        return prev;
+                    }
+                });
+            }, 750);
+
+            return () => clearInterval(timer);
         }
     }, [isOpen]);
 
@@ -47,17 +70,22 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose, t
     const handleCommand = (e: React.FormEvent) => {
         e.preventDefault();
         const cmd = inputValue.trim().toLowerCase();
-        setLines(prev => [...prev, `${getTimestamp()} guest@portfolio:~$ ${inputValue}`]);
+        setLines(prev => [...prev, { timestamp: getTimestamp(), content: `guest@portfolio:~$ ${inputValue}`, isCommand: true }]);
 
         if (cmd === 'reveal') {
-            setLines(prev => [...prev, `${getTimestamp()} [PROCESS] ${t.terminalProcess}`]);
+            setIsBooting(true); // Disable input during automated typing
+            setLines(prev => [...prev, { timestamp: getTimestamp(), type: 'PROCESS', content: t.terminalProcess }]);
             setTimeout(() => {
-                setLines(prev => [...prev, `${getTimestamp()} [SUCCESS] ${t.terminalSuccess1}: ${t.vibeP1}`]);
+                setLines(prev => [...prev, { timestamp: getTimestamp(), type: 'SUCCESS', content: `${t.terminalSuccess1}: ${t.vibeP1}` }]);
                 setTimeout(() => {
-                    setLines(prev => [...prev, `${getTimestamp()} [SUCCESS] ${t.terminalSuccess2}: ${t.vibeP2}`]);
+                    setLines(prev => [...prev, { timestamp: getTimestamp(), type: 'SUCCESS', content: `${t.terminalSuccess2}: ${t.vibeP2}` }]);
                     setTimeout(() => {
-                        setLines(prev => [...prev, `${getTimestamp()} [INFO] ${t.vibeMeta}`, `${getTimestamp()} [CMD] ${t.vibeClose}`]);
+                        setLines(prev => [...prev, 
+                            { timestamp: getTimestamp(), type: 'INFO', content: t.vibeMeta }, 
+                            { timestamp: getTimestamp(), type: 'CMD', content: t.vibeClose }
+                        ]);
                         setIsRevealed(true);
+                        setIsBooting(false);
                     }, 600);
                 }, 600);
             }, 800);
@@ -65,18 +93,31 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose, t
             setLines([]);
         } else if (cmd === 'help') {
             setLines(prev => [...prev, 
-                `${getTimestamp()} [HELP] ${t.terminalHelpTitle}`, 
-                `  - reveal : ${t.terminalHelpReveal}`, 
-                `  - clear  : ${t.terminalHelpClear}`, 
-                `  - help   : ${t.terminalHelpHelp}`, 
-                `  - exit   : ${t.terminalHelpExit}`
+                { timestamp: getTimestamp(), type: 'HELP', content: t.terminalHelpTitle }, 
+                { timestamp: '', content: `  - reveal : ${t.terminalHelpReveal}` }, 
+                { timestamp: '', content: `  - clear  : ${t.terminalHelpClear}` }, 
+                { timestamp: '', content: `  - help   : ${t.terminalHelpHelp}` }, 
+                { timestamp: '', content: `  - exit   : ${t.terminalHelpExit}` }
             ]);
         } else if (cmd === 'exit') {
             onClose();
         } else {
-            setLines(prev => [...prev, `${getTimestamp()} [ERROR] ${t.terminalError}: ${cmd}`]);
+            setLines(prev => [...prev, { timestamp: getTimestamp(), type: 'ERROR', content: `${t.terminalError}: ${cmd}` }]);
         }
         setInputValue('');
+    };
+
+    const renderLine = (line: TerminalLine | undefined, index: number) => {
+        if (!line) return null;
+        const typeClass = line.type ? `type-${line.type.toLowerCase()}` : '';
+        
+        return (
+            <div key={index} className="terminal-line">
+                {line.timestamp && <span className="terminal-timestamp">[{line.timestamp}] </span>}
+                {line.type && <span className={`terminal-type ${typeClass}`}>[{line.type}] </span>}
+                <span className="terminal-content">{line.content}</span>
+            </div>
+        );
     };
 
     return (
@@ -92,10 +133,8 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose, t
                     <button className="terminal-close" onClick={onClose}>×</button>
                 </div>
                 <div className="terminal-body">
-                    {lines.map((line, i) => (
-                        <div key={i} className="terminal-line">{line}</div>
-                    ))}
-                    {!isRevealed && (
+                    {lines.map((line, i) => renderLine(line, i))}
+                    {!isRevealed && !isBooting && (
                         <form onSubmit={handleCommand} className="terminal-input-line">
                             <span className="terminal-prompt">guest@portfolio:~$</span>
                             <input

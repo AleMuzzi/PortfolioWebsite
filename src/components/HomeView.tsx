@@ -15,6 +15,13 @@ interface HomeViewProps {
 
 export const HomeView = ({ t, handleSelect }: HomeViewProps) => {
     const [isTerminalOpen, setIsTerminalOpen] = useState(false);
+    const [isGlowing, setIsGlowing] = useState(false);
+
+    const triggerGlow = () => {
+        if (isGlowing) return;
+        setIsGlowing(true);
+        setTimeout(() => setIsGlowing(false), 2000);
+    };
 
     return (
         <article className="home-view">
@@ -28,7 +35,7 @@ export const HomeView = ({ t, handleSelect }: HomeViewProps) => {
                 <div className="home-intro">
                     <h2 className="home-title">{t.heroTitle}</h2>
                     <p className="home-description">{t.heroDesc}</p>
-                    <div className="home-cta">
+                    <div className="home-cta" onClick={triggerGlow}>
                         <span className="cta-hint">Explore by clicking on the items</span>
                     </div>
                 </div>
@@ -41,18 +48,18 @@ export const HomeView = ({ t, handleSelect }: HomeViewProps) => {
                             <img src={printerControlPanel} alt="Printer Control Panel" />
                         </div>
 
-                        <div className="clickable-item laptop-item" onClick={() => handleSelect(null, 'experience')}>
+                        <div className={`clickable-item laptop-item ${isGlowing ? 'glowing' : ''}`} onClick={() => handleSelect(null, 'experience')}>
                             <img src={laptop} alt="Laptop" />
                             <span className="tooltip">{t.workTitle}</span>
                         </div>
                         <div className="non-clickable-item laptop-cables-item">
                             <img src={laptopCables} alt="Laptop Cables" />
                         </div>
-                        <div className="clickable-item soldering-iron-item" onClick={() => handleSelect(null, 'project')}>
+                        <div className={`clickable-item soldering-iron-item ${isGlowing ? 'glowing' : ''}`} onClick={() => handleSelect(null, 'project')}>
                             <img src={solderingIron} alt="Soldering Iron" />
                             <span className="tooltip">{t.personalTitle}</span>
                         </div>
-                        <div className="clickable-item book-item" onClick={() => handleSelect(null, 'about')}>
+                        <div className={`clickable-item book-item ${isGlowing ? 'glowing' : ''}`} onClick={() => handleSelect(null, 'about')}>
                             <img src={book} alt="Book" />
                             <span className="tooltip">{t.profileButton}</span>
                         </div>

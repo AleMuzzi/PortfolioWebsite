@@ -65,6 +65,7 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+  cursor: pointer;
 }
 
 .cta-hint {
@@ -74,6 +75,7 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
   animation: pulseHint 2s infinite;
+  user-select: none;
 }
 
 .cta-hint::after {
@@ -150,6 +152,7 @@
 
   .home-cta {
     justify-content: center;
+    cursor: pointer;
   }
 
   .cta-hint {
@@ -159,6 +162,7 @@
     text-transform: uppercase;
     letter-spacing: 0.05em;
     animation: pulseHint 2s infinite;
+    user-select: none;
   }
   .cta-hint::after {
     content: " ↓";
@@ -223,6 +227,26 @@
   z-index: 1;
   user-select: none;
   -webkit-user-select: none;
+}
+
+@keyframes glowAnimation {
+  0% {
+    filter: drop-shadow(0 0 5px var(--accent)) brightness(1.1);
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 25px var(--accent)) brightness(1.4);
+    transform: scale(1.05);
+  }
+  100% {
+    filter: drop-shadow(0 0 5px var(--accent)) brightness(1.1);
+    transform: scale(1);
+  }
+}
+
+.clickable-item.glowing, .printer-panel-item-easter-egg.glowing {
+  animation: glowAnimation 1s ease-in-out infinite;
+  z-index: 50;
 }
 
 .clickable-item, .non-clickable-item, .printer-panel-item-easter-egg {
