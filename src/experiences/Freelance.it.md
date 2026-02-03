@@ -7,7 +7,7 @@ Servizi di sviluppo indipendente per vari clienti durante la laurea triennale.
 Vari clienti
 
 ## Periodo
-Luglio 2016 — Ottobre 2019
+Luglio 2015 — Ottobre 2019
 
 ## Cosa ho fatto
 Esperienze di lavoro individuale e di squadra in varie aziende come freelance durante la mia laurea triennale, inclusi alcuni progetti di web scraping e IoT.

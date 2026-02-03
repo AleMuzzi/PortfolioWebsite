@@ -70,7 +70,8 @@ export const translations = {
     filterByTags: "Filter by Tags",
     apply: "Apply",
     clear: "Clear",
-    scrollToBottom: "Scroll to the beginning"
+    scrollToBottom: "Scroll to the beginning",
+    seeDetails: "See details"
   },
   it: {
     heroTitle: "Alessandro Muzzi",
@@ -143,7 +144,8 @@ export const translations = {
     filterByTags: "Filtra per Tag",
     apply: "Applica",
     clear: "Pulisci",
-    scrollToBottom: "Vai all'inizio"
+    scrollToBottom: "Vai all'inizio",
+    seeDetails: "Vedi dettagli"
   }
 };
 

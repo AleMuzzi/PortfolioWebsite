@@ -234,6 +234,24 @@
   margin: 0;
 }
 
+.click-hint {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.6rem;
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(5px);
+  transition: all 0.3s ease;
+}
+
+.project-list-item:hover .click-hint {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .project-item-footer {
   margin-top: 1rem;
   display: flex;

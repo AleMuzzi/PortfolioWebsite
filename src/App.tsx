@@ -25,8 +25,8 @@ const workBackgrounds = [
     dji_m300,     // Index 1
     text_embeddings_visualization,    // Index 2
     ptz_camera,           // Index 3
-    laptop,           // Index 4
-    iot            // Index 5
+    iot,            // Index 4
+    laptop,           // Index 5
 ];
 
 function App() {
@@ -55,11 +55,11 @@ function App() {
                 startYear: 2010,
                 endYear: 2015,
                 side: 'left',
-                bottomOffset: -140,
+                bottomOffset: -180,
                 width: 350,
                 height: 100,
                 // --- MANUAL OVERRIDES (0% = Top of SVG, 100% = Bottom) ---
-                manualTop: 87,    // Where the branch starts on the spine (top Y)
+                manualTop: 82,    // Where the branch starts on the spine (top Y)
                 manualBottom: 105  // Where the branch ends on the spine (bottom Y)
             },
             {
@@ -72,11 +72,11 @@ function App() {
                 startYear: 2015,
                 endYear: 2019,
                 side: 'right',
-                bottomOffset: -160,
+                bottomOffset: -60,
                 width: 330,
                 height: 100,
-                manualTop: 56,
-                manualBottom: 87
+                manualTop: 50,
+                manualBottom: 82
             },
             {
                 period: '2019 — 2022',
@@ -91,8 +91,8 @@ function App() {
                 bottomOffset: -45,
                 width: 300,
                 height: 100,
-                manualTop: 36,
-                manualBottom: 53
+                manualTop: 27,
+                manualBottom: 48
             }
         ];
 
@@ -137,7 +137,7 @@ function App() {
             minYear: _minYear,
             maxYear: _maxYear,
             yearRange: _yearRange,
-            svgHeight: 1900
+            svgHeight: 2040
         };
     }, [filteredExperiences, educationPeriods]);
 
@@ -349,8 +349,8 @@ function App() {
 
                 /* Hover State */
                 .timeline-item:hover .timeline-popout-bg {
-                    opacity: 0.12; 
-                    transform: translate(-50%, -50%) scale(1.5) rotate(-5deg);
+                    opacity: 0.20; 
+                    transform: translate(-50%, -50%) scale(2.0) rotate(-5deg);
                     filter: brightness(0.6) drop-shadow(0 10px 15px rgba(0,0,0,0.5));
                 }
             `}</style>

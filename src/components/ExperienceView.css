@@ -408,6 +408,27 @@
   color: var(--text-main);
 }
 
+.click-hint {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+}
+
+.timeline-item:hover .click-hint {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.timeline-item-left .click-hint {
+  justify-content: flex-end;
+}
 
 .timeline-summary p {
   margin: 0;

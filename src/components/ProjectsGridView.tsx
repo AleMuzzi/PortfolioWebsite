@@ -104,6 +104,14 @@ export function ProjectsGridView({
                                             {project.summary || project.overview.split('\n')[0].replace(/[#*`[\]]/g, '')}
                                         </ReactMarkdown>
                                     </div>
+
+                                    <div className="click-hint">
+                                        <span>{t.seeDetails}</span>
+                                        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                                            <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                                        </svg>
+                                    </div>
+
                                     <div className="project-item-footer">
                                         {project.technologies.slice(0, 3).map(tech => (
                                             <span 

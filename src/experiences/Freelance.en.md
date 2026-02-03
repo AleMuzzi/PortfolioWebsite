@@ -7,7 +7,7 @@ Independent development services for various clients throughout the bachelor's d
 Various clients
 
 ## Period
-July 2016 — October 2019
+July 2015 — October 2019
 
 ## What i did
 Individual and teamwork experiences in various companies as a freelance throughout my bachelor's degree, including some web scraping and IoT projects.
