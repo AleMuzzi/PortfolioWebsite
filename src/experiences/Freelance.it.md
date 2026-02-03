@@ -10,7 +10,7 @@ Vari clienti
 Luglio 2015 — Ottobre 2019
 
 ## Cosa ho fatto
-Esperienze di lavoro individuale e di squadra in varie aziende come freelance durante la mia laurea triennale, inclusi alcuni progetti di web scraping e IoT.
+Esperienze di lavoro individuale e di team in varie aziende come freelance durante la mia laurea triennale, inclusi alcuni progetti di web scraping e IoT.
 
 Le esperienze più rilevanti sono elencate come esperienze individuali nella sezione precedente.
 

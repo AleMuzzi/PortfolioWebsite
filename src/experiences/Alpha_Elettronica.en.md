@@ -24,5 +24,5 @@ Development of custom firmware based on OpenWRT for various IoT devices (lights,
 ## Technologies and tools
 
 - **Languages:** Java, Swift, Lua
-- **Platforms:** Android, iOS, OpenWRT
+- **Platforms:** Android, iOS, OpenWRT, KNX
 - **Core Skills:** IoT

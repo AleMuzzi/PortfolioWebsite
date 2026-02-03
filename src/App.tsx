@@ -22,6 +22,7 @@ import iot from './assets/iot.png';
 // Item 0 gets the 1st image, Item 1 gets the 2nd, etc.
 const workBackgrounds = [
     active_inference_brain, // Index 0
+    active_inference_brain, // Index 0
     dji_m300,     // Index 1
     text_embeddings_visualization,    // Index 2
     ptz_camera,           // Index 3
@@ -54,12 +55,12 @@ function App() {
                 color: '#f59e0b',
                 startYear: 2010,
                 endYear: 2015,
-                side: 'left',
-                bottomOffset: -180,
-                width: 350,
+                side: 'right',
+                bottomOffset: -210,
+                width: 360,
                 height: 100,
                 // --- MANUAL OVERRIDES (0% = Top of SVG, 100% = Bottom) ---
-                manualTop: 82,    // Where the branch starts on the spine (top Y)
+                manualTop: 86,    // Where the branch starts on the spine (top Y)
                 manualBottom: 105  // Where the branch ends on the spine (bottom Y)
             },
             {
@@ -71,12 +72,12 @@ function App() {
                 color: '#10b981',
                 startYear: 2015,
                 endYear: 2019,
-                side: 'right',
-                bottomOffset: -60,
-                width: 330,
+                side: 'left',
+                bottomOffset: -70,
+                width: 318,
                 height: 100,
-                manualTop: 50,
-                manualBottom: 82
+                manualTop: 55,
+                manualBottom: 86
             },
             {
                 period: '2019 — 2022',
@@ -87,12 +88,12 @@ function App() {
                 color: '#3b82f6',
                 startYear: 2019,
                 endYear: 2022,
-                side: 'right' as 'left' | 'right',
+                side: 'left',
                 bottomOffset: -45,
-                width: 300,
+                width: 328,
                 height: 100,
-                manualTop: 27,
-                manualBottom: 48
+                manualTop: 35,
+                manualBottom: 55
             }
         ];
 
@@ -137,7 +138,7 @@ function App() {
             minYear: _minYear,
             maxYear: _maxYear,
             yearRange: _yearRange,
-            svgHeight: 2040
+            svgHeight: 2350
         };
     }, [filteredExperiences, educationPeriods]);
 

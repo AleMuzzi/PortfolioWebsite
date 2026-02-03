@@ -7,7 +7,7 @@
 VERSES - https://www.verses.ai/
 
 ## Period
-June 2024 — Present
+August 2024 — December 2025
 
 ## What I did
 
