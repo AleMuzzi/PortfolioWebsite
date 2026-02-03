@@ -385,7 +385,11 @@ function App() {
                                     onTagClick={(tagName) => setActiveTagName(tagName)}
                                 />
                             ) : selectedType === 'about' ? (
-                                <AboutView lang={lang} handleSelect={handleSelect} />
+                                <AboutView 
+                                    lang={lang} 
+                                    handleSelect={handleSelect} 
+                                    onTagClick={(tagName) => setActiveTagName(tagName)}
+                                />
                             ) : null
                         ) : (
                             <DetailsView
