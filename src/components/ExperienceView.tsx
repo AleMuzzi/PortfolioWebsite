@@ -31,7 +31,7 @@ export function ExperienceView({
     };
 
     const renderWorkHeader = (rawName: string) => {
-        const separator = lang === 'en' ? ' at ' : ' presso ';
+        const separator = t.at;
         const parts = rawName.split(separator);
         if (parts.length >= 2) {
             const role = parts[0];

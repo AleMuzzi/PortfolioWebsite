@@ -54,7 +54,7 @@ export const HomeView = ({ t, handleSelect }: HomeViewProps) => {
                     <h2 className="home-title">{t.heroTitle}</h2>
                     <p className="home-description">{t.heroDesc}</p>
                     <div className="home-cta" onClick={triggerGlow}>
-                        <span className="cta-hint">Explore by clicking on the items</span>
+                        <span className="cta-hint">{t.exploreHint}</span>
                     </div>
                 </div>
 

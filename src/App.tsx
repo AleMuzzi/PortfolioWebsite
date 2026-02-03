@@ -47,8 +47,8 @@ function App() {
         const schools = [
             {
                 period: '2010 — 2015',
-                degree: 'High School degree',
-                field: 'Information Technology',
+                degree: t.highSchool,
+                field: t.itField,
                 school: 'ITIS Leonardo Da Vinci, Parma',
                 grade: '100/100',
                 color: '#f59e0b',
@@ -64,8 +64,8 @@ function App() {
             },
             {
                 period: '2015 — 2019',
-                degree: "Bachelor's degree",
-                field: 'Computer Engineering',
+                degree: t.bachelorsDegree,
+                field: t.compEngField,
                 school: 'Università degli Studi di Parma',
                 grade: '93/110',
                 color: '#10b981',
@@ -80,8 +80,8 @@ function App() {
             },
             {
                 period: '2019 — 2022',
-                degree: "Master's degree",
-                field: 'Computer Engineering',
+                degree: t.mastersDegree,
+                field: t.compEngField,
                 school: 'Università degli Studi di Parma',
                 grade: '110/110',
                 color: '#3b82f6',
@@ -98,7 +98,7 @@ function App() {
 
         schools.sort((a, b) => a.startYear - b.startYear);
         return schools;
-    }, []);
+    }, [t]);
 
     const { workItems, maxYear, yearRange, svgHeight } = useMemo(() => {
         const _allYears: number[] = [];
@@ -226,7 +226,7 @@ function App() {
                                 }}>
                                     <span className="education-branch-period" style={{fontSize: '0.7em', opacity: 0.8}}>{edu.period}</span>
                                     <span style={{fontSize: '0.7em', color: edu.color, border: `1px solid ${edu.color}`, padding: '1px 5px', borderRadius: '4px'}}>
-                                        {edu.grade.includes('100') ? '100/100' : edu.grade.split(': ')[1] || edu.grade}
+                                        {edu.grade.includes('100') ? '100/100' : (edu.grade.includes(':') ? edu.grade.split(':')[1].trim() : edu.grade)}
                                     </span>
                                 </div>
                             </div>

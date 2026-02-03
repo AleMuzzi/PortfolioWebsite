@@ -88,8 +88,8 @@ export function AboutView({lang, handleSelect, onTagClick}: AboutViewProps) {
                 <div className="edu-top">
                   <div className="edu-header">
                     <h4>
-                      {t.highschool.split('\n')[0]}
-                      <span className="edu-spec">{t.highschool.split('\n')[1]}</span>
+                      {t.highSchool}
+                      <span className="edu-spec">{t.itField}</span>
                     </h4>
                     <span className="edu-period">2010 — 2015</span>
                   </div>
@@ -103,8 +103,8 @@ export function AboutView({lang, handleSelect, onTagClick}: AboutViewProps) {
                 <div className="edu-top">
                   <div className="edu-header">
                     <h4>
-                      {t.bachelors.split('\n')[0]}
-                      <span className="edu-spec">{t.bachelors.split('\n')[1]}</span>
+                      {t.bachelorsDegree}
+                      <span className="edu-spec">{t.compEngField}</span>
                     </h4>
                     <span className="edu-period">2015 — 2018</span>
                   </div>
@@ -118,8 +118,8 @@ export function AboutView({lang, handleSelect, onTagClick}: AboutViewProps) {
                 <div className="edu-top">
                   <div className="edu-header">
                     <h4>
-                      {t.masters.split('\n')[0]}
-                      <span className="edu-spec">{t.masters.split('\n')[1]}</span>
+                      {t.mastersDegree}
+                      <span className="edu-spec">{t.compEngField}</span>
                     </h4>
                     <span className="edu-period">2019 — 2022</span>
                   </div>

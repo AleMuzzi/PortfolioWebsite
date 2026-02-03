@@ -72,7 +72,7 @@ export function ProjectsGridView({
                         <div className="search-bar-container">
                             <input 
                                 type="text" 
-                                placeholder="Search projects..." 
+                                placeholder={t.searchPlaceholder} 
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 className="search-input"
@@ -80,7 +80,7 @@ export function ProjectsGridView({
                             <button 
                                 className={`filter-icon-btn ${selectedTags.length > 0 ? 'has-filters' : ''}`}
                                 onClick={() => setIsFilterModalOpen(true)}
-                                title="Filter by tags"
+                                title={t.filterByTags}
                             >
                                 <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
                                     <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/>
@@ -147,7 +147,7 @@ export function ProjectsGridView({
                         />
                     ) : (
                         <div className="no-selection">
-                            <p>Select a project to see details</p>
+                            <p>{t.selectProjectHint}</p>
                         </div>
                     )}
                 </div>
