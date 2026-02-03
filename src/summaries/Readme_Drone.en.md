@@ -17,6 +17,8 @@ This workspace serves as both the technical foundation for the drone's operation
 ### Android Control Application
 The core of the user interface is a dedicated Android application. Designed for real-time interaction, the app facilitates:
 
+![Drone Control App{width="300px"}{align="right"}](src/summaries/res/drone_architecture.png)
+
 - **Command Transmission:** Sends precise control signals (throttle, yaw, pitch, roll) and flight mode switches to the drone's receiver via wireless protocols (Wi-Fi, Bluetooth, or custom radio links).
 - **Telemetry Feedback:** Displays live data from the drone, including battery voltage, altitude, orientation (attitude), and GPS coordinates, using a dynamic HUD-style interface.
 - **Data Logging:** Capable of recording flight telemetry for post-flight analysis and performance optimization.

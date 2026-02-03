@@ -195,6 +195,7 @@
     align-items: center;
     gap: 0.8rem;
     color: var(--text-main);
+    scroll-margin-top: 100px; /* Space for sticky header/back button */
 }
 
 .section-icon {

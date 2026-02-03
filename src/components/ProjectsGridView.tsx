@@ -101,7 +101,7 @@ export function ProjectsGridView({
                                     <h3>{project.name}</h3>
                                     <div className="project-summary">
                                         <ReactMarkdown>
-                                            {project.summary || project.overview.split('\n')[0].replace(/[#*`[\]]/g, '')}
+                                            {project.summary || project.description || project.bodyMarkdown.split('\n')[0].replace(/[#*`[\\]]/g, '')}
                                         </ReactMarkdown>
                                     </div>
 

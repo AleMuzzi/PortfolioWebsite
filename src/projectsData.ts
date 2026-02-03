@@ -2,8 +2,8 @@ export interface Project {
     id: string;
     name: string;
     summary: string;
-    overview: string;
-    how: string;
+    description: string;
+    bodyMarkdown: string;
     technologies: string[];
     categorizedTech?: Record<string, string[]>;
     link?: string;
@@ -37,8 +37,8 @@ function parseProject(filename: string, content: unknown): Project {
             id: filename,
             name: filename,
             summary: '',
-            overview: '',
-            how: '',
+            description: '',
+            bodyMarkdown: '',
             technologies: [],
             lang
         };
@@ -58,23 +58,20 @@ function parseProject(filename: string, content: unknown): Project {
     const sections = content.split(/^##\s+/m);
 
     let summary = '';
-    let overview = '';
-    let how = '';
+    let description = '';
     let link = '';
     let technologies: string[] = [];
     let categorizedTech: Record<string, string[]> = {};
+    let bodyMarkdownParts: string[] = [];
 
     sections.forEach(section => {
         const lines = section.trim().split('\n');
-        const header = lines[0].toLowerCase().trim();
+        const headerOriginal = lines[0].trim();
+        const header = headerOriginal.toLowerCase();
         const body = lines.slice(1).join('\n').trim();
 
         if (header.includes('summary')) {
             summary = body;
-        } else if (header.includes('what this project is') || header.includes('project overview')) {
-            overview = body;
-        } else if (header.includes('how it works') || header.includes('come funziona')) {
-            how = body;
         } else if (header.includes('link')) {
             const urlMatch = body.match(/(https?:\/\/[^\s]+)/);
             if (urlMatch) {
@@ -101,6 +98,10 @@ function parseProject(filename: string, content: unknown): Project {
                     }
                 }
             });
+        } else if (header.includes('what this project is') || header.includes('project overview')) {
+            description = body;
+        } else if (headerOriginal.length > 0 && !headerOriginal.includes('# ')) {
+            bodyMarkdownParts.push(`## ${headerOriginal}\n\n${body}`);
         }
     });
 
@@ -108,8 +109,8 @@ function parseProject(filename: string, content: unknown): Project {
         id,
         name,
         summary,
-        overview,
-        how,
+        description,
+        bodyMarkdown: bodyMarkdownParts.join('\n\n').trim(),
         technologies: Array.from(new Set(technologies)),
         categorizedTech: Object.keys(categorizedTech).length > 0 ? categorizedTech : undefined,
         link: link || undefined,

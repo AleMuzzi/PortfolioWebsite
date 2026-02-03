@@ -2,6 +2,7 @@ import ReactMarkdown from 'react-markdown';
 import { Project, Experience } from '../projectsData';
 import { translations, Language } from '../i18n';
 import './DetailsView.css';
+import remarkGfm from 'remark-gfm';
 
 interface DetailsViewProps {
     selectedType: 'project' | 'experience' | 'about' | 'home' | null;
@@ -99,9 +100,67 @@ export function DetailsView({
 
                             {/* BODY CONTENT */}
                             <div className="markdown-body exp-body">
-                                <ReactMarkdown>
-                                    {(item as any).details || (item as any).overview || (item as any).summary}
-                                </ReactMarkdown>
+                                {(() => {
+                                    const renderers = {
+                                        img: ({node, ...props}: any) => {
+                                            const alt = props.alt || '';
+                                            const widthMatch = alt.match(/\{width="?(\d+%?|auto|[^"}]+)"?\}/);
+                                            const alignMatch = alt.match(/\{align="?(left|right)"?\}/);
+                                            
+                                            let style: React.CSSProperties = { maxWidth: '100%' };
+                                            let className = '';
+                                            let cleanAlt = alt;
+
+                                            if (widthMatch) {
+                                                style.width = widthMatch[1];
+                                                cleanAlt = cleanAlt.replace(widthMatch[0], '');
+                                            }
+                                            
+                                            if (alignMatch) {
+                                                const alignment = alignMatch[1];
+                                                className = `align-${alignment}`;
+                                                cleanAlt = cleanAlt.replace(alignMatch[0], '');
+                                            }
+                                            
+                                            cleanAlt = cleanAlt.trim();
+
+                                            return (
+                                                <img
+                                                    {...props}
+                                                    alt={cleanAlt}
+                                                    style={style}
+                                                    className={className}
+                                                />
+                                            );
+                                        }
+                                    };
+
+                                    return (
+                                        <>
+                                            <ReactMarkdown components={renderers}>
+                                                {isExp ? ((item as any).details || (item as any).summary) : ""}
+                                            </ReactMarkdown>
+                                            {!isExp && (
+                                                <>
+                                                    { (item as Project).description && (
+                                                        <div className="project-description">
+                                                            <ReactMarkdown components={renderers} remarkPlugins={[remarkGfm]}>
+                                                                {(item as Project).description}
+                                                            </ReactMarkdown>
+                                                        </div>
+                                                    )}
+                                                    { (item as Project).bodyMarkdown && (
+                                                        <div className="project-body-markdown">
+                                                            <ReactMarkdown components={renderers} remarkPlugins={[remarkGfm]}>
+                                                                {(item as Project).bodyMarkdown}
+                                                            </ReactMarkdown>
+                                                        </div>
+                                                    )}
+                                                </>
+                                            )}
+                                        </>
+                                    );
+                                })()}
                             </div>
 
                             {/* TOOLS FOOTER */}

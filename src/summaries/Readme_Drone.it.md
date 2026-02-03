@@ -1,17 +1,25 @@
 # 🚁 Drone
 
 ## Summary
-Una piattaforma drone personalizzata dotata di un'app di telemetria Android e controllo di volo ottimizzato.
+Un drone completamente DIY con un'app Android per la telemetria e il controllo del volo ottimizzato.
 
 ## What this project is
-Il progetto Drone è uno spazio di lavoro completo per lo sviluppo e la documentazione di una piattaforma drone amatoriale personalizzata. Integra molteplici discipline, tra cui:
-- **Controllo Mobile:** Un'applicazione Android costruita su misura per il funzionamento del drone e il monitoraggio della telemetria.
-- **Sistemi di Volo:** Profili di configurazione e calibrazione per l'hardware di controllo di volo (come la scheda KK2).
-- **Media & Analisi:** Un archivio curato di filmati di volo e documentazione fotografica utilizzati per la messa a punto delle prestazioni e l'ispezione del telaio.
+Come da titolo, questo progetto consiste in un drone, costruito interamente in casa. Il progetto non è nato dall'idea di creare un drone commerciale, ma piuttosto come un esercizio di apprendimento per comprendere i principi di base del volo dei droni, della programmazione di applicazioni mobili e dell'integrazione hardware-software.
+Ero curioso di esplorare come i vari componenti hardware (motori, ESC, controller di volo) interagiscono con il software e di testare se un'app Android potesse essere utilizzata efficacemente per controllare un drone in tempo reale.
+Il progetto è iniziato durante la laurea magistrale e aveva anche lo scopo di formarmi per lavorare in ambito di droni e robotica, che era il mio obiettivo professionale subito dopo la laurea.
 
-Questo spazio di lavoro funge sia da base tecnica per il funzionamento del drone sia da record storico del suo sviluppo e della sua storia di volo.
 
-## How it works
+### Architettura
+![Architettura del drone{width="400px"}{align="right"}](src/summaries/res/drone_architecture.png)
+L'intero sistema è stato progettato da 0, partendo dalla selezione dei motori brushless e di conseguenza degli ESC, fino alla scelta del controller di volo e alla progettazione dell'app Android per il controllo e la telemetria.
+
+L'app fornisce un'interfaccia utente che richiama i comandi di un normale controller di volo, con due joystick virtuali per controllare l'acceleratore, l'imbardata, il beccheggio e il rollio. I comandi sono trasmessi al drone tramite Wi-Fi, via UDP, per garantire una bassa latenza. 
+Per evitare ritardi cumulativi, i comandi sono inviati in modo continuo ad una frequenza fissa, gestibile dal server. I comandi vengono poi interpretati dal flight controller, che regola la velocità dei motori di conseguenza, passando per gli ESC.
+
+Avendo a disposizione un Arduino Yun, nella versione iniziale del progetto il server UDP era scritto in Lua, sfruttando la potenza di calcolo del processore Linux integrato nell'Arduino Yun. Per poter inviare i comandi al flight controller era però necessario accedere ai pin di Arduino, possibile solo attraverso la _Bridge Library_. Questo introduceva un ritardo significativo nella catena di comunicazione, rendendo il controllo del drone poco reattivo e impreciso.
+Per risolvere questo problema, ho deciso di sfruttare un'ESP8266 come antenna Wi-Fi via UART[^1] e riscrivere il server UDP in C, per farlo girare direttamente sul microcontrollore. In questo modo, i comandi potevano essere trasmessi direttamente ai pin di Arduino, riducendo drasticamente la latenza e migliorando la reattività del sistema di controllo.
+
+
 
 ### Applicazione di Controllo Android
 Il cuore dell'interfaccia utente è un'applicazione Android dedicata. Progettata per l'interazione in tempo reale, l'app facilita:
@@ -32,6 +40,8 @@ L'archivio multimediale integrato include filmati sia a bordo che a terra. Quest
 - Identificare problemi di vibrazione o instabilità meccaniche.
 - Rivedere le manovre di volo e le prestazioni della batteria sotto carico.
 - Documentare missioni di successo e testare nuove iterazioni software o hardware.
+
+[^1]: https://www.instructables.com/Cheap-Arduino-WiFi-Shield-With-ESP8266/
 
 ## Technologies and tools
 - **Sviluppo Android:** Architettura dell'applicazione basata su Gradle per il controllo mobile.

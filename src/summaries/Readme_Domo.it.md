@@ -1,33 +1,21 @@
 # 🏠 Domo
 
 ## Summary
-Una libreria UI Material Design per Android, che porta un'estetica moderna sui dispositivi legacy.
+Un'app per il controllo della musica in una rete locale.
 
 ## What this project is
-Domo è una libreria Android e una suite dimostrativa progettata per mostrare e implementare componenti UI Material Design personalizzati. Il suo obiettivo principale è fornire widget di alta qualità ispirati al Material — come pulsanti, finestre di dialogo e input — che portino un'estetica moderna ai dispositivi Android più vecchi (supportati a partire da Android 4.0).
+Domo è una piccola applicazione Android che consente agli utenti di controllare la riproduzione musicale su un server multimediale all'interno di una rete locale. L'app offre funzionalità di base come play, pausa, salto traccia e regolazione del volume, il tutto attraverso un'interfaccia utente intuitiva e reattiva.
+L'app non richiede alcuna connessione a Internet, nè l'autenticazione dell'utente, rendendola ideale per feste tra amici. L'idea è nata dalla necessità di avere un modo semplice e veloce per gestire la musica in ambienti sociali senza complicazioni.
 
-Il progetto è strutturato come un modulo libreria riutilizzabile, consentendo agli sviluppatori di integrare facilmente questi componenti nelle proprie applicazioni.
 
-## How it works
+### Come funziona
+L'applicazione presenta un'architettura molto semplice, composta da un'interfaccia utente principale che comunica con un server multimediale scritto in C# tramite HTTP e una connessione websocket per aggiornamenti in tempo reale su lo stato della riproduzione, consentendo un controllo della musica fluido, reattivo e multi-utente.
 
-### Architettura della Libreria
-La logica principale risiede nel modulo libreria `MaterialDesign`. È costruito utilizzando una robusta configurazione Gradle che garantisce un'ampia compatibilità:
 
-- **Retrocompatibilità:** Utilizza `minSdkVersion 14` e si affida a librerie come `NineOldAndroids` per il backport delle animazioni delle proprietà e delle transizioni fluide verso le versioni legacy di Android.
-- **Integrazione Moderna:** Compilato rispetto agli SDK moderni per garantire che rimanga funzionale all'interno degli attuali ambienti di sviluppo.
-- **Gestione delle Risorse:** Include un ricco set di attributi personalizzati, stili e asset (`res` e `assets`) che definiscono il linguaggio visivo dei componenti, inclusi effetti ripple e ombre di elevazione.
-
-### Componenti UI
-La libreria implementa una varietà di viste personalizzate, ognuna incapsulata con la propria logica di disegno e gestione delle interazioni. I componenti chiave includono:
-- **Pulsanti Reattivi:** Pulsanti piatti e in rilievo con feedback ripple integrato.
-- **Dialoghi:** Finestre modali con stile personalizzato per avvisi e input utente.
-- **Floating Action Buttons (FAB):** Trigger di azioni moderne con supporto per vari stili di posizionamento e animazione.
-
-### Flusso di Integrazione
-L'integrazione della libreria comporta l'aggiunta del modulo come dipendenza del progetto. Una volta inclusa, gli sviluppatori possono utilizzare i widget direttamente nei loro file di layout XML facendo riferimento al pacchetto della libreria. Questo approccio consente una chiara separazione tra le definizioni dei componenti UI e la logica di business dell'applicazione.
+### Pubblicazione
+L'app era originariamente disponibile gratuitamente su Google Play Store, ma è stata rimossa per mancanza di tempo per la manutenzione.
 
 ## Technologies and tools
-- **Modulo Libreria Android** (basato su Gradle).
-- **NineOldAndroids & AndroidX Legacy Support** per animazioni in backport.
-- **Disegno di Viste Personalizzate:** Implementazione di pattern visivi Material Design.
-- **Pubblicazione Gradle:** Configurazione per la distribuzione della libreria e la gestione delle versioni.
+- **Linguaggi:** Kotlin, C#
+- **Frameworks:** Android SDK
+- **Backend e API:** HTTP, WebSocket

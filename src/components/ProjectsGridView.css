@@ -291,14 +291,11 @@
   height: 100%;
   margin: 0;
   max-width: none;
+  overflow: hidden; /* Prevent nested scrolling here too */
 }
 
 .projects-details-side .view-header {
   display: none; /* Hide internal back button as we are in list-detail */
-}
-
-.projects-details-side .detail-content {
-  padding: 2rem;
 }
 
 .no-selection {

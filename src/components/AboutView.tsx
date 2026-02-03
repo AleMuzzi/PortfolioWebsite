@@ -14,8 +14,15 @@ export function AboutView({lang, handleSelect, onTagClick}: AboutViewProps) {
   const interestsRef = useRef<HTMLDivElement>(null);
   const educationRef = useRef<HTMLDivElement>(null);
 
-  const scrollToSection = (ref: React.RefObject<HTMLDivElement>) => {
-    ref.current?.scrollIntoView({behavior: 'smooth'});
+  const scrollToSection = (ref: React.RefObject<HTMLDivElement | null>) => {
+    if (ref.current) {
+      const heading = ref.current.querySelector('h3');
+      if (heading) {
+        heading.scrollIntoView({behavior: 'smooth'});
+      } else {
+        ref.current.scrollIntoView({behavior: 'smooth'});
+      }
+    }
   };
 
   const renderTag = (tag: string) => (
