@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { projects, experiences } from './projectsData';
 import { translations, Language } from './i18n';
 import { DetailsView } from './components/DetailsView';
@@ -36,6 +36,7 @@ function App() {
     const [activeTagName, setActiveTagName] = useState<string | null>(null);
     const [showVibeModal, setShowVibeModal] = useState(false);
     const [clickCount, setClickCount] = useState(0);
+    const experienceScrollPos = useRef(0);
 
     const t = translations[lang];
 
@@ -252,6 +253,14 @@ function App() {
     const selectedExperience = selectedType === 'experience' ? filteredExperiences.find((e) => e.id === selectedId) : null;
 
     const handleSelect = (id: string | null, type: 'project' | 'experience' | 'about' | 'home' | null, pushState = true) => {
+        // Save scroll position if we are in experience view and about to leave it
+        if (selectedType === 'experience' && !selectedId) {
+            const detailsElement = document.querySelector('.details');
+            if (detailsElement) {
+                experienceScrollPos.current = detailsElement.scrollTop;
+            }
+        }
+
         setSelectedId(id);
         setSelectedType(type);
         setActiveTagName(null);
@@ -260,14 +269,30 @@ function App() {
             window.history.pushState({ id, type }, '');
         }
 
-        // Use setTimeout to ensure the element is rendered and accessible
-        setTimeout(() => {
-            const detailsElement = document.querySelector('.details');
-            if (detailsElement) {
-                detailsElement.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
-            }
-        }, 0);
+        // We reset scroll for other views immediately.
+        // Restoration for experience is handled by useEffect.
+        if (type !== 'experience' || id) {
+            setTimeout(() => {
+                const detailsElement = document.querySelector('.details');
+                if (detailsElement) {
+                    detailsElement.scrollTo({ top: 0, behavior: 'auto' as ScrollBehavior });
+                }
+            }, 0);
+        }
     };
+
+    useEffect(() => {
+        if (selectedType === 'experience' && !selectedId) {
+            // Use a small delay to ensure the DOM is ready for scrolling
+            const timer = setTimeout(() => {
+                const detailsElement = document.querySelector('.details');
+                if (detailsElement) {
+                    detailsElement.scrollTo({ top: experienceScrollPos.current, behavior: 'auto' });
+                }
+            }, 50);
+            return () => clearTimeout(timer);
+        }
+    }, [selectedType, selectedId]);
 
     useEffect(() => {
         // Initial state

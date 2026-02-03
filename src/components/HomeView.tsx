@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import printerWithRobot from '../assets/printer_with_robot.png';
-import printerControlPanel from '../assets/printer_control_panel.png';
+import printerControlPanel0 from '../assets/printer_control_panel_0.png';
+import printerControlPanel25 from '../assets/printer_control_panel_25.png';
+import printerControlPanel50 from '../assets/printer_control_panel_50.png';
+import printerControlPanel75 from '../assets/printer_control_panel_75.png';
 import laptop from '../assets/laptop.png';
 import book from '../assets/book.png';
 import solderingIron from '../assets/soldering_iron.png';
@@ -16,6 +19,21 @@ interface HomeViewProps {
 export const HomeView = ({ t, handleSelect }: HomeViewProps) => {
     const [isTerminalOpen, setIsTerminalOpen] = useState(false);
     const [isGlowing, setIsGlowing] = useState(false);
+    const [currentPanelIndex, setCurrentPanelIndex] = useState(0);
+
+    const panelImages = [
+        printerControlPanel0,
+        printerControlPanel25,
+        printerControlPanel50,
+        printerControlPanel75
+    ];
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentPanelIndex((prevIndex) => (prevIndex + 1) % panelImages.length);
+        }, 2000);
+        return () => clearInterval(interval);
+    }, [panelImages.length]);
 
     const triggerGlow = () => {
         if (isGlowing) return;
@@ -45,7 +63,7 @@ export const HomeView = ({ t, handleSelect }: HomeViewProps) => {
                         <img src={printerWithRobot} alt="Printer with robot" className="printer-robot-img" />
                         
                         <div className="printer-panel-item-easter-egg" onClick={() => setIsTerminalOpen(true)}>
-                            <img src={printerControlPanel} alt="Printer Control Panel" />
+                            <img src={panelImages[currentPanelIndex]} alt="Printer Control Panel" />
                         </div>
 
                         <div className={`clickable-item laptop-item ${isGlowing ? 'glowing' : ''}`} onClick={() => handleSelect(null, 'experience')}>

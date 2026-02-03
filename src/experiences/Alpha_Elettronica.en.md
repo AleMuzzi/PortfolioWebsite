@@ -11,7 +11,7 @@ August 2015 — July 2017
 
 ## What i did
 **Project WF100**
-- Design and development of an **Android** and **iOS** application capable of managing multiple controllers of multicolor (and monocolor) led strips
+- Design and development of an **Android** and **iOS** application capable of managing multiple WiFi controllers of multicolor (and monocolor) led strips
 - Resolution and re-evaluation of any changes in the course of work
 - Highly modular design to facilitate future implementations and improvements
 - Modifications and adaptation of **OpenWRT** firmware with **Lua** server
