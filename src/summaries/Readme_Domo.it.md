@@ -17,5 +17,5 @@ L'app era originariamente disponibile gratuitamente su Google Play Store, ma è 
 
 ## Technologies and tools
 - **Linguaggi:** Kotlin, C#
-- **Frameworks:** Android SDK
+- **Frameworks:** Android
 - **Backend e API:** HTTP, WebSocket

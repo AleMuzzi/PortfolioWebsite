@@ -17,35 +17,26 @@ L'app fornisce un'interfaccia utente che richiama i comandi di un normale contro
 Per evitare ritardi cumulativi, i comandi sono inviati in modo continuo ad una frequenza fissa, gestibile dal server. I comandi vengono poi interpretati dal flight controller, che regola la velocità dei motori di conseguenza, passando per gli ESC.
 
 Avendo a disposizione un Arduino Yun, nella versione iniziale del progetto il server UDP era scritto in Lua, sfruttando la potenza di calcolo del processore Linux integrato nell'Arduino Yun. Per poter inviare i comandi al flight controller era però necessario accedere ai pin di Arduino, possibile solo attraverso la _Bridge Library_. Questo introduceva un ritardo significativo nella catena di comunicazione, rendendo il controllo del drone poco reattivo e impreciso.
-Per risolvere questo problema, ho deciso di sfruttare un'ESP8266 come antenna Wi-Fi via UART[^1] e riscrivere il server UDP in C, per farlo girare direttamente sul microcontrollore. In questo modo, i comandi potevano essere trasmessi direttamente ai pin di Arduino, riducendo drasticamente la latenza e migliorando la reattività del sistema di controllo.
+Per risolvere questo problema, ho deciso di sfruttare un'[ESP8266 come antenna Wi-Fi via UART](https://www.instructables.com/Cheap-Arduino-WiFi-Shield-With-ESP8266/) e riscrivere il server UDP in C, per farlo girare direttamente sul microcontrollore. In questo modo, i comandi potevano essere trasmessi direttamente ai pin di Arduino, riducendo drasticamente la latenza e migliorando la reattività del sistema di controllo.
 
+### Risultati
+Il drone è stato in grado di volare con successo, dimostrando che un'app Android può essere utilizzata efficacemente per il controllo del volo in tempo reale. L'esperienza mi ha fornito una comprensione approfondita dei principi di volo e funzionamento dei droni, della programmazione di applicazioni mobili e dell'integrazione hardware-software.
+Avrei potuto migliorare ulteriormente il progetto con funzionalità aggiuntive come la stabilizzazione automatica del volo, il GPS per il posizionamento e il ritorno a casa, ma a quel punto l'obiettivo principale era già stato raggiunto: avevo ottenuto un lavoro come [Full Stack Drone Developer](). #TODO: link al lavoro
 
+![drone_photo_1.jpg{width="500px"}](src/summaries/res/drone_photo_1.jpg)
+![drone_photo_2.jpg{width="420px"}](src/summaries/res/drone_photo_2.jpg)
 
-### Applicazione di Controllo Android
-Il cuore dell'interfaccia utente è un'applicazione Android dedicata. Progettata per l'interazione in tempo reale, l'app facilita:
-- **Trasmissione dei Comandi:** Invia segnali di controllo precisi (acceleratore, imbardata, beccheggio, rollio) e interruttori di modalità di volo al ricevitore del drone tramite protocolli wireless (Wi-Fi, Bluetooth o link radio personalizzati).
-- **Feedback di Telemetria:** Visualizza i dati in tempo reale dal drone, inclusi tensione della batteria, altitudine, orientamento (assetto) e coordinate GPS, utilizzando un'interfaccia dinamica in stile HUD.
-- **Registrazione dei Dati:** In grado di registrare la telemetria di volo per l'analisi post-volo e l'ottimizzazione delle prestazioni.
+<div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+<video src="src/summaries/res/drone_test.mp4" loop autoplay muted playsinline width="500"></video>
+</div>
 
-L'applicazione segue i pattern architetturali standard di Android, garantendo prestazioni affidabili e comunicazioni a bassa latenza con l'hardware del drone.
+### Curiosità
+Durante lo sviluppo del progetto, ho dovuto calibrare gli ESC per garantire che i motori rispondessero correttamente ai comandi di velocità. Non avendolo mai fatto prima, ho dovuto documentarmi e ho scoperto che vanno calibrati ascoltanto i "beep" emessi dai motori. Questi suoni non sono casuali, ma seguono uno schema preciso che indica lo stato di calibrazione degli ESC e vengono generati dal movimento del rotore.
 
-### Configurazione e Messa a Punto del Volo
-Un volo di successo richiede una calibrazione precisa dell'hardware. Questo progetto include risorse specializzate per:
-- **Tuning PID:** Documentazione e impostazioni per l'ottimizzazione dei controllori Proporzionale-Integrale-Derivativo (PID) per garantire caratteristiche di volo stabili.
-- **Calibrazione dell'Electronic Speed Controller (ESC):** Parametri per la sincronizzazione del motore e i tempi di risposta.
-- **Documentazione Hardware:** Diagrammi dettagliati e fotografie del telaio, layout dei cablaggi e posizionamento dei componenti per assistere nelle riparazioni e nei futuri aggiornamenti.
-
-### Media di Volo
-L'archivio multimediale integrato include filmati sia a bordo che a terra. Questi video non sono solo per esposizione; sono critici per:
-- Identificare problemi di vibrazione o instabilità meccaniche.
-- Rivedere le manovre di volo e le prestazioni della batteria sotto carico.
-- Documentare missioni di successo e testare nuove iterazioni software o hardware.
-
-[^1]: https://www.instructables.com/Cheap-Arduino-WiFi-Shield-With-ESP8266/
+Ad ogni accensione del drone, quando l'ESC viene avviato, controlla di avere memorizzato i valori di minimo e massimo. Quindi, se tutto è corretto, il motore emette una serie di beep che indicano che si può procedere con il volo.
 
 ## Technologies and tools
-- **Sviluppo Android:** Architettura dell'applicazione basata su Gradle per il controllo mobile.
-- **Hardware di Controllo del Volo:** Controllori di volo multi-rotore (es. KK2), ESC e motori brushless.
-- **Comunicazione Wireless:** Implementazione di protocolli per telemetria in tempo reale e link di comando.
-- **Imaging Digitale:** Strumenti per la registrazione del volo e documentazione hardware fotografica.
-- **Analisi della Telemetria:** Tecniche per rivedere e interpretare i dati dei sensori dal sistema di volo.
+- **Frameworks**: Android
+- **Linguaggi:** C, Kotlin, Lua
+- **Hardware:** Arduino, ESP8266, KK2 Flight Controller, ESC, Brushless Motors
+

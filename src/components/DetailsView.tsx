@@ -3,6 +3,7 @@ import { Project, Experience } from '../projectsData';
 import { translations, Language } from '../i18n';
 import './DetailsView.css';
 import remarkGfm from 'remark-gfm';
+import rehypeRaw from "rehype-raw";
 
 interface DetailsViewProps {
     selectedType: 'project' | 'experience' | 'about' | 'home' | null;
@@ -105,7 +106,7 @@ export function DetailsView({
                                         img: ({node, ...props}: any) => {
                                             const alt = props.alt || '';
                                             const widthMatch = alt.match(/\{width="?(\d+%?|auto|[^"}]+)"?\}/);
-                                            const alignMatch = alt.match(/\{align="?(left|right)"?\}/);
+                                            const alignMatch = alt.match(/\{align="?(left|right|center)"?\}/);
                                             
                                             let style: React.CSSProperties = { maxWidth: '100%' };
                                             let className = '';
@@ -132,7 +133,14 @@ export function DetailsView({
                                                     className={className}
                                                 />
                                             );
-                                        }
+                                        },
+                                        a: ({node, ...props}: any) => (
+                                          <a
+                                            {...props}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                          />
+                                        )
                                     };
 
                                     return (
@@ -144,14 +152,20 @@ export function DetailsView({
                                                 <>
                                                     { (item as Project).description && (
                                                         <div className="project-description">
-                                                            <ReactMarkdown components={renderers} remarkPlugins={[remarkGfm]}>
+                                                            <ReactMarkdown
+                                                              components={renderers}
+                                                              remarkPlugins={[remarkGfm]}
+                                                              rehypePlugins={[rehypeRaw]}>
                                                                 {(item as Project).description}
                                                             </ReactMarkdown>
                                                         </div>
                                                     )}
                                                     { (item as Project).bodyMarkdown && (
                                                         <div className="project-body-markdown">
-                                                            <ReactMarkdown components={renderers} remarkPlugins={[remarkGfm]}>
+                                                            <ReactMarkdown
+                                                              components={renderers}
+                                                              remarkPlugins={[remarkGfm]}
+                                                              rehypePlugins={[rehypeRaw]}>
                                                                 {(item as Project).bodyMarkdown}
                                                             </ReactMarkdown>
                                                         </div>
