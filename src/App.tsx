@@ -37,7 +37,6 @@ function App() {
     const [lastProjectId, setLastProjectId] = useState<string | null>(null);
     const [activeTagName, setActiveTagName] = useState<string | null>(null);
     const [showVibeModal, setShowVibeModal] = useState(false);
-    const [clickCount, setClickCount] = useState(0);
     const experienceScrollPos = useRef(0);
 
     const t = translations[lang];
@@ -254,18 +253,6 @@ function App() {
         });
     }, [educationPeriods, svgHeight, maxYear, yearRange]);
 
-    // @ts-ignore
-    const handleFooterClick = () => {
-        const newCount = clickCount + 1;
-        if (newCount === 5) {
-            setShowVibeModal(true);
-            setClickCount(0);
-        } else {
-            setClickCount(newCount);
-            setTimeout(() => setClickCount(0), 2000);
-        }
-    };
-
     const selectedProject = selectedType === 'project' ? filteredProjects.find((p) => p.id === selectedId) : null;
     const selectedExperience = selectedType === 'experience' ? filteredExperiences.find((e) => e.id === selectedId) : null;
 
@@ -276,11 +263,6 @@ function App() {
             if (detailsElement) {
                 experienceScrollPos.current = detailsElement.scrollTop;
             }
-        }
-
-        // Track last selected project so that ProjectsGridView can restore it on navigation/back
-        if (type === 'project' && id) {
-            setLastProjectId(id);
         }
 
         setSelectedId(id);

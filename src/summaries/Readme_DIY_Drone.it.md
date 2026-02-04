@@ -1,4 +1,4 @@
-# 🚁 Drone
+# 🚁 DIY Drone
 
 ## Summary
 Un drone completamente DIY con un'app Android per la telemetria e il controllo del volo ottimizzato.
@@ -24,8 +24,6 @@ Il drone è stato in grado di volare con successo, dimostrando che un'app Androi
 Avrei potuto migliorare ulteriormente il progetto con funzionalità aggiuntive come la stabilizzazione automatica del volo, il GPS per il posizionamento e il ritorno a casa, ma a quel punto l'obiettivo principale era già stato raggiunto: avevo ottenuto un lavoro come [Full Stack Drone Developer](http://experience:verses-drone). 
 Magari in futuro potrebbe diventare un drone FPV, chissà!
 
-[//]: # (TODO: link al lavoro)
-
 ![drone_photo_1.jpg{width="500px"}](src/summaries/res/drone_photo_1.jpg)
 ![drone_photo_2.jpg{width="420px"}](src/summaries/res/drone_photo_2.jpg)
 
@@ -39,8 +37,8 @@ Durante lo sviluppo del progetto, ho dovuto calibrare gli ESC per garantire che 
 Ad ogni accensione del drone, quando l'ESC viene avviato, controlla di avere memorizzato i valori di minimo e massimo. Quindi, se tutto è corretto, il motore emette una serie di beep che indicano che si può procedere con il volo.
 
 ## Technologies and tools
-- **Frameworks**: Android
+- **Frameworks**: Android, Arduino
 - **Linguaggi:** C, Kotlin, Lua
 - **Hardware:** Arduino, ESP8266, KK2 Flight Controller, ESC, Brushless Motors
 - **Strumenti di Prototipazione:** 3D print FDM
-
+- **Protocolli di Comunicazione:** UDP, Serial

@@ -13,7 +13,7 @@ L'applicazione presenta un'architettura molto semplice, composta da un'interfacc
 
 
 ### Pubblicazione
-L'app era originariamente disponibile gratuitamente su Google Play Store, ma è stata rimossa per mancanza di tempo per la manutenzione.
+L'app era originariamente disponibile gratuitamente su Google Play Store, ma è stata rimossa per mancanza di utilizzo e tempo per la manutenzione.
 
 ## Technologies and tools
 - **Linguaggi:** Kotlin, C#
