@@ -143,6 +143,7 @@ export function ProjectsGridView({
                             selectedExperience={null}
                             lang={lang}
                             handleSelect={() => setLocalSelectedId(null)}
+                            handleSelectExternal={(id, type) => handleSelect(id, type)}
                             onTagClick={onTagClick}
                         />
                     ) : (

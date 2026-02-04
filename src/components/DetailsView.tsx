@@ -11,6 +11,7 @@ interface DetailsViewProps {
     selectedExperience: Experience | null | undefined;
     lang: Language;
     handleSelect: (id: string | null, type: 'project' | 'experience' | 'about' | 'home' | null) => void;
+    handleSelectExternal: (id: string, type: 'project' | 'experience') => void;
     onTagClick?: (tagName: string) => void;
 }
 
@@ -20,6 +21,7 @@ export function DetailsView({
     selectedExperience,
     lang,
     handleSelect,
+    handleSelectExternal,
     onTagClick
 }: DetailsViewProps) {
     const t = translations[lang];
@@ -134,13 +136,52 @@ export function DetailsView({
                                                 />
                                             );
                                         },
-                                        a: ({node, ...props}: any) => (
-                                          <a
-                                            {...props}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                          />
-                                        )
+                                        a: ({node, href, children, ...props}: any) => {
+                                          const hrefValue = typeof href === 'string' ? href : '';
+
+                                          // Internal app links (SPA navigation only)
+                                          const internalPrefixes: { prefix: string; type: 'project' | 'experience' }[] = [
+                                            { prefix: 'http://experience:', type: 'experience' },
+                                            { prefix: 'http://project:', type: 'project' },
+                                            { prefix: 'experience:', type: 'experience' },
+                                            { prefix: 'project:', type: 'project' },
+                                          ];
+
+                                          const match = internalPrefixes.find(p => hrefValue.startsWith(p.prefix));
+
+                                          if (match) {
+                                            const targetId = hrefValue.slice(match.prefix.length).trim() || null;
+                                            if (!targetId) {
+                                                console.warn(`Invalid internal link: ${hrefValue}`);
+                                                return <span {...props}>{children}</span>;
+                                            }
+                                            return (
+                                              <button
+                                                type="button"
+                                                {...props}
+                                                onClick={(e) => {
+                                                  e.preventDefault();
+                                                  handleSelectExternal(targetId, match.type);
+                                                }}
+                                                className={`${props.className || ''} internal-link-button`}
+                                              >
+                                                {children}
+                                              </button>
+                                            );
+                                          }
+
+                                          // Default: external links in new tab
+                                          return (
+                                            <a
+                                              {...props}
+                                              href={hrefValue}
+                                              target="_blank"
+                                              rel="noopener noreferrer"
+                                            >
+                                              {children}
+                                            </a>
+                                          );
+                                        }
                                     };
 
                                     return (

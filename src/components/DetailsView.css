@@ -259,6 +259,21 @@
     color: #f3e8ff;
 }
 
+.internal-link-button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    color: #38bdf8;
+    text-decoration: underline;
+    cursor: pointer;
+    font: inherit;
+}
+
+.internal-link-button:hover {
+    color: #0ea5e9;
+}
+
 /* Image alignment styles */
 .markdown-body img.align-right {
     float: right;
