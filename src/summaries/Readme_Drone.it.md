@@ -21,7 +21,10 @@ Per risolvere questo problema, ho deciso di sfruttare un'[ESP8266 come antenna W
 
 ### Risultati
 Il drone è stato in grado di volare con successo, dimostrando che un'app Android può essere utilizzata efficacemente per il controllo del volo in tempo reale. L'esperienza mi ha fornito una comprensione approfondita dei principi di volo e funzionamento dei droni, della programmazione di applicazioni mobili e dell'integrazione hardware-software.
-Avrei potuto migliorare ulteriormente il progetto con funzionalità aggiuntive come la stabilizzazione automatica del volo, il GPS per il posizionamento e il ritorno a casa, ma a quel punto l'obiettivo principale era già stato raggiunto: avevo ottenuto un lavoro come [Full Stack Drone Developer](). #TODO: link al lavoro
+Avrei potuto migliorare ulteriormente il progetto con funzionalità aggiuntive come la stabilizzazione automatica del volo, il GPS per il posizionamento e il ritorno a casa, ma a quel punto l'obiettivo principale era già stato raggiunto: avevo ottenuto un lavoro come [Full Stack Drone Developer](). 
+Magari in futuro potrebbe diventare un drone FPV, chissà!
+
+[//]: # (TODO: link al lavoro)
 
 ![drone_photo_1.jpg{width="500px"}](src/summaries/res/drone_photo_1.jpg)
 ![drone_photo_2.jpg{width="420px"}](src/summaries/res/drone_photo_2.jpg)
@@ -39,4 +42,5 @@ Ad ogni accensione del drone, quando l'ESC viene avviato, controlla di avere mem
 - **Frameworks**: Android
 - **Linguaggi:** C, Kotlin, Lua
 - **Hardware:** Arduino, ESP8266, KK2 Flight Controller, ESC, Brushless Motors
+- **Strumenti di Prototipazione:** 3D print FDM
 

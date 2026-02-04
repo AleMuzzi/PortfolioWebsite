@@ -1,9 +1,10 @@
 # 🤖 Omnibot
 
 ## Summary
-Telecomando Android e dashboard di telemetria in tempo reale per robot omnidirezionali.
+Robot omnidirezionale con un'app Android dedicata per il controllo e lo streaming video in tempo reale.
 
 ## What this project is
+
 Omnibot è un'applicazione Android specializzata progettata per fungere da **telecomando principale e dashboard di telemetria** per una piattaforma robotica omnidirezionale. Ottimizzata per l'uso su tablet e dispositivi mobili, fornisce un'interfaccia intuitiva per la navigazione robotica in tempo reale, il monitoraggio del sistema e la configurazione dell'hardware su una rete wireless.
 
 ## How it works
