@@ -7,6 +7,11 @@ export interface Project {
     technologies: string[];
     categorizedTech?: Record<string, string[]>;
     link?: string;
+    /**
+     * Optional numeric order extracted from the markdown filename.
+     * Example: `2_Readme_DIY_Drone.en.md` → order = 2.
+     */
+    order?: number;
     lang: 'en' | 'it';
 }
 
@@ -43,12 +48,29 @@ function parseProject(filename: string, content: unknown): Project {
             lang
         };
     }
-    const id = filename
-        .split('/')
-        .pop()!
-        .replace('Readme_', '')
+
+    // Example filename: "2_Readme_DIY_Drone.en.md"
+    const fileName = filename.split('/').pop()!;
+
+    // Extract numeric prefix (order) if present at the beginning (e.g. "2_...")
+    let order: number | undefined;
+    const orderMatch = fileName.match(/^(\d+)_/);
+    if (orderMatch) {
+        order = Number.parseInt(orderMatch[1], 10);
+    }
+
+    // Remove extension and numeric prefix for id/slug generation
+    let base = fileName
         .replace('.en.md', '')
-        .replace('.it.md', '')
+        .replace('.it.md', '');
+
+    // Drop leading numeric prefix + underscore (e.g. "2_" → "")
+    base = base.replace(/^\d+_/, '');
+
+    // Preserve previous behavior: strip "Readme_" and use the rest as slug
+    const slugSource = base.replace('Readme_', '');
+
+    const id = slugSource
         .toLowerCase()
         .replace(/_/g, '-');
 
@@ -114,6 +136,7 @@ function parseProject(filename: string, content: unknown): Project {
         technologies: Array.from(new Set(technologies)),
         categorizedTech: Object.keys(categorizedTech).length > 0 ? categorizedTech : undefined,
         link: link || undefined,
+        order,
         lang
     };
 }
@@ -218,7 +241,13 @@ function parsePeriodStart(period: string): number {
 
 export const projects: Project[] = Object.entries(projectModules)
     .map(([path, module]) => parseProject(path, module.default))
-    .sort((a, b) => a.name.localeCompare(b.name));
+    .sort((a, b) => {
+        const ao = a.order ?? Number.MAX_SAFE_INTEGER;
+        const bo = b.order ?? Number.MAX_SAFE_INTEGER;
+        if (ao !== bo) return ao - bo;
+        // Fallback: alphabetic order by name when order is equal or missing
+        return a.name.localeCompare(b.name);
+    });
 
 export const experiences: Experience[] = Object.entries(experienceModules)
     .map(([path, module]) => parseExperience(path, module.default))

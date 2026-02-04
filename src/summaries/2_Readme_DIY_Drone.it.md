@@ -24,8 +24,12 @@ Il drone è stato in grado di volare con successo, dimostrando che un'app Androi
 Avrei potuto migliorare ulteriormente il progetto con funzionalità aggiuntive come la stabilizzazione automatica del volo, il GPS per il posizionamento e il ritorno a casa, ma a quel punto l'obiettivo principale era già stato raggiunto: avevo ottenuto un lavoro come [Full Stack Drone Developer](http://experience:verses-drone). 
 Magari in futuro potrebbe diventare un drone FPV, chissà!
 
+<div style="display: flex; flex-direction: column; align-items: center; gap: 20px">
+
 ![drone_photo_1.jpg{width="500px"}](src/summaries/res/drone_photo_1.jpg)
 ![drone_photo_2.jpg{width="420px"}](src/summaries/res/drone_photo_2.jpg)
+
+</div>
 
 <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
 <video src="src/summaries/res/drone_test.mp4" loop autoplay muted playsinline width="500"></video>
