@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Project } from '../projectsData';
 import { translations, Language } from '../i18n';
@@ -11,19 +11,30 @@ interface ProjectsGridViewProps {
     filteredProjects: Project[];
     handleSelect: (id: string | null, type: 'project' | 'experience' | 'about' | 'home' | null) => void;
     onTagClick?: (tagName: string) => void;
+    initialSelectedId?: string | null;
+    onProjectSelected?: (id: string) => void;
 }
 
 export function ProjectsGridView({
     lang,
     filteredProjects,
     handleSelect,
-    onTagClick
+    onTagClick,
+    initialSelectedId,
+    onProjectSelected,
 }: ProjectsGridViewProps) {
     const t = translations[lang];
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
-    const [localSelectedId, setLocalSelectedId] = useState<string | null>(filteredProjects.length > 0 ? filteredProjects[0].id : null);
+    const [localSelectedId, setLocalSelectedId] = useState<string | null>(
+        initialSelectedId ?? (filteredProjects.length > 0 ? filteredProjects[0].id : null)
+    );
+
+    useEffect(() => {
+        const fallbackId = filteredProjects.length > 0 ? filteredProjects[0].id : null;
+        setLocalSelectedId(initialSelectedId ?? fallbackId);
+    }, [initialSelectedId, filteredProjects]);
 
     const allTags = useMemo(() => {
         const tags = new Set<string>();
@@ -96,7 +107,10 @@ export function ProjectsGridView({
                                 <div 
                                     key={project.id} 
                                     className={`project-list-item ${localSelectedId === project.id ? 'active' : ''}`}
-                                    onClick={() => setLocalSelectedId(project.id)}
+                                    onClick={() => {
+                                        setLocalSelectedId(project.id);
+                                        onProjectSelected?.(project.id);
+                                    }}
                                 >
                                     <h3>{project.name}</h3>
                                     <div className="project-summary">

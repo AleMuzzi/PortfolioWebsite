@@ -34,6 +34,7 @@ function App() {
     const [lang, setLang] = useState<Language>('en');
     const [selectedId, setSelectedId] = useState<string | null>(null);
     const [selectedType, setSelectedType] = useState<'project' | 'experience' | 'about' | 'home' | null>('home');
+    const [lastProjectId, setLastProjectId] = useState<string | null>(null);
     const [activeTagName, setActiveTagName] = useState<string | null>(null);
     const [showVibeModal, setShowVibeModal] = useState(false);
     const [clickCount, setClickCount] = useState(0);
@@ -43,6 +44,21 @@ function App() {
 
     const filteredProjects = useMemo(() => projects.filter(p => p.lang === lang), [lang]);
     const filteredExperiences = useMemo(() => experiences.filter(e => e.lang === lang), [lang]);
+
+    // Ensure lastProjectId always points to a valid project for the current language
+    useEffect(() => {
+        if (filteredProjects.length === 0) {
+            if (lastProjectId !== null) {
+                setLastProjectId(null);
+            }
+            return;
+        }
+
+        const exists = lastProjectId && filteredProjects.some(p => p.id === lastProjectId);
+        if (!exists) {
+            setLastProjectId(filteredProjects[0].id);
+        }
+    }, [filteredProjects, lastProjectId]);
 
     const educationPeriods = useMemo(() => {
         const schools = [
@@ -262,6 +278,11 @@ function App() {
             }
         }
 
+        // Track last selected project so that ProjectsGridView can restore it on navigation/back
+        if (type === 'project' && id) {
+            setLastProjectId(id);
+        }
+
         setSelectedId(id);
         setSelectedType(type);
         setActiveTagName(null);
@@ -384,6 +405,8 @@ function App() {
                                     filteredProjects={filteredProjects}
                                     handleSelect={handleSelect}
                                     onTagClick={(tagName) => setActiveTagName(tagName)}
+                                    initialSelectedId={lastProjectId}
+                                    onProjectSelected={(id) => setLastProjectId(id)}
                                 />
                             ) : selectedType === 'about' ? (
                                 <AboutView 
@@ -399,6 +422,7 @@ function App() {
                                 selectedExperience={selectedExperience}
                                 lang={lang}
                                 handleSelect={handleSelect}
+                                handleSelectExternal={(id, type) => handleSelect(id, type)}
                                 onTagClick={(tagName) => setActiveTagName(tagName)}
                             />
                         )}
