@@ -218,9 +218,39 @@ export function DetailsView({
                                 })()}
                             </div>
 
+                            {/* RESOURCES SECTION */}
+                            {item.resources && item.resources.length > 0 && (
+                                <div className="resources-section">
+                                    <span className="resources-title">{t.resources}</span>
+                                    <div className="resources-grid">
+                                        {item.resources.map((res) => (
+                                            <a
+                                                key={res.url}
+                                                href={res.url}
+                                                download
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="resource-card"
+                                            >
+                                                <div className="resource-icon">
+                                                    {res.kind === 'image' ? (
+                                                        <img src={res.url} alt={res.label} />
+                                                    ) : (
+                                                        <span className="resource-emoji">
+                                                            {res.kind === 'pdf' ? '📄' : '📦'}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                                <div className="resource-label">{res.label}</div>
+                                            </a>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
                             {/* TOOLS FOOTER */}
                             <div className="tools-section">
-                                <span className="tools-title">Techniques & Tools</span>
+                                <span className="tools-title">{t.tecnologiesAndTools}</span>
                                 {item.categorizedTech ? (
                                     <div className="categorized-tools">
                                         {Object.entries(item.categorizedTech).map(([category, items]) => (

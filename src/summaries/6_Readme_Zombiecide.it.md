@@ -73,8 +73,14 @@ L’applicazione, oltre ai test effettuati durante lo sviluppo, ha anche affront
 
 Inoltre, il progetto è piaciuto al professore universitario, che lo ha accettato e valutato come progetto d'esame.
 
+
 ## Technologies and tools
 - **Frameworks:** .NET, Unity
 - **Linguaggi:** C#
 - **OS Supportati:** Windows, Linux, macOS
 - **Protocolli di Comunicazione:** TCP, UDP
+
+
+[//]: # (da aggiungere ai segreti)
+
+[//]: # (più o meno, l'AI non è molto brava a debuggare)

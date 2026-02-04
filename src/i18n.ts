@@ -47,6 +47,7 @@ export const translations = {
     activities: "Activities",
     whatIDid: "What I did",
     technologies: "Technologies & tools",
+    resources: "Resources",
     overview: "Overview",
     howItWorks: "How it was done",
     builtWith: "Built with",
@@ -78,6 +79,7 @@ export const translations = {
     experience: "Experience",
     filterByTags: "Filter by Tags",
     apply: "Apply",
+    tecnologiesAndTools: "Technologies & Tools",
   },
   it: {
     heroTitle: "Alessandro Muzzi",
@@ -118,6 +120,7 @@ export const translations = {
     activities: "Attività",
     whatIDid: "Cosa ho fatto",
     technologies: "Tecnologie e strumenti",
+    resources: "Risorse",
     overview: "Panoramica",
     howItWorks: "Come funziona",
     builtWith: "Costruito con",
@@ -161,6 +164,7 @@ export const translations = {
     bachelorsDegree: "Laurea Triennale",
     compEngField: "Ingegneria Informatica",
     mastersDegree: "Laurea Magistrale",
+    tecnologiesAndTools: "Tecnologie e Strumenti",
   }
 };
 

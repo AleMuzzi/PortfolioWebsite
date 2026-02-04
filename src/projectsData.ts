@@ -1,3 +1,9 @@
+export interface Resource {
+    label: string;
+    url: string;
+    kind: 'image' | 'pdf' | 'other';
+}
+
 export interface Project {
     id: string;
     name: string;
@@ -12,6 +18,11 @@ export interface Project {
      * Example: `2_Readme_DIY_Drone.en.md` → order = 2.
      */
     order?: number;
+    /**
+     * Optional list of downloadable resources parsed from the markdown
+     * "Resources" / "Risorse" section.
+     */
+    resources?: Resource[];
     lang: 'en' | 'it';
 }
 
@@ -25,6 +36,8 @@ export interface Experience {
     details: string;
     technologies: string[];
     categorizedTech?: Record<string, string[]>;
+    /** Optional resources section for experiences as well. */
+    resources?: Resource[];
     lang: 'en' | 'it';
 }
 
@@ -85,6 +98,7 @@ function parseProject(filename: string, content: unknown): Project {
     let technologies: string[] = [];
     let categorizedTech: Record<string, string[]> = {};
     let bodyMarkdownParts: string[] = [];
+    let resources: Resource[] = [];
 
     sections.forEach(section => {
         const lines = section.trim().split('\n');
@@ -99,6 +113,35 @@ function parseProject(filename: string, content: unknown): Project {
             if (urlMatch) {
                 link = urlMatch[0];
             }
+        } else if (header.includes('resources') || header.includes('risorse')) {
+            const resourceLines = body.split('\\n').filter(line => line.trim().length > 0);
+
+            resourceLines.forEach(line => {
+                const cleanLine = line.replace(/^[-*+]\\s+/, '').trim();
+                if (!cleanLine) return;
+
+                // Try to parse markdown link: [Label](url)
+                const linkMatch = cleanLine.match(/\[(.*?)\]\((.*?)\)/);
+                let label: string;
+                let url: string;
+                if (linkMatch) {
+                    label = linkMatch[1].trim();
+                    url = linkMatch[2].trim();
+                } else {
+                    label = cleanLine;
+                    url = cleanLine;
+                }
+
+                const lowerUrl = url.toLowerCase();
+                let kind: Resource['kind'] = 'other';
+                if (/(\.png|\.jpg|\.jpeg|\.gif|\.webp|\.svg)$/.test(lowerUrl)) {
+                    kind = 'image';
+                } else if (lowerUrl.endsWith('.pdf')) {
+                    kind = 'pdf';
+                }
+
+                resources.push({ label, url, kind });
+            });
         } else if (header.includes('technologies and tools') || header.includes('tecnologie e strumenti')) {
             const techLines = body.split('\n').filter(line => line.trim().length > 0);
 
@@ -132,11 +175,12 @@ function parseProject(filename: string, content: unknown): Project {
         name,
         summary,
         description,
-        bodyMarkdown: bodyMarkdownParts.join('\n\n').trim(),
+        bodyMarkdown: bodyMarkdownParts.join('\\n\\n').trim(),
         technologies: Array.from(new Set(technologies)),
         categorizedTech: Object.keys(categorizedTech).length > 0 ? categorizedTech : undefined,
         link: link || undefined,
         order,
+        resources: resources.length > 0 ? resources : undefined,
         lang
     };
 }
@@ -174,11 +218,12 @@ function parseExperience(filename: string, content: unknown): Experience {
     let companyUrl = '';
     let technologies: string[] = [];
     let categorizedTech: Record<string, string[]> = {};
+    let resources: Resource[] = [];
 
     sections.forEach(section => {
-        const lines = section.trim().split('\n');
+        const lines = section.trim().split('\\n');
         const header = lines[0].toLowerCase().trim();
-        const body = lines.slice(1).join('\n').trim();
+        const body = lines.slice(1).join('\\n').trim();
 
         if (header.includes('summary')) {
             summary = body;
@@ -196,6 +241,34 @@ function parseExperience(filename: string, content: unknown): Experience {
             period = body;
         } else if (header.includes('what i did') || header.includes('cosa ho fatto')) {
             details = body;
+        } else if (header.includes('resources') || header.includes('risorse')) {
+            const resourceLines = body.split('\\n').filter(line => line.trim().length > 0);
+
+            resourceLines.forEach(line => {
+                const cleanLine = line.replace(/^[-*+]\\s+/, '').trim();
+                if (!cleanLine) return;
+
+                const linkMatch = cleanLine.match(/\[(.*?)\]\((.*?)\)/);
+                let label: string;
+                let url: string;
+                if (linkMatch) {
+                    label = linkMatch[1].trim();
+                    url = linkMatch[2].trim();
+                } else {
+                    label = cleanLine;
+                    url = cleanLine;
+                }
+
+                const lowerUrl = url.toLowerCase();
+                let kind: Resource['kind'] = 'other';
+                if (/(\.png|\.jpg|\.jpeg|\.gif|\.webp|\.svg)$/.test(lowerUrl)) {
+                    kind = 'image';
+                } else if (lowerUrl.endsWith('.pdf')) {
+                    kind = 'pdf';
+                }
+
+                resources.push({ label, url, kind });
+            });
         } else if (header.includes('technologies and tools') || header.includes('tecnologie e strumenti')) {
             const techLines = body.split('\n').filter(line => line.trim().length > 0);
 
@@ -230,6 +303,7 @@ function parseExperience(filename: string, content: unknown): Experience {
         details,
         technologies: Array.from(new Set(technologies)),
         categorizedTech: Object.keys(categorizedTech).length > 0 ? categorizedTech : undefined,
+        resources: resources.length > 0 ? resources : undefined,
         lang
     };
 }

@@ -32,8 +32,24 @@ Il controllore si interfaccia con due sensori a galleggiante, uno posizionato al
 Questi sensori forniscono un feedback preciso sui livelli dell'acqua, consentendo al microcontrollore di prendere decisioni informate sull'attivazione della pompa.
 Il codice Arduino, lungo meno di 40 righe, implementa una logica a macchina a stati che gestisce i cicli di pompaggio in modo affidabile e informa l'utente dello stato del sistema tramite LED dedicati.
 E' stato quindi utilizzato un relè per tradurre il segnale a bassa tensione del microcontrollore nella potenza richiesta per azionare la pompa dell'acqua.
+                                                
+<div style="display: flex; flex-direction: column; align-items: center; gap: 20px">
 
-[//]: # (TODO foto)
+![pompa_cantina_foto_off.jpg{width="376px"}](src/summaries/res/pompa_cantina_foto_off.jpg)
+![pompa_cantina_foto_on.jpg{width="600px"}](src/summaries/res/pompa_cantina_foto_on.jpg)
+</br>
+<label style="display: flex; flex-direction: column; align-items: center; font-style: italic">Stato Spento (sinistra) e Stato Attivo (destra) con LED di stato acceso</label>
+
+</div>
+Nelle foto sopra si possono notare:
+
+- il LED di alimentazione (a sinistra) che indica che il sistema è alimentato
+- il LED di stato (acceso a destra) che indica che la pompa è attiva e sta drenando l'acqua dal serbatoio
+- i due sensori a galleggiante (in alto a destra) che monitorano i livelli di "Pieno" e "Vuoto"
+- il tubo di immissione dell'acqua proveniente dal deumidificatore (verde, in alto a destra)
+- il tubo di scarico dell'acqua pompata fuori dal serbatoio (bianco, in alto a sinistra)
+- il tubo di emergenza (bianco, a sinistra) che previene il traboccamento in caso di guasto del sistema e devia l'acqua in un secchio esterno
+- l'interruttore di azionamento manuale (nero, in alto a destra sopra il serbatoio) che consente di attivare la pompa manualmente in caso di necessità
 
 ### Logica di Controllo e Macchina a Stati
 Il sistema opera su una semplice e robusta logica a macchina a stati per garantire cicli di pompaggio affidabili:
@@ -44,7 +60,7 @@ Il sistema opera su una semplice e robusta logica a macchina a stati per garanti
 La logica è ottimizzata per l'implementazione autonoma, non richiedendo alcuna connessione a un computer esterno una volta caricato il firmware.
 
 ## Technologies and tools
-- **Hardware:** Arduino, Sensori a galleggiante, Modulo relè, LED
+- **Hardware:** Arduino, Sensori a galleggiante, Modulo relè, LED, Timer NE555
 - **Linguaggi:** C++
 - **Software di Progettazione Circuiti:** EveryCircuit
 - **Strumenti di Prototipazione:** Basetta millefori, 3D print FDM
