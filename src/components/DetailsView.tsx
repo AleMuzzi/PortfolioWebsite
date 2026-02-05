@@ -109,11 +109,13 @@ export function DetailsView({
                                             const alt = props.alt || '';
                                             const widthMatch = alt.match(/\{width="?(\d+%?|auto|[^"}]+)"?\}/);
                                             const alignMatch = alt.match(/\{align="?(left|right|center)"?\}/);
-                                            const captionMatch = alt.match(/\{caption="?(\w+)"?\}/);
+                                            const captionMatch = alt.match(/\{caption="?(.+)"?\}/);
 
                                             let style: React.CSSProperties = { maxWidth: '100%' };
                                             let className = '';
                                             let cleanAlt = alt;
+                                            let captionTextStyle: React.CSSProperties = { textAlign: 'center', fontSize: '0.9em', color: '#888', marginTop: '4px', fontStyle: 'italic' };
+                                            let captionText = '';
 
                                             if (widthMatch) {
                                                 style.width = widthMatch[1];
@@ -127,7 +129,7 @@ export function DetailsView({
                                             }
 
                                             if (captionMatch) {
-                                                const captionText = captionMatch[1];
+                                                captionText = captionMatch[1].substring(0, captionMatch[1].length - 1);
                                                 cleanAlt = cleanAlt.replace(captionMatch[0], captionText);
                                             }
                                             
@@ -141,7 +143,7 @@ export function DetailsView({
                                                         style={style}
                                                         className={className}
                                                     />
-                                                    <figcaption className="image-caption">{cleanAlt}</figcaption>
+                                                    <figcaption className="image-caption" style={captionTextStyle}>{captionText}</figcaption>
                                                 </figure>
                                             ) : (
                                                 <img

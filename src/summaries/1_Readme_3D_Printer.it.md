@@ -1,8 +1,7 @@
 # 🖨️ Gargantua - Stampante 3D di grande formato
 
 ## Summary
-St
-ampante 3D DIY open source di grande formato, basata su BTT Manta M8P e Klipper
+Stampante 3D DIY open source di grande formato, basata su BTT Manta M8P e Klipper
 
 ## What this project is
 Tutto è cominciato quando ho sbagliato a prendere il nuovo piatto in vetro per la mia Creality Ender 3 Pro, ordinando una lastra da 420x420 mm invece di 220x220 mm. Invece di restituirla o ritagliarla, ho deciso di costruire una nuova stampante 3D in grado di sfruttare appieno questa enorme superficie di stampa.
@@ -18,7 +17,7 @@ La scelta del firmware è stata probabilmente la prima decisione importante da p
 Dopo un po' di ricerca, **Klipper** ne è uscito vincitore, noto per la sua flessibilità e capacità di sfruttare al meglio l'hardware a 32 bit, offrendo un controllo preciso dei movimenti e delle temperature, oltre a una vasta gamma di funzionalità avanzate sviluppate dalla comunità open source.
 Avevo già esperienza con Marlin, ma volevo esplorare nuove possibilità e Klipper sembrava la scelta giusta per questo progetto.
 
-![gargantua_btt_manta_m8p_photo.png{width="400px"}{align="right"}](src/summaries/res/gargantua_btt_manta_m8p_photo.png)
+![gargantua_btt_manta_m8p_photo.png{width="400px"}{align="right"}{caption="BTT Manta M8P"}](src/summaries/res/gargantua_btt_manta_m8p_photo.png)
 Per il controller ho scelto la scheda **BTT Manta M8P**, una scheda di controllo a 32 bit basata su STM32G0B1VET6, un ARM Cortex-M0+ a 32 bit 64MHz, che offre un'ampia gamma di funzionalità e una buona compatibilità con vari firmware open source.
 Ad affiancarla, la scheda di computazione **BTT CB1**, di fatto una gemella della Raspberry Pi CM4, che esegue Klipper e gestisce l'interfaccia utente tramite **Mainsail**[<math display="inline"><sup>↗</sup></math>](https://github.com/mainsail-crew/mainsail).
 
@@ -30,7 +29,7 @@ I motori sono pilotati da driver **TMC2209**, noti per il loro funzionamento sil
 
 Si sono rese necessarie anche alcune considerazioni sull'alimentazione, dato che il piatto riscaldato richiede una potenza significativa.
 
-![gargantua_biqu_extruder.png{width="300px"}{align="right"}](src/summaries/res/gargantua_biqu_extruder.png)
+![gargantua_biqu_extruder.png{width="300px"}{align="right"}{caption="Biqu H2 V2S REVO"}](src/summaries/res/gargantua_biqu_extruder.png)
 
 Facendo due conti, la potenza totale richiesta dai componenti principali della stampante è la seguente:
 - Piatto riscaldato: 420W a 24V
@@ -43,7 +42,7 @@ Ragion per cui ho optato per **due alimentatori da 24V 500W** ciascuno, uno dedi
 
 [//]: # (TODO CHECK THIS CAPTION)
 ![gargantua_bed_mesh.png{width="400px"}{align="right"}{caption="Se si osserva attentamente l'asse Z, il piatto sembra molto inclinato, ma su 40cm di lunghezza ci sono solo 2mm di differenza massima"}](src/summaries/res/gargantua_bed_mesh.png)
-Infine, ho deciso di aggiornare il sensore di livellamento del letto, passando da un CR-3D, simile ad un BLTouch, a un **Beacon H**, un sensore che sfrutta lo spostamento tramite correnti indotte _(brutta traduzione di "Eddy current displacement")_ per misurare con precisione la distanza tra il sensore e il letto di stampa, offrendo una calibrazione molto più accurata, affidabile e veloce, soprattutto su superfici più grandi. La mappatura è così passata da una matrice di punti 5x5 ad una 30x30, senza alcuna necessità di interpolazione tra i rilevamenti. 
+Infine, ho deciso di aggiornare il sensore di livellamento del letto, passando da un CR-3D, simile ad un BLTouch, a un **Beacon H**, un sensore che sfrutta lo spostamento tramite correnti indotte _(brutta traduzione di "Eddy current displacement")_ per misurare con precisione la distanza tra il sensore e il letto di stampa, offrendo una calibrazione molto più accurata, affidabile e veloce, soprattutto su superfici più grandi. La mappatura è così passata da una matrice di punti 5x5 ad una 30x30, senza alcuna necessità di interpolazione tra i rilevamenti.
 
 ## Technologies and tools
 

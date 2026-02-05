@@ -349,18 +349,18 @@
 }
 
 /* Image alignment styles */
-.markdown-body img.align-right {
+.markdown-body .align-right {
     float: right;
     margin-left: 20px;
     margin-bottom: 10px;
 }
 
-.markdown-body img.align-left {
+.markdown-body .align-left {
     float: left;
     margin-right: 20px;
     margin-bottom: 10px;
 }
-.markdown-body img.align-center {
+.markdown-body .align-center {
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -376,8 +376,8 @@
 
 /* On small screens, disable float to keep layout clean */
 @media (max-width: 768px) {
-    .markdown-body img.align-right,
-    .markdown-body img.align-left {
+    .markdown-body img.align-right figure.align-right,
+    .markdown-body img.align-left figure.align-left {
         float: none;
         display: block;
         margin: 10px auto;
