@@ -109,7 +109,8 @@ export function DetailsView({
                                             const alt = props.alt || '';
                                             const widthMatch = alt.match(/\{width="?(\d+%?|auto|[^"}]+)"?\}/);
                                             const alignMatch = alt.match(/\{align="?(left|right|center)"?\}/);
-                                            
+                                            const captionMatch = alt.match(/\{caption="?(\w+)"?\}/);
+
                                             let style: React.CSSProperties = { maxWidth: '100%' };
                                             let className = '';
                                             let cleanAlt = alt;
@@ -124,10 +125,25 @@ export function DetailsView({
                                                 className = `align-${alignment}`;
                                                 cleanAlt = cleanAlt.replace(alignMatch[0], '');
                                             }
+
+                                            if (captionMatch) {
+                                                const captionText = captionMatch[1];
+                                                cleanAlt = cleanAlt.replace(captionMatch[0], captionText);
+                                            }
                                             
                                             cleanAlt = cleanAlt.trim();
 
-                                            return (
+                                            return captionMatch ? (
+                                                <figure className={`image-figure ${className}`} style={style}>
+                                                    <img
+                                                        {...props}
+                                                        alt={cleanAlt}
+                                                        style={style}
+                                                        className={className}
+                                                    />
+                                                    <figcaption className="image-caption">{cleanAlt}</figcaption>
+                                                </figure>
+                                            ) : (
                                                 <img
                                                     {...props}
                                                     alt={cleanAlt}

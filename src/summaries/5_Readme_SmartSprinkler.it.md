@@ -22,15 +22,25 @@ L'obiettivo finale è creare un sistema completamente automatizzato che possa ad
 Il sistema è composto da due componenti principali: l'hardware di irrigazione e i client che interagiscono con esso, siano essi un'app azionata manualmente o un sistema di controllo automatizzato basato su inferenza bayesiana.
 
 #### Hardware di Irrigazione
-L'hardware di irrigazione è gestito da un'ESP32, che funge da nodo centrale per il controllo e la comunicazione. La scheda è stata programmata utilizzando il framework Arduino, con codice scritto in C. 
+L'hardware di irrigazione è gestito da un'ESP32-CAM, che funge da nodo centrale per il controllo e la comunicazione. La scheda è stata programmata utilizzando il framework Arduino, con codice scritto in C. 
 
 All'avvio, l'ESP32 si connette alla rete Wi-Fi locale e avvia un server HTTP che espone un'API RESTful per interagire col sistema. Le richieste possono essere:
 - **di stato:** per ottenere informazioni sui sensori e lo stato attuale dell'irrigazione
 - **di comando:** per inviare istruzioni di irrigazione specifiche, come "Start", "Stop" e "Dispensa", insieme a parametri come la pianta da irrigare e il volume d'acqua da erogare.
 
-Come prima versione, il sistema è dotato di una pompa per l'acqua collegata a un serbatoio esterno, che viene attivata tramite relè controllato dall'ESP32. 
+Come prima versione, il sistema è dotato di una pompa per l'acqua collegata a un serbatoio esterno, che viene attivata tramite mosfet controllato dall'ESP32. 
 Un'elettrovalvola direziona il flusso d'acqua verso la pianta selezionata. 
-Al momento, il sistema è dotato di una sola elettrovalvola, quindi può decidere tra 2 piante (valvola aperta o chiusa), ma l'idea è di espandere il sistema aggiungendo ulteriori elettrovalvole in un sistema binario per gestire più piante (n valvole per 2^n piante).
+Al momento, il sistema è dotato di una sola elettrovalvola, quindi può decidere tra 2 piante (valvola aperta o chiusa), ma l'idea è di espandere il sistema aggiungendo ulteriori elettrovalvole in un sistema binario per gestire più piante (<math display="inline"><mi>n</mi></math> valvole per <math display="inline"><mn>2</mn><sup>n</sup></math> piante).
+                                              
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 20px">
+
+![smart_sprinkler_photo_closed.jpg{width="400px"}](src/summaries/res/smart_sprinkler_photo_closed.jpg)
+![smart_sprinkler_photo_open.jpg{width="354px"}](src/summaries/res/smart_sprinkler_photo_open.jpg)
+
+</div>
+
+Come si può vedere dalle foto sopra, il sistema è attualmente in una fase di prototipo, senza un case dedicato nè una scheda che dia struttura, ma è comunque funzionante. Nella foto dell'interno si possono notare l'ESP32-CAM e il mosfet che controlla la pompa dell'acqua, mentre nella foto esterna si può vedere il sensore DHT22 per la temperatura e l'umidità dell'aria.
 
 #### Applicazione Mobile
 L'app mobile, sviluppata utilizzando Flutter e Dart, fornisce un'interfaccia utente intuitiva per monitorare e controllare il sistema di irrigazione.
@@ -45,12 +55,10 @@ L'app segue un'architettura pulita e reattiva che separa l'interfaccia utente da
 #### Comunicazione
 La rete di casa è stata configurata per assegnare un indirizzo IP dedicato all'ESP32, che è stato mappato attraverso un reverse proxy (Nginx) per consentire l'accesso esterno tramite un dominio che punta al mio IP pubblico.
 
-[//]: # (TODO add photos)
-
 
 ## Tecnologie e strumenti
-- **Framework:** Flutter, Arduino
+- **Framework:** Flutter, Arduino, Bayesian Inference
 - **Linguaggi:** Dart, C
-- **Hardware:** ESP32, Relè, Elettrovalvola, Pompa acqua
+- **Hardware:** ESP32, Mosfet, Elettrovalvola, Pompa acqua
 - **Comunicazione:** HTTP, RESTful API
 - **Design Pattern:** MVVM
