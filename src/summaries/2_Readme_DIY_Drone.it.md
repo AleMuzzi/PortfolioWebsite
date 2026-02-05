@@ -36,9 +36,12 @@ Magari in futuro potrebbe diventare un drone FPV, chissà!
 </div>
 
 ### Curiosità
-Durante lo sviluppo del progetto, ho dovuto calibrare gli ESC per garantire che i motori rispondessero correttamente ai comandi di velocità. Non avendolo mai fatto prima, ho dovuto documentarmi e ho scoperto che vanno calibrati ascoltanto i "beep" emessi dai motori. Questi suoni non sono casuali, ma seguono uno schema preciso che indica lo stato di calibrazione degli ESC e vengono generati dal movimento del rotore.
+![drone_esc_manual.png{width="500px"}{align="right"}](src/summaries/res/drone_esc_manual.png)
+Durante lo sviluppo del progetto, ho dovuto calibrare gli ESC per garantire che i motori rispondessero correttamente ai comandi di velocità. Non avendolo mai fatto prima, mi sono abbastanza sorpreso quando ho scoperto che vanno calibrati ascoltanto i "beep" emessi dai motori. Questi suoni infatti non sono casuali, ma seguono anzi uno schema preciso che indica lo stato di calibrazione degli ESC e vengono generati dal movimento del rotore.
 
 Ad ogni accensione del drone, quando l'ESC viene avviato, controlla di avere memorizzato i valori di minimo e massimo. Quindi, se tutto è corretto, il motore emette una serie di beep che indicano che si può procedere con il volo.
+
+<audio controls src="/src/summaries/res/drone_esc_startup_audio.mp4"></audio>
 
 ## Technologies and tools
 - **Frameworks**: Android, Arduino

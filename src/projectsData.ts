@@ -221,9 +221,9 @@ function parseExperience(filename: string, content: unknown): Experience {
     let resources: Resource[] = [];
 
     sections.forEach(section => {
-        const lines = section.trim().split('\\n');
+        const lines = section.trim().split('\n');
         const header = lines[0].toLowerCase().trim();
-        const body = lines.slice(1).join('\\n').trim();
+        const body = lines.slice(1).join('\n').trim();
 
         if (header.includes('summary')) {
             summary = body;
