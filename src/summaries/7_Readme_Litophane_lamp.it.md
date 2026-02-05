@@ -1,10 +1,11 @@
-# 💡 Lampada Litofania
+# 💡 Lampada con litofania
 
 ## Summary
-Lampade personalizzate stampate in 3D che rivelano fotografie ad alto dettaglio quando illuminate.
+Lampada stampata in 3D che rivela una fotografia ad alto dettaglio quando illuminata
 
 ## What this project is
 Questo progetto nasce come regalo di San Valentino, quando il tema è stato "fatto in casa". E' piaciuto così tanto che me ne sono state commissionate altre dopo.
+
 Una litofania è un'opera d'arte incisa o modellata in porcellana o plastica traslucida molto sottile che può essere vista chiaramente solo se retroilluminata da una sorgente luminosa. In questo progetto, la stampa 3D viene utilizzata per creare questi pezzi, dove i diversi spessori nella plastica si traducono in diversi livelli di trasmissione della luce, rivelando una fotografia dettagliata.
 
 

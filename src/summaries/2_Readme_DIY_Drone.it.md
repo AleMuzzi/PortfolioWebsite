@@ -1,7 +1,7 @@
 # 🚁 DIY Drone
 
 ## Summary
-Un drone completamente DIY con un'app Android per la telemetria e il controllo del volo ottimizzato.
+Drone DIY pilotato con un'app Android 🎮
 
 ## What this project is
 Come da titolo, questo progetto consiste in un drone, costruito interamente in casa. Il progetto non è nato dall'idea di creare un drone commerciale, ma piuttosto come un esercizio di apprendimento per comprendere i principi di base del volo dei droni, della programmazione di applicazioni mobili e dell'integrazione hardware-software.

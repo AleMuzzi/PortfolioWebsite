@@ -2,7 +2,6 @@
 
 ## Summary
 Zombicide, ma da remoto!
-Gioco di sopravvivenza multiplayer con un client Unity 3D e un server dedicato in C#.
 
 ## What this project is
 La necessità di questo progetto è nata durante la pandemia, quando le interazioni sociali erano limitate ed era impossibile giocare a giochi da tavolo con amici e familiari.
@@ -78,9 +77,4 @@ Inoltre, il progetto è piaciuto al professore universitario, che lo ha accettat
 - **Frameworks:** .NET, Unity
 - **Linguaggi:** C#
 - **OS Supportati:** Windows, Linux, macOS
-- **Protocolli di Comunicazione:** TCP, UDP
-
-
-[//]: # (da aggiungere ai segreti)
-
-[//]: # (più o meno, l'AI non è molto brava a debuggare)
+- **Comunicazione:** HTTP, RESTful API, UDP

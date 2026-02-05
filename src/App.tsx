@@ -36,7 +36,6 @@ function App() {
     const [selectedType, setSelectedType] = useState<'project' | 'experience' | 'about' | 'home' | null>('home');
     const [lastProjectId, setLastProjectId] = useState<string | null>(null);
     const [activeTagName, setActiveTagName] = useState<string | null>(null);
-    const [showVibeModal, setShowVibeModal] = useState(false);
     const experienceScrollPos = useRef(0);
 
     const t = translations[lang];
@@ -422,22 +421,6 @@ function App() {
                         onItemClick={(id, type) => handleSelect(id, type)}
                         t={t}
                     />
-                </div>
-            )}
-
-            {showVibeModal && (
-                <div className="vibe-overlay">
-                    <div className="vibe-modal" onClick={(e) => e.stopPropagation()}>
-                        <div className="vibe-content">
-                            <h3>{t.vibeTitle}</h3>
-                            <p>{t.vibeP1}</p>
-                            <p>{t.vibeP2}</p>
-                            <p className="vibe-meta">{t.vibeMeta}</p>
-                            <button className="vibe-close" onClick={() => setShowVibeModal(false)}>
-                                {t.vibeClose}
-                            </button>
-                        </div>
-                    </div>
                 </div>
             )}
         </div>

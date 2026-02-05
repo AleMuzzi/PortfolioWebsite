@@ -1,7 +1,7 @@
-# 💧 Controllore Pompa Cantina
+# 💧 Sistema di Drenaggio Automatico
 
 ## Summary
-Controllore di pompa automatizzato basato su Arduino con sensori a doppio livello e logica a macchina a stati.
+Sistema automatizzato basato su Arduino per il drenaggio dell'acqua del deumidificatore
 
 ## What this project is
 Questo progetto nasce dalla necessità di svuotare automaticamente l'acqua accumulata dal deumidificatore nella mia cantina, senza dover intervenire manualmente ogni volta che il serbatoio si riempie.
@@ -60,7 +60,7 @@ Il sistema opera su una semplice e robusta logica a macchina a stati per garanti
 La logica è ottimizzata per l'implementazione autonoma, non richiedendo alcuna connessione a un computer esterno una volta caricato il firmware.
 
 ## Technologies and tools
-- **Hardware:** Arduino, Sensori a galleggiante, Modulo relè, LED, Timer NE555
-- **Linguaggi:** C++
+- **Hardware:** Arduino, Sensori a galleggiante, Relè, LED, Timer NE555, Pompa acqua
+- **Linguaggi:** C
 - **Software di Progettazione Circuiti:** EveryCircuit
 - **Strumenti di Prototipazione:** Basetta millefori, 3D print FDM

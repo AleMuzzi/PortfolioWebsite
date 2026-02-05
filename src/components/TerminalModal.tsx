@@ -78,14 +78,17 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose, t
             setTimeout(() => {
                 setLines(prev => [...prev, { timestamp: getTimestamp(), type: 'SUCCESS', content: `${t.terminalSuccess1}: ${t.vibeP1}` }]);
                 setTimeout(() => {
-                    setLines(prev => [...prev, { timestamp: getTimestamp(), type: 'SUCCESS', content: `${t.terminalSuccess2}: ${t.vibeP2}` }]);
-                    setTimeout(() => {
-                        setLines(prev => [...prev, 
-                            { timestamp: getTimestamp(), type: 'INFO', content: t.vibeMeta }, 
-                            { timestamp: getTimestamp(), type: 'CMD', content: t.vibeClose }
-                        ]);
-                        setIsRevealed(true);
-                        setIsBooting(false);
+                  setLines(prev => [...prev, { timestamp: getTimestamp(), type: 'SUCCESS', content: `${t.terminalSuccess2}: ${t.vibeP2}` }]);
+                  setTimeout(() => {
+                      setLines(prev => [...prev, { timestamp: getTimestamp(), type: 'SUCCESS', content: `${t.terminalSuccess3}: ${t.vibeP3}` }]);
+                      setTimeout(() => {
+                          setLines(prev => [...prev,
+                              { timestamp: getTimestamp(), type: 'INFO', content: t.vibeMeta },
+                              { timestamp: getTimestamp(), type: 'CMD', content: t.vibeClose }
+                          ]);
+                          setIsRevealed(true);
+                          setIsBooting(false);
+                      }, 600);
                     }, 600);
                 }, 600);
             }, 800);

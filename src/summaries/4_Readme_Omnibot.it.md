@@ -1,7 +1,7 @@
 # 🤖 Omnibot
 
 ## Summary
-Robot omnidirezionale con un'app Android dedicata per il controllo e lo streaming video in tempo reale.
+Robot omnidirezionale con streaming video controllato tramite app Android
 
 ## What this project is
 Così come il progetto [DIY Drone](http://project:diy-drone) descritto in precedenza, anche questo progetto nasce come esercizio di apprendimento per esplorare la robotica mobile, in particolare i robot omnidirezionali e il funzionamento delle omniwheels (ruote omnidirezionali).
@@ -31,4 +31,4 @@ La trasmissione video in tempo reale consente all'utente di vedere l'ambiente ci
 ## Technologies and tools
 - **Frameworks:** Android, Arduino, ESP32, ESP32-CAM
 - **Linguaggi:** C, Kotlin
-- **Protocolli di Comunicazione:** UDP, Serial
+- **Comunicazione:** UDP, Serial

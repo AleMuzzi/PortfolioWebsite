@@ -13,9 +13,9 @@
 
 .terminal-window {
     width: 80%;
-    max-width: 800px;
+    max-width: 1000px;
     height: 60%;
-    max-height: 500px;
+    max-height: 600px;
     background-color: #0c0c0c;
     border: 1px solid #333;
     border-radius: 6px;

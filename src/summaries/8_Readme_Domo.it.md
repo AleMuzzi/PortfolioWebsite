@@ -19,3 +19,4 @@ L'app era originariamente disponibile gratuitamente su Google Play Store, ma è 
 - **Linguaggi:** Kotlin, C#
 - **Frameworks:** Android
 - **Backend e API:** HTTP, WebSocket
+- **Protocolli di Comunicazione:** TCP, UDP
