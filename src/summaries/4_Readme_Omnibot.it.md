@@ -22,7 +22,7 @@ Ho quindi modificato il controller android precedentemente sviluppato per il [DI
 L'applicazione facilita un'interazione fluida tra l'utente e l'hardware robotico:
 1. **Gestione della Connessione:** Scopre o si connette automaticamente al nodo di controllo del robot utilizzando protocolli di rete standard.
 2. **Superficie di Controllo di Precisione:** Dispone di joystick virtuali e slider interattivi per movimenti complessi, inclusa la traslazione simultanea (strafing) e la rotazione.
-4. **Pipeline dei Comandi:** Gli input dell'utente vengono serializzati in un formato che ne minimizza la dimensione e trasmessi tramite Wi-Fi (UDP) al computer di bordo del robot, che esegue quindi i movimenti. Anche il protocollo di comunicazione tra ESP32-CAM e Arduino Uno è stato modificato per venire incontro alle nuove esigenze.
+3. **Pipeline dei Comandi:** Gli input dell'utente vengono serializzati in un formato che ne minimizza la dimensione e trasmessi tramite Wi-Fi (UDP) al computer di bordo del robot, che esegue quindi i movimenti. Anche il protocollo di comunicazione tra ESP32-CAM e Arduino Uno è stato modificato per venire incontro alle nuove esigenze.
 
 ### Risultati
 Il robot è in grado di muoversi in tutte le direzioni con facilità, dimostrando l'efficacia delle omniwheels per la mobilità omnidirezionale. L'app Android fornisce un'interfaccia utente intuitiva e reattiva per il controllo del robot, consentendo movimenti precisi e fluidi.

@@ -10,18 +10,19 @@ Decisi così di partire dal disegno CAD fornito da Creality per la Ender 3[<math
 
 Essendo la prima volta che progettavo una stampante 3D, ma soprattutto per mancanza di conoscenze al tempo, sono rimasto conservativo, mantenendo la stessa architettura di base: struttura in alluminio V-slot, doppio asse Z.
 
-Se dovessi ricominciare oggi, opterei quasi sicuramente per una configurazione CoreXY, che offre vantaggi significativi in termini di velocità e precisione di stampa, specialmente per formati più grandi, e su un sistema a guide lineari anziché V-slot.
+> 💡 **Col senno di poi:** Se dovessi ricominciare oggi, opterei quasi sicuramente per una configurazione CoreXY, che offre vantaggi significativi in termini di velocità e precisione di stampa, specialmente per formati più grandi, e su un sistema a guide lineari anziché V-slot.
 
+---
 
 ### Dettagli tecnici
 ```
-Volume di stampa: 400x400x768 mm                   
-Dimensioni:                                        Numero di estrusori: 2                   
-    stampante:           620x625x1145mm            Temperatura massima estrusori: 300°      
-    con case:           1020x890x1350mm            Temperatura massima piatto: 110°         
-    + deumidificatore:  1020x890x1790mm            Case chiuso: Sì                          
-Precisione: 0.1 mm                                 OS: Klipper                              
-Velocità massima: 300 mm/s                         Alimentazione: 2x 24V 500W               
+Volume di stampa:        400x400x768 mm                   
+Dimensioni:                                        Numero di estrusori:               2                   
+    stampante:           620x625x1145mm            Temperatura massima estrusori:  300°      
+    con case:           1020x890x1350mm            Temperatura massima piatto:     110°         
+    + deumidificatore:  1020x890x1790mm            Case chiuso:                      Sì                          
+Precisione:                      0.1 mm            OS:                          Klipper                              
+Velocità massima:              300 mm/s            Alimentazione:           2x 24V 500W               
 ```
 
 ### Hardware
@@ -44,11 +45,11 @@ Si sono rese necessarie anche alcune considerazioni sull'alimentazione, dato che
 ![gargantua_biqu_extruder.png{width="300px"}{align="right"}{caption="Biqu H2 V2S REVO"}](src/summaries/res/gargantua_biqu_extruder.png)
 
 Facendo due conti, la potenza totale richiesta dai componenti principali della stampante è la seguente:
-- Piatto riscaldato: 420W a 24V
-- 2 Hotend Biqu H2 V2S REVO, in grado di raggiungere fino a 300°C: 40W ciascuno a 24V
-- Sistema di essicazione dei filamenti (progetto in corso): 200W
-- Altri componenti: motori, ventole, elettronica
-- Margine di sicurezza
+- **Piatto riscaldato**: 420W a 24V
+- **2 Hotend Biqu H2 V2S REVO (che raggiungono fino a 300°C)**: 40W ciascuno a 24V
+- **Sistema di essicazione dei filamenti (progetto in corso)**: 200W
+- **Altri componenti**: motori, ventole, elettronica
+- **Margine di sicurezza**
 
 Ragion per cui ho optato per **due alimentatori da 24V 500W** ciascuno, uno dedicato al piatto riscaldato e l'altro a tutti gli altri componenti. Il piatto riscaldato è controllato attraverso un **SSR** (Solid State Relay) per garantire un funzionamento sicuro, affidabile e veloce.
 
@@ -56,7 +57,7 @@ Infine, ho deciso di aggiornare il sensore di livellamento del letto, passando d
 
 <div style="display: flex; flex-direction: column; align-items: left; gap: 20px">
 
-![gargantua_bed_mesh.png{width="400px"}{align="right"}{caption="Se si osserva attentamente l'asse Z, il piatto sembra molto inclinato, ma su 40cm di lunghezza ci sono solo 2mm di differenza massima"}](src/summaries/res/gargantua_bed_mesh.png)
+![gargantua_bed_mesh.png{width="400px"}{align="right"}{caption="Il piatto sembra molto inclinato, ma se si osserva attentamente l'asse Z, su 40cm di lunghezza ci sono solo 2mm di differenza massima"}](src/summaries/res/gargantua_bed_mesh.png)
 <video src="src/summaries/res/gargantua_bed_scan.mp4" loop muted autoplay playsinline width="400"></video>
 </div>
 
@@ -104,24 +105,24 @@ All'interno, la stampante è fissata all'enclosure attraverso 4 smorzatori in go
 
 Un sistema di led a striscia è stato installato sul soffitto dell'enclosure, per illuminare l'interno durante la stampa e facilitare l'ispezione visiva del processo di stampa.
 
-#### Deumidificatore filamenti
+### Deumidificatore filamenti
 Una parte molto importante e spesso sottovalutata nella stampa 3D è la gestione dei filamenti, che sono igroscopici e tendono ad assorbire umidità dall'ambiente, con conseguente degrado della qualità di stampa. Un filamento umido si espande e può causare problemi di sotto-estrusione, o addirittura blocchi dell'estrusore.
 Per risolvere questo problema, ho deciso di integrare un sistema di essicazione dei filamenti direttamente sopra all'enclosure, progettando un compartimento dedicato che ospiti 10 filamenti, con un sistema di riscaldamento e ventilazione per mantenere i filamenti asciutti e pronti per la stampa.
 Questo sistema è alimentato assieme alla stampante, ed è collegato direttamente agli estrusori, in modo che i filamenti essicati non entrino in contatto con l'umidità esterna durante il percorso verso gli hotend.
 
-![gargantua_dehumidifier_photo.png{width="800px"}{align="center"}{caption="Deumidificatore di filamenti"}](src/summaries/res/gargantua_dehumidifier_photo.png)
+![gargantua_dehumidifier_photo.png{width="750px"}{align="center"}{caption="Deumidificatore di filamenti"}](src/summaries/res/gargantua_dehumidifier_photo.png)
 
 Nella foto sopra si può vedere il deumidificatore, con diversi filamenti, e si intravede al di sopra il circuito di riscaldamento, in fase di prototipazione. Al centro, un sistema di carrucole guida i filamenti verso gli estrusori.
 
 Il sistema è ancora in fase di sviluppo, il circuito è pronto e testato, ma occorrono ancora alcune modifiche al disegno 3D dove sarà posizionato per integrare meglio i componenti e migliorare il flusso d'aria.
 
-#### Gestione dei fumi
+### Gestione dei fumi
 Stampare con materiali come l'ABS può generare fumi potenzialmente nocivi, oltre a un odore sgradevole. Per migliorare la sicurezza e il comfort durante la stampa, ho deciso di integrare un sistema di estrazione dei fumi direttamente nell'enclosure.
 Non avendo accesso ad uno scarico esterno, ho optato per un sistema di filtraggio dell'aria basato su filtri a carbone attivo e HEPA, che catturano le particelle e neutralizzano gli odori prima di reimmettere l'aria nell'ambiente.
 Il filtro in questione è l'**AlveoOne R di Alveo3D**[<math display="inline"><sup>↗</sup></math>](https://www.alveo3d.com/en/product/alveoone-r-assembled/), progettato specificamente per la stampa 3D, filtra l'aria presente nel case chiuso.
 Il firmware di Gargantua è configurato per attivare automaticamente il sistema di estrazione dei fumi quando vengono stampati materiali che generano fumi, e per continuare a filtrare l'aria per un certo periodo dopo la fine della stampa.
 
-#### Il nome Gargantua
+### Il nome Gargantua
 ![gargantua_black_hole_banner.jpg{width="1000px"}{height="300px"}{align="center"}{caption="Gargantua - Il buco nero super massiccio di Interstellar"}](src/summaries/res/gargantua_black_hole_banner.jpg)
 </br>
 
@@ -131,7 +132,7 @@ Gargantua è stato al centro del film, rappresentato come un buco nero rotante c
 Il nome è stato scelto per simboleggiare la grandezza e la potenza della stampante che, con il suo ampio volume di stampa di **400x400x768mm** e le sue capacità, rappresenta un punto di riferimento nel mio percorso di apprendimento e sperimentazione nel mondo della stampa 3D.
 
 
-#### Dagli errori si impara
+### Dagli errori si impara
 Sarebbe bello poter dire che è andato tutto liscio, ma purtroppo non è così. Questo progetto ha presentato numerose sfide e ostacoli lungo il percorso, molti dei quali derivanti dalla mia inesperienza nel progettare una stampante 3D da zero.
 I principali sono stati 2: sottovalutare le temperature interne al case e l'erosione degli ugelli degli hotend.
 

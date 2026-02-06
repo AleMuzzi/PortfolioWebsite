@@ -1,33 +1,26 @@
 # 🏠 Domo
 
 ## Summary
-A Material Design UI library for Android, bringing modern aesthetics to legacy devices.
+
+A local network music control app
 
 ## What this project is
-Domo is an Android library and demonstration suite designed to showcase and implement custom Material Design UI components. Its primary goal is to provide high-quality, Material-inspired widgets—such as buttons, dialogs, and inputs—that bring a modern aesthetic to older Android devices (supporting back to Android 4.0).
 
-The project is structured as a reusable library module, allowing developers to easily integrate these components into their own applications.
+Domo is a lightweight Android application that allows users to control music playback on a media server within a local network. The app offers essential features such as play, pause, track skipping, and volume adjustment, all delivered through an intuitive and responsive user interface.
 
-## How it works
+The app requires neither an internet connection nor user authentication, making it perfect for parties and social gatherings. The project was born from the need for a quick and simple way to manage music in social settings without any hassle.
 
-### Library Architecture
-The core logic resides in the `MaterialDesign` library module. It is built using a robust Gradle configuration that ensures broad compatibility:
+### How it works
 
-- **Backward Compatibility:** Uses `minSdkVersion 14` and relies on libraries like `NineOldAndroids` to backport property animations and smooth transitions to legacy Android versions.
-- **Modern Integration:** Compiled against modern SDKs to ensure it remains functional within current development environments.
-- **Resource Management:** Includes a rich set of custom attributes, styles, and assets (`res` and `assets`) that define the visual language of the components, including ripple effects and elevation shadows.
+The application features a straightforward architecture where the main user interface communicates with a C#-based media server via HTTP. It also utilizes a WebSocket connection for real-time playback status updates, enabling fluid, responsive, and multi-user music control.
 
-### UI Components
-The library implements a variety of custom views, each encapsulated with its own drawing logic and interaction handling. Key components include:
-- **Responsive Buttons:** Flat and raised buttons with integrated ripple feedback.
-- **Dialogs:** Custom-styled modal windows for alerts and user input.
-- **Floating Action Buttons (FAB):** Modern action triggers with support for various positioning and animation styles.
+### Publishing
 
-### Integration Workflow
-Integrating the library involves adding the module as a project dependency. Once included, developers can use the widgets directly in their XML layout files by referencing the library's package. This approach allows for a clean separation between the UI component definitions and the application's business logic.
+The app was originally available for free on the Google Play Store, but it has since been removed due to low usage and a lack of maintenance time.
 
 ## Technologies and tools
-- **Frameworks**: Android
-- **NineOldAndroids & AndroidX Legacy Support** for backported animations.
-- **Custom View Drawing:** Implementation of Material Design visual patterns.
-- **Gradle Publishing:** Configuration for library distribution and version management.
+
+* **Languages:** Kotlin, C#
+* **Frameworks:** Android
+* **Backend and APIs:** HTTP, WebSocket
+* **Communication Protocols:** TCP, UDP

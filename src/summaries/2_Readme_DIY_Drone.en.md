@@ -1,47 +1,58 @@
-# 🚁 Drone
+# 🚁 DIY Drone
 
 ## Summary
-A custom drone platform featuring an Android telemetry app and optimized flight control.
+
+A DIY drone piloted with an Android app 🎮
 
 ## What this project is
-The Drone project is a comprehensive development and documentation workspace for a custom hobby drone platform. It integrates multiple disciplines, including:
 
-- **Mobile Control:** A custom-built Android application for drone operation and telemetry monitoring.
-- **Flight Systems:** Configuration and calibration profiles for flight control hardware (such as the KK2 board).
-- **Media & Analysis:** A curated archive of flight footage and photographic documentation used for performance tuning and airframe inspection.
+As the title suggests, this project consists of a drone built entirely from scratch at home. The project was not intended to create a commercial product, but rather served as a learning exercise to understand the fundamental principles of drone flight, mobile application programming, and hardware-software integration.
 
-This workspace serves as both the technical foundation for the drone's operation and a historical record of its development and flight history.
+I was curious to explore how various hardware components—such as motors, ESCs, and flight controllers—interact with software, and to test if an Android app could effectively control a drone in real-time. The project began during my master's degree with the goal of preparing me for a career in drones and robotics, which was my professional objective immediately after graduation.
 
-## How it works
+### Architecture
+![Architettura del drone{width="400px"}{align="right"}{caption="Architectural scheme"}](src/summaries/res/drone_architecture.png)
 
-### Android Control Application
-The core of the user interface is a dedicated Android application. Designed for real-time interaction, the app facilitates:
+The entire system was designed from the ground up, starting from the selection of brushless motors and ESCs to the choice of the flight controller and the development of the Android app for control and telemetry.
 
-![Drone Control App{width="300px"}{align="right"}](src/summaries/res/drone_architecture.png)
+The app provides a user interface mimicking a standard flight controller, featuring two virtual joysticks to manage throttle, yaw, pitch, and roll. Commands are transmitted to the drone via Wi-Fi using the UDP protocol to ensure low latency. 
+To prevent cumulative delays, commands are sent continuously at a fixed frequency manageable by the server. These commands are then interpreted by the flight controller, which regulates motor speed through the ESCs.
 
-- **Command Transmission:** Sends precise control signals (throttle, yaw, pitch, roll) and flight mode switches to the drone's receiver via wireless protocols (Wi-Fi, Bluetooth, or custom radio links).
-- **Telemetry Feedback:** Displays live data from the drone, including battery voltage, altitude, orientation (attitude), and GPS coordinates, using a dynamic HUD-style interface.
-- **Data Logging:** Capable of recording flight telemetry for post-flight analysis and performance optimization.
+In the initial version, which used an Arduino Yun, the UDP server was written in Lua to leverage the computing power of the Yun's integrated Linux processor. However, accessing the Arduino pins required the *Bridge Library*, which introduced significant lag, making the drone's control unresponsive. 
+To resolve this, I transitioned to using an [ESP8266 as a Wi-Fi antenna via UART](https://www.instructables.com/Cheap-Arduino-WiFi-Shield-With-ESP8266/) and rewrote the UDP server in C to run directly on the microcontroller. This allowed commands to be transmitted directly to the pins, drastically reducing latency and improving system responsiveness.
 
-The application follows standard Android architectural patterns, ensuring reliable performance and low-latency communication with the drone's hardware.
+### Results
 
-### Flight Configuration and Tuning
-Successful flight requires precise hardware calibration. This project includes specialized resources for:
+The drone successfully achieved flight, proving that an Android app can be an effective tool for real-time flight control. This experience provided me with a deep understanding of flight principles, mobile programming, and system integration.
 
-- **PID Tuning:** Documentation and settings for optimizing the Proportional-Integral-Derivative (PID) controllers to ensure stable flight characteristics.
-- **Electronic Speed Controller (ESC) Calibration:** Parameters for motor synchronization and response timing.
-- **Hardware Documentation:** Detailed diagrams and photographs of the airframe, wiring layouts, and component positioning to assist with repairs and future upgrades.
+While I could have added features like automatic stabilization, GPS positioning, or "return to home", my primary goal was met when I secured a position as a [Full Stack Drone Developer](http://experience:verses-drone). 
+Perhaps in the future, it will evolve into an FPV drone!
 
-### Flight Media
-The integrated media archive includes both onboard and ground-based footage. These videos are not just for display; they are critical for:
-- Identifying vibration issues or mechanical instabilities.
-- Reviewing flight maneuvers and battery performance under load.
-- Documenting successful missions and testing new software or hardware iterations.
+<div style="display: flex; flex-direction: column; align-items: center; gap: 20px">
+
+![drone_photo_1.jpg{width="500px"}](src/summaries/res/drone_photo_1.jpg)
+![drone_photo_2.jpg{width="420px"}](src/summaries/res/drone_photo_2.jpg)
+
+</div>
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+<video src="src/summaries/res/drone_test.mp4" loop autoplay muted playsinline width="500"></video>
+<label class="image-caption" style="margin-top: -5px">One of the first flight tests</label>
+</div>
+
+### Curiosity
+![drone_esc_manual.png{width="500px"}{align="right"}{caption="ESC calibration manual"}](src/summaries/res/drone_esc_manual.png)
+
+During development, I had to calibrate the ESCs to ensure the motors responded correctly to speed commands. I was surprised to learn that calibration is performed by listening to "beeps" emitted by the motors. These sounds are not random; they follow a specific pattern indicating the calibration status and are actually generated by the movement of the rotor.
+
+Every time the drone powers on, the ESC checks for stored minimum and maximum values. If everything is correct, the motor emits a series of beeps indicating it is ready for flight.
+
+<audio controls src="/src/summaries/res/drone_esc_startup_audio.mp4"></audio>
 
 ## Technologies and tools
-- **Frameworks**: Android
-- **Android Development:** Gradle-based application architecture for mobile control.
-- **Flight Control Hardware:** Multi-rotor flight controllers (e.g., KK2), ESCs, and brushless motors.
-- **Wireless Communication:** Implementation of protocols for real-time telemetry and command link.
-- **Digital Imaging:** Tools for flight recording and photographic hardware documentation.
-- **Telemetry Analysis:** Techniques for reviewing and interpreting sensor data from the flight system.
+
+* **Frameworks**: Android, Arduino
+* **Languages:** C, Kotlin, Lua
+* **Hardware:** Arduino, ESP8266, KK2 Flight Controller, ESC, Brushless Motors
+* **Prototyping Tools:** FDM 3D printing
+* **Communication Protocols:** UDP, Serial

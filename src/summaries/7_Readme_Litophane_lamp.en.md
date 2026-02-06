@@ -1,38 +1,58 @@
 # 💡 Lithophane Lamp
 
 ## Summary
-Personalized 3D-printed lamps that reveal high-detail photographs when illuminated.
+
+A 3D-printed lamp that reveals a high-detail photograph when illuminated
 
 ## What this project is
-This project showcases a series of custom-designed **lithophane lamps** created as personalized functional art. A lithophane is an etched or molded artwork in very thin translucent porcelain or plastic that can only be seen clearly when back lit with a light source. In this project, 3D printing is used to create these pieces, where varying thicknesses in the plastic translate into different levels of light transmission, revealing a detailed photograph.
 
-The project includes several unique designs, each tailored for a specific recipient, along with a reusable framework for creating new designs from any photograph.
+This project began as a Valentine's Day gift when the theme was "homemade". It was so well-received that I was later commissioned to create several more.
 
-## How it works
+A lithophane is a work of art etched or molded into very thin porcelain or translucent plastic that can only be clearly seen when backlit by a light source. In this project, 3D printing is used to create these pieces, where varying thicknesses in the plastic translate into different levels of light transmission, revealing a detailed photograph.
 
 ### Image Processing and Depth Mapping
-The transformation of a 2D photograph into a 3D-printable shell involves a careful digital workflow:
 
-1. **Photographic Preparation:** High-contrast images are selected and processed (using tools like GIMP) to optimize them for light transmission.
-2. **Negative Conversion:** The image is inverted so that dark areas correspond to thicker sections of the print and light areas to thinner sections, ensuring a natural-looking photograph when illuminated.
-3. **Displacement Mapping:** The processed grayscale image is used as a "displacement map" in 3D modeling software. This map dictates the local thickness of a 3D surface (typically a sphere or cylinder), effectively "carving" the image into the digital geometry.
+Transforming a 2D photograph into a 3D-printable shell involves a careful digital workflow:
 
-### 3D Modeling and Structural Design
-Creating a functional lamp requires more than just the image; it needs structural integrity and a way to house the light source:
-
-- **Surface Geometry:** The lithophane effect is applied to a base spherical or cylindrical model using advanced modifiers in 3ds Max or Blender.
-- **Structural Sectioning:** To facilitate printing without excessive support material, large models are often split into manageable sections using boolean operations. This allows for cleaner internal surfaces and easier assembly.
-- **Fitting & Tolerances:** The models are designed to fit together precisely, often including a dedicated base to house electronics and the light source.
+1. **Photo Preparation:** High-contrast images are selected and processed (using tools like GIMP) to optimize them for light transmission.
+2. **Negative Conversion:** The image is inverted so that dark areas correspond to the thickest sections of the print and light areas to the thinnest, ensuring a natural-looking photograph when lit.
+3. **Displacement Mapping:** The processed grayscale image is used as a "displacement map" in 3D modeling software. This map dictates the local thickness of a 3D surface (typically a sphere or cylinder), effectively "sculpting" the image into the digital geometry.
 
 ### Production Pipeline
-The final physical objects are produced via FDM (Fused Deposition Modeling) 3D printing:
 
-1. **High-Resolution Slicing:** The 3D models are sliced with very thin layers (0.1mm - 0.2mm) to ensure smooth gradients and fine photographic detail.
-2. **Material Selection:** Translucent white PLA or similar light-colored filaments are used for their excellent light-diffusion properties.
-3. **Assembly:** The printed shells are mounted onto a base containing an LED light source, resulting in a unique piece of personalized home decor.
+In this case, the lamps are produced via FDM (Fused Deposition Modeling) 3D printing:
+
+1. **High-Resolution Slicing:** 3D models are sliced with very thin layers (0.1 mm) to ensure smooth gradients and fine photographic detail.
+2. **Material Selection:** Filaments such as translucent white PLA or similar light colors are used for their excellent light diffusion properties.
+3. **Assembly:** The printed shells are mounted on a base containing an LED light source to avoid overheating the plastic and risking melting, resulting in a unique piece of personalized decor.
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+
+![litofania_immagine_originale.png{width="700px"}{align="center"}{caption="Original image"}](src/summaries/res/litofania_immagine_originale.png) 
+
+![litofania_modello.jpg{width="300px"}](src/summaries/res/litofania_modello.jpg)
+![litofania_modello_sezione.jpg{width="300px"}](src/summaries/res/litofania_modello_sezione.jpg)
+![litofania_interruttore.jpg{width="300px"}](src/summaries/res/litofania_interruttore.jpg)
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+
+![litofania_fine_stampa.jpg{width="500px"}{align="left"}](src/summaries/res/litofania_fine_stampa.jpg)
+<video src="src/summaries/res/litofania_stampa.mp4" loop autoplay muted playsinline width="500"></video>
+</div>
+
+### Results
+
+The final result is a lamp that, when turned off, appears as a simple white object, but when turned on, reveals a detailed and captivating photograph.
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+
+![litofania_fine.jpg{width="500px"}](src/summaries/res/litofania_fine.jpg)
+<video src="src/summaries/res/litofania_fine.mp4" loop autoplay muted playsinline width="500"></video>
+
+</div>
 
 ## Technologies and tools
-- **Image Editing:** GIMP for photographic optimization and depth map preparation.
-- **3D Modeling:** 3ds Max and Blender for displacement mapping, boolean geometry, and structural design.
-- **3D Printing:** FDM printing with translucent materials and high-detail slicing configurations.
-- **Light Integration:** Design of custom bases for LED-based illumination.
+
+* **Image Editing:** GIMP
+* **3D Modeling:** 3ds Max, Blender
+* **3D Printing:** FDM 3D print, Ender 3 Pro, Cura Slicing Software
