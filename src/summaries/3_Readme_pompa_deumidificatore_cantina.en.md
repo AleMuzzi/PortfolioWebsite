@@ -34,8 +34,8 @@ The controller interfaces with two float sensors: one positioned at the "Full" l
 
 <div style="display: flex; flex-direction: column; align-items: center; gap: 20px">
 
-![pompa_cantina_foto_off.jpg{width="399px"}](src/assets/pompa_cantina_foto_off.jpg)
-![pompa_cantina_foto_on.jpg{width="600px"}](src/assets/pompa_cantina_foto_on.jpg)
+![pompa_cantina_foto_off.jpg{width="399px"}](assets/pompa_cantina_foto_off.jpg)
+![pompa_cantina_foto_on.jpg{width="600px"}](assets/pompa_cantina_foto_on.jpg)
 </br>
 <label class="image-caption" style="display: flex; flex-direction: column; align-items: center;">Off State (left) and Active State (right) with status LED lit</label>
 

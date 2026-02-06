@@ -31,7 +31,7 @@ Max speed:                    300 mm/s            Power:               2x 24V 50
 
 Choosing the firmware was the first major decision, as it influenced all subsequent hardware choices. **Klipper** emerged as the winner due to its flexibility and ability to leverage 32-bit hardware for precise movement and temperature control.
 
-![gargantua_btt_manta_m8p_photo.png{width="400px"}{align="right"}{caption="BTT Manta M8P"}](src/assets/gargantua_btt_manta_m8p_photo.png)
+![gargantua_btt_manta_m8p_photo.png{width="400px"}{align="right"}{caption="BTT Manta M8P"}](assets/gargantua_btt_manta_m8p_photo.png)
 
 For the controller, I chose the **BTT Manta M8P** board—a 32-bit control board based on the ARM Cortex-M0+. 
 It is paired with the **BTT CB1** computing module (essentially a twin to the Raspberry Pi CM4), which runs Klipper and manages the **Mainsail**[<math display="inline"><sup>↗</sup></math>](https://github.com/mainsail-crew/mainsail) user interface.
@@ -43,7 +43,7 @@ The motors are driven by **TMC2209** drivers, known for their silent operation a
 
 Because of the high power draw of the massive bed and dual hotends, I calculated the following power requirements:
 
-![gargantua_biqu_extruder.png{width="300px"}{align="right"}{caption="Biqu H2 V2S REVO"}](src/assets/gargantua_biqu_extruder.png)
+![gargantua_biqu_extruder.png{width="300px"}{align="right"}{caption="Biqu H2 V2S REVO"}](assets/gargantua_biqu_extruder.png)
 
 -**Heated Bed:** 420W @ 24V
 -**2x Biqu H2 V2S REVO Hotends (up to 300°):** 40W each
@@ -57,8 +57,8 @@ Finally, I upgraded the bed leveling sensor from a standard probe to a **Beacon 
 
 <div style="display: flex; flex-direction: column; align-items: left; gap: 20px">
 
-![gargantua_bed_mesh.png{width="400px"}{align="right"}{caption="The plate seems very tilted, but if you look carefully at the Z-axis, on 40cm of length there is only 2mm of maximum difference"}](src/assets/gargantua_bed_mesh.png)
-<video src="src/assets/gargantua_bed_scan.mp4" loop muted autoplay playsinline width="400"></video>
+![gargantua_bed_mesh.png{width="400px"}{align="right"}{caption="The plate seems very tilted, but if you look carefully at the Z-axis, on 40cm of length there is only 2mm of maximum difference"}](assets/gargantua_bed_mesh.png)
+<video src="assets/gargantua_bed_scan.mp4" loop muted autoplay playsinline width="400"></video>
 
 </div>
 
@@ -70,7 +70,7 @@ The printer design was done using **Fusion 360**, which allowed me to precisely 
 The development process was iterative, with frequent testing and design changes. Designing everything in CAD allowed me to identify and resolve potential compatibility and space issues before proceeding to the assembly phase, saving time and resources.
 The project was initially manageable in size, but over time it was necessary to break it down into parts and combine them into a single design for when an overall view is needed. This modularity allowed for more agile development of the various components.
 
-![gargantua_printer.gif{width="400px"}{align="center"}{caption="Gargantua's structure"}](src/assets/gargantua_printer.gif)
+![gargantua_printer.gif{width="400px"}{align="center"}{caption="Gargantua's structure"}](assets/gargantua_printer.gif)
 
 #### From Bowden to Direct Drive
 
@@ -83,8 +83,8 @@ In designing this printer, flexibility took priority over performance; if I were
 The idea of being able to print with two extruders has always fascinated me: in addition to allowing printing in 2 colors, it allows you to experiment with different materials, such as prints in which a flexible and a non-flexible material are interleaved, or to use soluble media such as PVA.
 I then decided to implement it from the beginning, designing a support head for two Biqu H2 V2S REVO hotends.
 
-![gargantua_print_head_bowden.png{width="900px"}{align="center"}](src/assets/gargantua_print_head_bowden.png)
-![gargantua_print_head_direct_drive.png{width="900px"}{align="center"}{caption="(sopra) Bowden extruder, (sotto) Direct drive extruder"}](src/assets/gargantua_print_head_direct_drive.png)
+![gargantua_print_head_bowden.png{width="900px"}{align="center"}](assets/gargantua_print_head_bowden.png)
+![gargantua_print_head_direct_drive.png{width="900px"}{align="center"}{caption="(sopra) Bowden extruder, (sotto) Direct drive extruder"}](assets/gargantua_print_head_direct_drive.png)
 
 In the images above you can see the difference between the print head with bowden extruders and the one with direct drive extruders.
 In the first, you can glimpse the extruders and the aeration channels to cool them (hidden fans to show the details), and in the distance on the left, the extruder motors.
@@ -99,7 +99,7 @@ As a first enclosure it might have been fine, but the IKEA Lack coffee table did
 
 For Gargantua, I drew a hollow aluminum square-section profile structure, with two ports, so that I had both front and side access to the printer.
 
-![gargantua_enclosure.png{width="900px"}{align="center"}{caption="Gargantua nel suo case"}](src/assets/gargantua_enclosure.png)
+![gargantua_enclosure.png{width="900px"}{align="center"}{caption="Gargantua nel suo case"}](assets/gargantua_enclosure.png)
 
 The walls and doors were then padded with insulation panels and covered with hard plastic panels.
 To allow me to inspect the printing in progress without having to open the doors, I designed the doors with a double hinge, so that the outer part can be opened independently of the inner part, consisting of an aluminum frame with a transparent plexiglass panel.

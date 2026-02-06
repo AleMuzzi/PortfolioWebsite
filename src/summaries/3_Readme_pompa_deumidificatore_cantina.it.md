@@ -14,7 +14,7 @@ Il sistema è progettato per il funzionamento autonomo, fornendo una soluzione a
 Questo progetto ha subito un'evoluzione significativa nel tempo. 
 
 #### Prima Iterazione
-![pompa_cantina_1_circuito.jpg{width="400px"}{align="right"}{caption="Simulazione circuito su EveryCircuit"}](src/assets/pompa_cantina_1_circuito.jpg)
+![pompa_cantina_1_circuito.jpg{width="400px"}{align="right"}{caption="Simulazione circuito su EveryCircuit"}](assets/pompa_cantina_1_circuito.jpg)
 L'idea iniziale, ispirata al funzionamento dei serbatoi dei WC, prevedeva l'uso di un singolo sensore a galleggiante per rilevare il livello dell'acqua.
 
 Una volta raggiunto il livello di "Pieno", il circuito veniva chiuso, quindi:
@@ -35,8 +35,8 @@ E' stato quindi utilizzato un relè per tradurre il segnale a bassa tensione del
                                                 
 <div style="display: flex; flex-direction: column; align-items: center; gap: 20px">
 
-![pompa_cantina_foto_off.jpg{width="399px"}](src/assets/pompa_cantina_foto_off.jpg)
-![pompa_cantina_foto_on.jpg{width="600px"}](src/assets/pompa_cantina_foto_on.jpg)
+![pompa_cantina_foto_off.jpg{width="399px"}](assets/pompa_cantina_foto_off.jpg)
+![pompa_cantina_foto_on.jpg{width="600px"}](assets/pompa_cantina_foto_on.jpg)
 </br>
 <label class="image-caption" style="display: flex; flex-direction: column; align-items: center;">Stato Spento (sinistra) e Stato Attivo (destra) con LED di stato acceso</label>
 

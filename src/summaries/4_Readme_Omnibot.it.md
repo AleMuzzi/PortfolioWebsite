@@ -7,7 +7,7 @@ Robot omnidirezionale con streaming video controllato tramite app Android
 Così come il progetto [DIY Drone](http://project:diy-drone) descritto in precedenza, anche questo progetto nasce come esercizio di apprendimento per esplorare la robotica mobile, in particolare i robot omnidirezionali e il funzionamento delle omniwheels (ruote omnidirezionali).
 In quanto progetto esplorativo e senza una particolare utilità finale, il budget è stato mantenuto al minimo, partendo da un robot giocattolo: 
 
-![omnibot_photo.png{width="400px"}{align="center"}{caption="Robot con omniwheels"}](src/assets/omnibot_photo.png)
+![omnibot_photo.png{width="400px"}{align="center"}{caption="Robot con omniwheels"}](assets/omnibot_photo.png)
 
 ### Prima Fase: Apprendimento del funzionamento originale
 La prima fase del progetto ha comportato l'assemblaggio e la comprensione del codice fornito con il robot. Di base, il robot era dotato di un microcontrollore ESP32-CAM che gestiva l'esecuzione dei comandi e la trasmissione video tramite attraverso un'interfaccia web.
