@@ -30,7 +30,7 @@ La scelta del firmware è stata probabilmente la prima decisione importante da p
 Dopo un po' di ricerca, **Klipper** ne è uscito vincitore, noto per la sua flessibilità e capacità di sfruttare al meglio l'hardware a 32 bit, offrendo un controllo preciso dei movimenti e delle temperature, oltre a una vasta gamma di funzionalità avanzate sviluppate dalla comunità open source.
 Avevo già esperienza con Marlin, ma volevo esplorare nuove possibilità e Klipper sembrava la scelta giusta per questo progetto.
 
-![gargantua_btt_manta_m8p_photo.png{width="400px"}{align="right"}{caption="BTT Manta M8P"}](src/assets/summaries/gargantua_btt_manta_m8p_photo.png)
+![gargantua_btt_manta_m8p_photo.png{width="400px"}{align="right"}{caption="BTT Manta M8P"}](src/assets/gargantua_btt_manta_m8p_photo.png)
 Per il controller ho scelto la scheda **BTT Manta M8P**, una scheda di controllo a 32 bit basata su STM32G0B1VET6, un ARM Cortex-M0+ a 32 bit 64MHz, che offre un'ampia gamma di funzionalità e una buona compatibilità con vari firmware open source.
 Ad affiancarla, la scheda di computazione **BTT CB1**, di fatto una gemella della Raspberry Pi CM4, che esegue Klipper e gestisce l'interfaccia utente tramite **Mainsail**[<math display="inline"><sup>↗</sup></math>](https://github.com/mainsail-crew/mainsail).
 
@@ -42,7 +42,7 @@ I motori sono pilotati da driver **TMC2209**, noti per il loro funzionamento sil
 
 Si sono rese necessarie anche alcune considerazioni sull'alimentazione, dato che il piatto riscaldato richiede una potenza significativa.
 
-![gargantua_biqu_extruder.png{width="300px"}{align="right"}{caption="Biqu H2 V2S REVO"}](src/assets/summaries/gargantua_biqu_extruder.png)
+![gargantua_biqu_extruder.png{width="300px"}{align="right"}{caption="Biqu H2 V2S REVO"}](src/assets/gargantua_biqu_extruder.png)
 
 Facendo due conti, la potenza totale richiesta dai componenti principali della stampante è la seguente:
 - **Piatto riscaldato**: 420W a 24V
@@ -57,8 +57,8 @@ Infine, ho deciso di aggiornare il sensore di livellamento del letto, passando d
 
 <div style="display: flex; flex-direction: column; align-items: left; gap: 20px">
 
-![gargantua_bed_mesh.png{width="400px"}{align="right"}{caption="Il piatto sembra molto inclinato, ma se si osserva attentamente l'asse Z, su 40cm di lunghezza ci sono solo 2mm di differenza massima"}](src/assets/summaries/gargantua_bed_mesh.png)
-<video src="src/assets/summaries/gargantua_bed_scan.mp4" loop muted autoplay playsinline width="400"></video>
+![gargantua_bed_mesh.png{width="400px"}{align="right"}{caption="Il piatto sembra molto inclinato, ma se si osserva attentamente l'asse Z, su 40cm di lunghezza ci sono solo 2mm di differenza massima"}](src/assets/gargantua_bed_mesh.png)
+<video src="src/assets/gargantua_bed_scan.mp4" loop muted autoplay playsinline width="400"></video>
 </div>
 
 
@@ -67,25 +67,25 @@ Il design della stampante è stato realizzato utilizzando **Fusion 360**, che mi
 Il processo di sviluppo è stato iterativo, con frequenti test e modifiche al design. Progettare tutto in CAD mi ha permesso di identificare e risolvere potenziali problemi di compatibilità e di spazio prima di procedere alla fase di assemblaggio, risparmiando tempo e risorse.
 Il progetto era inizialmente di dimensioni gestibili, ma col passare del tempo è stato necessario suddividerlo in parti e combinare quest'ultime in un unico disegno per quando è necessaria una visione di insieme. Questa modularità ha consentito uno sviluppo più agile dei vari componenti.
 
-![gargantua_printer.gif{width="400px"}{align="center"}{caption="Visuale della struttura di Gargantua"}](src/assets/summaries/gargantua_printer.gif)
+![gargantua_printer.gif{width="400px"}{align="center"}{caption="Visuale della struttura di Gargantua"}](src/assets/gargantua_printer.gif)
 
 #### Da "bowden" a "direct drive"
 La Creality Ender 3 Pro utilizza un sistema di estrusione "bowden", in cui l'estrusore è separato dall'hotend e il filamento viene spinto attraverso un tubo fino all'hotend. 
 Questo approccio ha alcuni vantaggi, come la riduzione del peso sull'asse X, ma può presentare problemi di reattività e precisione nell'estrusione, specialmente con materiali flessibili. Avevo già avuto difficoltà con questo sistema provando a stampare TPU, che tendeva a piegarsi all'interno del tubo bowden, ho così deciso di passare a un sistema "direct drive", in cui l'estrusore è montato direttamente sull'hotend. Questo cambiamento ha migliorato significativamente la precisione e la reattività dell'estrusione, permettendomi di stampare una gamma più ampia di materiali con maggiore affidabilità.
 Nella progettazione di questa stampante, la flessibilità ha avuto la priorità sulle performance; se dovessi ricominciare con un sistema CoreXY, probabilmente opterei per un sistema di estrusione bowden, per ridurre il peso sull'asse X e migliorare la velocità di stampa, al costo di non poter stampare materiali flessibili.
 
-#### Doppio estrusore
-L'idea di poter stampare con due estrusori mi ha sempre affascinato: oltre a permettere di stampare in 2 colori, permette di sperimentare con materiali diversi, come stampe in cui un materiale flessibile e uno non flessibile vengono interlacciati, o di utilizzare supporti solubili come il PVA.
-Ho quindi deciso di implementarla fin dall'inizio, progettando una testina di supporto per due hotend Biqu H2 V2S REVO.
+![gargantua_print_head_bowden.png{width="900px"}{align="center"}](src/assets/gargantua_print_head_bowden.png)
+![gargantua_print_head_direct_drive.png{width="900px"}{align="center"}{caption="(sopra) Bowden extruder, (sotto) Direct drive extruder"}](src/assets/gargantua_print_head_direct_drive.png)
 
-![gargantua_print_head_bowden.png{width="900px"}{align="center"}](src/assets/summaries/gargantua_print_head_bowden.png)
-![gargantua_print_head_direct_drive.png{width="900px"}{align="center"}{caption="(sopra) Bowden extruder, (sotto) Direct drive extruder"}](src/assets/summaries/gargantua_print_head_direct_drive.png)
-
-Nelle immagini sopra si può vedere la differenza tra la testina di stampa con estrusori bowden e quella con estrusori direct drive. 
+Nelle immagini sopra si può vedere la differenza tra la testina di stampa con estrusori bowden e quella con estrusori direct drive.
 Nella prima, si possono intravedere gli estrusori e i canali di aerazione per raffreddarli (ventole nascoste per mostrare i dettagli), e in lontananza sulla sinistra, i motori degli estrusori.
 Nella seconda, invece, si possono vedere i due motori degli estrusori montati direttamente sugli hotend sulla testina di stampa. Il profilo metallico dove erano alloggiati i motori per il sistema bowden è stato lasciato montato per avere un ancoraggio per i cavi che vanno alla testina.
 
 Oltre agli estrusori, si può notare come anche i canali di aerazione del pezzo, alimentati da due ventole radiali, siano stati migliorati, per consentire un raffreddamento più omogeneo.
+
+#### Doppio estrusore
+L'idea di poter stampare con due estrusori mi ha sempre affascinato: oltre a permettere di stampare in 2 colori, permette di sperimentare con materiali diversi, come stampe in cui un materiale flessibile e uno non flessibile vengono interlacciati, o di utilizzare supporti solubili come il PVA.
+Ho quindi deciso di implementarla fin dall'inizio, progettando una testina di supporto per due hotend Biqu H2 V2S REVO.
 
 #### Enclosure
 Per migliorare la qualità di stampa, ridurre il rumore durante la stampa e i problemi legati alla deformazione dei pezzi durante la stampa di materiali come l'ABS, ho deciso di costruire un'enclosure per la stampante, una struttura che racchiude completamente la stampante, mantenendo una temperatura interna stabile e riducendo l'influenza delle correnti d'aria esterne.
@@ -94,7 +94,7 @@ Come prima enclosure poteva andare bene, ma il tavolino IKEA Lack non forniva la
 
 Per Gargantua, ho disegnato una struttura in profili a sezione quadrata di alluminio cavo, con due porte, in modo da avere un accesso sia frontale che laterale alla stampante. 
 
-![gargantua_enclosure.png{width="900px"}{align="center"}{caption="Gargantua nel suo case"}](src/assets/summaries/gargantua_enclosure.png)
+![gargantua_enclosure.png{width="900px"}{align="center"}{caption="Gargantua nel suo case"}](src/assets/gargantua_enclosure.png)
 
 Le pareti e le porte sono state quindi imbottite con pannelli isolanti e rivestite con pannelli di plastica dura.
 Per consentirmi di ispezionare la stampa in corso senza dover aprire le porte, ho disegnato le porte con un doppio cardine, in modo che la parte esterna possa essere aperta indipendentemente da quella interna, consistente in un frame di alluminio con un pannello di plexiglass trasparente.
@@ -110,7 +110,7 @@ Una parte molto importante e spesso sottovalutata nella stampa 3D è la gestione
 Per risolvere questo problema, ho deciso di integrare un sistema di essicazione dei filamenti direttamente sopra all'enclosure, progettando un compartimento dedicato che ospiti 10 filamenti, con un sistema di riscaldamento e ventilazione per mantenere i filamenti asciutti e pronti per la stampa.
 Questo sistema è alimentato assieme alla stampante, ed è collegato direttamente agli estrusori, in modo che i filamenti essicati non entrino in contatto con l'umidità esterna durante il percorso verso gli hotend.
 
-![gargantua_dehumidifier_photo.png{width="750px"}{align="center"}{caption="Deumidificatore di filamenti"}](src/assets/summaries/gargantua_dehumidifier_photo.png)
+![gargantua_dehumidifier_photo.png{width="750px"}{align="center"}{caption="Deumidificatore di filamenti"}](src/assets/gargantua_dehumidifier_photo.png)
 
 Nella foto sopra si può vedere il deumidificatore, con diversi filamenti, e si intravede al di sopra il circuito di riscaldamento, in fase di prototipazione. Al centro, un sistema di carrucole guida i filamenti verso gli estrusori.
 
@@ -123,7 +123,7 @@ Il filtro in questione è l'**AlveoOne R di Alveo3D**[<math display="inline"><su
 Il firmware di Gargantua è configurato per attivare automaticamente il sistema di estrazione dei fumi quando vengono stampati materiali che generano fumi, e per continuare a filtrare l'aria per un certo periodo dopo la fine della stampa.
 
 ### Il nome Gargantua
-![gargantua_black_hole_banner.jpg{width="1000px"}{height="300px"}{align="center"}{caption="Gargantua - Il buco nero super massiccio di Interstellar"}](src/assets/summaries/gargantua_black_hole_banner.jpg)
+![gargantua_black_hole_banner.jpg{width="1000px"}{height="300px"}{align="center"}{caption="Gargantua - Il buco nero super massiccio di Interstellar"}](src/assets/gargantua_black_hole_banner.jpg)
 </br>
 
 Il nome Gargantua è stato scelto in onore al buco nero super massiccio rappresentato nel film Interstellar, diretto da Christopher Nolan.
@@ -143,8 +143,8 @@ Per risolvere questo problema, ho dovuto effettuare un piccolo foro sul retro de
                               
 <div style="display: flex; flex-direction: column; align-items: center;">
 
-![gargantua_electronics_outside_photo.jpg{width="600px"}](src/assets/summaries/gargantua_electronics_outside_photo.jpg)
-![gargantua_electronics_inside_photo.jpg{width="336px"}](src/assets/summaries/gargantua_electronics_inside_photo.jpg)
+![gargantua_electronics_outside_photo.jpg{width="600px"}](src/assets/gargantua_electronics_outside_photo.jpg)
+![gargantua_electronics_inside_photo.jpg{width="336px"}](src/assets/gargantua_electronics_inside_photo.jpg)
 <div>
 <label class="image-caption">(sinistra) Alimentatori e schede di controllo spostate all'esterno del case. (destra) I cablaggi interni alla stampante</label>
 </div>
@@ -169,7 +169,7 @@ Questo è stato sicuramente il progetto più ambizioso e complesso che abbia mai
 Gargantua è una stampante 3D di grande formato, potente e versatile, che mi ha permesso di esplorare nuove possibilità nella stampa 3D e di migliorare le mie competenze in progettazione ed elettronica.
 Non posso dire che sia finita, perchè si tratta di un progetto in continua evoluzione, con nuove funzionalità e miglioramenti in fase di sviluppo, ma sono orgoglioso di quello che ho realizzato finora e non vedo l'ora di vedere dove mi porterà questo progetto in futuro.
 
-![gargantua_photo.jpg{width="200px"}{align="right"}](src/assets/summaries/gargantua_photo.jpg)
+![gargantua_photo.jpg{width="200px"}{align="right"}](src/assets/gargantua_photo.jpg)
 
 ## Technologies and tools
 

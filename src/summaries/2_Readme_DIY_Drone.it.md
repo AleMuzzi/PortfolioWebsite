@@ -10,7 +10,7 @@ Il progetto è iniziato durante la laurea magistrale e aveva anche lo scopo di f
 
 
 ### Architettura
-![Architettura del drone{width="400px"}{align="right"}{caption="Schema architetturale"}](src/assets/summaries/drone_architecture.png)
+![Architettura del drone{width="400px"}{align="right"}{caption="Schema architetturale"}](src/assets/drone_architecture.png)
 L'intero sistema è stato progettato da 0, partendo dalla selezione dei motori brushless e di conseguenza degli ESC, fino alla scelta del controller di volo e alla progettazione dell'app Android per il controllo e la telemetria.
 
 L'app fornisce un'interfaccia utente che richiama i comandi di un normale controller di volo, con due joystick virtuali per controllare l'acceleratore, l'imbardata, il beccheggio e il rollio. I comandi sono trasmessi al drone tramite Wi-Fi, via UDP, per garantire una bassa latenza. 
@@ -26,23 +26,23 @@ Magari in futuro potrebbe diventare un drone FPV, chissà!
 
 <div style="display: flex; flex-direction: column; align-items: center; gap: 20px">
 
-![drone_photo_1.jpg{width="500px"}](src/assets/summaries/drone_photo_1.jpg)
-![drone_photo_2.jpg{width="420px"}](src/assets/summaries/drone_photo_2.jpg)
+![drone_photo_1.jpg{width="500px"}](src/assets/drone_photo_1.jpg)
+![drone_photo_2.jpg{width="420px"}](src/assets/drone_photo_2.jpg)
 
 </div>
 
 <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
-<video src="src/assets/summaries/drone_test.mp4" loop autoplay muted playsinline width="500"></video>
+<video src="src/assets/drone_test.mp4" loop autoplay muted playsinline width="500"></video>
 <label class="image-caption" style="margin-top: -5px">Uno dei primi test di volo</label>
 </div>
 
 ### Curiosità
-![drone_esc_manual.png{width="500px"}{align="right"}{caption="Manuale di calibrazione di un ESC"}](src/assets/summaries/drone_esc_manual.png)
+![drone_esc_manual.png{width="500px"}{align="right"}{caption="Manuale di calibrazione di un ESC"}](src/assets/drone_esc_manual.png)
 Durante lo sviluppo del progetto, ho dovuto calibrare gli ESC per garantire che i motori rispondessero correttamente ai comandi di velocità. Non avendolo mai fatto prima, mi sono abbastanza sorpreso quando ho scoperto che vanno calibrati ascoltanto i "beep" emessi dai motori. Questi suoni infatti non sono casuali, ma seguono anzi uno schema preciso che indica lo stato di calibrazione degli ESC e vengono generati dal movimento del rotore.
 
 Ad ogni accensione del drone, quando l'ESC viene avviato, controlla di avere memorizzato i valori di minimo e massimo. Quindi, se tutto è corretto, il motore emette una serie di beep che indicano che si può procedere con il volo.
 
-<audio controls src="/src/assets/summaries/drone_esc_startup_audio.mp4"></audio>
+<audio controls src="/src/assets/drone_esc_startup_audio.mp4"></audio>
 
 ## Technologies and tools
 - **Frameworks**: Android, Arduino
