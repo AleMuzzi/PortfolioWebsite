@@ -35,8 +35,8 @@ In its first version, the system is equipped with a water pump connected to an e
 
 <div style="display: flex; flex-direction: column; align-items: center">
 
-![smart_sprinkler_photo_closed.jpg{width="400px"}](src/assets/summaries/smart_sprinkler_photo_closed.jpg)
-![smart_sprinkler_photo_open.jpg{width="354px"}](src/assets/summaries/smart_sprinkler_photo_open.jpg)
+![smart_sprinkler_photo_closed.jpg{width="400px"}](/summaries/smart_sprinkler_photo_closed.jpg)
+![smart_sprinkler_photo_open.jpg{width="354px"}](/summaries/smart_sprinkler_photo_open.jpg)
 
 </div>
 

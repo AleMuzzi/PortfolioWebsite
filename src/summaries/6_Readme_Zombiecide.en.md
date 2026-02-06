@@ -11,7 +11,7 @@ At the time, I was taking a university exam focused on virtual reality and 3D ap
 
 I created a cooperative multiplayer game inspired by Zombicide, a popular zombie survival board game (specifically the [Rue Morgue](https://www.zombicide.com/rue-morgue/) version).
 
-![zombicide_banner.webp{align="center"}](src/assets/summaries/zombicide_banner.png)
+![zombicide_banner.webp{align="center"}](/summaries/zombicide_banner.png)
 
 ### The game
 
@@ -57,8 +57,8 @@ Below is an example with the corresponding resulting configuration:
 
 <div style="display: flex; flex-direction: column; align-items: center">
 
-![zombicide_server_esempio1.png{width="700px"}{align="center"}](src/assets/summaries/zombicide_server_esempio1.png)
-![zombicide_client_esempio1.png{width="700px"}{align="center"}{caption="(up) Server configuration, (down) Results client side"}](src/assets/summaries/zombicide_client_esempio1.png)
+![zombicide_server_esempio1.png{width="700px"}{align="center"}](/summaries/zombicide_server_esempio1.png)
+![zombicide_client_esempio1.png{width="700px"}{align="center"}{caption="(up) Server configuration, (down) Results client side"}](/summaries/zombicide_client_esempio1.png)
 
 </div>
 

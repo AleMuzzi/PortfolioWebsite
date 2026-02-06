@@ -9,7 +9,7 @@ An omnidirectional robot with video streaming, controlled via an Android app
 Much like the [DIY Drone](http://project:diy-drone) project mentioned earlier, this project was born as a learning exercise to explore mobile robotics, specifically focusing on omnidirectional robots and the mechanics of omni-wheels. 
 As an exploratory project without a specific end-use, the budget was kept to a minimum by starting with a toy robot base:
 
-![omnibot_photo.png{width="400px"}{align="center"}{caption="Omniwheels robot"}](src/assets/summaries/omnibot_photo.png)
+![omnibot_photo.png{width="400px"}{align="center"}{caption="Omniwheels robot"}](/summaries/omnibot_photo.png)
 
 ### Phase One: Learning the Original Mechanics
 

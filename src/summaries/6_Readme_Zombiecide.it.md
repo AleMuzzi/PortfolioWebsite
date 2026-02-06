@@ -9,7 +9,7 @@ Il caso ha voluto che in quel periodo stessi sostenendo un esame universitario i
 
 Ho quindi deciso di unire l'utile al dilettevole, creando un gioco multiplayer cooperativo ispirato a Zombicide, un popolare gioco da tavolo di sopravvivenza contro gli zombie _(in particolare la versione [Rue Morgue](https://www.zombicide.com/rue-morgue/))_.
 
-![zombicide_banner.webp{align="center"}](src/assets/summaries/zombicide_banner.png)
+![zombicide_banner.webp{align="center"}](/summaries/zombicide_banner.png)
 
 ### Il gioco
 In Zombiecide, i giocatori assumono il ruolo di sopravvissuti in un mondo post-apocalittico infestato da zombie. Devono collaborare per completare missioni, raccogliere risorse e combattere orde di zombie.
@@ -48,8 +48,8 @@ Di seguito un esempio con la corrispettiva configurazione risultante:
 
 <div style="display: flex; flex-direction: column; align-items: center">
 
-![zombicide_server_esempio1.png{width="700px"}{align="center"}](src/assets/summaries/zombicide_server_esempio1.png)
-![zombicide_client_esempio1.png{width="700px"}{align="center"}{caption="(sopra) Configurazione server, (sotto) Risultato lato client"}](src/assets/summaries/zombicide_client_esempio1.png)
+![zombicide_server_esempio1.png{width="700px"}{align="center"}](/summaries/zombicide_server_esempio1.png)
+![zombicide_client_esempio1.png{width="700px"}{align="center"}{caption="(sopra) Configurazione server, (sotto) Risultato lato client"}](/summaries/zombicide_client_esempio1.png)
 
 </div>
 
