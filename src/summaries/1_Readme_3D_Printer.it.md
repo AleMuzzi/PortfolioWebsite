@@ -15,19 +15,13 @@ Se dovessi ricominciare oggi, opterei quasi sicuramente per una configurazione C
 
 ### Dettagli tecnici
 ```
-Volume di stampa: 400x400x768 mm
-Dimensioni: 
-    stampante:          620x625x1145mm
-    con case:           1020x890x1350mm
-    + deumidificatore:  1020x890x1790mm
-Precisione: 0.1 mm
-Velocità massima: 300 mm/s
-Numero di estrusori: 2
-Temperatura massima estrusori: 300°
-Temperatura massima piatto: 110°
-Case chiuso: Sì
-OS: Klipper
-Alimentazione: 2x 24V 500W
+Volume di stampa: 400x400x768 mm                   
+Dimensioni:                                        Numero di estrusori: 2                   
+    stampante:           620x625x1145mm            Temperatura massima estrusori: 300°      
+    con case:           1020x890x1350mm            Temperatura massima piatto: 110°         
+    + deumidificatore:  1020x890x1790mm            Case chiuso: Sì                          
+Precisione: 0.1 mm                                 OS: Klipper                              
+Velocità massima: 300 mm/s                         Alimentazione: 2x 24V 500W               
 ```
 
 ### Hardware
@@ -58,8 +52,14 @@ Facendo due conti, la potenza totale richiesta dai componenti principali della s
 
 Ragion per cui ho optato per **due alimentatori da 24V 500W** ciascuno, uno dedicato al piatto riscaldato e l'altro a tutti gli altri componenti. Il piatto riscaldato è controllato attraverso un **SSR** (Solid State Relay) per garantire un funzionamento sicuro, affidabile e veloce.
 
+Infine, ho deciso di aggiornare il sensore di livellamento del letto, passando da un CR-3D, simile ad un BLTouch, a un **Beacon H**[<math display="inline"><sup>↗</sup></math>](https://beacon3d.com/), un sensore che sfrutta lo spostamento tramite correnti indotte _(brutta traduzione di "Eddy current displacement")_ per misurare con precisione la distanza tra il sensore e il letto di stampa, offrendo una calibrazione molto più accurata, affidabile e veloce, soprattutto su superfici più grandi. La mappatura è così passata da una matrice di punti 5x5 ad una 30x30, senza alcuna necessità di interpolazione tra i rilevamenti.
+
+<div style="display: flex; flex-direction: column; align-items: left; gap: 20px">
+
 ![gargantua_bed_mesh.png{width="400px"}{align="right"}{caption="Se si osserva attentamente l'asse Z, il piatto sembra molto inclinato, ma su 40cm di lunghezza ci sono solo 2mm di differenza massima"}](src/summaries/res/gargantua_bed_mesh.png)
-Infine, ho deciso di aggiornare il sensore di livellamento del letto, passando da un CR-3D, simile ad un BLTouch, a un **Beacon H**, un sensore che sfrutta lo spostamento tramite correnti indotte _(brutta traduzione di "Eddy current displacement")_ per misurare con precisione la distanza tra il sensore e il letto di stampa, offrendo una calibrazione molto più accurata, affidabile e veloce, soprattutto su superfici più grandi. La mappatura è così passata da una matrice di punti 5x5 ad una 30x30, senza alcuna necessità di interpolazione tra i rilevamenti.
+<video src="src/summaries/res/gargantua_bed_scan.mp4" loop muted autoplay playsinline width="400"></video>
+</div>
+
 
 ### Design e Sviluppo
 Il design della stampante è stato realizzato utilizzando **Fusion 360**, che mi ha permesso di progettare ogni componente con precisione, simulare il movimento degli assi e verificare l'integrazione di tutti i componenti hardware. Ho creato modelli 3D dettagliati per ogni parte della stampante, inclusi i supporti per i motori, le staffe per il piatto riscaldato, i supporti per l'elettronica e i componenti di raffreddamento.
@@ -100,38 +100,80 @@ Per consentirmi di ispezionare la stampa in corso senza dover aprire le porte, h
 All'interno, la stampante è fissata all'enclosure attraverso 4 smorzatori in gomma, per ridurre le vibrazioni trasmesse alla struttura, anch'essa dotata di smorzatori in gomma come piedini.
 
 
->Nota: l'enclosure è necessariamente a base non quadrata, questo per ridurre al minimo la dimensione, ma lasciando spazio per il piatto di scorrere lungo l'asse Y. 
+>ℹ️ L'enclosure è necessariamente a base non quadrata, questo per ridurre al minimo la dimensione, ma lasciando spazio per il piatto di scorrere lungo l'asse Y.
+
+Un sistema di led a striscia è stato installato sul soffitto dell'enclosure, per illuminare l'interno durante la stampa e facilitare l'ispezione visiva del processo di stampa.
 
 #### Deumidificatore filamenti
+Una parte molto importante e spesso sottovalutata nella stampa 3D è la gestione dei filamenti, che sono igroscopici e tendono ad assorbire umidità dall'ambiente, con conseguente degrado della qualità di stampa. Un filamento umido si espande e può causare problemi di sotto-estrusione, o addirittura blocchi dell'estrusore.
+Per risolvere questo problema, ho deciso di integrare un sistema di essicazione dei filamenti direttamente sopra all'enclosure, progettando un compartimento dedicato che ospiti 10 filamenti, con un sistema di riscaldamento e ventilazione per mantenere i filamenti asciutti e pronti per la stampa.
+Questo sistema è alimentato assieme alla stampante, ed è collegato direttamente agli estrusori, in modo che i filamenti essicati non entrino in contatto con l'umidità esterna durante il percorso verso gli hotend.
+
+![gargantua_dehumidifier_photo.png{width="800px"}{align="center"}{caption="Deumidificatore di filamenti"}](src/summaries/res/gargantua_dehumidifier_photo.png)
+
+Nella foto sopra si può vedere il deumidificatore, con diversi filamenti, e si intravede al di sopra il circuito di riscaldamento, in fase di prototipazione. Al centro, un sistema di carrucole guida i filamenti verso gli estrusori.
+
+Il sistema è ancora in fase di sviluppo, il circuito è pronto e testato, ma occorrono ancora alcune modifiche al disegno 3D dove sarà posizionato per integrare meglio i componenti e migliorare il flusso d'aria.
+
+#### Gestione dei fumi
+Stampare con materiali come l'ABS può generare fumi potenzialmente nocivi, oltre a un odore sgradevole. Per migliorare la sicurezza e il comfort durante la stampa, ho deciso di integrare un sistema di estrazione dei fumi direttamente nell'enclosure.
+Non avendo accesso ad uno scarico esterno, ho optato per un sistema di filtraggio dell'aria basato su filtri a carbone attivo e HEPA, che catturano le particelle e neutralizzano gli odori prima di reimmettere l'aria nell'ambiente.
+Il filtro in questione è l'**AlveoOne R di Alveo3D**[<math display="inline"><sup>↗</sup></math>](https://www.alveo3d.com/en/product/alveoone-r-assembled/), progettato specificamente per la stampa 3D, filtra l'aria presente nel case chiuso.
+Il firmware di Gargantua è configurato per attivare automaticamente il sistema di estrazione dei fumi quando vengono stampati materiali che generano fumi, e per continuare a filtrare l'aria per un certo periodo dopo la fine della stampa.
 
 #### Il nome Gargantua
 ![gargantua_black_hole_banner.jpg{width="1000px"}{height="300px"}{align="center"}{caption="Gargantua - Il buco nero super massiccio di Interstellar"}](src/summaries/res/gargantua_black_hole_banner.jpg)
+</br>
+
 Il nome Gargantua è stato scelto in onore al buco nero super massiccio rappresentato nel film Interstellar, diretto da Christopher Nolan.
 Gargantua è stato al centro del film, rappresentato come un buco nero rotante con un disco di accrescimento luminoso e distorsioni gravitazionali che ne alterano l'aspetto.
-Il nome è stato scelto per simboleggiare la grandezza e la potenza della stampante, che con il suo ampio volume di stampa (**400x400x768mm**) e le sue capacità avanzate, rappresenta un punto di riferimento nel mio percorso di apprendimento e sperimentazione nel mondo della stampa 3D.
+
+Il nome è stato scelto per simboleggiare la grandezza e la potenza della stampante che, con il suo ampio volume di stampa di **400x400x768mm** e le sue capacità, rappresenta un punto di riferimento nel mio percorso di apprendimento e sperimentazione nel mondo della stampa 3D.
 
 
 #### Dagli errori si impara
-Alcune cose vengono bene subito, altre no
-- alimentatori interni al case, spostata esternamente
-- elettronica interna al case, spostata esternamente
-- dual extrusion con estrusori fissi, passata a estrusori mobili
+Sarebbe bello poter dire che è andato tutto liscio, ma purtroppo non è così. Questo progetto ha presentato numerose sfide e ostacoli lungo il percorso, molti dei quali derivanti dalla mia inesperienza nel progettare una stampante 3D da zero.
+I principali sono stati 2: sottovalutare le temperature interne al case e l'erosione degli ugelli degli hotend.
+
+Il precedente enclosure basato su tavolini IKEA Lack non era isolato, e la stampante all'interno dissipava il calore generato durante la stampa, mantenendo una temperatura interna relativamente bassa.
+Dopo aver completato l'assemblaggio e aver iniziato a stampare, ho constatato con soddisfazione che la temperatura interna al case saliva rapidamente, raggiungendo picchi di oltre 50°C e mantenendosi poi stabile, segno che l'enclosure stava facendo il suo lavoro.
+Tuttavia, questo calore ha causato problemi di surriscaldamento per l'elettronica e gli alimentatori, portando a malfunzionamenti e interruzioni della stampa.
+Per risolvere questo problema, ho dovuto effettuare un piccolo foro sul retro dell'enclosure per spostare tutta l'elettronica all'esterno, consentendo una migliore dissipazione del calore.
+                              
+<div style="display: flex; flex-direction: column; align-items: center;">
+
+![gargantua_electronics_outside_photo.jpg{width="600px"}](src/summaries/res/gargantua_electronics_outside_photo.jpg)
+![gargantua_electronics_inside_photo.jpg{width="336px"}](src/summaries/res/gargantua_electronics_inside_photo.jpg)
+<div>
+<label class="image-caption">(sinistra) Alimentatori e schede di controllo spostate all'esterno del case. (destra) I cablaggi interni alla stampante</label>
+</div>
+
+</div>
+
+Il secondo problema è stato l'erosione degli ugelli degli hotend. Quando ho realizzato la testina di stampa a doppio estrusore, ho cercato di ottenere la massima precisione possibile, per fare in modo che i due l'altezza dei due hotend fosse perfettamente allineata.
+Tuttavia, il doppio estrusore ha funzionato per poco tempo: erosioni dovute alla stampa e ugelli usciti di fabbrica leggermente più alti di altri hanno reso impossibile mantenere un allineamento preciso tra i due hotend. Purtroppo, la precisione richiesta qua è abbastanza alta, ~0.1mm, e anche una piccola differenza di altezza tra i due hotend può causare problemi di stampa.
+Per questo motivo, al momento sto stampando con un singolo estrusore, ma sto lavorando ad una nuova testina di stampa e sto valutando diverse opzioni:
+- sistema ad estrusori mobili, in cui gli estrusori si muovono su e giù e vengono calibrati individualmente
+- sistema IDEX (Independent Dual Extrusion), in cui i due estrusori sono completamente indipendenti e possono muoversi in modo autonomo, eliminando completamente il problema dell'allineamento.
+
+O magari entrambi!
 
 ### Open Source
 Il progetto è completamente open source, con tutti i file di progettazione, il firmware e la documentazione disponibili su GitHub[<math display="inline"><sup>↗</sup></math>](https://github.com/AleMuzzi/Gargantua).
-L'obiettivo è condividere questa esperienza con la comunità maker, fornendo una guida dettagliata per chiunque voglia costruire una stampante 3D di grande formato, oltre a offrire spunti e ispirazione per ulteriori modifiche e miglioramenti. 
+L'obiettivo è condividere questa esperienza con la comunità maker e DIY, fornendo una guida dettagliata per chiunque voglia costruire una stampante 3D di grande formato, oltre a offrire spunti e ispirazione per ulteriori modifiche e miglioramenti. 
 Il progetto è stato sviluppato con l'intenzione di essere facilmente replicabile, con componenti comunemente disponibili e istruzioni chiare per l'assemblaggio e la configurazione del firmware.
+
+### Risultati
+Questo è stato sicuramente il progetto più ambizioso e complesso che abbia mai realizzato, e nonostante le sfide incontrate, sono estremamente soddisfatto del risultato finale. 
+Gargantua è una stampante 3D di grande formato, potente e versatile, che mi ha permesso di esplorare nuove possibilità nella stampa 3D e di migliorare le mie competenze in progettazione ed elettronica.
+Non posso dire che sia finita, perchè si tratta di un progetto in continua evoluzione, con nuove funzionalità e miglioramenti in fase di sviluppo, ma sono orgoglioso di quello che ho realizzato finora e non vedo l'ora di vedere dove mi porterà questo progetto in futuro.
+
+![gargantua_photo.jpg{width="200px"}{align="right"}](src/summaries/res/gargantua_photo.jpg)
 
 ## Technologies and tools
 
-[//]: # (- Firmware **Marlin 2.x** &#40;personalizzato per STM32F407&#41;.)
-
-[//]: # (- Scheda di controllo a 32 bit **MKS Monster8**.)
-
-[//]: # (- **PrusaSlicer** con profili stampante e materiale personalizzati.)
-
-[//]: # (- **Hardware di Precisione:** Motori passo-passo, riscaldatori ad alta potenza e sensori di livellamento del letto.)
-
-[//]: # (- **Strumenti Media:** Imaging digitale per il monitoraggio della stampa e la creazione di time-lapse.)
-
-Klipper, BTT Manta M8P, BTT CB1, Mainsail, Motori NEMA 17, Driver TMC2209, Piatto riscaldato 420x420mm, Hotend E3D V6, Sensore di livellamento, Alimentatori 24V 500W, SSR, Cura, PrusaSlicer, Fusion 360
+- **Firmware:** Klipper
+- **Hardware:** BTT Manta M8P, BTT CB1, NEMA 17, CR 42-60, TMC2209, SSR
+- **Interfaccia utente:** Mainsail
+- **Slicer:** Cura, PrusaSlicer
+- **Design:** Fusion 360
