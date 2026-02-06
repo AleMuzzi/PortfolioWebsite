@@ -24,16 +24,16 @@ In questo caso, le lampade sono prodotte tramite stampa 3D FDM (Fused Deposition
 
 <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
 
-![litofania_immagine_originale.png{width="700px"}{align="center"}{caption="Imagine originale"}](src/assets/summaries/litofania_immagine_originale.png) 
+![litofania_immagine_originale.png{width="700px"}{align="center"}{caption="Imagine originale"}](/summaries/litofania_immagine_originale.png) 
 
-![litofania_modello.jpg{width="300px"}](src/assets/summaries/litofania_modello.jpg)
-![litofania_modello_sezione.jpg{width="300px"}](src/assets/summaries/litofania_modello_sezione.jpg)
-![litofania_interruttore.jpg{width="300px"}](src/assets/summaries/litofania_interruttore.jpg)
+![litofania_modello.jpg{width="300px"}](/summaries/litofania_modello.jpg)
+![litofania_modello_sezione.jpg{width="300px"}](/summaries/litofania_modello_sezione.jpg)
+![litofania_interruttore.jpg{width="300px"}](/summaries/litofania_interruttore.jpg)
 </div>
 <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
 
-![litofania_fine_stampa.jpg{width="500px"}{align="left"}](src/assets/summaries/litofania_fine_stampa.jpg)
-<video src="src/assets/summaries/litofania_stampa.mp4" loop autoplay muted playsinline width="500"></video>
+![litofania_fine_stampa.jpg{width="500px"}{align="left"}](/summaries/litofania_fine_stampa.jpg)
+<video src="/summaries/litofania_stampa.mp4" loop autoplay muted playsinline width="500"></video>
 </div>
 
 ### Risultati
@@ -41,8 +41,8 @@ Il risultato finale è una lampada che, da spenta, appare come un semplice ogget
 
 <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
 
-![litofania_fine.jpg{width="500px"}](src/assets/summaries/litofania_fine.jpg)
-<video src="src/assets/summaries/litofania_fine.mp4" loop autoplay muted playsinline width="500"></video>
+![litofania_fine.jpg{width="500px"}](/summaries/litofania_fine.jpg)
+<video src="/summaries/litofania_fine.mp4" loop autoplay muted playsinline width="500"></video>
 </div>
 
 ## Technologies and tools
