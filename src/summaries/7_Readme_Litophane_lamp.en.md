@@ -28,16 +28,16 @@ In this case, the lamps are produced via FDM (Fused Deposition Modeling) 3D prin
 
 <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
 
-![litofania_immagine_originale.png{width="700px"}{align="center"}{caption="Original image"}](src/assets/litofania_immagine_originale.png) 
+![litofania_immagine_originale.png{width="700px"}{align="center"}{caption="Original image"}](src/assets/summaries/litofania_immagine_originale.png) 
 
-![litofania_modello.jpg{width="300px"}](src/assets/litofania_modello.jpg)
-![litofania_modello_sezione.jpg{width="300px"}](src/assets/litofania_modello_sezione.jpg)
-![litofania_interruttore.jpg{width="300px"}](src/assets/litofania_interruttore.jpg)
+![litofania_modello.jpg{width="300px"}](src/assets/summaries/litofania_modello.jpg)
+![litofania_modello_sezione.jpg{width="300px"}](src/assets/summaries/litofania_modello_sezione.jpg)
+![litofania_interruttore.jpg{width="300px"}](src/assets/summaries/litofania_interruttore.jpg)
 </div>
 <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
 
-![litofania_fine_stampa.jpg{width="500px"}{align="left"}](src/assets/litofania_fine_stampa.jpg)
-<video src="src/assets/litofania_stampa.mp4" loop autoplay muted playsinline width="500"></video>
+![litofania_fine_stampa.jpg{width="500px"}{align="left"}](src/assets/summaries/litofania_fine_stampa.jpg)
+<video src="src/assets/summaries/litofania_stampa.mp4" loop autoplay muted playsinline width="500"></video>
 </div>
 
 ### Results
@@ -46,8 +46,8 @@ The final result is a lamp that, when turned off, appears as a simple white obje
 
 <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
 
-![litofania_fine.jpg{width="500px"}](src/assets/litofania_fine.jpg)
-<video src="src/assets/litofania_fine.mp4" loop autoplay muted playsinline width="500"></video>
+![litofania_fine.jpg{width="500px"}](src/assets/summaries/litofania_fine.jpg)
+<video src="src/assets/summaries/litofania_fine.mp4" loop autoplay muted playsinline width="500"></video>
 
 </div>
 
