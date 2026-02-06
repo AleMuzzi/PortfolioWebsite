@@ -30,7 +30,7 @@ La scelta del firmware è stata probabilmente la prima decisione importante da p
 Dopo un po' di ricerca, **Klipper** ne è uscito vincitore, noto per la sua flessibilità e capacità di sfruttare al meglio l'hardware a 32 bit, offrendo un controllo preciso dei movimenti e delle temperature, oltre a una vasta gamma di funzionalità avanzate sviluppate dalla comunità open source.
 Avevo già esperienza con Marlin, ma volevo esplorare nuove possibilità e Klipper sembrava la scelta giusta per questo progetto.
 
-![gargantua_btt_manta_m8p_photo.png{width="400px"}{align="right"}{caption="BTT Manta M8P"}](src/summaries/res/gargantua_btt_manta_m8p_photo.png)
+![gargantua_btt_manta_m8p_photo.png{width="400px"}{align="right"}{caption="BTT Manta M8P"}](res/gargantua_btt_manta_m8p_photo.png)
 Per il controller ho scelto la scheda **BTT Manta M8P**, una scheda di controllo a 32 bit basata su STM32G0B1VET6, un ARM Cortex-M0+ a 32 bit 64MHz, che offre un'ampia gamma di funzionalità e una buona compatibilità con vari firmware open source.
 Ad affiancarla, la scheda di computazione **BTT CB1**, di fatto una gemella della Raspberry Pi CM4, che esegue Klipper e gestisce l'interfaccia utente tramite **Mainsail**[<math display="inline"><sup>↗</sup></math>](https://github.com/mainsail-crew/mainsail).
 
