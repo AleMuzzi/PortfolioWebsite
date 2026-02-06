@@ -49,10 +49,7 @@ Di seguito un esempio con la corrispettiva configurazione risultante:
 <div style="display: flex; flex-direction: column; align-items: center">
 
 ![zombicide_server_esempio1.png{width="700px"}{align="center"}](src/summaries/res/zombicide_server_esempio1.png)
-
-| ![zombicide_client_esempio1.png{width="700px"}{align="center"}](src/summaries/res/zombicide_client_esempio1.png) |
-|:----------------------------------------------------------------------------------------------------------------:|
-|                        *_(sopra)_ Configurazione server, _(sotto)_ Risultato lato client*                        |
+![zombicide_client_esempio1.png{width="700px"}{align="center"}{caption="(sopra) Configurazione server, (sotto) Risultato lato client"}](src/summaries/res/zombicide_client_esempio1.png)
 
 </div>
 

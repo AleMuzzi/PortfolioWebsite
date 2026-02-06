@@ -33,7 +33,7 @@ Un'elettrovalvola direziona il flusso d'acqua verso la pianta selezionata.
 Al momento, il sistema è dotato di una sola elettrovalvola, quindi può decidere tra 2 piante (valvola aperta o chiusa), ma l'idea è di espandere il sistema aggiungendo ulteriori elettrovalvole in un sistema binario per gestire più piante (<math display="inline"><mi>n</mi></math> valvole per <math display="inline"><mn>2</mn><sup>n</sup></math> piante).
                                               
 
-<div style="display: flex; flex-direction: column; align-items: center; gap: 20px">
+<div style="display: flex; flex-direction: column; align-items: center">
 
 ![smart_sprinkler_photo_closed.jpg{width="400px"}](src/summaries/res/smart_sprinkler_photo_closed.jpg)
 ![smart_sprinkler_photo_open.jpg{width="354px"}](src/summaries/res/smart_sprinkler_photo_open.jpg)

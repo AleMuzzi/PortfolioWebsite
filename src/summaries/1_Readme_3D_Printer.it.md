@@ -12,6 +12,24 @@ Essendo la prima volta che progettavo una stampante 3D, ma soprattutto per manca
 
 Se dovessi ricominciare oggi, opterei quasi sicuramente per una configurazione CoreXY, che offre vantaggi significativi in termini di velocità e precisione di stampa, specialmente per formati più grandi, e su un sistema a guide lineari anziché V-slot.
 
+
+### Dettagli tecnici
+```
+Volume di stampa: 400x400x768 mm
+Dimensioni: 
+    stampante:          620x625x1145mm
+    con case:           1020x890x1350mm
+    + deumidificatore:  1020x890x1790mm
+Precisione: 0.1 mm
+Velocità massima: 300 mm/s
+Numero di estrusori: 2
+Temperatura massima estrusori: 300°
+Temperatura massima piatto: 110°
+Case chiuso: Sì
+OS: Klipper
+Alimentazione: 2x 24V 500W
+```
+
 ### Hardware
 La scelta del firmware è stata probabilmente la prima decisione importante da prendere, poiché avrebbe influenzato tutte le altre scelte hardware successive.
 Dopo un po' di ricerca, **Klipper** ne è uscito vincitore, noto per la sua flessibilità e capacità di sfruttare al meglio l'hardware a 32 bit, offrendo un controllo preciso dei movimenti e delle temperature, oltre a una vasta gamma di funzionalità avanzate sviluppate dalla comunità open source.
@@ -40,9 +58,69 @@ Facendo due conti, la potenza totale richiesta dai componenti principali della s
 
 Ragion per cui ho optato per **due alimentatori da 24V 500W** ciascuno, uno dedicato al piatto riscaldato e l'altro a tutti gli altri componenti. Il piatto riscaldato è controllato attraverso un **SSR** (Solid State Relay) per garantire un funzionamento sicuro, affidabile e veloce.
 
-[//]: # (TODO CHECK THIS CAPTION)
 ![gargantua_bed_mesh.png{width="400px"}{align="right"}{caption="Se si osserva attentamente l'asse Z, il piatto sembra molto inclinato, ma su 40cm di lunghezza ci sono solo 2mm di differenza massima"}](src/summaries/res/gargantua_bed_mesh.png)
 Infine, ho deciso di aggiornare il sensore di livellamento del letto, passando da un CR-3D, simile ad un BLTouch, a un **Beacon H**, un sensore che sfrutta lo spostamento tramite correnti indotte _(brutta traduzione di "Eddy current displacement")_ per misurare con precisione la distanza tra il sensore e il letto di stampa, offrendo una calibrazione molto più accurata, affidabile e veloce, soprattutto su superfici più grandi. La mappatura è così passata da una matrice di punti 5x5 ad una 30x30, senza alcuna necessità di interpolazione tra i rilevamenti.
+
+### Design e Sviluppo
+Il design della stampante è stato realizzato utilizzando **Fusion 360**, che mi ha permesso di progettare ogni componente con precisione, simulare il movimento degli assi e verificare l'integrazione di tutti i componenti hardware. Ho creato modelli 3D dettagliati per ogni parte della stampante, inclusi i supporti per i motori, le staffe per il piatto riscaldato, i supporti per l'elettronica e i componenti di raffreddamento.
+Il processo di sviluppo è stato iterativo, con frequenti test e modifiche al design. Progettare tutto in CAD mi ha permesso di identificare e risolvere potenziali problemi di compatibilità e di spazio prima di procedere alla fase di assemblaggio, risparmiando tempo e risorse.
+Il progetto era inizialmente di dimensioni gestibili, ma col passare del tempo è stato necessario suddividerlo in parti e combinare quest'ultime in un unico disegno per quando è necessaria una visione di insieme. Questa modularità ha consentito uno sviluppo più agile dei vari componenti.
+
+![gargantua_printer.gif{width="400px"}{align="center"}{caption="Visuale della struttura di Gargantua"}](src/summaries/res/gargantua_printer.gif)
+
+#### Da "bowden" a "direct drive"
+La Creality Ender 3 Pro utilizza un sistema di estrusione "bowden", in cui l'estrusore è separato dall'hotend e il filamento viene spinto attraverso un tubo fino all'hotend. 
+Questo approccio ha alcuni vantaggi, come la riduzione del peso sull'asse X, ma può presentare problemi di reattività e precisione nell'estrusione, specialmente con materiali flessibili. Avevo già avuto difficoltà con questo sistema provando a stampare TPU, che tendeva a piegarsi all'interno del tubo bowden, ho così deciso di passare a un sistema "direct drive", in cui l'estrusore è montato direttamente sull'hotend. Questo cambiamento ha migliorato significativamente la precisione e la reattività dell'estrusione, permettendomi di stampare una gamma più ampia di materiali con maggiore affidabilità.
+Nella progettazione di questa stampante, la flessibilità ha avuto la priorità sulle performance; se dovessi ricominciare con un sistema CoreXY, probabilmente opterei per un sistema di estrusione bowden, per ridurre il peso sull'asse X e migliorare la velocità di stampa, al costo di non poter stampare materiali flessibili.
+
+#### Doppio estrusore
+L'idea di poter stampare con due estrusori mi ha sempre affascinato: oltre a permettere di stampare in 2 colori, permette di sperimentare con materiali diversi, come stampe in cui un materiale flessibile e uno non flessibile vengono interlacciati, o di utilizzare supporti solubili come il PVA.
+Ho quindi deciso di implementarla fin dall'inizio, progettando una testina di supporto per due hotend Biqu H2 V2S REVO.
+
+![gargantua_print_head_bowden.png{width="900px"}{align="center"}](src/summaries/res/gargantua_print_head_bowden.png)
+![gargantua_print_head_direct_drive.png{width="900px"}{align="center"}{caption="(sopra) Bowden extruder, (sotto) Direct drive extruder"}](src/summaries/res/gargantua_print_head_direct_drive.png)
+
+Nelle immagini sopra si può vedere la differenza tra la testina di stampa con estrusori bowden e quella con estrusori direct drive. 
+Nella prima, si possono intravedere gli estrusori e i canali di aerazione per raffreddarli (ventole nascoste per mostrare i dettagli), e in lontananza sulla sinistra, i motori degli estrusori.
+Nella seconda, invece, si possono vedere i due motori degli estrusori montati direttamente sugli hotend sulla testina di stampa. Il profilo metallico dove erano alloggiati i motori per il sistema bowden è stato lasciato montato per avere un ancoraggio per i cavi che vanno alla testina.
+
+Oltre agli estrusori, si può notare come anche i canali di aerazione del pezzo, alimentati da due ventole radiali, siano stati migliorati, per consentire un raffreddamento più omogeneo.
+
+#### Enclosure
+Per migliorare la qualità di stampa, ridurre il rumore durante la stampa e i problemi legati alla deformazione dei pezzi durante la stampa di materiali come l'ABS, ho deciso di costruire un'enclosure per la stampante, una struttura che racchiude completamente la stampante, mantenendo una temperatura interna stabile e riducendo l'influenza delle correnti d'aria esterne.
+Avevo già esperienza nella costruzione di enclosure, per la mia Ender 3 Pro avevo costruito quello che su internet viene chiamato "IKEA Lack Enclosure"[<math display="inline"><sup>↗</sup></math>](https://www.google.com/search?q=ikea+lack+enclosure): utilizzando due tavolini IKEA Lack sovrapposti, pannelli di plexiglass per le pareti laterali e le porte, e stampando in 3D i vari connettori.
+Come prima enclosure poteva andare bene, ma il tavolino IKEA Lack non forniva la stabilità necessaria, e in ogni caso non sarebbe stata una soluzione applicabile ad una stampante di grandi dimensioni come Gargantua.
+
+Per Gargantua, ho disegnato una struttura in profili a sezione quadrata di alluminio cavo, con due porte, in modo da avere un accesso sia frontale che laterale alla stampante. 
+
+![gargantua_enclosure.png{width="900px"}{align="center"}{caption="Gargantua nel suo case"}](src/summaries/res/gargantua_enclosure.png)
+
+Le pareti e le porte sono state quindi imbottite con pannelli isolanti e rivestite con pannelli di plastica dura.
+Per consentirmi di ispezionare la stampa in corso senza dover aprire le porte, ho disegnato le porte con un doppio cardine, in modo che la parte esterna possa essere aperta indipendentemente da quella interna, consistente in un frame di alluminio con un pannello di plexiglass trasparente.
+All'interno, la stampante è fissata all'enclosure attraverso 4 smorzatori in gomma, per ridurre le vibrazioni trasmesse alla struttura, anch'essa dotata di smorzatori in gomma come piedini.
+
+
+>Nota: l'enclosure è necessariamente a base non quadrata, questo per ridurre al minimo la dimensione, ma lasciando spazio per il piatto di scorrere lungo l'asse Y. 
+
+#### Deumidificatore filamenti
+
+#### Il nome Gargantua
+![gargantua_black_hole_banner.jpg{width="1000px"}{height="300px"}{align="center"}{caption="Gargantua - Il buco nero super massiccio di Interstellar"}](src/summaries/res/gargantua_black_hole_banner.jpg)
+Il nome Gargantua è stato scelto in onore al buco nero super massiccio rappresentato nel film Interstellar, diretto da Christopher Nolan.
+Gargantua è stato al centro del film, rappresentato come un buco nero rotante con un disco di accrescimento luminoso e distorsioni gravitazionali che ne alterano l'aspetto.
+Il nome è stato scelto per simboleggiare la grandezza e la potenza della stampante, che con il suo ampio volume di stampa (**400x400x768mm**) e le sue capacità avanzate, rappresenta un punto di riferimento nel mio percorso di apprendimento e sperimentazione nel mondo della stampa 3D.
+
+
+#### Dagli errori si impara
+Alcune cose vengono bene subito, altre no
+- alimentatori interni al case, spostata esternamente
+- elettronica interna al case, spostata esternamente
+- dual extrusion con estrusori fissi, passata a estrusori mobili
+
+### Open Source
+Il progetto è completamente open source, con tutti i file di progettazione, il firmware e la documentazione disponibili su GitHub[<math display="inline"><sup>↗</sup></math>](https://github.com/AleMuzzi/Gargantua).
+L'obiettivo è condividere questa esperienza con la comunità maker, fornendo una guida dettagliata per chiunque voglia costruire una stampante 3D di grande formato, oltre a offrire spunti e ispirazione per ulteriori modifiche e miglioramenti. 
+Il progetto è stato sviluppato con l'intenzione di essere facilmente replicabile, con componenti comunemente disponibili e istruzioni chiare per l'assemblaggio e la configurazione del firmware.
 
 ## Technologies and tools
 

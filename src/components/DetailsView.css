@@ -374,6 +374,14 @@
     clear: both;
 }
 
+.image-caption {
+    text-align: center;
+    font-size: 0.9em;
+    color: #888;
+    margin-top: 4px;
+    font-style: italic
+}
+
 /* On small screens, disable float to keep layout clean */
 @media (max-width: 768px) {
     .markdown-body img.align-right figure.align-right,

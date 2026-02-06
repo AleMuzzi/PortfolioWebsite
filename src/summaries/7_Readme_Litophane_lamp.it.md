@@ -24,9 +24,7 @@ In questo caso, le lampade sono prodotte tramite stampa 3D FDM (Fused Deposition
 
 <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
 
-| ![litofania_immagine_originale.png{width="700px"}{align="center"}](src/summaries/res/litofania_immagine_originale.png) |
-|:----------------------------------------------------------------------------------------------------------------------:|
-|                                                  *Imagine originale*                                                   |
+![litofania_immagine_originale.png{width="700px"}{align="center"}{caption="Imagine originale"}](src/summaries/res/litofania_immagine_originale.png) 
 
 ![litofania_modello.jpg{width="300px"}](src/summaries/res/litofania_modello.jpg)
 ![litofania_modello_sezione.jpg{width="300px"}](src/summaries/res/litofania_modello_sezione.jpg)
