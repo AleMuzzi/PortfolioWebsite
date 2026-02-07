@@ -14,8 +14,7 @@ FROM nginx:stable-alpine
 
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Add nginx config to handle SPA routing if needed
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
+RUN chmod -R 755 /usr/share/nginx/html/summaries/*
 
 EXPOSE 80
 
