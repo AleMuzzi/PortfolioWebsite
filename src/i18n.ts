@@ -82,7 +82,9 @@ export const translations = {
     filterByTags: "Filter by Tags",
     apply: "Apply",
     tecnologiesAndTools: "Technologies & Tools",
-    mobileWarningText: "I am not a web developer, so this website is not optimized for mobile devices.\nFor the intended experience, please visit on a <strong>desktop browser</strong>."
+    mobileWarningTitle: "Desktop Recommended",
+    mobileWarningText: "I am not a web developer, so this website is not optimized for mobile devices.\nFor the intended experience, please visit on a <strong>desktop browser</strong>.",
+    mobileWarningButton: "Proceed Anyway"
   },
   it: {
     heroTitle: "Alessandro Muzzi",
@@ -170,7 +172,9 @@ export const translations = {
     compEngField: "Ingegneria Informatica",
     mastersDegree: "Laurea Magistrale",
     tecnologiesAndTools: "Tecnologie e Strumenti",
-    mobileWarningText: "Non sono un web developer, quindi questo sito non è ottimizzato per dispositivi mobili.\nPer l'esperienza completa, visita il sito su un <strong>browser desktop</strong>."
+    mobileWarningTitle: "Sito desktop consigliato",
+    mobileWarningText: "Non sono un web developer, quindi questo sito non è ottimizzato per dispositivi mobili.\nPer l'esperienza completa, visita il sito su un <strong>browser desktop</strong>.",
+    mobileWarningButton: "Procedi comunque"
   }
 };
 

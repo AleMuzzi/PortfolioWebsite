@@ -349,13 +349,13 @@ function App() {
               <div className="mobile-modal-overlay">
                 <div className="mobile-modal-content">
                   <div className="mobile-modal-icon">🖥️</div>
-                  <h2>Desktop Recommended</h2>
+                  <h2>{t.mobileWarningTitle}</h2>
                   <p dangerouslySetInnerHTML={{ __html: t.mobileWarningText }}></p>
                   <button
                     className="mobile-modal-btn"
                     onClick={handleCloseModal}
                   >
-                    Proceed Anyway
+                    {t.mobileWarningButton}
                   </button>
                 </div>
               </div>
