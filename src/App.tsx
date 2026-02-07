@@ -43,6 +43,29 @@ function App() {
     const filteredProjects = useMemo(() => projects.filter(p => p.lang === lang), [lang]);
     const filteredExperiences = useMemo(() => experiences.filter(e => e.lang === lang), [lang]);
 
+    const [showMobileModal, setShowMobileModal] = useState<boolean>(false);
+
+    useEffect(() => {
+      // Check screen width
+      const isMobile = window.innerWidth <= 1024;
+      if (isMobile) {
+        setShowMobileModal(true);
+        // Prevent background scrolling
+        document.body.style.overflow = 'hidden';
+      }
+
+      // Cleanup: re-enable scrolling if component unmounts
+      return () => {
+        document.body.style.overflow = 'unset';
+      };
+    }, []);
+
+    const handleCloseModal = () => {
+      setShowMobileModal(false);
+      // Re-enable scrolling when dismissed
+      document.body.style.overflow = 'unset';
+    };
+
     // Ensure lastProjectId always points to a valid project for the current language
     useEffect(() => {
         if (filteredProjects.length === 0) {
@@ -320,43 +343,23 @@ function App() {
 
     return (
         <div className={`app-root ${selectedType === 'home' ? 'is-home' : ''}`}>
-            {/* --- INJECTED STYLES FOR POP-OUT EFFECT --- */}
-            <style>{`
-                .timeline-item {
-                    position: relative;
-                    z-index: 1;
-                    overflow: visible !important;
-                }
-                
-                /* The container for the background image */
-                .timeline-popout-bg {
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%) scale(0.5); /* Start small */
-                    width: 300px;
-                    height: auto;
-                    opacity: 0;
-                    z-index: -1; /* Behind text */
-                    pointer-events: none;
-                    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-                    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
-                }
 
-                .timeline-item-left .timeline-popout-bg {
-                    left: 30%;
-                }
-                .timeline-item-right .timeline-popout-bg {
-                    left: 70%;
-                }
-
-                /* Hover State */
-                .timeline-item:hover .timeline-popout-bg {
-                    opacity: 0.20; 
-                    transform: translate(-50%, -50%) scale(2.0) rotate(-5deg);
-                    filter: brightness(0.6) drop-shadow(0 10px 15px rgba(0,0,0,0.5));
-                }
-            `}</style>
+            {/* --- MOBILE MODAL --- */}
+            {showMobileModal && (
+              <div className="mobile-modal-overlay">
+                <div className="mobile-modal-content">
+                  <div className="mobile-modal-icon">🖥️</div>
+                  <h2>Desktop Recommended</h2>
+                  <p dangerouslySetInnerHTML={{ __html: t.mobileWarningText }}></p>
+                  <button
+                    className="mobile-modal-btn"
+                    onClick={handleCloseModal}
+                  >
+                    Proceed Anyway
+                  </button>
+                </div>
+              </div>
+            )}
 
             <div className="header-actions-floating">
                 <button className="lang-toggle" onClick={toggleLanguage} aria-label="Toggle language">

@@ -72,7 +72,7 @@ html, body::before {
   position: fixed;
   top: 1.5rem;
   right: 5vw;
-  z-index: 1000;
+  z-index: 999999;
   pointer-events: auto;
 }
 
@@ -614,3 +614,87 @@ html, body::before {
   }
 }
 
+.timeline-item {
+    position: relative;
+    z-index: 1;
+    overflow: visible !important;
+}
+
+/* The container for the background image */
+.timeline-popout-bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.5); /* Start small */
+    width: 300px;
+    height: auto;
+    opacity: 0;
+    z-index: -1; /* Behind text */
+    pointer-events: none;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+}
+
+.timeline-item-left .timeline-popout-bg {
+    left: 30%;
+}
+.timeline-item-right .timeline-popout-bg {
+    left: 70%;
+}
+
+/* Hover State */
+.timeline-item:hover .timeline-popout-bg {
+    opacity: 0.20;
+    transform: translate(-50%, -50%) scale(2.0) rotate(-5deg);
+    filter: brightness(0.6) drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+}
+
+.mobile-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.95); /* Slightly more opaque */
+    backdrop-filter: blur(10px);
+    z-index: 999998; /* Higher z-index to stay above everything */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    /* Ensure the overlay itself blocks clicks to things behind it */
+    pointer-events: all;
+    touch-action: none;
+}
+
+.mobile-modal-content {
+    background: #1e293b;
+    border: 2px solid #3b82f6;
+    border-radius: 20px;
+    padding: 40px 24px;
+    max-width: 340px;
+    text-align: center;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+    /* Ensure the content and its button are clickable */
+    position: relative;
+    z-index: 1000000;
+    pointer-events: all;
+}
+
+.mobile-modal-btn {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+    /* Important: explicitly allow clicks */
+    pointer-events: auto !important;
+}
+
+.mobile-modal-btn:hover {
+    background: #2563eb;
+}
