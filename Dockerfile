@@ -12,9 +12,10 @@ RUN npm run build
 # Production stage
 FROM nginx:stable-alpine
 
-COPY --from=build /app/dist /usr/share/nginx/html
+COPY --from=build --chown=nginx:nginx /app/dist /usr/share/nginx/html
 
-RUN chmod 755 /usr/share/nginx/html/summaries/*
+#RUN chown -R nginx:nginx /usr/share/nginx/html && \
+#    chmod -R 755 /usr/share/nginx/html
 
 EXPOSE 80
 
