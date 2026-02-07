@@ -14,7 +14,7 @@ FROM nginx:stable-alpine
 
 COPY --from=build /app/dist /usr/share/nginx/html
 
-RUN chmod -R 755 /usr/share/nginx/html/summaries/*
+RUN chmod 755 /usr/share/nginx/html/summaries/*
 
 EXPOSE 80
 
