@@ -24,6 +24,7 @@ Dimensioni:                                        Numero di estrusori:         
 Precisione:                      0.1 mm            OS:                          Klipper                              
 Velocità massima:              300 mm/s            Alimentazione:           2x 24V 500W               
 ```
+---
 
 ### Hardware
 La scelta del firmware è stata probabilmente la prima decisione importante da prendere, poiché avrebbe influenzato tutte le altre scelte hardware successive.
@@ -55,10 +56,12 @@ Ragion per cui ho optato per **due alimentatori da 24V 500W** ciascuno, uno dedi
 
 Infine, ho deciso di aggiornare il sensore di livellamento del letto, passando da un CR-3D, simile ad un BLTouch, a un **Beacon H**[<math display="inline"><sup>↗</sup></math>](https://beacon3d.com/), un sensore che sfrutta lo spostamento tramite correnti indotte _(brutta traduzione di "Eddy current displacement")_ per misurare con precisione la distanza tra il sensore e il letto di stampa, offrendo una calibrazione molto più accurata, affidabile e veloce, soprattutto su superfici più grandi. La mappatura è così passata da una matrice di punti 5x5 ad una 30x30, senza alcuna necessità di interpolazione tra i rilevamenti.
 
-<div style="display: flex; flex-direction: column; align-items: left; gap: 20px">
-
-![gargantua_bed_mesh.png{width="400px"}{align="right"}{caption="Il piatto sembra molto inclinato, ma se si osserva attentamente l'asse Z, su 40cm di lunghezza ci sono solo 2mm di differenza massima"}](/summaries/gargantua_bed_mesh.png)
-<video src="/summaries/gargantua_bed_scan.mp4" loop muted autoplay playsinline width="400"></video>
+<div style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 24px;">
+    <video src="/summaries/gargantua_bed_scan.mp4" loop muted autoplay playsinline width="400px"></video>
+    <figure width="400px" style="display: table">
+      <img src="/summaries/gargantua_bed_mesh.png" width="400px" />
+      <figcaption class="image-caption" style="display: table-caption; caption-side: bottom;" >Il piatto sembra molto inclinato, ma se si osserva attentamente l'asse Z, su 40cm di lunghezza ci sono solo 2mm di differenza massima</figcaption>
+    </figure>
 </div>
 
 

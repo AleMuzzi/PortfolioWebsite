@@ -26,6 +26,7 @@ Dimesions:                                        Extruders number:             
 Precision:                      0.1 mm            OS:                      Klipper                              
 Max speed:                    300 mm/s            Power:               2x 24V 500W               
 ```
+---
 
 ### Hardware
 
@@ -53,16 +54,16 @@ Because of the high power draw of the massive bed and dual hotends, I calculated
 
 I opted for **two 24V 500W power supplies**—one dedicated solely to the bed and the other for all other components. The bed is controlled via a **Solid State Relay (SSR)** for safety and reliability.
 
-Finally, I upgraded the bed leveling sensor from a standard probe to a **Beacon H**[<math display="inline"><sup>↗</sup></math>](https://beacon3d.com/), which uses eddy current displacement to measure distance. This allowed the bed mesh to leap from a 5x5 grid to a highly accurate 30x30 matrix without needing interpolation.
+Finally, I upgraded the bed leveling sensor from a standard probe to a **Beacon H**[<math display="inline"><sup>↗</sup></math>](https://beacon3d.com/), which uses eddy current displacement to measure distance to accurately measure the distance between the sensor and the print bed, offering much more accurate, reliable and faster calibration, especially on larger surfaces. This allowed the bed mesh to leap from a 5x5 grid to a highly accurate 30x30 matrix without needing interpolation.
 
-<div style="display: flex; flex-direction: column; align-items: left; gap: 20px">
-
-![gargantua_bed_mesh.png{width="400px"}{align="right"}{caption="The plate seems very tilted, but if you look carefully at the Z-axis, on 40cm of length there is only 2mm of maximum difference"}](/summaries/gargantua_bed_mesh.png)
-<video src="/summaries/gargantua_bed_scan.mp4" loop muted autoplay playsinline width="400"></video>
-
+<div style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 24px;">
+    <video src="/summaries/gargantua_bed_scan.mp4" loop muted autoplay playsinline width="400px"></video>
+    <figure width="400px" style="display: table">
+      <img src="/summaries/gargantua_bed_mesh.png" width="400px" />
+      <figcaption class="image-caption" style="display: table-caption; caption-side: bottom;" >The plate seems very tilted, but if you look carefully at the Z-axis, on 40cm of length there is only 2mm of maximum difference</figcaption>
+    </figure>
 </div>
 
----
 
 ### Design and Development
 
@@ -84,7 +85,7 @@ The idea of being able to print with two extruders has always fascinated me: in 
 I then decided to implement it from the beginning, designing a support head for two Biqu H2 V2S REVO hotends.
 
 ![gargantua_print_head_bowden.png{width="900px"}{align="center"}](/summaries/gargantua_print_head_bowden.png)
-![gargantua_print_head_direct_drive.png{width="900px"}{align="center"}{caption="(sopra) Bowden extruder, (sotto) Direct drive extruder"}](/summaries/gargantua_print_head_direct_drive.png)
+![gargantua_print_head_direct_drive.png{width="900px"}{align="center"}{caption="(above) Bowden extruder, (below) Direct drive extruder"}](/summaries/gargantua_print_head_direct_drive.png)
 
 In the images above you can see the difference between the print head with bowden extruders and the one with direct drive extruders.
 In the first, you can glimpse the extruders and the aeration channels to cool them (hidden fans to show the details), and in the distance on the left, the extruder motors.
@@ -99,7 +100,7 @@ As a first enclosure it might have been fine, but the IKEA Lack coffee table did
 
 For Gargantua, I drew a hollow aluminum square-section profile structure, with two ports, so that I had both front and side access to the printer.
 
-![gargantua_enclosure.png{width="900px"}{align="center"}{caption="Gargantua nel suo case"}](/summaries/gargantua_enclosure.png)
+![gargantua_enclosure.png{width="900px"}{align="center"}{caption="Gargantua inside its enclosure"}](/summaries/gargantua_enclosure.png)
 
 The walls and doors were then padded with insulation panels and covered with hard plastic panels.
 To allow me to inspect the printing in progress without having to open the doors, I designed the doors with a double hinge, so that the outer part can be opened independently of the inner part, consisting of an aluminum frame with a transparent plexiglass panel.
@@ -115,6 +116,8 @@ A very important and often underestimated part of 3D printing is the management 
 To address this issue, I decided to integrate a filament drying system directly above the enclosure, designing a dedicated compartment that houses 10 filaments, with a heating and ventilation system to keep the filaments dry and ready for printing.
 This system is powered together with the printer, and is connected directly to the extruders, so that the dried filaments do not come into contact with external moisture on the way to the hotends.
 
+![gargantua_dehumidifier_photo.png{width="750px"}{align="center"}{caption="Filament dehumidifier"}](/summaries/gargantua_dehumidifier_photo.png)
+
 ### Fume Management
 
 Printing with materials such as ABS can generate potentially harmful fumes, as well as an unpleasant odor. To improve safety and comfort during printing, I decided to integrate a smoke extraction system directly into the enclosure.
@@ -123,7 +126,7 @@ The filter in question is the **AlveoOne R of Alveo3D**[<math display="inline"><
 Gargantua's firmware is configured to automatically activate the fume extraction system when fume-generating materials are printed, and to continue filtering the air for a certain period after printing has finished.
 
 ### The Name: Gargantua
-![gargantua_black_hole_banner.jpg{width="1000px"}{height="300px"}{align="center"}{caption="Gargantua - Il buco nero super massiccio di Interstellar"}](/summaries/gargantua_black_hole_banner.jpg)
+![gargantua_black_hole_banner.jpg{width="1000px"}{height="300px"}{align="center"}{caption="Gargantua - Interstellar's supermassive black hole"}](/summaries/gargantua_black_hole_banner.jpg)
 </br>
 
 The name Gargantua was chosen in honor of the super-massive black hole depicted in Christopher Nolan's film Interstellar.
@@ -131,7 +134,6 @@ Gargantua was at the center of the film, depicted as a rotating black hole with 
 
 The name was chosen to symbolize the size and power of the printer, which, with its large print volume of **400x400x768mm** and its capabilities, represents a benchmark in my journey of learning and experimenting in the world of 3D printing.
 
----
 
 ### Lessons Learned
 
@@ -148,7 +150,7 @@ To solve this problem, I had to drill a small hole in the back of the enclosure 
 ![gargantua_electronics_outside_photo.jpg{width="600px"}](/summaries/gargantua_electronics_outside_photo.jpg)
 ![gargantua_electronics_inside_photo.jpg{width="336px"}](/summaries/gargantua_electronics_inside_photo.jpg)
 <div>
-<label class="image-caption">(sinistra) Alimentatori e schede di controllo spostate all'esterno del case. (destra) I cablaggi interni alla stampante</label>
+<label class="image-caption">(left) Power supplies and electronics, moved outside the case. (right) Cables inside it</label>
 </div>
 
 </div>
@@ -161,7 +163,6 @@ For this reason, I am currently printing with a single extruder, but I am workin
 
 Or maybe both!
 
----
 
 ### Open Source
 
@@ -169,7 +170,7 @@ The project is fully open source, with all design files, firmware, and documenta
 The goal is to share this experience with the maker and DIY community, providing detailed guidance for anyone looking to build a large-format 3D printer, as well as offering insights and inspiration for further modifications and improvements.
 The project was developed with the intention of being easily replicable, with commonly available components and clear instructions for assembling and configuring the firmware.
 
-### Risultati
+### Results and Future Developments
 This was certainly the most ambitious and complex project I have ever carried out, and despite the challenges I encountered, I am extremely satisfied with the final result.
 Gargantua is a large format, powerful and versatile 3 D printer, which has allowed me to explore new possibilities in 3 D printing and improve my skills in design and electronics.
 I can't say it's over, because this is an ever-evolving project, with new features and improvements in development, but I'm proud of what I've accomplished so far and can't wait to see where this project takes me in the future.
