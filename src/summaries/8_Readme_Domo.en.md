@@ -21,6 +21,6 @@ The app was originally available for free on the Google Play Store, but it has s
 ## Technologies and tools
 
 * **Languages:** Kotlin, C#
-* **Frameworks:** Android
+* **Frameworks:** Android, .NET
 * **Backend and APIs:** HTTP, WebSocket
 * **Communication Protocols:** TCP, UDP

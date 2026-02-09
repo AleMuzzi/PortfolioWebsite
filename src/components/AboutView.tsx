@@ -146,19 +146,19 @@ export function AboutView({lang, handleSelect, onTagClick}: AboutViewProps) {
                 <div className="skill-category">
                   <h4>{t.softwareDev}</h4>
                   <div className="skill-tags">
-                    {["Python", "Kotlin", "C++", "C#", "Java", "Dart", "TypeScript", "Lua", "Swift", "React", "Node.js", "Flutter", "Unity", "Android SDK", "Spring", ".NET", "Architecture", "System Design", "Infrastructure", "Team Management", "Web Scraping"].map(renderTag)}
+                    {["Python", "Kotlin", "C++", "C#", "Java", "C", "Dart", "Lua", "Swift", "React.js", "Node.js", "Flutter", "Unity", "Android", "iOS", "Spring", ".NET", "Docker", "GraphQL", "MQTT", "Git", "System Design", "Team Leadership", "Web Scraping"].map(renderTag)}
                   </div>
                 </div>
                 <div className="skill-category">
                   <h4>{t.hardwareEmbedded}</h4>
                   <div className="skill-tags">
-                    {["Arduino", "ESP32", "STM32", "OpenWRT", "Marlin", "State Machines", "Custom C++", "DJI SDK", "PID", "Motion Control", "Telemetry", "PTZ", "3D Printing", "Slicing", "3D Modeling", "Fusion 360", "Blender"].map(renderTag)}
+                    {["Arduino", "ESP32", "ESP8266", "OpenWRT", "Klipper", "DJI SDK", "IoT", "KNX", "PTZ", "MVVM", "3D Printing", "3D Modeling", "Fusion 360", "Blender"].map(renderTag)}
                   </div>
                 </div>
                 <div className="skill-category">
                   <h4>{t.dataAI}</h4>
                   <div className="skill-tags">
-                    {["Pandas", "NumPy", "Scikit-learn", "BERT", "Elasticsearch", "DepthAI", "Active Inference", "Semantic Search", "Financial Engineering", "Computer Vision"].map(renderTag)}
+                    {["Machine Learning", "BERT", "Gensim", "Word Embeddings", "Elasticsearch", "Active Inference", "Semantic Search", "Bayesian Inference"].map(renderTag)}
                   </div>
                 </div>
               </div>

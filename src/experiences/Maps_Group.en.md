@@ -20,6 +20,6 @@ Semantic search engine for the **SignalER** platform:
 ## Technologies and tools
 
 - **Languages:** Python, Java
-- **Frameworks:** Spring Framework
+- **Frameworks:** Spring
 - **Data & AI:** Machine Learning, BERT, Gensim, Word Embeddings
 - **Infrastructure:** GraphQL, Elasticsearch, Docker

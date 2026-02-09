@@ -20,6 +20,6 @@ Motore di ricerca semantico per la piattaforma **SignalER**:
 ## Tecnologie e strumenti
 
 - **Linguaggi:** Python, Java
-- **Framework:** Spring Framework
+- **Framework:** Spring
 - **Dati e IA:** Machine Learning, BERT, Gensim, Word Embeddings
 - **Infrastruttura:** GraphQL, Elasticsearch, Docker
