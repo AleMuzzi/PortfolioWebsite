@@ -25,9 +25,14 @@ export function ExperienceView({
 }: ExperienceViewProps) {
     const t = translations[lang];
     const bottomRef = useRef<HTMLDivElement>(null);
+    const topRef = useRef<HTMLDivElement>(null);
 
     const scrollToBottom = () => {
         bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    const scrollToTop = () => {
+        topRef.current?.scrollIntoView({ behavior: 'smooth' });
     };
 
     const renderWorkHeader = (rawName: string) => {
@@ -48,12 +53,16 @@ export function ExperienceView({
 
     return (
         <article className="timeline-view">
+            <div ref={topRef} style={{ height: '1px' }} />
             <div className="view-header">
                 <button className="back-button" onClick={() => handleSelect(null, 'home')}>←</button>
                 <h2>{t.workTitle}</h2>
             </div>
           <button className="scroll-to-bottom-btn" onClick={scrollToBottom} style={{ position: 'absolute', top: '100px', right: '-20px', zIndex: 1000 }}>
             <span className="scroll-icon">↓</span> {t.scrollToBottom}
+          </button>
+          <button className="scroll-to-bottom-btn" onClick={scrollToTop} style={{ position: 'absolute', top: '2270px', right: '-20px', zIndex: 1000 }}>
+            <span className="scroll-icon">↑</span> {t.scrollToTop}
           </button>
             <div className="timeline-container" style={{ position: 'relative' }}>
                 <svg width="100%" height={svgHeight} viewBox={`0 0 1000 ${svgHeight}`} style={{ position: 'absolute', left: 0, top: 0, pointerEvents: 'none', zIndex: 0 }}>
@@ -123,17 +132,6 @@ export function ExperienceView({
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     onTagClick?.(tech);
-                                                }}
-                                                style={{
-                                                    fontSize: '0.8em',
-                                                    fontWeight: '500',
-                                                    padding: '4px 10px',
-                                                    borderRadius: '6px',
-                                                    background: 'rgba(139, 92, 246, 0.15)',
-                                                    border: '1px solid rgba(167, 139, 250, 0.4)',
-                                                    color: '#f3e8ff',
-                                                    fontFamily: 'monospace',
-                                                    letterSpacing: '0.02em'
                                                 }}
                                             >
                                                 {tech}

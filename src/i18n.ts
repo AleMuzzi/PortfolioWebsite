@@ -38,6 +38,7 @@ export const translations = {
     mastersDegree: "Master's degree",
     clear: "Clear",
     scrollToBottom: "Scroll to the beginning",
+    scrollToTop: "Scroll to the the end",
     seeDetails: "See details",
     exploreHint: "Explore by clicking on the items",
     searchPlaceholder: "Search projects...",
@@ -84,7 +85,9 @@ export const translations = {
     tecnologiesAndTools: "Technologies & Tools",
     mobileWarningTitle: "Desktop Recommended",
     mobileWarningText: "I am not a web developer, so this website is not optimized for mobile devices.\nFor the intended experience, please visit on a <strong>desktop browser</strong>.",
-    mobileWarningButton: "Proceed Anyway"
+    mobileWarningButton: "Proceed Anyway",
+    smallScreenTitle: "Wider Monitor Recommended",
+    smallScreenText: "I am not a web developer, so this website is not optimized for tight monitor.\nFor the intended experience, please visit on a monitor <strong>wider than 1024px</strong>.",
   },
   it: {
     heroTitle: "Alessandro Muzzi",
@@ -161,6 +164,7 @@ export const translations = {
     apply: "Applica",
     clear: "Pulisci",
     scrollToBottom: "Vai all'inizio",
+    scrollToTop: "Vai alla fine",
     seeDetails: "Vedi dettagli",
     exploreHint: "Esplora cliccando sugli elementi",
     searchPlaceholder: "Cerca progetti...",
@@ -174,7 +178,9 @@ export const translations = {
     tecnologiesAndTools: "Tecnologie e Strumenti",
     mobileWarningTitle: "Sito desktop consigliato",
     mobileWarningText: "Non sono un web developer, quindi questo sito non è ottimizzato per dispositivi mobili.\nPer l'esperienza completa, visita il sito su un <strong>browser desktop</strong>.",
-    mobileWarningButton: "Procedi comunque"
+    mobileWarningButton: "Procedi comunque",
+    smallScreenTitle: "Monitor più ampio consigliato",
+    smallScreenText: "Non sono un web developer, quindi questo sito non è ottimizzato per monitor stretti.\nPer l'esperienza completa, visita il sito su un monitor <strong>più largo di 1024px</strong>.",
   }
 };
 

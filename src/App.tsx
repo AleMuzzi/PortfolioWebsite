@@ -16,12 +16,13 @@ import active_inference_brain from './assets/active_inference_brain.png';
 import text_embeddings_visualization from './assets/text_embeddings_visualization.png';
 import ptz_camera from './assets/ptz_camera.png';
 import iot from './assets/iot.png';
+import verses_logo from './assets/verses_logo.png';
 
 // --- LIST FOR BACKGROUND IMAGES ---
 // The code will map these images to timeline items based on their index.
 // Item 0 gets the 1st image, Item 1 gets the 2nd, etc.
 const workBackgrounds = [
-    active_inference_brain, // Index 0
+    verses_logo, // Index 0
     active_inference_brain, // Index 0
     dji_m300,     // Index 1
     text_embeddings_visualization,    // Index 2
@@ -29,6 +30,10 @@ const workBackgrounds = [
     iot,            // Index 4
     laptop,           // Index 5
 ];
+
+function isMobileDevice(): boolean {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
 
 function App() {
     const [lang, setLang] = useState<Language>('en');
@@ -44,13 +49,18 @@ function App() {
     const filteredExperiences = useMemo(() => experiences.filter(e => e.lang === lang), [lang]);
 
     const [showMobileModal, setShowMobileModal] = useState<boolean>(false);
+    const [showSmallScreenModal, setShowSmallScreenModal] = useState<boolean>(false);
 
     useEffect(() => {
       // Check screen width
-      const isMobile = window.innerWidth <= 1024;
-      if (isMobile) {
+      if (isMobileDevice()) {
         setShowMobileModal(true);
         // Prevent background scrolling
+        document.body.style.overflow = 'hidden';
+      }
+
+      if(window.innerWidth <= 1024) {
+        setShowSmallScreenModal(true);
         document.body.style.overflow = 'hidden';
       }
 
@@ -62,6 +72,7 @@ function App() {
 
     const handleCloseModal = () => {
       setShowMobileModal(false);
+      setShowSmallScreenModal(false);
       // Re-enable scrolling when dismissed
       document.body.style.overflow = 'unset';
     };
@@ -111,7 +122,7 @@ function App() {
                 endYear: 2019,
                 side: 'left',
                 bottomOffset: -70,
-                width: 318,
+                width: 328,
                 height: 100,
                 manualTop: 55,
                 manualBottom: 86
@@ -127,7 +138,7 @@ function App() {
                 endYear: 2022,
                 side: 'left',
                 bottomOffset: -45,
-                width: 328,
+                width: 313,
                 height: 100,
                 manualTop: 35,
                 manualBottom: 55
@@ -175,7 +186,7 @@ function App() {
             minYear: _minYear,
             maxYear: _maxYear,
             yearRange: _yearRange,
-            svgHeight: 2350
+            svgHeight: 2370
         };
     }, [filteredExperiences, educationPeriods]);
 
@@ -345,12 +356,12 @@ function App() {
         <div className={`app-root ${selectedType === 'home' ? 'is-home' : ''}`}>
 
             {/* --- MOBILE MODAL --- */}
-            {showMobileModal && (
+            {(showMobileModal || showSmallScreenModal) && (
               <div className="mobile-modal-overlay">
                 <div className="mobile-modal-content">
                   <div className="mobile-modal-icon">🖥️</div>
-                  <h2>{t.mobileWarningTitle}</h2>
-                  <p dangerouslySetInnerHTML={{ __html: t.mobileWarningText }}></p>
+                  <h2>{showMobileModal? t.mobileWarningTitle : t.smallScreenTitle}</h2>
+                  <p dangerouslySetInnerHTML={{ __html: showMobileModal? t.mobileWarningText : t.smallScreenText }}></p>
                   <button
                     className="mobile-modal-btn"
                     onClick={handleCloseModal}
