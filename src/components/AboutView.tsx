@@ -1,6 +1,67 @@
-import React, {useRef} from 'react';
+import React, {useRef, useMemo} from 'react';
 import {translations, Language} from '../i18n';
+import {projects, experiences} from '../projectsData';
 import './AboutView.css';
+
+// Parse period end date to timestamp (higher = more recent)
+const parseEndDate = (period: string): number => {
+  // Handle "Present" / "Presente" as current date
+  if (period.toLowerCase().includes('present') || period.toLowerCase().includes('presente')) {
+    return Date.now();
+  }
+  // Extract end date from "Month Year — Month Year" format
+  const parts = period.split(/[—–-]/);
+  const endPart = parts[parts.length - 1].trim();
+  const date = new Date(endPart);
+  return isNaN(date.getTime()) ? 0 : date.getTime();
+};
+
+// Map MD file categories to AboutView categories
+const categoryMapping: Record<string, 'software' | 'hardware' | 'data'> = {
+  // Software Development
+  'Languages': 'software',
+  'Linguaggi': 'software',
+  'Frameworks': 'software',
+  'Frameworks & UI': 'software',
+  'Backend and APIs': 'software',
+  'Backend & APIs': 'software',
+  'Frontend': 'software',
+  'Platforms': 'software',
+  'Piattaforme': 'software',
+  'Management & Versioning': 'software',
+  'Management': 'software',
+  'Gestione': 'software',
+  'Core Skills': 'software',
+  'Core Competencies': 'software',
+  'Competenze Chiave': 'software',
+  'Communication': 'software',
+  'Comunicazione': 'software',
+  'Communication Protocols': 'software',
+  'Protocolli di Comunicazione': 'software',
+  'Supported OS': 'software',
+  'Design Patterns': 'software',
+  // Hardware & Embedded
+  'Hardware': 'hardware',
+  'Firmware': 'hardware',
+  'User Interface': 'hardware',
+  'Slicers': 'hardware',
+  'Design': 'hardware',
+  'Prototyping Tools': 'hardware',
+  'Strumenti di Prototipazione': 'hardware',
+  'Circuit Design Software': 'hardware',
+  'Image Editing': 'hardware',
+  '3D Modeling': 'hardware',
+  'Modellazione 3D': 'hardware',
+  '3D Printing': 'hardware',
+  'Stampa 3D': 'hardware',
+  'Robotics': 'hardware',
+  'Robotica': 'hardware',
+  // Data & AI
+  'Data & AI': 'data',
+  'Dati & AI': 'data',
+  'Infrastructure': 'data',
+  'Infrastruttura': 'data',
+};
 
 interface AboutViewProps {
   lang: Language;
@@ -13,6 +74,64 @@ export function AboutView({lang, handleSelect, onTagClick}: AboutViewProps) {
   const skillsRef = useRef<HTMLDivElement>(null);
   const interestsRef = useRef<HTMLDivElement>(null);
   const educationRef = useRef<HTMLDivElement>(null);
+
+  // Collect tags from projects and experiences based on current language
+  // Sort by usage count (desc), then by recency (desc)
+  const {softwareTags, hardwareTags, dataTags} = useMemo(() => {
+    // Track count and most recent date for each tag
+    const tagStats: Record<string, { count: number; latestDate: number; category: 'software' | 'hardware' | 'data' }> = {};
+
+    const addTag = (tech: string, category: 'software' | 'hardware' | 'data', date: number) => {
+      if (!tagStats[tech]) {
+        tagStats[tech] = { count: 0, latestDate: 0, category };
+      }
+      tagStats[tech].count++;
+      tagStats[tech].latestDate = Math.max(tagStats[tech].latestDate, date);
+    };
+
+    const processItem = (categorizedTech: Record<string, string[]> | undefined, date: number) => {
+      if (!categorizedTech) return;
+      Object.entries(categorizedTech).forEach(([category, techs]) => {
+        const targetCategory = categoryMapping[category];
+        if (targetCategory) {
+          techs.forEach(tech => addTag(tech, targetCategory, date));
+        }
+      });
+    };
+
+    // Process projects (use order as recency proxy - lower order = more recent/important)
+    const filteredProjects = projects.filter(p => p.lang === lang);
+    const maxOrder = Math.max(...filteredProjects.map(p => p.order ?? 0), 1);
+    filteredProjects.forEach(p => {
+      const date = (maxOrder - (p.order ?? maxOrder) + 1) * 1000; // Convert to pseudo-timestamp
+      processItem(p.categorizedTech, date);
+    });
+
+    // Process experiences (parse period for actual dates)
+    experiences
+      .filter(e => e.lang === lang)
+      .forEach(e => {
+        const date = parseEndDate(e.period);
+        processItem(e.categorizedTech, date);
+      });
+
+    // Sort tags by count (desc), then by latestDate (desc)
+    const sortTags = (category: 'software' | 'hardware' | 'data'): string[] => {
+      return Object.entries(tagStats)
+        .filter(([_, stats]) => stats.category === category)
+        .sort((a, b) => {
+          if (b[1].count !== a[1].count) return b[1].count - a[1].count;
+          return b[1].latestDate - a[1].latestDate;
+        })
+        .map(([tag]) => tag);
+    };
+
+    return {
+      softwareTags: sortTags('software'),
+      hardwareTags: sortTags('hardware'),
+      dataTags: sortTags('data'),
+    };
+  }, [lang]);
 
   const scrollToSection = (ref: React.RefObject<HTMLDivElement | null>) => {
     if (ref.current) {
@@ -143,24 +262,30 @@ export function AboutView({lang, handleSelect, onTagClick}: AboutViewProps) {
             <section ref={skillsRef} className="about-section">
               <h3><span className="section-icon">🛠️</span>{t.techSkills}</h3>
               <div className="skills-container">
-                <div className="skill-category">
-                  <h4>{t.softwareDev}</h4>
-                  <div className="skill-tags">
-                    {["Python", "Kotlin", "C++", "C#", "Java", "C", "Dart", "Lua", "Swift", "React.js", "Node.js", "Flutter", "Unity", "Android", "iOS", "Spring", ".NET", "Docker", "GraphQL", "MQTT", "Git", "System Design", "Team Leadership", "Web Scraping"].map(renderTag)}
+                {softwareTags.length > 0 && (
+                  <div className="skill-category">
+                    <h4>{t.softwareDev}</h4>
+                    <div className="skill-tags">
+                      {softwareTags.map(renderTag)}
+                    </div>
                   </div>
-                </div>
-                <div className="skill-category">
-                  <h4>{t.hardwareEmbedded}</h4>
-                  <div className="skill-tags">
-                    {["Arduino", "ESP32", "ESP8266", "OpenWRT", "Klipper", "DJI SDK", "IoT", "KNX", "PTZ", "MVVM", "3D Printing", "3D Modeling", "Fusion 360", "Blender"].map(renderTag)}
+                )}
+                {hardwareTags.length > 0 && (
+                  <div className="skill-category">
+                    <h4>{t.hardwareEmbedded}</h4>
+                    <div className="skill-tags">
+                      {hardwareTags.map(renderTag)}
+                    </div>
                   </div>
-                </div>
-                <div className="skill-category">
-                  <h4>{t.dataAI}</h4>
-                  <div className="skill-tags">
-                    {["Machine Learning", "BERT", "Gensim", "Word Embeddings", "Elasticsearch", "Active Inference", "Semantic Search", "Bayesian Inference"].map(renderTag)}
+                )}
+                {dataTags.length > 0 && (
+                  <div className="skill-category">
+                    <h4>{t.dataAI}</h4>
+                    <div className="skill-tags">
+                      {dataTags.map(renderTag)}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </section>
 
