@@ -7,8 +7,8 @@ A DIY drone piloted with an Android app 🎮
 ## What this project is
 
 As the title suggests, this project consists of a drone built entirely from scratch at home. The project was not intended to create a commercial product, but rather served as a learning exercise to understand the fundamental principles of drone flight, mobile application programming, and hardware-software integration.
-
-I was curious to explore how various hardware components—such as motors, ESCs, and flight controllers—interact with software, and to test if an Android app could effectively control a drone in real-time. The project began during my master's degree with the goal of preparing me for a career in drones and robotics, which was my professional objective immediately after graduation.
+I was curious to explore how various hardware components—such as motors, ESCs, and flight controllers—interact with software, and to test if an Android app could effectively control a drone in real-time. 
+The project began during my master's degree with the goal of preparing me for a career in drones and robotics, which was my professional objective immediately after graduation.
 
 ### Architecture
 ![Architettura del drone{width="400px"}{align="right"}{caption="Architectural scheme"}](/summaries/drone_architecture.png)
@@ -23,7 +23,7 @@ To resolve this, I transitioned to using an [ESP8266 as a Wi-Fi antenna via UART
 
 ### Results
 
-The drone successfully achieved flight, proving that an Android app can be an effective tool for real-time flight control. This experience provided me with a deep understanding of flight principles, mobile programming, and system integration.
+The drone successfully achieved flight, proving that an Android app can be an effective tool for real-time flight control, leaving aside flight distance limitations due to WiFi range. This experience provided me with a deep understanding of flight principles, mobile programming, and system integration.
 
 While I could have added features like automatic stabilization, GPS positioning, or "return to home", my primary goal was met when I secured a position as a [Full Stack Drone Developer](http://experience:verses-drone). 
 Perhaps in the future, it will evolve into an FPV drone!

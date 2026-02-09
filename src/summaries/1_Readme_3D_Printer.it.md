@@ -45,10 +45,10 @@ Si sono rese necessarie anche alcune considerazioni sull'alimentazione, dato che
 ![gargantua_biqu_extruder.png{width="300px"}{align="right"}{caption="Biqu H2 V2S REVO"}](/summaries/gargantua_biqu_extruder.png)
 
 Facendo due conti, la potenza totale richiesta dai componenti principali della stampante è la seguente:
-- **Piatto riscaldato**: 420W a 24V
-- **2 Hotend Biqu H2 V2S REVO (che raggiungono fino a 300°C)**: 40W ciascuno a 24V
-- **Sistema di essicazione dei filamenti (progetto in corso)**: 200W
-- **Altri componenti**: motori, ventole, elettronica
+- **Piatto riscaldato:** 420W a 24V
+- **2 Hotend Biqu H2 V2S REVO (che raggiungono fino a 300°C):** 40W ciascuno a 24V
+- **Sistema di essicazione dei filamenti (progetto in corso):** 200W
+- **Altri componenti:** motori, ventole, elettronica
 - **Margine di sicurezza**
 
 Ragion per cui ho optato per **due alimentatori da 24V 500W** ciascuno, uno dedicato al piatto riscaldato e l'altro a tutti gli altri componenti. Il piatto riscaldato è controllato attraverso un **SSR** (Solid State Relay) per garantire un funzionamento sicuro, affidabile e veloce.

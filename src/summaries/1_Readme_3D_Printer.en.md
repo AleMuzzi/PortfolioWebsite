@@ -109,35 +109,72 @@ Inside, the printer is attached to the enclosure through 4 rubber dampers, to re
 
 A strip led system was installed on the ceiling of the enclosure, to illuminate the interior during printing and facilitate visual inspection of the printing process.
 
-TODO FINISH
----
-
 ### Filament Dehumidifier
 
-Filaments are hygroscopic and can degrade print quality by absorbing moisture. I integrated a dedicated drying compartment above the enclosure that holds 10 spools, keeping them dry and feeding them directly into the extruders.
+A very important and often underestimated part of 3D printing is the management of filaments, which are hygroscopic and tend to absorb moisture from the environment, resulting in a degradation of print quality. A wet filament expands and can cause under-extrusion problems, or even extruder blockages.
+To address this issue, I decided to integrate a filament drying system directly above the enclosure, designing a dedicated compartment that houses 10 filaments, with a heating and ventilation system to keep the filaments dry and ready for printing.
+This system is powered together with the printer, and is connected directly to the extruders, so that the dried filaments do not come into contact with external moisture on the way to the hotends.
 
 ### Fume Management
 
-Printing materials like ABS generates harmful fumes. Lacking an external vent, I integrated the **AlveoOne R by Alveo3D**[<math display="inline"><sup>↗</sup></math>](https://www.alveo3d.com/en/product/alveoone-r-assembled/), which uses HEPA and activated carbon filters to purify the air inside the case.
+Printing with materials such as ABS can generate potentially harmful fumes, as well as an unpleasant odor. To improve safety and comfort during printing, I decided to integrate a smoke extraction system directly into the enclosure.
+Since I didn't have access to an external exhaust, I opted for an air filtration system based on activated carbon and HEPA filters, which capture particles and neutralize odors before reintroducing air into the environment.
+The filter in question is the **AlveoOne R of Alveo3D**[<math display="inline"><sup>↗</sup></math>](https://www.alveo3d.com/en/product/alveoone-r-assembled/), designed specifically for 3D printing, it filters the air present in the enclosed case.
+Gargantua's firmware is configured to automatically activate the fume extraction system when fume-generating materials are printed, and to continue filtering the air for a certain period after printing has finished.
 
 ### The Name: Gargantua
+![gargantua_black_hole_banner.jpg{width="1000px"}{height="300px"}{align="center"}{caption="Gargantua - Il buco nero super massiccio di Interstellar"}](/summaries/gargantua_black_hole_banner.jpg)
+</br>
 
-The name was chosen in honor of the supermassive black hole in Christopher Nolan's *Interstellar*. It symbolizes the sheer size and power of the printer and its build volume of **400x400x768 mm**.
+The name Gargantua was chosen in honor of the super-massive black hole depicted in Christopher Nolan's film Interstellar.
+Gargantua was at the center of the film, depicted as a rotating black hole with a bright accretion disk and gravitational distortions that alter its appearance.
+
+The name was chosen to symbolize the size and power of the printer, which, with its large print volume of **400x400x768mm** and its capabilities, represents a benchmark in my journey of learning and experimenting in the world of 3D printing.
 
 ---
 
 ### Lessons Learned
 
-This project came with its fair share of challenges:
+It would be nice to be able to say that everything went smoothly, but unfortunately it did not. This project presented numerous challenges and obstacles along the way, many of which stemmed from my inexperience in designing a 3D printer from scratch.
+The main ones were 2: underestimating the temperatures inside the house and the erosion of the hotend nozzles.
 
-1. **Thermal Management:** I underestimated the internal heat of the insulated enclosure. At 50°C, the electronics began to fail. I eventually moved all power supplies and control boards to the outside of the case for better dissipation.
-2. **Nozzle Alignment:** Maintaining a perfectly level height (~0.1mm tolerance) between dual extruders proved difficult due to nozzle wear and manufacturing variances. I am currently researching IDEX (Independent Dual Extrusion) as a more robust solution.
+The previous table-based enclosure IKEA Lack was not insulated, and the printer inside dissipated the heat generated during printing, maintaining a relatively low internal temperature.
+After completing assembly and starting printing, I was pleased to see that the internal temperature of the case rose rapidly, reaching peaks of over 50°C and then remaining stable, a sign that the enclosure was doing its job.
+However, this heat caused overheating problems for the electronics and power supplies, leading to malfunctions and printing interruptions.
+To solve this problem, I had to drill a small hole in the back of the enclosure to move all the electronics outside, allowing for better heat dissipation.
+
+<div style="display: flex; flex-direction: column; align-items: center;">
+
+![gargantua_electronics_outside_photo.jpg{width="600px"}](/summaries/gargantua_electronics_outside_photo.jpg)
+![gargantua_electronics_inside_photo.jpg{width="336px"}](/summaries/gargantua_electronics_inside_photo.jpg)
+<div>
+<label class="image-caption">(sinistra) Alimentatori e schede di controllo spostate all'esterno del case. (destra) I cablaggi interni alla stampante</label>
+</div>
+
+</div>
+
+The second problem was the erosion of the hotend nozzles. When I made the double extruder printhead, I tried to get as much precision as possible, to make sure that the height of the two hotends was perfectly aligned.
+However, the dual extruder operated for a short time: erosions from printing and nozzles that left the factory slightly higher than others made it impossible to maintain precise alignment between the two hotends. Unfortunately, the accuracy required here is quite high, ~0.1mm, and even a small difference in height between the two hotends can cause printing problems.
+For this reason, I am currently printing with a single extruder, but I am working on a new print head and am evaluating several options:
+- mobile extruder system, in which the extruders move up and down and are individually calibrated
+- IDEX (Independent Dual Extrusion) system, in which the two extruders are completely independent and can move autonomously, completely eliminating the alignment problem.
+
+Or maybe both!
 
 ---
 
 ### Open Source
 
-This project is fully open source. All design files, firmware, and documentation are available on GitHub[<math display="inline"><sup>↗</sup></math>](https://github.com/AleMuzzi/Gargantua) to inspire the maker community.
+The project is fully open source, with all design files, firmware, and documentation available on GitHub[<math display="inline"><sup>↗</sup></math>](https://github.com/AleMuzzi/Gargantua).
+The goal is to share this experience with the maker and DIY community, providing detailed guidance for anyone looking to build a large-format 3D printer, as well as offering insights and inspiration for further modifications and improvements.
+The project was developed with the intention of being easily replicable, with commonly available components and clear instructions for assembling and configuring the firmware.
+
+### Risultati
+This was certainly the most ambitious and complex project I have ever carried out, and despite the challenges I encountered, I am extremely satisfied with the final result.
+Gargantua is a large format, powerful and versatile 3 D printer, which has allowed me to explore new possibilities in 3 D printing and improve my skills in design and electronics.
+I can't say it's over, because this is an ever-evolving project, with new features and improvements in development, but I'm proud of what I've accomplished so far and can't wait to see where this project takes me in the future.
+
+![gargantua_photo.jpg{width="200px"}{align="right"}](/summaries/gargantua_photo.jpg)
 
 ## Technologies and tools
 
@@ -146,7 +183,3 @@ This project is fully open source. All design files, firmware, and documentation
 * **User Interface:** Mainsail
 * **Slicers:** Cura, PrusaSlicer
 * **Design:** Fusion 360
-
----
-
-Would you like me to help you draft the technical specifications for the proposed IDEX upgrade for this printer?
