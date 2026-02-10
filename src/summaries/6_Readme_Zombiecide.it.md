@@ -71,7 +71,7 @@ Inoltre, il progetto è piaciuto al professore universitario, che lo ha accettat
 
 
 ## Technologies and tools
-- **Frameworks:** .NET, Unity
 - **Linguaggi:** C#
+- **Frameworks:** .NET, Unity
 - **OS Supportati:** Windows, Linux, macOS
 - **Comunicazione:** HTTP, RESTful API, UDP

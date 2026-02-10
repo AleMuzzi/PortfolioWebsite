@@ -57,8 +57,8 @@ La rete di casa è stata configurata per assegnare un indirizzo IP dedicato all'
 
 
 ## Tecnologie e strumenti
-- **Framework:** Flutter, Arduino, Bayesian Inference
 - **Linguaggi:** Dart, C
+- **Framework:** Flutter, Arduino, Bayesian Inference
 - **Hardware:** ESP32, Mosfet, Elettrovalvola, Pompa acqua
 - **Comunicazione:** HTTP, RESTful API
 - **Design Pattern:** MVVM

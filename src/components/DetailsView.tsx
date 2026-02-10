@@ -4,6 +4,7 @@ import { translations, Language } from '../i18n';
 import './DetailsView.css';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from "rehype-raw";
+import {useEffect, useRef} from "react";
 
 interface DetailsViewProps {
     selectedType: 'project' | 'experience' | 'about' | 'home' | null;
@@ -25,6 +26,15 @@ export function DetailsView({
     onTagClick
 }: DetailsViewProps) {
     const t = translations[lang];
+
+    useEffect(() => {
+      setTimeout(() => {
+        const detailsElement = document.querySelector('.experience-detail-container');
+        if (detailsElement) {
+          detailsElement.scrollTo({ top: 0, behavior: 'instant' });
+        }
+      }, 0);
+    }, [selectedProject, selectedExperience]);
 
     return (
         <article className="detail-view">

@@ -29,6 +29,6 @@ Il robot è in grado di muoversi in tutte le direzioni con facilità, dimostrand
 La trasmissione video in tempo reale consente all'utente di vedere l'ambiente circostante, migliorando ulteriormente l'esperienza di controllo remoto.
 
 ## Technologies and tools
-- **Frameworks:** Android, Arduino, ESP32, ESP32-CAM
 - **Linguaggi:** C, Kotlin
+- **Frameworks:** Android, Arduino, ESP32, ESP32-CAM
 - **Comunicazione:** UDP, Serial

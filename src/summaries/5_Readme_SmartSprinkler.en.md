@@ -60,8 +60,8 @@ The home network was configured to assign a dedicated IP address to the ESP32, w
 
 ## Technologies and tools
 
-* **Frameworks:** Flutter, Arduino, Bayesian Inference
 * **Languages:** Dart, C
+* **Frameworks:** Flutter, Arduino, Bayesian Inference
 * **Hardware:** ESP32, MOSFET, Solenoid Valve, Water Pump
 * **Communication:** HTTP, RESTful API
 * **Design Patterns:** MVVM

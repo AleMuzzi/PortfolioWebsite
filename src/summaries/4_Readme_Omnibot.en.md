@@ -39,6 +39,6 @@ Real-time video streaming allows the user to see the surrounding environment, fu
 
 ## Technologies and tools
 
-* **Frameworks:** Android, Arduino, ESP32, ESP32-CAM
 * **Languages:** C, Kotlin
+* **Frameworks:** Android, Arduino, ESP32, ESP32-CAM
 * **Communication:** UDP, Serial

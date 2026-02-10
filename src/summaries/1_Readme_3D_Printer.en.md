@@ -189,7 +189,6 @@ I can't say it's over, because this is an ever-evolving project, with new featur
 ![gargantua_printer_photo_3.jpg{width="400px"}](summaries/gargantua_printer_photo_3.jpg)
 
 ## Technologies and tools
-
 * **Firmware:** Klipper
 * **Hardware:** BTT Manta M8P, BTT CB1, NEMA 17, CR 42-60, TMC2209, SSR
 * **User Interface:** Mainsail

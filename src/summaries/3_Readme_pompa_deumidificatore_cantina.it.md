@@ -60,7 +60,8 @@ Il sistema opera su una semplice e robusta logica a macchina a stati per garanti
 La logica è ottimizzata per l'implementazione autonoma, non richiedendo alcuna connessione a un computer esterno una volta caricato il firmware.
 
 ## Technologies and tools
+- **Linguaggi:** C, Kotlin
+- **Framework:** Arduino, Android
 - **Hardware:** Arduino, Sensori a galleggiante, Relè, LED, Timer NE555, Pompa acqua
-- **Linguaggi:** C
 - **Software di Progettazione Circuiti:** EveryCircuit
 - **Strumenti di Prototipazione:** Basetta millefori, 3D print FDM

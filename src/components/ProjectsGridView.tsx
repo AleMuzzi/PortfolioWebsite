@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import React, {useState, useMemo, useEffect, useRef} from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Project } from '../projectsData';
 import { translations, Language } from '../i18n';
@@ -151,7 +151,7 @@ export function ProjectsGridView({
 
                 <div className="projects-details-side">
                     {selectedProject ? (
-                        <DetailsView 
+                        <DetailsView
                             selectedType="project"
                             selectedProject={selectedProject}
                             selectedExperience={null}

@@ -84,7 +84,7 @@ Furthermore, the project was well-received by the university professor, who acce
 
 ## Technologies and tools
 
-* **Frameworks:** .NET, Unity
 * **Languages:** C#
+* **Frameworks:** .NET, Unity
 * **Supported OS:** Windows, Linux, macOS
 * **Communication:** HTTP, RESTful API, UDP

@@ -62,8 +62,8 @@ The system operates on simple and robust state machine logic to ensure reliable 
 The logic is optimized for standalone implementation, requiring no connection to an external computer once the firmware is uploaded.
 
 ## Technologies and tools
-
+* **Languages:** C, Kotlin
+- **Framework:** Arduino, Android
 * **Hardware:** Arduino, Float Sensors, Relay, LEDs, NE555 Timer, Water Pump
-* **Languages:** C
 * **Circuit Design Software:** EveryCircuit
 * **Prototyping Tools:** Perfboard, FDM 3D printing
