@@ -11,7 +11,8 @@ Dicembre 2025 — Presente
 
 ## Cosa ho fatto
 
-- **Leadership del Team:** Promosso a guidare lo sviluppo di queste iniziative architettoniche, gestendo attualmente un team di ingegneri, conducendo revisioni del codice e facendo mentoring al personale junior per allinearsi con la visione più ampia del sistema.
+- **Leadership del Team:** Promosso a guidare lo sviluppo di iniziative architetturali grazie all'esperienza accumulata lavorando in più team. Attualmente gestisco un team di ingegneri, conducendo code review e mentoring per allineare il lavoro alla visione più ampia del sistema.
+- **Sviluppo Continuo:** Continuazione del lavoro di sviluppo e supervisione su framework di Active Inference, garantendo che le soluzioni architetturali siano scalabili, efficienti e allineate con gli obiettivi aziendali a lungo termine.
 
 ## Tecnologie e strumenti
 

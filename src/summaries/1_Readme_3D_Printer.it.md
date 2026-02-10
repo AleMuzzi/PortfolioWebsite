@@ -32,6 +32,7 @@ Dopo un po' di ricerca, **Klipper** ne è uscito vincitore, noto per la sua fles
 Avevo già esperienza con Marlin, ma volevo esplorare nuove possibilità e Klipper sembrava la scelta giusta per questo progetto.
 
 ![gargantua_btt_manta_m8p_photo.png{width="400px"}{align="right"}{caption="BTT Manta M8P"}](/summaries/gargantua_btt_manta_m8p_photo.png)
+
 Per il controller ho scelto la scheda **BTT Manta M8P**, una scheda di controllo a 32 bit basata su STM32G0B1VET6, un ARM Cortex-M0+ a 32 bit 64MHz, che offre un'ampia gamma di funzionalità e una buona compatibilità con vari firmware open source.
 Ad affiancarla, la scheda di computazione **BTT CB1**, di fatto una gemella della Raspberry Pi CM4, che esegue Klipper e gestisce l'interfaccia utente tramite **Mainsail**[<math display="inline"><sup>↗</sup></math>](https://github.com/mainsail-crew/mainsail).
 
@@ -45,14 +46,14 @@ Si sono rese necessarie anche alcune considerazioni sull'alimentazione, dato che
 
 ![gargantua_biqu_extruder.png{width="300px"}{align="right"}{caption="Biqu H2 V2S REVO"}](/summaries/gargantua_biqu_extruder.png)
 
-Facendo due conti, la potenza totale richiesta dai componenti principali della stampante è la seguente:
+La potenza totale richiesta dai componenti principali della stampante è la seguente:
 - **Piatto riscaldato:** 420W a 24V
 - **2 Hotend Biqu H2 V2S REVO (che raggiungono fino a 300°C):** 40W ciascuno a 24V
 - **Sistema di essicazione dei filamenti (progetto in corso):** 200W
 - **Altri componenti:** motori, ventole, elettronica
 - **Margine di sicurezza**
 
-Ragion per cui ho optato per **due alimentatori da 24V 500W** ciascuno, uno dedicato al piatto riscaldato e l'altro a tutti gli altri componenti. Il piatto riscaldato è controllato attraverso un **SSR** (Solid State Relay) per garantire un funzionamento sicuro, affidabile e veloce.
+Ho quindi optato per **due alimentatori da 24V 500W** ciascuno, uno dedicato al piatto riscaldato e l'altro a tutti gli altri componenti. Il piatto riscaldato è controllato attraverso un **SSR** (Solid State Relay) per garantire un funzionamento sicuro, affidabile e veloce.
 
 Infine, ho deciso di aggiornare il sensore di livellamento del letto, passando da un CR-3D, simile ad un BLTouch, a un **Beacon H**[<math display="inline"><sup>↗</sup></math>](https://beacon3d.com/), un sensore che sfrutta lo spostamento tramite correnti indotte _(brutta traduzione di "Eddy current displacement")_ per misurare con precisione la distanza tra il sensore e il letto di stampa, offrendo una calibrazione molto più accurata, affidabile e veloce, soprattutto su superfici più grandi. La mappatura è così passata da una matrice di punti 5x5 ad una 30x30, senza alcuna necessità di interpolazione tra i rilevamenti.
 
@@ -73,11 +74,13 @@ Il progetto era inizialmente di dimensioni gestibili, ma col passare del tempo �
 ![gargantua_printer.gif{width="400px"}{align="center"}{caption="Visuale della struttura di Gargantua"}](/summaries/gargantua_printer.gif)
 
 #### Da "bowden" a "direct drive"
+
 La Creality Ender 3 Pro utilizza un sistema di estrusione "bowden", in cui l'estrusore è separato dall'hotend e il filamento viene spinto attraverso un tubo fino all'hotend. 
 Questo approccio ha alcuni vantaggi, come la riduzione del peso sull'asse X, ma può presentare problemi di reattività e precisione nell'estrusione, specialmente con materiali flessibili. Avevo già avuto difficoltà con questo sistema provando a stampare TPU, che tendeva a piegarsi all'interno del tubo bowden, ho così deciso di passare a un sistema "direct drive", in cui l'estrusore è montato direttamente sull'hotend. Questo cambiamento ha migliorato significativamente la precisione e la reattività dell'estrusione, permettendomi di stampare una gamma più ampia di materiali con maggiore affidabilità.
 Nella progettazione di questa stampante, la flessibilità ha avuto la priorità sulle performance; se dovessi ricominciare con un sistema CoreXY, probabilmente opterei per un sistema di estrusione bowden, per ridurre il peso sull'asse X e migliorare la velocità di stampa, al costo di non poter stampare materiali flessibili.
 
 #### Doppio estrusore
+
 L'idea di poter stampare con due estrusori mi ha sempre affascinato: oltre a permettere di stampare in 2 colori, permette di sperimentare con materiali diversi, come stampe in cui un materiale flessibile e uno non flessibile vengono interlacciati, o di utilizzare supporti solubili come il PVA.
 Ho quindi deciso di implementarla fin dall'inizio, progettando una testina di supporto per due hotend Biqu H2 V2S REVO.
 
@@ -103,29 +106,32 @@ Le pareti e le porte sono state quindi imbottite con pannelli isolanti e rivesti
 Per consentirmi di ispezionare la stampa in corso senza dover aprire le porte, ho disegnato le porte con un doppio cardine, in modo che la parte esterna possa essere aperta indipendentemente da quella interna, consistente in un frame di alluminio con un pannello di plexiglass trasparente.
 All'interno, la stampante è fissata all'enclosure attraverso 4 smorzatori in gomma, per ridurre le vibrazioni trasmesse alla struttura, anch'essa dotata di smorzatori in gomma come piedini.
 
-
 >ℹ️ L'enclosure è necessariamente a base non quadrata, questo per ridurre al minimo la dimensione, ma lasciando spazio per il piatto di scorrere lungo l'asse Y.
 
 Un sistema di led a striscia è stato installato sul soffitto dell'enclosure, per illuminare l'interno durante la stampa e facilitare l'ispezione visiva del processo di stampa.
 
+![gargantua_printer_photo_lights.jpg](/summaries/gargantua_printer_photo_lights.jpg)
+
 ### Deumidificatore filamenti
+
 Una parte molto importante e spesso sottovalutata nella stampa 3D è la gestione dei filamenti, che sono igroscopici e tendono ad assorbire umidità dall'ambiente, con conseguente degrado della qualità di stampa. Un filamento umido si espande e può causare problemi di sotto-estrusione, o addirittura blocchi dell'estrusore.
 Per risolvere questo problema, ho deciso di integrare un sistema di essicazione dei filamenti direttamente sopra all'enclosure, progettando un compartimento dedicato che ospiti 10 filamenti, con un sistema di riscaldamento e ventilazione per mantenere i filamenti asciutti e pronti per la stampa.
 Questo sistema è alimentato assieme alla stampante, ed è collegato direttamente agli estrusori, in modo che i filamenti essicati non entrino in contatto con l'umidità esterna durante il percorso verso gli hotend.
 
 ![gargantua_dehumidifier_photo.png{width="750px"}{align="center"}{caption="Deumidificatore di filamenti"}](/summaries/gargantua_dehumidifier_photo.png)
 
-Nella foto sopra si può vedere il deumidificatore, con diversi filamenti, e si intravede al di sopra il circuito di riscaldamento, in fase di prototipazione. Al centro, un sistema di carrucole guida i filamenti verso gli estrusori.
+Nella foto sopra si può vedere il deumidificatore, con diversi filamenti, e sopra ad esso, si intravede il circuito di riscaldamento, in fase di prototipazione. Al centro, un sistema di carrucole guida i filamenti verso gli estrusori; si può intravedere in basso al centro il tubo che porta i filamenti al di fuori del deumidificatore, verso gli estrusori.
 
 Il sistema è ancora in fase di sviluppo, il circuito è pronto e testato, ma occorrono ancora alcune modifiche al disegno 3D dove sarà posizionato per integrare meglio i componenti e migliorare il flusso d'aria.
 
 ### Gestione dei fumi
+
 Stampare con materiali come l'ABS può generare fumi potenzialmente nocivi, oltre a un odore sgradevole. Per migliorare la sicurezza e il comfort durante la stampa, ho deciso di integrare un sistema di estrazione dei fumi direttamente nell'enclosure.
 Non avendo accesso ad uno scarico esterno, ho optato per un sistema di filtraggio dell'aria basato su filtri a carbone attivo e HEPA, che catturano le particelle e neutralizzano gli odori prima di reimmettere l'aria nell'ambiente.
 Il filtro in questione è l'**AlveoOne R di Alveo3D**[<math display="inline"><sup>↗</sup></math>](https://www.alveo3d.com/en/product/alveoone-r-assembled/), progettato specificamente per la stampa 3D, filtra l'aria presente nel case chiuso.
 Il firmware di Gargantua è configurato per attivare automaticamente il sistema di estrazione dei fumi quando vengono stampati materiali che generano fumi, e per continuare a filtrare l'aria per un certo periodo dopo la fine della stampa.
 
-### Il nome Gargantua
+### Il nome: Gargantua
 ![gargantua_black_hole_banner.jpg{width="1000px"}{height="300px"}{align="center"}{caption="Gargantua - Il buco nero super massiccio di Interstellar"}](/summaries/gargantua_black_hole_banner.jpg)
 </br>
 
@@ -136,6 +142,7 @@ Il nome è stato scelto per simboleggiare la grandezza e la potenza della stampa
 
 
 ### Dagli errori si impara
+
 Sarebbe bello poter dire che è andato tutto liscio, ma purtroppo non è così. Questo progetto ha presentato numerose sfide e ostacoli lungo il percorso, molti dei quali derivanti dalla mia inesperienza nel progettare una stampante 3D da zero.
 I principali sono stati 2: sottovalutare le temperature interne al case e l'erosione degli ugelli degli hotend.
 
@@ -163,6 +170,7 @@ Per questo motivo, al momento sto stampando con un singolo estrusore, ma sto lav
 O magari entrambi!
 
 ### Open Source
+
 Il progetto è completamente open source, con tutti i file di progettazione, il firmware e la documentazione disponibili su GitHub[<math display="inline"><sup>↗</sup></math>](https://github.com/AleMuzzi/Gargantua).
 L'obiettivo è condividere questa esperienza con la comunità maker e DIY, fornendo una guida dettagliata per chiunque voglia costruire una stampante 3D di grande formato, oltre a offrire spunti e ispirazione per ulteriori modifiche e miglioramenti. 
 Il progetto è stato sviluppato con l'intenzione di essere facilmente replicabile, con componenti comunemente disponibili e istruzioni chiare per l'assemblaggio e la configurazione del firmware.
@@ -172,7 +180,9 @@ Questo è stato sicuramente il progetto più ambizioso e complesso che abbia mai
 Gargantua è una stampante 3D di grande formato, potente e versatile, che mi ha permesso di esplorare nuove possibilità nella stampa 3D e di migliorare le mie competenze in progettazione ed elettronica.
 Non posso dire che sia finita, perchè si tratta di un progetto in continua evoluzione, con nuove funzionalità e miglioramenti in fase di sviluppo, ma sono orgoglioso di quello che ho realizzato finora e non vedo l'ora di vedere dove mi porterà questo progetto in futuro.
 
-![gargantua_photo.jpg{width="200px"}{align="right"}](/summaries/gargantua_photo.jpg)
+![gargantua_printer_photo_1.jpg{width="400px"}](summaries/gargantua_printer_photo_1.jpg)
+![gargantua_printer_photo_2.jpg{width="400px"}](summaries/gargantua_printer_photo_2.jpg)
+![gargantua_printer_photo_3.jpg{width="400px"}](summaries/gargantua_printer_photo_3.jpg)
 
 ## Technologies and tools
 

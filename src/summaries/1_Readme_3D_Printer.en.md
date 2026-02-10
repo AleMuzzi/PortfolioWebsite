@@ -30,14 +30,17 @@ Max speed:                    300 mm/s            Power:               2x 24V 50
 
 ### Hardware
 
-Choosing the firmware was the first major decision, as it influenced all subsequent hardware choices. **Klipper** emerged as the winner due to its flexibility and ability to leverage 32-bit hardware for precise movement and temperature control.
+Choosing the firmware was the first major decision, as it influenced all subsequent hardware choices. 
+**Klipper** emerged as the winner due to its flexibility and ability to leverage 32-bit hardware for precise movement and temperature control.
+I already had experience with Marlin, but I wanted to explore new possibilities and Klipper seemed like the right choice for this project.
 
 ![gargantua_btt_manta_m8p_photo.png{width="400px"}{align="right"}{caption="BTT Manta M8P"}](/summaries/gargantua_btt_manta_m8p_photo.png)
 
-For the controller, I chose the **BTT Manta M8P** board—a 32-bit control board based on the ARM Cortex-M0+. 
+For the controller I chose the **BTT Manta M8P** board, a 32-bit control board based on the STM32G0B1VET6, a 32-bit 64MHz ARM Cortex-M0+, which offers a wide range of features and good compatibility with various open source firmware.
 It is paired with the **BTT CB1** computing module (essentially a twin to the Raspberry Pi CM4), which runs Klipper and manages the **Mainsail**[<math display="inline"><sup>↗</sup></math>](https://github.com/mainsail-crew/mainsail) user interface.
 
-To reuse as many components as possible from my Ender 3 Pro, I kept the reliable **NEMA 17** stepper motors, supplementing them with a dual-shaft **CR 42-60** motor for the Y-axis, inspired by the Creality CR-6 Max configuration.
+The next step was selecting the stepper motors. To reuse as many components as possible from my Ender 3 Pro, I decided to keep the same **NEMA 17** motors, which have proven reliable and suitable for the needs of this project, pairing them with a dual-axis **CR 42-60** motor for the Y-axis, drawing inspiration from the Creality CR-6 Max setup.
+
 Also from the Creality CR-6 Max I took the heated bed, which offers a large printing surface of **400x400mm** and uniform heat distribution, and the idea of adding a couple of diagonal tie rods to improve the stability of the structure.
 
 The motors are driven by **TMC2209** drivers, known for their silent operation and advanced microstepping. 
@@ -46,13 +49,14 @@ Because of the high power draw of the massive bed and dual hotends, I calculated
 
 ![gargantua_biqu_extruder.png{width="300px"}{align="right"}{caption="Biqu H2 V2S REVO"}](/summaries/gargantua_biqu_extruder.png)
 
+The total power required by the main components of the printer is as follows:
 -**Heated Bed:** 420W @ 24V
 -**2x Biqu H2 V2S REVO Hotends (up to 300°):** 40W each
--**Filament Drying System:** 200W
+-**Filament Drying System (ongoing project):** 200W
 - **Other components**: motors, fans, electronics
 - **Safety margin**
 
-I opted for **two 24V 500W power supplies**—one dedicated solely to the bed and the other for all other components. The bed is controlled via a **Solid State Relay (SSR)** for safety and reliability.
+So, I opted for **two 24V 500W power supplies**—one dedicated solely to the bed and the other for all other components. The bed is controlled via a **Solid State Relay (SSR)** for safety and reliability.
 
 Finally, I upgraded the bed leveling sensor from a standard probe to a **Beacon H**[<math display="inline"><sup>↗</sup></math>](https://beacon3d.com/), which uses eddy current displacement to measure distance to accurately measure the distance between the sensor and the print bed, offering much more accurate, reliable and faster calibration, especially on larger surfaces. This allowed the bed mesh to leap from a 5x5 grid to a highly accurate 30x30 matrix without needing interpolation.
 
@@ -110,6 +114,8 @@ Inside, the printer is attached to the enclosure through 4 rubber dampers, to re
 
 A strip led system was installed on the ceiling of the enclosure, to illuminate the interior during printing and facilitate visual inspection of the printing process.
 
+![gargantua_printer_photo_lights.jpg](/summaries/gargantua_printer_photo_lights.jpg)
+
 ### Filament Dehumidifier
 
 A very important and often underestimated part of 3D printing is the management of filaments, which are hygroscopic and tend to absorb moisture from the environment, resulting in a degradation of print quality. A wet filament expands and can cause under-extrusion problems, or even extruder blockages.
@@ -117,6 +123,10 @@ To address this issue, I decided to integrate a filament drying system directly 
 This system is powered together with the printer, and is connected directly to the extruders, so that the dried filaments do not come into contact with external moisture on the way to the hotends.
 
 ![gargantua_dehumidifier_photo.png{width="750px"}{align="center"}{caption="Filament dehumidifier"}](/summaries/gargantua_dehumidifier_photo.png)
+
+In the photo above, you can see the dehumidifier, with several filaments, and above it, you can see the heating circuit, still in the prototyping phase. In the center, a pulley system guides the filaments toward the extruders; at the bottom center, you can see the tube that carries the filaments out of the dehumidifier, toward the extruders.
+
+The system is still in development; the circuit is ready and tested, but some modifications to the 3D design are still needed to better integrate the components and improve airflow.
 
 ### Fume Management
 
@@ -163,19 +173,20 @@ For this reason, I am currently printing with a single extruder, but I am workin
 
 Or maybe both!
 
-
 ### Open Source
 
-The project is fully open source, with all design files, firmware, and documentation available on GitHub[<math display="inline"><sup>↗</sup></math>](https://github.com/AleMuzzi/Gargantua).
+The project is fully open source, with all design files, firmware, and documentation available on <img src="summaries/ic_github.png" alt="Company Logo" width="20" height="20"/> GitHub[<math display="inline"><sup>↗</sup></math>](https://github.com/AleMuzzi/Gargantua).
 The goal is to share this experience with the maker and DIY community, providing detailed guidance for anyone looking to build a large-format 3D printer, as well as offering insights and inspiration for further modifications and improvements.
 The project was developed with the intention of being easily replicable, with commonly available components and clear instructions for assembling and configuring the firmware.
 
 ### Results and Future Developments
 This was certainly the most ambitious and complex project I have ever carried out, and despite the challenges I encountered, I am extremely satisfied with the final result.
-Gargantua is a large format, powerful and versatile 3 D printer, which has allowed me to explore new possibilities in 3 D printing and improve my skills in design and electronics.
+Gargantua is a large format, powerful and versatile 3 D printer, which has allowed me to explore new possibilities in 3D printing and improve my skills in design and electronics.
 I can't say it's over, because this is an ever-evolving project, with new features and improvements in development, but I'm proud of what I've accomplished so far and can't wait to see where this project takes me in the future.
 
-![gargantua_photo.jpg{width="200px"}{align="right"}](/summaries/gargantua_photo.jpg)
+![gargantua_printer_photo_1.jpg{width="400px"}](summaries/gargantua_printer_photo_1.jpg)
+![gargantua_printer_photo_2.jpg{width="400px"}](summaries/gargantua_printer_photo_2.jpg)
+![gargantua_printer_photo_3.jpg{width="400px"}](summaries/gargantua_printer_photo_3.jpg)
 
 ## Technologies and tools
 

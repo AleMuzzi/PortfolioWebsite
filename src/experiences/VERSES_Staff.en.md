@@ -11,7 +11,8 @@ December 2025 — Present
 
 ## What I did
 
-- **Team Leadership:** Promoted to lead the development of these architectural initiatives, currently managing a team of engineers, conducting code reviews, and mentoring junior staff to align with the broader system vision.
+- **Team Leadership:** Promoted to lead the development of architectural initiatives due to the accumulated cross-team experience. Currently managing a team of engineers, conducting code reviews, and mentoring junior staff to align with the broader system vision.
+- **Ongoing Development:** Continuing development and oversight work on Active Inference frameworks, ensuring architectural solutions are scalable, efficient, and aligned with long-term company goals.
 
 ## Technologies and tools
 
