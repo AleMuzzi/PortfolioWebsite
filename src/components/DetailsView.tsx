@@ -4,7 +4,7 @@ import { translations, Language } from '../i18n';
 import './DetailsView.css';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from "rehype-raw";
-import {useEffect, useRef} from "react";
+import {useEffect} from "react";
 
 interface DetailsViewProps {
     selectedType: 'project' | 'experience' | 'about' | 'home' | null;

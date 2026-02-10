@@ -1,4 +1,4 @@
-import React, {useState, useMemo, useEffect, useRef} from 'react';
+import {useState, useMemo, useEffect} from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Project } from '../projectsData';
 import { translations, Language } from '../i18n';
