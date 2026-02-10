@@ -181,7 +181,7 @@ The project was developed with the intention of being easily replicable, with co
 
 ### Results and Future Developments
 This was certainly the most ambitious and complex project I have ever carried out, and despite the challenges I encountered, I am extremely satisfied with the final result.
-Gargantua is a large format, powerful and versatile 3 D printer, which has allowed me to explore new possibilities in 3D printing and improve my skills in design and electronics.
+Gargantua is a large format, powerful and versatile 3D printer, which has allowed me to explore new possibilities in 3D printing and improve my skills in design and electronics.
 I can't say it's over, because this is an ever-evolving project, with new features and improvements in development, but I'm proud of what I've accomplished so far and can't wait to see where this project takes me in the future.
 
 ![gargantua_printer_photo_1.jpg{width="400px"}](summaries/gargantua_printer_photo_1.jpg)
