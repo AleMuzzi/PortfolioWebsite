@@ -62,6 +62,6 @@ The home network was configured to assign a dedicated IP address to the ESP32, w
 
 * **Languages:** Dart, C
 * **Frameworks:** Flutter, Arduino, Bayesian Inference
-* **Hardware:** ESP32, MOSFET, Solenoid Valve, Water Pump
+* **Hardware:** ESP32-CAM, MOSFET
 * **Communication:** HTTP, RESTful API
 * **Design Patterns:** MVVM

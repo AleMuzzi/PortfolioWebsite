@@ -62,6 +62,6 @@ La logica è ottimizzata per l'implementazione autonoma, non richiedendo alcuna 
 ## Technologies and tools
 - **Linguaggi:** C, Kotlin
 - **Framework:** Arduino, Android
-- **Hardware:** Arduino, Sensori a galleggiante, Relè, LED, Timer NE555, Pompa acqua
+- **Hardware:** Arduino Nano
 - **Software di Progettazione Circuiti:** EveryCircuit
 - **Strumenti di Prototipazione:** Basetta millefori, 3D print FDM

@@ -187,7 +187,7 @@ Non posso dire che sia finita, perchè si tratta di un progetto in continua evol
 
 ## Technologies and tools
 - **Firmware:** Klipper
-- **Hardware:** BTT Manta M8P, BTT CB1, NEMA 17, CR 42-60, TMC2209, SSR
+- **Hardware:** BTT Manta M8P, BTT CB1, SSR
 - **Interfaccia utente:** Mainsail
-- **Slicer:** Cura, PrusaSlicer
+- **Slicer:** Cura Slicer, PrusaSlicer
 - **Design:** Fusion 360

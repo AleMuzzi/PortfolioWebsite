@@ -16,40 +16,49 @@ const parseEndDate = (period: string): number => {
   return isNaN(date.getTime()) ? 0 : date.getTime();
 };
 
+type TagCategory = 'software' | 'hardware' | 'data' | 'framework' | 'management';
+
 // Map MD file categories to AboutView categories
-const categoryMapping: Record<string, 'software' | 'hardware' | 'data'> = {
+const categoryMapping: Record<string, TagCategory> = {
   // Software Development
   'Languages': 'software',
   'Linguaggi': 'software',
-  'Frameworks': 'software',
-  'Frameworks & UI': 'software',
-  'Backend and APIs': 'software',
+  'Frameworks': 'framework',
+  'Framework': 'framework',
+  'Frameworks & UI': 'framework',
+  'Framework e UI': 'framework',
   'Backend & APIs': 'software',
+  'Backend e APIs': 'software',
   'Frontend': 'software',
-  'Platforms': 'software',
-  'Piattaforme': 'software',
-  'Management & Versioning': 'software',
-  'Management': 'software',
-  'Gestione': 'software',
+  'Platforms': 'framework',
+  'Piattaforme': 'framework',
+  'Management & Versioning': 'framework',
+  'Gestione e Versionamento': 'framework',
+  'Management': 'management',
   'Core Skills': 'software',
   'Core Competencies': 'software',
   'Competenze Chiave': 'software',
-  'Communication': 'software',
-  'Comunicazione': 'software',
-  'Communication Protocols': 'software',
-  'Protocolli di Comunicazione': 'software',
+  'Communication': 'framework',
+  'Comunicazione': 'framework',
+  'Communication Protocols': 'framework',
+  'Protocolli di Comunicazione': 'framework',
   'Supported OS': 'software',
+  'OS Supportati': 'software',
   'Design Patterns': 'software',
+  'Design Pattern': 'software',
   // Hardware & Embedded
   'Hardware': 'hardware',
   'Firmware': 'hardware',
   'User Interface': 'hardware',
+  'Interfaccia utente': 'hardware',
   'Slicers': 'hardware',
   'Design': 'hardware',
   'Prototyping Tools': 'hardware',
   'Strumenti di Prototipazione': 'hardware',
   'Circuit Design Software': 'hardware',
+  'Software di Progettazione Circuiti': 'hardware',
   'Image Editing': 'hardware',
+  'Editing Immagini': 'hardware',
   '3D Modeling': 'hardware',
   'Modellazione 3D': 'hardware',
   '3D Printing': 'hardware',
@@ -58,9 +67,9 @@ const categoryMapping: Record<string, 'software' | 'hardware' | 'data'> = {
   'Robotica': 'hardware',
   // Data & AI
   'Data & AI': 'data',
-  'Dati & AI': 'data',
-  'Infrastructure': 'data',
-  'Infrastruttura': 'data',
+  'Dati e AI': 'data',
+  'Infrastructure': 'framework',
+  'Infrastruttura': 'framework',
 };
 
 interface AboutViewProps {
@@ -71,17 +80,18 @@ interface AboutViewProps {
 
 export function AboutView({lang, handleSelect, onTagClick}: AboutViewProps) {
   const t = translations[lang];
+  const aboutMeRef = useRef<HTMLDivElement>(null);
   const skillsRef = useRef<HTMLDivElement>(null);
   const interestsRef = useRef<HTMLDivElement>(null);
   const educationRef = useRef<HTMLDivElement>(null);
 
   // Collect tags from projects and experiences based on current language
   // Sort by usage count (desc), then by recency (desc)
-  const {softwareTags, hardwareTags, dataTags} = useMemo(() => {
+  const {softwareTags, hardwareTags, dataTags, frameworkTags, managementTags} = useMemo(() => {
     // Track count and most recent date for each tag
-    const tagStats: Record<string, { count: number; latestDate: number; category: 'software' | 'hardware' | 'data' }> = {};
+    const tagStats: Record<string, { count: number; latestDate: number; category: TagCategory }> = {};
 
-    const addTag = (tech: string, category: 'software' | 'hardware' | 'data', date: number) => {
+    const addTag = (tech: string, category: TagCategory, date: number) => {
       if (!tagStats[tech]) {
         tagStats[tech] = { count: 0, latestDate: 0, category };
       }
@@ -116,7 +126,7 @@ export function AboutView({lang, handleSelect, onTagClick}: AboutViewProps) {
       });
 
     // Sort tags by count (desc), then by latestDate (desc)
-    const sortTags = (category: 'software' | 'hardware' | 'data'): string[] => {
+    const sortTags = (category: TagCategory): string[] => {
       return Object.entries(tagStats)
         .filter(([_, stats]) => stats.category === category)
         .sort((a, b) => {
@@ -130,6 +140,8 @@ export function AboutView({lang, handleSelect, onTagClick}: AboutViewProps) {
       softwareTags: sortTags('software'),
       hardwareTags: sortTags('hardware'),
       dataTags: sortTags('data'),
+      frameworkTags: sortTags('framework'),
+      managementTags: sortTags('management'),
     };
   }, [lang]);
 
@@ -159,7 +171,7 @@ export function AboutView({lang, handleSelect, onTagClick}: AboutViewProps) {
 
   return (
     <article className="profile-view">
-      <div className="view-header">
+      <div ref={aboutMeRef} className="view-header">
         <button className="back-button" onClick={() => handleSelect(null, 'home')}>←</button>
         <h2>{t.aboutMeTitle}</h2>
       </div>
@@ -168,17 +180,21 @@ export function AboutView({lang, handleSelect, onTagClick}: AboutViewProps) {
         <aside className="about-side-menu">
           <nav>
             <ul>
+              <li onClick={() => scrollToSection(aboutMeRef)}>
+                <span className="menu-icon">👨‍💻</span>
+                <span className="menu-text">{t.aboutMeTitle}</span>
+              </li>
               <li onClick={() => scrollToSection(educationRef)}>
                 <span className="menu-icon">🎓</span>
                 <span className="menu-text">{t.education}</span>
               </li>
-              <li onClick={() => scrollToSection(skillsRef)}>
-                <span className="menu-icon">🛠️</span>
-                <span className="menu-text">{t.techSkills}</span>
-              </li>
               <li onClick={() => scrollToSection(interestsRef)}>
                 <span className="menu-icon">🌟</span>
                 <span className="menu-text">{t.interests}</span>
+              </li>
+              <li onClick={() => scrollToSection(skillsRef)}>
+                <span className="menu-icon">🛠️</span>
+                <span className="menu-text">{t.techSkills}</span>
               </li>
             </ul>
           </nav>
@@ -258,6 +274,16 @@ export function AboutView({lang, handleSelect, onTagClick}: AboutViewProps) {
             </div>
           </section>
 
+          <section ref={interestsRef} className="about-section">
+            <h3><span className="section-icon">🌟</span>{t.interests}</h3>
+            <ul className="interests-list">
+              <li><strong>{t.interest1Title}</strong> {t.interest1Desc}</li>
+              <li><strong>{t.interest4Title}</strong> {t.interest4Desc}</li>
+              <li><strong>{t.interest2Title}</strong> {t.interest2Desc}</li>
+              <li><strong>{t.interest3Title}</strong> {t.interest3Desc}</li>
+            </ul>
+          </section>
+
           <div className="profile-sections">
             <section ref={skillsRef} className="about-section">
               <h3><span className="section-icon">🛠️</span>{t.techSkills}</h3>
@@ -267,6 +293,14 @@ export function AboutView({lang, handleSelect, onTagClick}: AboutViewProps) {
                     <h4>{t.softwareDev}</h4>
                     <div className="skill-tags">
                       {softwareTags.map(renderTag)}
+                    </div>
+                  </div>
+                )}
+                {frameworkTags.length > 0 && (
+                  <div className="skill-category">
+                    <h4>{t.frameworkInfrastructure}</h4>
+                    <div className="skill-tags">
+                      {frameworkTags.map(renderTag)}
                     </div>
                   </div>
                 )}
@@ -286,17 +320,15 @@ export function AboutView({lang, handleSelect, onTagClick}: AboutViewProps) {
                     </div>
                   </div>
                 )}
+                {managementTags.length > 0 && (
+                  <div className="skill-category">
+                    <h4>{t.management}</h4>
+                    <div className="skill-tags">
+                      {managementTags.map(renderTag)}
+                    </div>
+                  </div>
+                )}
               </div>
-            </section>
-
-            <section ref={interestsRef} className="about-section">
-              <h3><span className="section-icon">🌟</span>{t.interests}</h3>
-              <ul className="interests-list">
-                <li><strong>{t.interest1Title}</strong> {t.interest1Desc}</li>
-                <li><strong>{t.interest4Title}</strong> {t.interest4Desc}</li>
-                <li><strong>{t.interest2Title}</strong> {t.interest2Desc}</li>
-                <li><strong>{t.interest3Title}</strong> {t.interest3Desc}</li>
-              </ul>
             </section>
           </div>
         </div>

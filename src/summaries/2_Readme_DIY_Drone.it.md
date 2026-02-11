@@ -47,6 +47,6 @@ Ad ogni accensione del drone, quando l'ESC viene avviato, controlla di avere mem
 ## Technologies and tools
 - **Linguaggi:** C, Kotlin, Lua
 - **Frameworks**: Android, Arduino
-- **Hardware:** Arduino, ESP8266, KK2 Flight Controller, ESC, Brushless Motors
+- **Hardware:** Arduino, ESP8266, KK2 Flight Controller
 - **Strumenti di Prototipazione:** 3D print FDM
 - **Protocolli di Comunicazione:** UDP, Serial

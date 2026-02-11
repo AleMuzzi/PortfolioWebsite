@@ -21,5 +21,6 @@ Sviluppo di software relativo a:
 ## Tecnologie e strumenti
 
 - **Linguaggi:** C#, C++
-- **Framework e UI:** XAML, Radical Framework, MVVM, .NET
+- **Framework e UI:** XAML, Radical Framework, .NET
+- **Design Pattern:** MVVM
 - **Gestione e Versionamento:** TFS, Git

@@ -30,5 +30,6 @@ La trasmissione video in tempo reale consente all'utente di vedere l'ambiente ci
 
 ## Technologies and tools
 - **Linguaggi:** C, Kotlin
-- **Frameworks:** Android, Arduino, ESP32, ESP32-CAM
+- **Frameworks:** Android, Arduino
+- **Hardware:** ESP32-CAM, Arduino Uno, Omni-wheels
 - **Comunicazione:** UDP, Serial

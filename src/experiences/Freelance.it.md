@@ -16,4 +16,4 @@ Le esperienze più rilevanti sono elencate come esperienze individuali nella sez
 
 ## Tecnologie e strumenti
 
-- **Competenze Core:** Web Scraping, IoT, Sviluppo Full Stack
+- **Competenze Chiave:** Web Scraping, IoT, Sviluppo Full Stack

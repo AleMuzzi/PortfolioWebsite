@@ -63,7 +63,7 @@ The logic is optimized for standalone implementation, requiring no connection to
 
 ## Technologies and tools
 * **Languages:** C, Kotlin
-- **Framework:** Arduino, Android
-* **Hardware:** Arduino, Float Sensors, Relay, LEDs, NE555 Timer, Water Pump
+* **Framework:** Arduino, Android
+* **Hardware:** Arduino Nano
 * **Circuit Design Software:** EveryCircuit
-* **Prototyping Tools:** Perfboard, FDM 3D printing
+* **Prototyping Tools:** Perfboard, 3D print FDM

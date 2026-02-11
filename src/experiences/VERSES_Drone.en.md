@@ -19,7 +19,7 @@ April 2022 — August 2024
 
 ## Technologies and tools
 
-- **Languages:** Kotlin, Python, Node.js
-- **Frontend:** React.js
-- **Backend & APIs:** GraphQL, MQTT
+- **Languages:** Kotlin, Python, Node.js, Typescript
+- **Frameworks:** React.js, GraphQL
+- **Communication:** MQTT
 - **Robotics:** DJI SDK

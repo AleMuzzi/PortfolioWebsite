@@ -48,4 +48,4 @@ Il risultato finale è una lampada che, da spenta, appare come un semplice ogget
 ## Technologies and tools
 - **Editing Immagini:** GIMP
 - **Modellazione 3D:** 3ds Max, Blender
-- **Stampa 3D:** 3D print FDM, Ender 3 Pro, Cura Slicing Software
+- **Stampa 3D:** 3D print FDM, Ender 3 Pro, Cura Slicer, PrusaSlicer

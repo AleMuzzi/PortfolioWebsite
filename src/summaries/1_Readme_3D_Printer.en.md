@@ -190,7 +190,7 @@ I can't say it's over, because this is an ever-evolving project, with new featur
 
 ## Technologies and tools
 * **Firmware:** Klipper
-* **Hardware:** BTT Manta M8P, BTT CB1, NEMA 17, CR 42-60, TMC2209, SSR
+* **Hardware:** BTT Manta M8P, BTT CB1, SSR
 * **User Interface:** Mainsail
-* **Slicers:** Cura, PrusaSlicer
+* **Slicers:** Cura Slicer, PrusaSlicer
 * **Design:** Fusion 360

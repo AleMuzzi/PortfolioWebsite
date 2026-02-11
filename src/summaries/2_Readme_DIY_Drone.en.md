@@ -53,6 +53,6 @@ Every time the drone powers on, the ESC checks for stored minimum and maximum va
 
 * **Languages:** C, Kotlin, Lua
 * **Frameworks**: Android, Arduino
-* **Hardware:** Arduino, ESP8266, KK2 Flight Controller, ESC, Brushless Motors
-* **Prototyping Tools:** FDM 3D printing
+* **Hardware:** Arduino, ESP8266, KK2 Flight Controller
+* **Prototyping Tools:** 3D print FDM
 * **Communication Protocols:** UDP, Serial

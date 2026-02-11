@@ -55,4 +55,4 @@ The final result is a lamp that, when turned off, appears as a simple white obje
 
 * **Image Editing:** GIMP
 * **3D Modeling:** 3ds Max, Blender
-* **3D Printing:** FDM 3D print, Ender 3 Pro, Cura Slicing Software
+* **3D Printing:** 3D print FDM, Ender 3 Pro, Cura Slicer, PrusaSlicer

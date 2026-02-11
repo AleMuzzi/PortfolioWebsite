@@ -18,5 +18,5 @@ Dicembre 2025 — Presente
 
 - **Linguaggi:** Python, C++
 - **Management:** Leadership, Mentoring Tecnico, Collaborazione Cross-Funzionale
-- **Competenze Core:** Architettura Software, Design di Sistema, Active Inference, Sviluppo Full-Stack
+- **Competenze Chiave:** Architettura Software, Design di Sistema, Active Inference, Sviluppo Full-Stack
 - **Infrastruttura:** Docker, Pipeline CI/CD
