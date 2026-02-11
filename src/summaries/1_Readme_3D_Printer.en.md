@@ -16,7 +16,7 @@ Since this was my first time designing a 3D printer and I was still learning the
 
 ---
 
-### Dettagli tecnici
+### Technical Specifications
 ```
 Build Volume:           400x400x768 mm                   
 Dimesions:                                        Extruders number:              2                   
