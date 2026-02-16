@@ -23,6 +23,7 @@ import { init, track } from '@plausible-analytics/tracker'
 init({
   domain: 'portfolio-dev.casabrignuzzi.com.es',
   endpoint: 'https://plausible-tracker.casabrignuzzi.com.es',
+  captureOnLocalhost: true, // Useful for testing if your dev env is localhost
 })
 
 // --- LIST FOR BACKGROUND IMAGES ---
@@ -59,7 +60,6 @@ function App() {
     const [showSmallScreenModal, setShowSmallScreenModal] = useState<boolean>(false);
 
     useEffect(() => {
-        track('pageview');
         // Check screen width
       if (isMobileDevice()) {
         setShowMobileModal(true);
