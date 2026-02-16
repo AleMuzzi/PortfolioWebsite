@@ -1,7 +1,7 @@
 # Full Stack Drone Developer at VERSES
 
 ## Summary
-Lead developer of the autonomous drone management system for **Flying Forward 2020 (FF2020)**, a European Commission-funded initiative establishing the standards for **Urban Air Mobility (UAM)**.
+**Lead developer** of the autonomous drone management system for **Flying Forward 2020 (FF2020)**, a European Commission-funded initiative establishing the standards for **Urban Air Mobility (UAM)**.
 
 ## Company
 VERSES - https://www.verses.ai/

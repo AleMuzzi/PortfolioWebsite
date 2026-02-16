@@ -18,6 +18,17 @@ import ptz_camera from './assets/ptz_camera.png';
 import iot from './assets/iot.png';
 import verses_logo from './assets/verses_logo.png';
 
+import Plausible from 'plausible-tracker';
+
+const { enableAutoPageviews } = Plausible({
+  domain: 'portfolio-dev.casabrignuzzi.com.es',
+  // Change apiHost if you are self-hosting the Plausible instance
+  apiHost: 'https://plausible-tracker.casabrignuzzi.com.es',
+});
+
+// This one line handles all route changes in your React app
+enableAutoPageviews();
+
 // --- LIST FOR BACKGROUND IMAGES ---
 // The code will map these images to timeline items based on their index.
 // Item 0 gets the 1st image, Item 1 gets the 2nd, etc.

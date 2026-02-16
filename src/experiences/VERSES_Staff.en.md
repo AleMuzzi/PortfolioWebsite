@@ -1,7 +1,7 @@
 # Staff Software Engineer at VERSES
 
 ## Summary
-**Lead Architect** for core Active Inference systems. Transitioned from senior individual contributor to leader of the Architecture Team.
+**Lead Architect** for core Active Inference framework. Transitioned from senior individual contributor to leader of the Architecture Team.
 
 ## Company
 VERSES — https://www.verses.ai/
