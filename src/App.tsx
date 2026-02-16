@@ -18,7 +18,7 @@ import ptz_camera from './assets/ptz_camera.png';
 import iot from './assets/iot.png';
 import verses_logo from './assets/verses_logo.png';
 
-import { init, track } from '@plausible-analytics/tracker'
+import { init } from '@plausible-analytics/tracker'
 import { trackEvent } from './utils/analytics';
 
 init({
