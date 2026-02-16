@@ -67,6 +67,7 @@ function App() {
         // Prevent background scrolling
         document.body.style.overflow = 'hidden';
         track('uses_mobile', { props: { tier: 'startup' } })
+        console.log("Passed here!")
       }
 
       if(window.innerWidth <= 1024) {
