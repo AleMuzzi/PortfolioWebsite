@@ -21,7 +21,7 @@ import verses_logo from './assets/verses_logo.png';
 import { init } from '@plausible-analytics/tracker'
 
 init({
-  domain: 'my-app.com'
+  domain: 'portfolio-dev.casabrignuzzi.com.es'
 })
 
 // --- LIST FOR BACKGROUND IMAGES ---
