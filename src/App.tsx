@@ -18,13 +18,11 @@ import ptz_camera from './assets/ptz_camera.png';
 import iot from './assets/iot.png';
 import verses_logo from './assets/verses_logo.png';
 
-import { init } from '@plausible-analytics/tracker'
-import { track } from '@plausible-analytics/tracker'
+import { init, track } from '@plausible-analytics/tracker'
 
 init({
   domain: 'portfolio-dev.casabrignuzzi.com.es',
-  endpoint: 'https://plausible-tracker.casabrignuzzi.com.es/api/event',
-
+  endpoint: 'https://plausible-tracker.casabrignuzzi.com.es',
 })
 
 // --- LIST FOR BACKGROUND IMAGES ---
@@ -61,7 +59,8 @@ function App() {
     const [showSmallScreenModal, setShowSmallScreenModal] = useState<boolean>(false);
 
     useEffect(() => {
-      // Check screen width
+        track('pageview');
+        // Check screen width
       if (isMobileDevice()) {
         setShowMobileModal(true);
         // Prevent background scrolling
