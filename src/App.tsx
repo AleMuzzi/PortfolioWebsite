@@ -19,6 +19,7 @@ import iot from './assets/iot.png';
 import verses_logo from './assets/verses_logo.png';
 
 import { init, track } from '@plausible-analytics/tracker'
+import { trackEvent } from './utils/analytics';
 
 init({
   domain: 'portfolio-dev.casabrignuzzi.com.es',
@@ -66,14 +67,14 @@ function App() {
         setShowMobileModal(true);
         // Prevent background scrolling
         document.body.style.overflow = 'hidden';
-        track('uses_mobile', { props: { tier: 'uses_mobile' } })
+        trackEvent('uses_mobile', { tier: 'uses_mobile' })
         console.log("Passed here!")
       }
 
       if(window.innerWidth <= 1024) {
         setShowSmallScreenModal(true);
         document.body.style.overflow = 'hidden';
-        track('uses_small_screen', { props: { tier: 'startup' } })
+        trackEvent('uses_small_screen', { tier: 'startup' })
       }
 
       // Cleanup: re-enable scrolling if component unmounts
@@ -85,7 +86,7 @@ function App() {
     const handleCloseModal = () => {
       setShowMobileModal(false);
       setShowSmallScreenModal(false);
-      track('proceeds_anyway', { props: { tier: 'startup' } })
+      trackEvent('proceeds_anyway', { tier: 'startup' })
       // Re-enable scrolling when dismissed
       document.body.style.overflow = 'unset';
     };
@@ -315,6 +316,18 @@ function App() {
         setSelectedType(type);
         setActiveTagName(null);
 
+        const source = pushState ? 'user_click' : 'navigation';
+
+        if (type === 'experience' && !id) {
+            trackEvent('page_visit', { page: 'work_experiences', source });
+        } else if (type === 'project' && !id) {
+            trackEvent('page_visit', { page: 'projects', source });
+        } else if (type === 'about') {
+            trackEvent('page_visit', { page: 'about_me', source });
+        } else if (type === 'home') {
+            trackEvent('page_visit', { page: 'home', source });
+        }
+
         if (pushState) {
             window.history.pushState({ id, type }, '');
         }
@@ -362,6 +375,8 @@ function App() {
     }, []);
 
     const toggleLanguage = () => {
+        const newLang = lang === 'en' ? 'it' : 'en';
+        trackEvent('language_toggle', { language: newLang });
         setLang(prev => prev === 'en' ? 'it' : 'en');
     };
 

@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { trackEvent } from '../utils/analytics';
 import ReactMarkdown from 'react-markdown';
 import { Experience } from '../projectsData';
 import { translations, Language } from '../i18n';
@@ -83,7 +84,10 @@ export function ExperienceView({
                             key={exp.id}
                             className={`timeline-item ${exp.side === 'left' ? 'timeline-item-left' : 'timeline-item-right'}`}
                             style={{ top: `${exp.topPos}%` }}
-                            onClick={() => handleSelect(exp.id, 'experience')}
+                            onClick={() => {
+                                handleSelect(exp.id, 'experience');
+                                trackEvent('work_experience_selection', { experience: exp.name });
+                            }}
                             role="button"
                             tabIndex={0}
                             onKeyDown={(e) => e.key === 'Enter' && handleSelect(exp.id, 'experience')}

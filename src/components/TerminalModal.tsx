@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './TerminalModal.css';
-import { track } from '@plausible-analytics/tracker'
+import { trackEvent } from '../utils/analytics';
 
 interface TerminalModalProps {
     isOpen: boolean;
@@ -37,7 +37,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose, t
 
     useEffect(() => {
         if (isOpen) {
-            track('easter-egg-terminal-opened', {});
+            trackEvent('easter-egg-terminal-opened');
             setLines([initialLines[0]]);
             setIsRevealed(false);
             setInputValue('');
@@ -75,7 +75,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose, t
         setLines(prev => [...prev, { timestamp: getTimestamp(), content: `guest@portfolio:~$ ${inputValue}`, isCommand: true }]);
 
         if (cmd === 'reveal') {
-            track('easter-egg-terminal-reveal-command', {});
+            trackEvent('easter-egg-terminal-reveal-command');
             setIsBooting(true); // Disable input during automated typing
             setLines(prev => [...prev, { timestamp: getTimestamp(), type: 'PROCESS', content: t.terminalProcess }]);
             setTimeout(() => {
@@ -96,10 +96,10 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose, t
                 }, 600);
             }, 800);
         } else if (cmd === 'clear') {
-            track('easter-egg-terminal-clear-command', {});
+            trackEvent('easter-egg-terminal-clear-command');
             setLines([]);
         } else if (cmd === 'help') {
-          track('easter-egg-terminal-help-command', {});
+            trackEvent('easter-egg-terminal-help-command');
             setLines(prev => [...prev, 
                 { timestamp: getTimestamp(), type: 'HELP', content: t.terminalHelpTitle }, 
                 { timestamp: '', content: `  - reveal : ${t.terminalHelpReveal}` }, 
@@ -108,10 +108,10 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose, t
                 { timestamp: '', content: `  - exit   : ${t.terminalHelpExit}` }
             ]);
         } else if (cmd === 'exit') {
-            track('easter-egg-terminal-exit-command', {});
+            trackEvent('easter-egg-terminal-exit-command');
             onClose();
         } else {
-            track('easter-egg-terminal-custom-command', {props: {command: cmd}});
+            trackEvent('easter-egg-terminal-custom-command', {command: cmd});
             setLines(prev => [...prev, { timestamp: getTimestamp(), type: 'ERROR', content: `${t.terminalError}: ${cmd}` }]);
         }
         setInputValue('');

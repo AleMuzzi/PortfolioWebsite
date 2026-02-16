@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { trackEvent } from '../utils/analytics';
 import './TagModal.css';
 import { Project, Experience } from '../projectsData';
 
@@ -25,6 +26,10 @@ export const TagModal: React.FC<TagModalProps> = ({
     const matchedExperiences = experiences.filter(e => 
         e.technologies.some(tech => tech.toLowerCase() === tagName.toLowerCase())
     );
+
+    useEffect(() => {
+        trackEvent('tags_modal_opened', { tag: tagName });
+    }, [tagName]);
 
     return (
         <div className="tag-modal-overlay" onClick={onClose}>
