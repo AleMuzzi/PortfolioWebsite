@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './TerminalModal.css';
+import { track } from '@plausible-analytics/tracker'
 
 interface TerminalModalProps {
     isOpen: boolean;
@@ -36,6 +37,7 @@ export const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose, t
 
     useEffect(() => {
         if (isOpen) {
+            track('easter-egg-terminal-opened', {});
             setLines([initialLines[0]]);
             setIsRevealed(false);
             setInputValue('');

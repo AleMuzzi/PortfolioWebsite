@@ -66,7 +66,7 @@ function App() {
         setShowMobileModal(true);
         // Prevent background scrolling
         document.body.style.overflow = 'hidden';
-        track('uses_mobile', { props: { tier: 'startup' } })
+        track('uses_mobile', { props: { tier: 'uses_mobile' } })
         console.log("Passed here!")
       }
 
