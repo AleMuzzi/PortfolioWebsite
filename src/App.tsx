@@ -22,7 +22,7 @@ import { init } from '@plausible-analytics/tracker'
 import { trackEvent } from './utils/analytics';
 
 init({
-  domain: 'portfolio-dev.casabrignuzzi.com.es',
+  domain: 'portfolio.casabrignuzzi.com.es',
   endpoint: 'https://plausible-tracker.casabrignuzzi.com.es/api/event',
   hashBasedRouting: true,
   captureOnLocalhost: true, // Useful for testing if your dev env is localhost
