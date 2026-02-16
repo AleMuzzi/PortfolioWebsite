@@ -19,9 +19,12 @@ import iot from './assets/iot.png';
 import verses_logo from './assets/verses_logo.png';
 
 import { init } from '@plausible-analytics/tracker'
+import { track } from '@plausible-analytics/tracker'
 
 init({
-  domain: 'portfolio-dev.casabrignuzzi.com.es'
+  domain: 'portfolio-dev.casabrignuzzi.com.es',
+  endpoint: 'https://plausible-tracker.casabrignuzzi.com.es/api/event',
+
 })
 
 // --- LIST FOR BACKGROUND IMAGES ---
@@ -63,11 +66,13 @@ function App() {
         setShowMobileModal(true);
         // Prevent background scrolling
         document.body.style.overflow = 'hidden';
+        track('uses_mobile', { props: { tier: 'startup' } })
       }
 
       if(window.innerWidth <= 1024) {
         setShowSmallScreenModal(true);
         document.body.style.overflow = 'hidden';
+        track('uses_small_screen', { props: { tier: 'startup' } })
       }
 
       // Cleanup: re-enable scrolling if component unmounts
@@ -79,6 +84,7 @@ function App() {
     const handleCloseModal = () => {
       setShowMobileModal(false);
       setShowSmallScreenModal(false);
+      track('proceeds_anyway', { props: { tier: 'startup' } })
       // Re-enable scrolling when dismissed
       document.body.style.overflow = 'unset';
     };
