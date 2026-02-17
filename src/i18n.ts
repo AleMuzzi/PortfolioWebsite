@@ -1,7 +1,7 @@
 export const translations = {
   en: {
     heroTitle: "Alessandro Muzzi",
-    heroDesc: "A curated collection of professional experiences, hardware builds, mobile apps, and tools. Explore the sections on the left to learn more about my journey and technical background.",
+    heroDesc: "A curated collection of professional experiences, hardware builds, mobile apps, and tools. Explore the sections on the right to learn more about my journey and technical background.",
     profileButton: "Profile & Skills",
     workTitle: "Work Experience",
     personalTitle: "Personal Projects",
@@ -93,12 +93,12 @@ export const translations = {
   },
   it: {
     heroTitle: "Alessandro Muzzi",
-    heroDesc: "Una raccolta curata di esperienze professionali, costruzioni hardware, app mobili e strumenti. Esplora le sezioni a sinistra per saperne di più sul mio percorso e sul mio background tecnico.",
+    heroDesc: "Una raccolta curata di esperienze professionali, costruzioni hardware, app mobili e strumenti. Esplora le sezioni a destra per saperne di più sul mio percorso e sul mio background tecnico.",
     profileButton: "Profilo e Competenze",
     workTitle: "Esperienza Lavorativa",
     personalTitle: "Progetti Personali",
     aboutMeTitle: "Su di Me",
-    bio: "Sono uno sviluppatore e maker versatile con la passione di colmare il divario tra hardware e software. Mi piacciono i progetti complessi e multidisciplinari che richiedono un mix di programmazione, elettronica e fabbricazione digitale. Che si tratti di costruire una stampante 3D personalizzata o di sviluppare un sistema di controllo robotico in tempo reale, amo la sfida di far lavorare insieme diverse tecnologie in modo fluido. Apprezzo la libertà del lavoro da remoto e l'alta produttività che ne deriva, ma allo stesso tempo mi piace viaggiare per collaborazioni on-site per connettermi profondamente con l'azienda e il team.",
+    bio: "Sono uno sviluppatore e maker versatile con la passione per colmare il divario tra hardware e software. Mi piacciono i progetti complessi e multidisciplinari che richiedono un mix di programmazione, elettronica e fabbricazione digitale. Che si tratti di costruire una stampante 3D personalizzata o di sviluppare un sistema di controllo robotico in tempo reale, amo la sfida di far lavorare insieme diverse tecnologie in modo fluido. Apprezzo la libertà del lavoro da remoto e l'alta produttività che ne deriva, ma allo stesso tempo mi piace viaggiare per collaborazioni on-site per connettermi profondamente con l'azienda e il team.",
     techSkills: "Competenze Tecniche",
     softwareDev: "Ingegneria del Software",
     languages: "Linguaggi",
