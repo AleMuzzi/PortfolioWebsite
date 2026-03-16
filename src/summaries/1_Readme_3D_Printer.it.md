@@ -4,7 +4,7 @@
 Stampante 3D DIY open source di grande formato, basata su BTT Manta M8P e Klipper
 
 ## What this project is
-Tutto è cominciato quando ho sbagliato a prendere il nuovo piatto in vetro per la mia Creality Ender 3 Pro, ordinando una lastra da 420x420 mm invece di 220x220 mm. Invece di restituirla o ritagliarla, ho deciso di costruire una nuova stampante 3D in grado di sfruttare appieno questa enorme superficie di stampa.
+Tutto è cominciato quando ho sbagliato a prendere il nuovo piatto in vetro per la mia Creality Ender 3 Pro, ordinando una lastra da 420x420 mm invece di 220x220 mm. Invece di restituirla o ritagliarla, ho deciso di approfittarne per costruire una nuova stampante 3D in grado di sfruttare appieno questa enorme superficie di stampa.
 
 La mia Ender 3 Pro era già stata modificata più volte: doppio asse Z, hotend E3D V6 all-metal, sensore di livellamento automatico BLTouch, e così via. Tuttavia, volevo esplorare a pieno questo mondo, costruendo una macchina da zero con un firmware personalizzato che mi consentisse di sperimentare nuovi approcci alla stampa 3D.
 Decisi così di partire dal disegno CAD fornito da Creality per la Ender 3[<math display="inline"><sup>↗</sup></math>](https://github.com/Creality3DPrinting/Ender-3), lo stesso che avevo già utilizzato per le modifiche precedenti, e di rivoluzionarlo completamente per adattarlo a un formato di stampa molto più grande.

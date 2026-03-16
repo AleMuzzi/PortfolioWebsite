@@ -6,7 +6,7 @@ An open-source large format DIY 3D printer based on BTT Manta M8P and Klipper
 
 ## What this project is
 
-It all started with a simple mistake: I ordered the wrong glass bed for my Creality Ender 3 Pro, receiving a 420x420 mm plate instead of the 220x220 mm version. Rather than returning or cutting it, I decided to build a brand-new 3D printer capable of fully utilizing this massive printing surface.
+It all started with a simple mistake: I ordered the wrong glass bed for my Creality Ender 3 Pro, receiving a 420x420 mm plate instead of the 220x220 mm version. Rather than returning or cutting it, I decided take it as an opportunity to build a brand-new 3D printer capable of fully utilizing this massive printing surface.
 
 My Ender 3 Pro had already undergone several modifications: dual Z-axis, E3D V6 all-metal hotend, BLTouch auto-leveling, and more. However, I wanted to explore this world more deeply by building a machine from scratch with custom firmware that would allow me to experiment with new 3D printing approaches. I used the CAD design provided by Creality for the Ender 3[<math display="inline"><sup>↗</sup></math>](https://github.com/Creality3DPrinting/Ender-3) as a starting point and completely overhauled it for a much larger format.
 

@@ -21,6 +21,7 @@ Una volta raggiunto il livello di "Pieno", il circuito veniva chiuso, quindi:
 - un lucchetto elettromagnetico scattava per mantenere il galleggiante in posizione, e di conseguenza il circuito attivo
 - un timer NE555, configurato con una durata preimpostata, partiva
 - la pompa veniva attivata per svuotare il serbatoio
+
 Allo scadere del timer, il lucchetto si disattivava, permettendo al galleggiante di abbassarsi con il livello dell'acqua oramai svuotata, aprendo il circuito e spegnendo la pompa.
 Il ciruito è stato progettato su EveryCircuit e successivamente realizzato su una basetta millefori.
 Sebbene questa soluzione funzionasse, probabilmente a causa di errori nel circuito (non sono un esperto di elettronica) o all'umidità, il timer NE555 non era affidabile e spesso si rompeva, richiedendo continue riparazioni e l'utilizzo della modalità manuale per svuotare il serbatoio, che era esattamente ciò che volevo evitare.
@@ -53,6 +54,7 @@ Nelle foto sopra si possono notare:
 
 ### Logica di Controllo e Macchina a Stati
 Il sistema opera su una semplice e robusta logica a macchina a stati per garantire cicli di pompaggio affidabili:
+
 1. **Attivazione del Ciclo:** Quando il livello dell'acqua raggiunge il sensore di "Pieno", il controllore aziona la pompa e accende il LED di stato.
 2. **Drenaggio in Stato Stazionario:** La pompa rimane attiva finché il livello dell'acqua non scende sotto la soglia di "Vuoto". Questa isteresi impedisce alla pompa di accendersi e spegnersi rapidamente vicino a un singolo punto del sensore.
 3. **Spegnimento Automatico:** Una volta confermato lo stato di "Vuoto", il controllore disattiva la pompa e resetta il sistema per il ciclo successivo. Il livello di "Vuoto" è stato posizionato strategicamente per garantire che il serbatoio sia sufficientemente svuotato ma non completamente, prevenendo il rischio di danneggiare la pompa a causa del funzionamento a secco.

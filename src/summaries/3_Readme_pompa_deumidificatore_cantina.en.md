@@ -15,7 +15,7 @@ The system is designed for autonomous operation, providing a reliable, zero-main
 This project has undergone significant evolution over time.
 
 #### First Iteration
-
+![pompa_cantina_1_circuito.jpg{width="400px"}{align="right"}{caption="Simulazione circuito su EveryCircuit"}](/summaries/pompa_cantina_1_circuito.jpg)
 The initial idea, inspired by the mechanics of toilet tanks, involved using a single float sensor to detect the water level.
 
 Once the "Full" level was reached, the circuit was closed, resulting in the following:
@@ -30,7 +30,9 @@ When the timer expired, the latch deactivated, allowing the float to drop with t
 
 Later, I decided to completely abandon the analog circuit in favor of a much simpler and more reliable digital solution based on an **Arduino Nano** microcontroller.
 
-The controller interfaces with two float sensors: one positioned at the "Full" level and the other at the "Empty" level. These sensors provide precise feedback on water levels, allowing the microcontroller to make informed decisions regarding pump activation. The Arduino code, less than 40 lines long, implements state machine logic that manages pumping cycles reliably and informs the user of the system status via dedicated LEDs. A relay was used to translate the microcontroller's low-voltage signal into the power required to drive the water pump.
+The controller interfaces with two float sensors: one positioned at the "Full" level and the other at the "Empty" level. These sensors provide precise feedback on water levels, allowing the microcontroller to make informed decisions regarding pump activation. 
+The Arduino code, less than 40 lines long, implements state machine logic that manages pumping cycles reliably and informs the user of the system status via dedicated LEDs. 
+A relay was used to translate the microcontroller's low-voltage signal into the power required to drive the water pump.
 
 <div style="display: flex; flex-direction: column; align-items: center; gap: 20px">
 
