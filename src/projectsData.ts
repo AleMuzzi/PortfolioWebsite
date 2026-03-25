@@ -114,7 +114,7 @@ function parseProject(filename: string, content: unknown): Project {
                 link = urlMatch[0];
             }
         } else if (header.includes('resources') || header.includes('risorse')) {
-            const resourceLines = body.split('\\n').filter(line => line.trim().length > 0);
+            const resourceLines = body.split('\n').filter(line => line.trim().length > 0);
 
             resourceLines.forEach(line => {
                 const cleanLine = line.replace(/^[-*+]\\s+/, '').trim();
@@ -242,7 +242,7 @@ function parseExperience(filename: string, content: unknown): Experience {
         } else if (header.includes('what i did') || header.includes('cosa ho fatto')) {
             details = body;
         } else if (header.includes('resources') || header.includes('risorse')) {
-            const resourceLines = body.split('\\n').filter(line => line.trim().length > 0);
+            const resourceLines = body.split('\n').filter(line => line.trim().length > 0);
 
             resourceLines.forEach(line => {
                 const cleanLine = line.replace(/^[-*+]\\s+/, '').trim();

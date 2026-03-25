@@ -37,6 +37,8 @@ const categoryMapping: Record<string, TagCategory> = {
   'Gestione e Versionamento': 'framework',
   'Management': 'management',
   'Core Skills': 'software',
+  'Specializations': 'software',
+  'Specializzazioni': 'software',
   'Core Competencies': 'software',
   'Competenze Chiave': 'software',
   'Communication': 'framework',

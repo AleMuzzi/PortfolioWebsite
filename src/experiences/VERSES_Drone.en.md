@@ -1,7 +1,7 @@
-# Full Stack Drone Developer at VERSES
+# Lead Full Stack Drone Developer at VERSES
 
 ## Summary
-**Lead developer** of the autonomous drone management system for **Flying Forward 2020 (FF2020)**, a European Commission-funded initiative establishing the standards for **Urban Air Mobility (UAM)**.
+Lead Architect for the autonomous drone management ecosystem within **Flying Forward 2020 (FF2020)**. Engineered the digital standards for **Urban Air Mobility (UAM)**, bridging the gap between complex robotics and city-scale digital infrastructure to enable the first generation of autonomous urban flight.
 
 ## Company
 VERSES - https://www.verses.ai/
@@ -11,15 +11,27 @@ April 2022 — August 2024
 
 ## What I did
 
-* Spearheaded the development of the end-to-end drone management system for **Flying Forward 2020 (FF2020)**, a consortium of 12 partners dedicated to integrating autonomous drones into the digital infrastructure of cities.
-* Engineered autonomous flight logic using **DJI SDK** and **Kotlin**, enabling **Beyond Visual Line of Sight (BVLOS)** missions for critical use cases such as biomedical delivery at **San Raffaele Hospital (Milan)** and crowd safety monitoring in **Zaragoza**.
-* Integrated **MQTT** and **GraphQL** pipelines to connect drone telemetry with VERSES' **KOSM** operating system, ensuring flights complied with real-time geospatial governance and EU regulatory frameworks.
-* Deployed and field-tested solutions across five European "Living Labs" (Eindhoven, Milan, Zaragoza, Tartu, and Oulu), facilitating autonomous security surveillance and infrastructure monitoring.
-* Collaborated with third-party systems to enable the "Smart Capsule" integration for secure pharmaceutical transport, directly contributing to the project's goal of creating a sustainable UAM ecosystem.
+![verses_drone_m300.jpg{width="400px"}{align="right"}{caption="DJI M300 with AED payload"}](/experiences/verses_drone_m300.jpg)
+### **Autonomous Flight & Mission Criticality**
+* **Pioneered the end-to-end autonomous flight logic** using Kotlin and the DJI SDK, successfully enabling **Beyond Visual Line of Sight (BVLOS)** missions in complex urban environments.
+* **Orchestrated autonomous drone delivery and facade scanning missions** at the Eindhoven High Tech Campus (HTC) to automate building maintenance and structural inspections.
+* **Revolutionized biomedical logistics** at San Raffaele Hospital (Milan) by deploying autonomous delivery systems that reduced transport times for critical supplies.
+* **Enhanced public safety protocols** in Zaragoza by engineering real-time crowd-monitoring drone logic, providing local authorities with unprecedented situational awareness during major events.
 
-## Technologies and tools
+### **System Integration & Regulatory Governance**
+* **Engineered a high-conformance telemetry pipeline** using MQTT and GraphQL to link real-time drone data with the KOSM operating system.
+* **Ensured 100% compliance with EU regulatory frameworks** by integrating geospatial governance directly into the flight mission logic, preventing unauthorized airspace incursions.
+* **Facilitated a sustainable UAM ecosystem** through integrations with third-party systems such as the "Smart Capsule", allowing for the secure and certified transport of pharmaceuticals across city labs.
 
-- **Languages:** Kotlin, Python, Node.js, Typescript
-- **Frameworks:** React.js, GraphQL
-- **Communication:** MQTT
-- **Robotics:** DJI SDK
+![verses_drone_kosm.png{width="700px"}{align="right"}{caption="KOSM portal"}](/experiences/verses_drone_kosm.png)
+### **Field Testing & European Impact**
+* **Led the successful field deployment and testing** of autonomous solutions across five European "Living Labs" (Eindhoven, Milan, Zaragoza, Tartu, and Oulu).
+* **Validated infrastructure monitoring capabilities** that set the benchmark for how European cities will manage autonomous security surveillance in the coming decade.
+
+
+## Technologies and Tools
+* **Languages:** Kotlin, Python, Node.js, Typescript
+* **Frameworks:** React.js, GraphQL
+* **Communication:** MQTT
+* **Robotics:** DJI SDK
+* **Core Expertise:** BVLOS Operations, Geospatial Governance, UAM
