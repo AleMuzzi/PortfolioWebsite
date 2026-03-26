@@ -62,7 +62,7 @@ export function ExperienceView({
           <button className="scroll-to-bottom-btn" onClick={scrollToBottom} style={{ position: 'absolute', top: '100px', right: '-20px', zIndex: 1000 }}>
             <span className="scroll-icon">↓</span> {t.scrollToBottom}
           </button>
-          <button className="scroll-to-bottom-btn" onClick={scrollToTop} style={{ position: 'absolute', top: '2270px', right: '-20px', zIndex: 1000 }}>
+          <button className="scroll-to-bottom-btn" onClick={scrollToTop} style={{ position: 'absolute', top: '2720px', right: '-20px', zIndex: 1000 }}>
             <span className="scroll-icon">↑</span> {t.scrollToTop}
           </button>
             <div className="timeline-container" style={{ position: 'relative' }}>

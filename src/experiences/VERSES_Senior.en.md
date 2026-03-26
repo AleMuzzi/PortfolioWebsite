@@ -1,7 +1,7 @@
-# Senior Software Engineer at VERSES
+# Senior Software Engineer & Architect at VERSES
 
 ## Summary
-**Senior Engineer** for core Active Inference systems. Transitioned from a high-impact cross-functional role —spanning deep backend to frontend development— to the Architecture Team, leveraging a holistic understanding of the company's stack to design unified frameworks and lead engineering teams.
+Strategic Senior Engineer and Architect for core **Active Inference** systems. Leveraged a holistic, full-stack understanding of the company's ecosystem to transition into the **Architecture Team**, where I led the standardization of AI frameworks and unified fragmented engineering efforts to ensure long-term system scalability.
 
 ## Company
 VERSES - https://www.verses.ai/
@@ -11,14 +11,18 @@ August 2024 — December 2025
 
 ## What I did
 
-- **Cross-Functional System Mastery:** Initially operated as a versatile "force multiplier" across multiple teams, delivering critical features ranging from low-level backend logic to frontend user interfaces. This full-stack exposure provided the deep, systemic understanding required to transition into the core **Architecture Team**.
-- **Active Inference Framework:** Leveraged this comprehensive knowledge of the stack to **co-architect and lead the development** of a standardized framework for executing Active Inference requests, unifying the work of disparate teams into a cohesive system.
-- **Architecture & Standardization:** Took ownership of previously fragmented AI resources, standardizing inconsistent AI models and datasets into a centralized repository with accessible APIs. This initiative resolved versioning discrepancies across teams and established a cohesive technical direction, ensuring long-term system efficiency.
-- **System Engineering:** Developed end-to-end software utilities and system monitoring tools using **Python** and **C++**, ensuring scalability across the various subsystems identified during the rotation phase.
+### **System Engineering & Performance**
+* **Engineered scalable end-to-end software utilities** and system monitoring tools using **Python** and **C++**, significantly enhancing visibility across all critical subsystems.
+* **Optimized system reliability** by designing monitoring frameworks that allowed for the proactive identification and resolution of performance bottlenecks before they impacted production.
 
-## Technologies and tools
+### **Architecture, Leadership & Standardization**
+* **Co-architected and led the development** of a standardized framework for executing Active Inference requests, successfully unifying the workflows of disparate engineering teams into a single, cohesive system.
+* **Eliminated technical debt and version discrepancies** between services in a distributed system by creating new standards for data and model management, including a centralized repository for communication resources, accessible via API.
+* **Established a unified technical direction** for the organization, improving overall system efficiency and making work easier for multiple cross-functional teams.
+* **Acted as a "force multiplier"** across the company, delivering high-impact features from low-level backend logic to frontend interfaces, which directly led to my promotion into the core Architecture Team.
 
-- **Languages:** Python, C++, Typescript, Rust
-- **Core Skills:** Software Architecture, System Design, Active Inference, Full-Stack Development
-- **Infrastructure:** Docker, CI/CD Pipelines
-- **Management:** Team Leadership, Technical Mentoring, Cross-Functional Collaboration
+## Technologies and Tools
+* **Languages:** Python, C++, TypeScript, Rust
+* **Core Skills:** Software Architecture, System Design, Active Inference, API Standardization, Full-Stack Development
+* **Infrastructure:** Docker, CI/CD Pipelines
+* **Leadership:** Technical Mentoring, Cross-Functional Collaboration

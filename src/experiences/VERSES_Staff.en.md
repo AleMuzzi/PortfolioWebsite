@@ -1,7 +1,7 @@
-# Staff Software Engineer at VERSES
+# Staff Software Engineer & Lead Architect at VERSES
 
 ## Summary
-**Lead Architect** for core Active Inference framework. Transitioned from senior individual contributor to leader of the Architecture Team.
+Lead Architect for the core **Active Inference** framework, promoted to head the **Architecture Team** based on a proven track record of cross-functional mastery. I specialize in translating complex AI research into scalable, production-ready infrastructure while mentoring the next generation of engineering talent to ensure technical excellence across the organization.
 
 ## Company
 VERSES — https://www.verses.ai/
@@ -11,12 +11,19 @@ December 2025 — Present
 
 ## What I did
 
-- **Team Leadership:** Promoted to lead the development of architectural initiatives due to the accumulated cross-team experience. Currently managing a team of engineers, conducting code reviews, and mentoring junior staff to align with the broader system vision.
-- **Ongoing Development:** Continuing development and oversight work on Active Inference frameworks, ensuring architectural solutions are scalable, efficient, and aligned with long-term company goals.
+### **Architectural Leadership & Strategic Vision**
+* **Promoted to Lead the Architecture Team** as a direct result of successfully bridging technical gaps across multiple departments, demonstrating the "high performer" qualities required for rapid career advancement.
+* **Serving as the Lead Architect** for the company’s flagship Active Inference framework, ensuring that all architectural solutions are engineered for maximum scalability and long-term efficiency.
+* **Directly managing and mentoring a team of engineers**, fostering a culture of high performance by aligning individual growth with the broader system vision and company goals.
+* **Standardizing code quality and system integrity** through rigorous architectural reviews, consistently exceeding internal benchmarks for software reliability and maintainability.
 
-## Technologies and tools
+### **System Engineering & Operational Excellence**
+* **Engineering critical-path utilities in Python and C++** to support the Active Inference framework, providing the high-performance foundations necessary for real-time AI processing.
+* **Advocate for periodic cross-functional collaboration meetings** with the other team leaders to ensure that disparate sub-systems remain cohesive, avoiding architectural silos and improving overall operational efficiency.
 
-- **Languages:** Python, C++
-- **Management:** Leadership, Technical Mentoring, Cross-Functional Collaboration
-- **Core Competencies:** Software Architecture, System Design, Active Inference, Full-Stack Development
-- **Infrastructure:** Docker, CI/CD Pipelines
+
+## Technologies and Tools
+* **Languages:** Python, C++
+* **Management:** Team Leadership, Technical Mentoring, Cross-Functional Strategy
+* **Core Competencies:** Software Architecture, System Design, Active Inference, Full-Stack Development
+* **Infrastructure:** Docker, CI/CD Pipelines

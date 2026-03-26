@@ -122,7 +122,7 @@ function App() {
                 width: 360,
                 height: 100,
                 // --- MANUAL OVERRIDES (0% = Top of SVG, 100% = Bottom) ---
-                manualTop: 86,    // Where the branch starts on the spine (top Y)
+                manualTop: 89,    // Where the branch starts on the spine (top Y)
                 manualBottom: 105  // Where the branch ends on the spine (bottom Y)
             },
             {
@@ -138,8 +138,8 @@ function App() {
                 bottomOffset: -70,
                 width: 328,
                 height: 100,
-                manualTop: 55,
-                manualBottom: 86
+                manualTop: 64,
+                manualBottom: 89
             },
             {
                 period: '2019 — 2022',
@@ -151,11 +151,11 @@ function App() {
                 startYear: 2019,
                 endYear: 2022,
                 side: 'left',
-                bottomOffset: -45,
+                bottomOffset: -70,
                 width: 313,
                 height: 100,
-                manualTop: 35,
-                manualBottom: 55
+                manualTop: 46,
+                manualBottom: 63
             }
         ];
 
@@ -200,7 +200,7 @@ function App() {
             minYear: _minYear,
             maxYear: _maxYear,
             yearRange: _yearRange,
-            svgHeight: 2370
+            svgHeight: 2800
         };
     }, [filteredExperiences, educationPeriods]);
 
