@@ -51,6 +51,7 @@ function App() {
     const [selectedType, setSelectedType] = useState<'project' | 'experience' | 'about' | 'home' | null>('home');
     const [lastProjectId, setLastProjectId] = useState<string | null>(null);
     const [activeTagName, setActiveTagName] = useState<string | null>(null);
+    const [hasInteracted, setHasInteracted] = useState(false);
     const experienceScrollPos = useRef(0);
 
     const t = translations[lang];
@@ -304,6 +305,10 @@ function App() {
     const selectedExperience = selectedType === 'experience' ? filteredExperiences.find((e) => e.id === selectedId) : null;
 
     const handleSelect = (id: string | null, type: 'project' | 'experience' | 'about' | 'home' | null, pushState = true) => {
+        if (type !== 'home') {
+            setHasInteracted(true);
+        }
+
         // Save scroll position if we are in experience view and about to leave it
         if (selectedType === 'experience' && !selectedId) {
             const detailsElement = document.querySelector('.details');
@@ -410,7 +415,7 @@ function App() {
                 <div className="details-wrapper">
                     <section className="details" aria-label="Content details">
                         {selectedType === 'home' ? (
-                            <HomeView t={t} handleSelect={handleSelect} />
+                            <HomeView t={t} handleSelect={handleSelect} hasInteracted={hasInteracted} setHasInteracted={setHasInteracted} />
                         ) : !selectedId ? (
                             selectedType === 'experience' ? (
                                 <ExperienceView

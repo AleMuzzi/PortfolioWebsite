@@ -14,11 +14,12 @@ import { TerminalModal } from './TerminalModal';
 interface HomeViewProps {
     t: any;
     handleSelect: (id: string | null, type: 'project' | 'experience' | 'about' | 'home' | null) => void;
+    hasInteracted: boolean;
+    setHasInteracted: (value: boolean) => void;
 }
 
-export const HomeView = ({ t, handleSelect }: HomeViewProps) => {
+export const HomeView = ({ t, handleSelect, hasInteracted, setHasInteracted }: HomeViewProps) => {
     const [isTerminalOpen, setIsTerminalOpen] = useState(false);
-    const [hasInteracted, setHasInteracted] = useState(false);
     const [currentPanelIndex, setCurrentPanelIndex] = useState(0);
 
     const panelImages = [
@@ -38,6 +39,11 @@ export const HomeView = ({ t, handleSelect }: HomeViewProps) => {
 
     const handleMouseEnter = () => {
         setHasInteracted(true);
+    };
+
+    const handleItemClick = (type: 'experience' | 'project' | 'about') => {
+        setHasInteracted(true);
+        handleSelect(null, type);
     };
 
     return (
@@ -88,7 +94,7 @@ export const HomeView = ({ t, handleSelect }: HomeViewProps) => {
 
                         <div 
                             className={`clickable-item laptop-item ${!hasInteracted ? 'glowing' : ''}`}
-                            onClick={() => handleSelect(null, 'experience')}
+                            onClick={() => handleItemClick('experience')}
                             onMouseEnter={handleMouseEnter}
                         >
                             <img src={laptop} alt="Laptop" />
@@ -99,7 +105,7 @@ export const HomeView = ({ t, handleSelect }: HomeViewProps) => {
                         </div>
                         <div 
                             className={`clickable-item soldering-iron-item ${!hasInteracted ? 'glowing' : ''}`}
-                            onClick={() => handleSelect(null, 'project')}
+                            onClick={() => handleItemClick('project')}
                             onMouseEnter={handleMouseEnter}
                         >
                             <img src={solderingIron} alt="Soldering Iron" />
@@ -107,7 +113,7 @@ export const HomeView = ({ t, handleSelect }: HomeViewProps) => {
                         </div>
                         <div 
                             className={`clickable-item book-item ${!hasInteracted ? 'glowing' : ''}`}
-                            onClick={() => handleSelect(null, 'about')}
+                            onClick={() => handleItemClick('about')}
                             onMouseEnter={handleMouseEnter}
                         >
                             <img src={book} alt="Book" />
