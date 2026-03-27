@@ -1,19 +1,19 @@
-# Programmatore Freelance
+# Sviluppatore Freelance
 
 ## Summary
-Servizi di sviluppo indipendente per vari clienti durante la laurea triennale.
+Servizi di sviluppo indipendente per diversi committenti, svolti in parallelo al percorso di laurea triennale.
 
 ## Azienda
-Vari clienti
+Clienti vari
 
 ## Periodo
 Luglio 2015 — Ottobre 2019
 
 ## Cosa ho fatto
-Esperienze di lavoro individuale e di team in varie aziende come freelance durante la mia laurea triennale, inclusi alcuni progetti di web scraping e IoT.
+Esperienze di lavoro individuale e in team presso diverse realtà aziendali in qualità di freelance durante gli studi universitari, spaziando da progetti di web scraping a soluzioni IoT.
 
-Le esperienze più rilevanti sono elencate come esperienze individuali nella sezione precedente.
+I progetti più significativi sono riportati come esperienze singole nella sezione precedente.
 
 ## Tecnologie e strumenti
 
-- **Competenze Chiave:** Web Scraping, IoT, Sviluppo Full Stack
+- **Competenze principali:** Web Scraping, IoT, Full Stack Development

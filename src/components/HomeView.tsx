@@ -18,7 +18,7 @@ interface HomeViewProps {
 
 export const HomeView = ({ t, handleSelect }: HomeViewProps) => {
     const [isTerminalOpen, setIsTerminalOpen] = useState(false);
-    const [isGlowing, setIsGlowing] = useState(false);
+    const [hasInteracted, setHasInteracted] = useState(false);
     const [currentPanelIndex, setCurrentPanelIndex] = useState(0);
 
     const panelImages = [
@@ -35,10 +35,9 @@ export const HomeView = ({ t, handleSelect }: HomeViewProps) => {
         return () => clearInterval(interval);
     }, [panelImages.length]);
 
-    const triggerGlow = () => {
-        if (isGlowing) return;
-        setIsGlowing(true);
-        setTimeout(() => setIsGlowing(false), 2000);
+
+    const handleMouseEnter = () => {
+        setHasInteracted(true);
     };
 
     return (
@@ -52,9 +51,30 @@ export const HomeView = ({ t, handleSelect }: HomeViewProps) => {
             <div className="home-content-split">
                 <div className="home-intro">
                     <h2 className="home-title">{t.heroTitle}</h2>
-                    <p className="home-description">{t.heroDesc}</p>
-                    <div className="home-cta" onClick={triggerGlow}>
-                        <span className="cta-hint">{t.exploreHint}</span>
+                    <p className="home-description" dangerouslySetInnerHTML={{ __html: t.heroDesc }}></p>
+                    <div className="citations">
+                        <a href="https://www.linkedin.com/in/alessandro-muzzi/#:~:text=Lori%20Pike,%E2%80%A6%20more" target="_blank" rel="noopener noreferrer" className="citation-link">
+                            <blockquote className="citation">
+                                <p dangerouslySetInnerHTML={{ __html: t.citation1 }}></p>
+                                <cite>
+                                    <svg className="linkedin-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                    </svg>
+                                    <span>{t.citation1Author}</span>
+                                </cite>
+                            </blockquote>
+                        </a>
+                        <a href="https://www.linkedin.com/in/alessandro-muzzi/#:~:text=Jeff%20Pike,and%20systems%20forward." target="_blank" rel="noopener noreferrer" className="citation-link">
+                            <blockquote className="citation">
+                                <p dangerouslySetInnerHTML={{ __html: t.citation2 }}></p>
+                                <cite>
+                                    <svg className="linkedin-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                    </svg>
+                                    <span>{t.citation2Author}</span>
+                                </cite>
+                            </blockquote>
+                        </a>
                     </div>
                 </div>
 
@@ -66,18 +86,30 @@ export const HomeView = ({ t, handleSelect }: HomeViewProps) => {
                             <img src={panelImages[currentPanelIndex]} alt="Printer Control Panel" />
                         </div>
 
-                        <div className={`clickable-item laptop-item ${isGlowing ? 'glowing' : ''}`} onClick={() => handleSelect(null, 'experience')}>
+                        <div 
+                            className={`clickable-item laptop-item ${!hasInteracted ? 'glowing' : ''}`}
+                            onClick={() => handleSelect(null, 'experience')}
+                            onMouseEnter={handleMouseEnter}
+                        >
                             <img src={laptop} alt="Laptop" />
                             <span className="tooltip">{t.workTitle}</span>
                         </div>
                         <div className="non-clickable-item laptop-cables-item">
                             <img src={laptopCables} alt="Laptop Cables" />
                         </div>
-                        <div className={`clickable-item soldering-iron-item ${isGlowing ? 'glowing' : ''}`} onClick={() => handleSelect(null, 'project')}>
+                        <div 
+                            className={`clickable-item soldering-iron-item ${!hasInteracted ? 'glowing' : ''}`}
+                            onClick={() => handleSelect(null, 'project')}
+                            onMouseEnter={handleMouseEnter}
+                        >
                             <img src={solderingIron} alt="Soldering Iron" />
                             <span className="tooltip">{t.personalTitle}</span>
                         </div>
-                        <div className={`clickable-item book-item ${isGlowing ? 'glowing' : ''}`} onClick={() => handleSelect(null, 'about')}>
+                        <div 
+                            className={`clickable-item book-item ${!hasInteracted ? 'glowing' : ''}`}
+                            onClick={() => handleSelect(null, 'about')}
+                            onMouseEnter={handleMouseEnter}
+                        >
                             <img src={book} alt="Book" />
                             <span className="tooltip">{t.profileButton}</span>
                         </div>

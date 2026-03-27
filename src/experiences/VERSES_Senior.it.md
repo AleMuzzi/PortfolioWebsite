@@ -1,7 +1,7 @@
-# Ingegnere e Architetto Software Senior presso VERSES
+# Senior Software Engineer & Architect presso VERSES
 
 ## Summary
-Ingegnere e Architetto Senior strategico per i sistemi core di **Active Inference**. Ho sfruttato una comprensione olistica e full-stack dell'ecosistema aziendale per passare al **Team di Architettura**, dove ho guidato la standardizzazione dei framework di IA e unificato gli sforzi di ingegneria frammentati per garantire la scalabilità del sistema a lungo termine.
+Senior Engineer e Architect strategico per i sistemi core di **Active Inference**. Grazie a una visione olistica e full-stack dell'ecosistema aziendale, sono passato al **Team di Architettura**, dove ho guidato la standardizzazione dei framework AI e unificato processi ingegneristici precedentemente frammentati per garantire la scalabilità del sistema a lungo termine.
 
 ## Azienda
 VERSES - https://www.verses.ai/
@@ -11,20 +11,18 @@ Agosto 2024 — Dicembre 2025
 
 ## Cosa ho fatto
 
-### **Ingegneria di Sistema e Prestazioni**
-* **Progettazione di utility software end-to-end scalabili** e strumenti di monitoraggio del sistema utilizzando **Python** e **C++**, migliorando significativamente la visibilità su tutti i sottosistemi critici.
-* **Ottimizzazione dell'affidabilità del sistema** attraverso la progettazione di framework di monitoraggio che hanno permesso l'identificazione e la risoluzione proattiva dei colli di bottiglia delle prestazioni prima che avessero un impatto sulla produzione.
-
+### **Ingegneria di Sistema e Performance**
+* **Sviluppo di utility software end-to-end scalabili** e strumenti di monitoraggio di sistema in **Python** e **C++**, migliorando significativamente la visibilità su tutti i sottosistemi critici.
+* **Ottimizzazione dell'affidabilità del sistema** attraverso la progettazione di framework di monitoraggio che hanno permesso l'identificazione e la risoluzione proattiva dei colli di bottiglia prestazionali prima che impattassero l'ambiente di produzione.
 
 ### **Architettura, Leadership e Standardizzazione**
-* **Ho contribuito alla progettazione e ho guidato lo sviluppo** di un framework standardizzato per l'esecuzione di richieste di Inferenza Attiva, unificando con successo i flussi di lavoro di diversi team di ingegneri in un unico sistema coeso.
-* **Ho eliminato il debito tecnico e le discrepanze di versione** tra servizi di un sistema distribuito, creando nuovi standard per la gestione di dati e modelli, tra cui un repository centralizzato per le risorse comunic, accessibile tramite API.
-* **Ho definito una direzione tecnica unificata** per l'organizzazione, migliorando l'efficienza complessiva del sistema e semplificando il lavoro di diversi team agendo in modo interfunzionale.
-* **Ho agito come un "moltiplicatore di forze"** in tutta l'azienda, fornendo funzionalità di grande impatto, dalla logica di backend di basso livello alle interfacce frontend, il che ha portato alla mia promozione nel team di Architettura.
+* **Co-progettazione e guida dello sviluppo** di un framework standardizzato per l'esecuzione di richieste di Active Inference, riuscendo a unificare i flussi di lavoro di diversi team ingegneristici in un unico sistema coeso.
+* **Eliminazione del debito tecnico e delle discrepanze di versione** tra i servizi in un sistema distribuito, definendo nuovi standard per la gestione di dati e modelli, incluso un repository centralizzato per le risorse di comunicazione accessibile via API.
+* **Definizione di una direzione tecnica unificata** per l'organizzazione, migliorando l'efficienza complessiva del sistema e semplificando l'operatività di molteplici team interfunzionali.
+* **Ruolo di "catalizzatore di produttività"** (*force multiplier*) all'interno dell'azienda, realizzando funzionalità ad alto impatto — dalla logica backend di basso livello alle interfacce frontend — che hanno portato direttamente alla mia promozione nel core Architecture Team.
 
-
-## Tecnologie e strumenti
+## Tecnologie e Strumenti
 * **Linguaggi:** Python, C++, TypeScript, Rust
-* **Competenze chiave:** Architettura Software, Progettazione di sistemi, Active Inference, Standardizzazione delle API, Sviluppo Full-Stack
+* **Competenze Chiave:** Architettura Software, System Design, Active Inference, Standardizzazione API, Sviluppo Full-Stack
 * **Infrastruttura:** Docker, Pipeline CI/CD
-* **Leadership:** Mentoring tecnico, Collaborazione Cross-Funzionale, Revisione codice
+* **Leadership:** Mentoring Tecnico, Collaborazione Interfunzionale

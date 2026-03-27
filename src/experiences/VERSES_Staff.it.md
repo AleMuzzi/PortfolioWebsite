@@ -1,7 +1,7 @@
-# Ingegnere del software e Architetto capo presso VERSES
+# Staff Software Engineer & Lead Architect presso VERSES
 
-## Riepilogo
-Architetto capo del framework principale **Active Inference**, promosso a capo del **Team di Architettura** grazie a una comprovata esperienza di competenza interfunzionale. Sono specializzato nel tradurre complesse ricerche sull'IA in infrastrutture scalabili e pronte per la produzione, affiancando al contempo la prossima generazione di talenti ingegneristici per garantire l'eccellenza tecnica in tutta l'organizzazione.
+## Summary
+Lead Architect per il framework core di **Active Inference**, promosso alla guida dell'**Architecture Team** grazie a una solida esperienza nel coordinamento di progetti trasversali. Sono specializzato nel trasformare la ricerca avanzata sull'IA in infrastrutture scalabili e pronte per la produzione (*production-ready*), dedicandomi al contempo al mentoring dei talenti ingegneristici per garantire l'eccellenza tecnica in tutta l'organizzazione.
 
 ## Azienda
 VERSES - https://www.verses.ai/
@@ -11,24 +11,18 @@ Dicembre 2025 — Presente
 
 ## Cosa ho fatto
 
-### **Leadership Architettonica e Visione Strategica**
-* **Promosso a Capo del Team di Architettura** come risultato diretto della capacità di colmare con successo le lacune tecniche tra diversi dipartimenti, dimostrando le qualità di "alto livello" necessarie per una rapida progressione di carriera.
+### **Leadership Architetturale e Visione Strategica**
+* **Promosso alla guida dell'Architecture Team** come risultato diretto della capacità di integrare con successo le competenze tecniche di diversi reparti, dimostrando le qualità di leadership necessarie per una rapida progressione di carriera.
+* **Responsabile come Lead Architect** del framework principale dell'azienda basato su Active Inference, assicurando che ogni soluzione architettonica sia progettata per la massima scalabilità ed efficienza a lungo termine.
+* **Gestione diretta e mentoring di un team di ingegneri**, promuovendo una cultura dell'eccellenza e allineando la crescita professionale dei singoli con la visione del sistema e gli obiettivi aziendali.
+* **Standardizzazione della qualità del codice e dell'integrità del sistema** attraverso rigorose review architettoniche, superando costantemente i parametri interni di affidabilità e manutenibilità del software.
 
-* **In qualità di Architetto capo** del framework Active Inference, fiore all'occhiello dell'azienda, mi occupo di garantire che tutte le soluzioni architetturali siano progettate per la massima scalabilità ed efficienza a lungo termine.
+### **Ingegneria di Sistema ed Eccellenza Operativa**
+* **Sviluppo di utility software per processi critici in Python e C++** a supporto del framework di Active Inference, fornendo le basi ad alte prestazioni necessarie per l'elaborazione IA in tempo reale.
+* **Promotore di incontri periodici di collaborazione interfunzionale** con gli altri team leader per garantire la coesione tra i vari sottosistemi, evitando la creazione di silos architetturali e migliorando l'efficienza operativa globale.
 
-
-## * **Gestione e tutoraggio diretto di un team di ingegneri**, promuovendo una cultura di alte prestazioni allineando la crescita individuale alla visione di sistema più ampia e agli obiettivi aziendali.
-
-* **Standardizzazione della qualità del codice e dell'integrità del sistema** attraverso rigorose revisioni architetturali, superando costantemente i benchmark interni per l'affidabilità e la manutenibilità del software.
-
-### **Ingegneria di sistema ed eccellenza operativa**
-* **Progettazione di utility critiche in Python e C++** a supporto del framework Active Inference, fornendo le basi ad alte prestazioni necessarie per l'elaborazione AI in tempo reale.
-
-* **Promozione di incontri periodici di collaborazione interfunzionale** con gli altri team leader per garantire la coesione dei sottosistemi, evitando silos architetturali e migliorando l'efficienza operativa complessiva.
-
-
-## Tecnologie e strumenti
+## Tecnologie e Strumenti
 * **Linguaggi:** Python, C++
-* **Management:** Leadership di team, Mentoring tecnico, Strategia Cross-Funzionale, Revisione codice
-* **Competenze chiave:** Architettura Software, Progettazione di sistemi, Active Inference, Sviluppo Full-Stack
+* **Management:** Team Leadership, Mentoring Tecnico, Strategia Interfunzionale
+* **Competenze Chiave:** Architettura Software, System Design, Active Inference, Sviluppo Full-Stack
 * **Infrastruttura:** Docker, Pipeline CI/CD

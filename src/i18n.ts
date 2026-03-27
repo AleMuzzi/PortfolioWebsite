@@ -1,7 +1,7 @@
 export const translations = {
   en: {
     heroTitle: "Alessandro Muzzi",
-    heroDesc: "A curated collection of professional experiences, hardware builds, mobile apps, and tools. Explore the sections on the right to learn more about my journey and technical background.",
+    heroDesc: "<element style=\"font-size: clamp(1.1rem, 1.4vw, 1.35rem);\"><strong>Staff Software Engineer & Lead Architect</strong></element> known for <strong>'deep-dive' technical discipline</strong> and <strong>'podcast-quality' clarity</strong>.</br>I act as a pragmatic force multiplier, leveraging ADRs and mentorship to transform complex AI frameworks into reliable, scale-ready infrastructure.",
     profileButton: "Profile & Skills",
     workTitle: "Work Experience",
     personalTitle: "Personal Projects",
@@ -42,7 +42,6 @@ export const translations = {
     scrollToBottom: "Scroll to the beginning",
     scrollToTop: "Scroll to the the end",
     seeDetails: "See details",
-    exploreHint: "Explore by clicking on the items",
     searchPlaceholder: "Search projects...",
     selectProjectHint: "Select a project to see details",
     at: " at ",
@@ -90,10 +89,14 @@ export const translations = {
     mobileWarningButton: "Proceed Anyway",
     smallScreenTitle: "Wider Monitor Recommended",
     smallScreenText: "I am not a web developer, so this website is not optimized for tight monitor.\nFor the intended experience, please visit on a monitor <strong>wider than 1024px</strong>.",
+    citation1: "What I noticed first was his depth. Alessandro <strong>doesn't skim the surface</strong> - he goes deep. [...] He's also one of the best communicators I've worked with at a technical level.\n\nAlessandro has a gift for taking complex topics and making them accessible - several people on the team thought he'd be a natural on a podcast. That same clarity made him an <strong>exceptional mentor</strong>.",
+    citation1Author: "Lori Pike — VP of Engineering @ VERSES",
+    citation2: "He combined strong engineering skills with a <strong>pragmatic approach</strong> to architecture, and played a key role in system testing and validation to ensure reliability at scale.\nAs Tech Lead, he consistently demonstrated <strong>leadership and ownership</strong>. He mentored other engineers, led Scrum standups with clarity and focus, and effectively represented the team in discussions with the VP of Engineering.",
+    citation2Author: "Jeff Pike — Principal Software Engineer @ VERSES",
   },
   it: {
     heroTitle: "Alessandro Muzzi",
-    heroDesc: "Una raccolta curata di esperienze professionali, costruzioni hardware, app mobili e strumenti. Esplora le sezioni a destra per saperne di più sul mio percorso e sul mio background tecnico.",
+    heroDesc: "<element style=\"font-size: clamp(1.1rem, 1.4vw, 1.35rem);\"><strong>Software Engineer e Chief Architect</strong></element> caratterizzato da un **solido rigore tecnico** e da una **spiccata capacità comunicativa**.</br>Agisco come un acceleratore di produttività per il team, sfruttando ADR e mentoring per trasformare framework AI complessi in infrastrutture solide e scalabili.",
     profileButton: "Profilo e Competenze",
     workTitle: "Esperienza Lavorativa",
     personalTitle: "Progetti Personali",
@@ -170,7 +173,6 @@ export const translations = {
     scrollToBottom: "Vai all'inizio",
     scrollToTop: "Vai alla fine",
     seeDetails: "Vedi dettagli",
-    exploreHint: "Esplora cliccando sugli elementi",
     searchPlaceholder: "Cerca progetti...",
     selectProjectHint: "Seleziona un progetto per vedere i dettagli",
     at: " presso ",
@@ -185,6 +187,10 @@ export const translations = {
     mobileWarningButton: "Procedi comunque",
     smallScreenTitle: "Monitor più ampio consigliato",
     smallScreenText: "Non sono un web developer, quindi questo sito non è ottimizzato per monitor stretti.\nPer l'esperienza completa, visita il sito su un monitor <strong>più largo di 1024px</strong>.",
+    citation1: "La prima cosa che mi ha colpito di Alessandro è la sua profondità. <strong>Non è uno che si ferma in superficie</strong>: lui scava a fondo. È anche uno dei comunicatori più efficaci in ambito tecnico con cui abbia mai collaborato. Alessandro ha il dono di saper rendere accessibili anche i temi più complessi; molti nel team pensavano che avesse una predisposizione naturale per il podcasting. Quella stessa chiarezza lo ha reso un <strong>mentore eccezionale</strong>.",
+    citation1Author: "Lori Pike — VP of Engineering @ VERSES",
+    citation2: "Ha saputo coniugare solide competenze tecniche con un <strong>approccio pragmatico</strong> all'architettura, svolgendo un ruolo chiave nel testing e nella validazione di sistema per garantire affidabilità su larga scala. Come Tech Lead, ha dato prova costante di <strong>leadership e senso di responsabilità</strong>. Ha supportato la crescita degli altri ingegneri, guidato gli standup Scrum con chiarezza e incisività, e rappresentato con efficacia il team nel confronto con il VP of Engineering.",
+    citation2Author: "Jeff Pike — Principal Software Engineer @ VERSES",
   }
 };
 

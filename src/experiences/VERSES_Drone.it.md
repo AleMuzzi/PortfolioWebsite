@@ -1,37 +1,40 @@
-# Responsabile full stack per lo sviluppo di droni a volo autonomo presso VERSES
+# Lead Full Stack Drone Developer presso VERSES
 
 ## Summary
-Architetto e realizzatore dell'ecosistema di gestione autonoma dei droni nell'ambito di **Flying Forward 2020 (FF2020)**. Progettato gli standard digitali per la **Mobilità aerea urbana (UAM)**, colmando il divario tra la robotica complessa e l'infrastruttura digitale su scala cittadina per consentire la prima generazione di volo urbano autonomo.
+
+Lead Architect per l'ecosistema di gestione dei droni autonomi all'interno di **Flying Forward 2020 (FF2020)**. Ho progettato gli standard digitali per la **Urban Air Mobility (UAM)**, connettendo la robotica complessa alle infrastrutture digitali urbane per abilitare la prima generazione di volo autonomo in città.
 
 ## Azienda
 VERSES - https://www.verses.ai/
 
 ## Periodo
+
 Aprile 2022 — Agosto 2024
 
 ## Cosa ho fatto
 
 ![verses_drone_m300.jpg{width="400px"}{align="right"}{caption="DJI M300 with AED payload"}](/experiences/verses_drone_m300.jpg)
-### **Volo autonomo e criticità della missione**
-* **Ho aperto la strada ai droni urbani a volo autonomo** utilizzando Kotlin e DJI SDK, abilitando con successo missioni **Beyond Visual Line of Sight (BVLOS)** in ambienti urbani complessi.
-* **Coordinato missioni autonome di consegna tramite droni e di scansione delle facciate** presso l'Eindhoven High Tech Campus (HTC) per automatizzare la manutenzione degli edifici e le ispezioni strutturali.
-* **Rivoluzionato la logistica biomedica** presso l'Ospedale San Raffaele (Milano) implementando sistemi di consegna autonomi che hanno ridotto i tempi di trasporto delle forniture critiche.
-* **Protocolli di pubblica sicurezza migliorati** a Saragozza attraverso la progettazione della logica dei droni per il monitoraggio della folla in tempo reale, fornendo alle autorità locali una consapevolezza situazionale senza precedenti durante i grandi eventi.
+### **Volo Autonomo e Scenari Mission-Critical**
 
-### **Integrazione dei sistemi e governance normativa**
-* **Progettato una pipeline di telemetria** utilizzando MQTT e GraphQL per collegare i dati dei droni in tempo reale con il sistema operativo KOSM.
-* **Garantito la conformità ai quadri normativi dell'UE** integrando la governance geospaziale direttamente nella logica della missione di volo, prevenendo incursioni non autorizzate nello spazio aereo.
-* **Facilitato un ecosistema UAM sostenibile** attraverso integrazioni con sistemi di terze parti come "Smart Capsule", consentendo il trasporto sicuro e certificato di prodotti farmaceutici attraverso i laboratori cittadini.
+* **Sviluppo della logica di volo autonomo end-to-end** tramite Kotlin e DJI SDK, abilitando con successo missioni **BVLOS (Beyond Visual Line of Sight)** in contesti urbani complessi.
+* **Orchestrazione di missioni per la consegna autonoma e la scansione di facciate** presso l'High Tech Campus (HTC) di Eindhoven, automatizzando la manutenzione degli edifici e le ispezioni strutturali.
+* **Trasformazione della logistica biomedica** presso l'Ospedale San Raffaele (Milano), implementando sistemi di consegna autonomi che hanno ridotto i tempi di trasporto per materiali sanitari critici.
+* **Potenziamento dei protocolli di sicurezza pubblica** a Saragozza tramite la progettazione di logiche per il monitoraggio della folla in tempo reale, fornendo alle autorità locali un quadro situazionale senza precedenti durante i grandi eventi.
+
+### **Integrazione di Sistema e Governance Normativa**
+
+* **Ingegnerizzazione di una pipeline di telemetria** ad alta affidabilità utilizzando MQTT e GraphQL per collegare i dati dei droni in tempo reale al sistema operativo KOSM.
+* **Garanzia della piena conformità ai quadri normativi UE**, integrando la governance geospaziale direttamente nella logica di missione per prevenire incursioni non autorizzate nello spazio aereo.
+* **Sviluppo di un ecosistema UAM sostenibile** attraverso l'integrazione con sistemi di terze parti come la "Smart Capsule", permettendo il trasporto sicuro e certificato di farmaci tra i laboratori cittadini.
 
 ![verses_drone_kosm.png{width="700px"}{align="right"}{caption="KOSM portal"}](/experiences/verses_drone_kosm.png)
-### **Test sul campo e impatto europeo**
-* **Ha guidato con successo l'implementazione e il test sul campo** di soluzioni autonome in cinque "Living Labs" europei (Eindhoven, Milano, Saragozza, Tartu e Oulu).
-* **Capacità di monitoraggio delle infrastrutture convalidate** che stabiliscono il punto di riferimento per il modo in cui le città europee gestiranno la sorveglianza di sicurezza autonoma nel prossimo decennio.
-
+### **Test sul campo e Impatto Europeo**
+* **Guida del deployment e dei test sul campo** per le soluzioni autonome in cinque "Living Labs" europei (Eindhoven, Milano, Saragozza, Tartu e Oulu).
+* **Validazione delle capacità di monitoraggio infrastrutturale**, definendo i parametri di riferimento su come le città europee gestiranno la sorveglianza autonoma nel prossimo decennio.
 
 ## Tecnologie e Strumenti
-- **Linguaggi:** Kotlin, Python, Node.js, Typescript
-- **Frameworks:** React.js, GraphQL
-- **Comunicazione:** MQTT
-- **Robotica:** DJI SDK
-* **Competenze Chiave:** Operazioni BVLOS, governance geospaziale, UAM
+* **Linguaggi:** Kotlin, Python, Node.js, Typescript
+* **Frameworks:** React.js, GraphQL
+* **Comunicazione:** MQTT
+* **Robotica:** DJI SDK
+* **Competenze Chiave:** Operazioni BVLOS, Governance Geospaziale, UAM
