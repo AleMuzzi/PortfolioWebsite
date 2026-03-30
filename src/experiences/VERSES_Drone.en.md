@@ -21,13 +21,18 @@ April 2022 — August 2024
 ### **System Integration & Regulatory Governance**
 * **Engineered a high-conformance telemetry pipeline** using MQTT and GraphQL to link real-time drone data with the KOSM operating system.
 * **Ensured 100% compliance with EU regulatory frameworks** by integrating geospatial governance directly into the flight mission logic, preventing unauthorized airspace incursions.
+![verses_drone_kosm.png{width="700px"}{align="right"}{caption="KOSM portal"}](/experiences/verses_drone_kosm.png)
 * **Facilitated a sustainable UAM ecosystem** through integrations with third-party systems such as the "Smart Capsule", allowing for the secure and certified transport of pharmaceuticals across city labs.
 
-![verses_drone_kosm.png{width="700px"}{align="right"}{caption="KOSM portal"}](/experiences/verses_drone_kosm.png)
 ### **Field Testing & European Impact**
 * **Led the successful field deployment and testing** of autonomous solutions across five European "Living Labs" (Eindhoven, Milan, Zaragoza, Tartu, and Oulu).
 * **Validated infrastructure monitoring capabilities** that set the benchmark for how European cities will manage autonomous security surveillance in the coming decade.
 
+### **Links**
+- [VERSES - FF2020 Zaragoza Crowd Monitoring Demo](https://www.verses.ai/videos/videos/drone-demo-zaragoza)
+- [Flying Forward EU - VERSES completes EU funded autonomous drone governance program](https://flyingforward.eu/verses-completes-eu-funded-autonomous-drone-governance-program/)
+- [European Commission - FF2020 project](https://cordis.europa.eu/project/id/101006828)
+- [EuroDrone Forum - Project Flying Forward 2020: Creating the 21st Century Spatial Ecosystem](https://eudroneforum.org/project-flying-forward-2020-creating-the-21st-century-spatial-ecosystem/)
 
 ## Technologies and Tools
 * **Languages:** Kotlin, Python, Node.js, Typescript
