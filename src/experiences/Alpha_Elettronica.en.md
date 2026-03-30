@@ -18,9 +18,9 @@ August 2015 — July 2017
 * **Developed a highly modular codebase** for both Android and iOS, which streamlined future feature updates and significantly reduced the time required for maintenance and troubleshooting.
 * **Improved user onboarding** by drafting a comprehensive technical manual that simplified complex setup processes for non-technical end-users.
 
-![alpha_elettronica_wf100_wiring.jpg](/experiences/alpha_elettronica_wf100_wiring.jpg)
 ### **Corporate Infrastructure Automation**
 * **Developed the automation of the company headquarters** during a major renovation by integrating several KNX-based domotic devices into a centralized control system.
+![alpha_elettronica_wf100_wiring.jpg{width="400px"}{align="right"}{caption="LED controller schema"}](/experiences/alpha_elettronica_wf100_wiring.jpg)
 * **Customized and deployed OpenHAB on OpenWRT firmware**, creating a bespoke automation gateway that allowed for unified management of office lighting, climate, irrigation, window curtains and sensors.
 * **Increased operational efficiency** by streamlining building management tasks, demonstrating a proactive ability to apply emerging IoT technologies to solve internal infrastructure challenges.
 

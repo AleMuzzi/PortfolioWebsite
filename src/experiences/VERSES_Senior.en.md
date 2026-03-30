@@ -11,6 +11,7 @@ August 2024 — December 2025
 
 ## What I did
 
+![verses_senior_genius_logo.png{height="200px"}{align="center"}](/experiences/verses_senior_genius_logo.png)
 ### **System Engineering & Performance**
 * **Engineered scalable end-to-end software utilities** and system monitoring tools using **Python** and **C++**, significantly enhancing visibility across all critical subsystems.
 * **Optimized system reliability** by designing monitoring frameworks that allowed for the proactive identification and resolution of performance bottlenecks before they impacted production.

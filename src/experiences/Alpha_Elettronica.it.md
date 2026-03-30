@@ -23,6 +23,7 @@ Agosto 2015 — Luglio 2017
 ### **Automazione dell'infrastruttura aziendale**
 
 * **Sviluppo del sistema di automazione della sede aziendale** durante un importante intervento di ristrutturazione, integrando diversi dispositivi domotici basati su standard KNX in un sistema di controllo centralizzato.
+![alpha_elettronica_wf100_wiring.jpg{width="400px"}{align="right"}{caption="Schema controller LED"}](/experiences/alpha_elettronica_wf100_wiring.jpg)
 * **Personalizzazione e deployment di OpenHAB su firmware OpenWRT**, creando un gateway di automazione su misura per la gestione unificata di illuminazione, climatizzazione, irrigazione, tende e sensori dell'ufficio.
 * **Incremento dell'efficienza operativa** attraverso l'ottimizzazione delle attività di gestione dell'edificio, dimostrando una spiccata capacità proattiva nell'applicare tecnologie IoT emergenti per risolvere sfide infrastrutturali interne.
 

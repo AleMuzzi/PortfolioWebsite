@@ -11,6 +11,7 @@ Agosto 2024 — Dicembre 2025
 
 ## Cosa ho fatto
 
+![verses_senior_genius_logo.png{height="200px"}{align="center"}](/experiences/verses_senior_genius_logo.png)
 ### **Ingegneria di Sistema e Performance**
 * **Sviluppo di utility software end-to-end scalabili** e strumenti di monitoraggio di sistema in **Python** e **C++**, migliorando significativamente la visibilità su tutti i sottosistemi critici.
 * **Ottimizzazione dell'affidabilità del sistema** attraverso la progettazione di framework di monitoraggio che hanno permesso l'identificazione e la risoluzione proattiva dei colli di bottiglia prestazionali prima che impattassero l'ambiente di produzione.

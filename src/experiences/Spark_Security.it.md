@@ -14,6 +14,7 @@ Maggio 2018 — Ottobre 2019
 ### **Stabilità di Sistema e Precisione**
 
 * **Progettazione di un motore di sincronizzazione ad alta precisione** per allineare gli allarmi delle telecamere ai relativi frame video all'interno della suite di gestione. Questo ha garantito un recupero degli eventi accurato al singolo frame, migliorando sensibilmente l'affidabilità degli audit di sicurezza e delle indagini sugli incidenti.
+![spark_security_ptz_camera.png{width="400px"}{align="right"}{caption="PTZ Camera"}](/experiences/spark_security_ptz_camera.png)
 * **Risoluzione di un complesso memory leak latente** nello strato di interoperabilità (interop) C++/C\#, causato da una gestione errata dei buffer dei frame ad alta frequenza. Questa analisi tecnica approfondita ha eliminato i crash periodici del sistema, garantendo stabilità a lungo termine per le installazioni enterprise.
 * **Ottimizzazione dell'elaborazione video in tempo reale** attraverso il refactoring e il performance tuning dell'interfaccia .NET/XAML, riducendo il carico sulla CPU e rendendo l'esperienza utente più fluida durante la riproduzione multi-stream.
 
@@ -25,7 +26,7 @@ Maggio 2018 — Ottobre 2019
 
 ## Tecnologie e Strumenti
 
-* **Linguaggi:** C\#, C++
+* **Linguaggi:** C#, C++
 * **Framework e UI:** .NET, XAML, Radical Framework
 * **Design Pattern:** MVVM
 * **Gestione e Versionamento:** TFS, Git

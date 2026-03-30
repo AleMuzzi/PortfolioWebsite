@@ -35,6 +35,8 @@ const categoryMapping: Record<string, TagCategory> = {
   'Frontend': 'software',
   'Platforms': 'framework',
   'Piattaforme': 'framework',
+  'Protocols': 'framework',
+  'Protocolli': 'framework',
   'Management & Versioning': 'framework',
   'Gestione e Versionamento': 'framework',
   'Management': 'management',
@@ -321,6 +323,14 @@ export function AboutView({lang, handleSelect, onTagClick}: AboutViewProps) {
             <section ref={skillsRef} className="about-section">
               <h3><span className="section-icon">🛠️</span>{t.techSkills}</h3>
               <div className="skills-container">
+                {managementTags.length > 0 && (
+                  <div className="skill-category">
+                    <h4>{t.management}</h4>
+                    <div className="skill-tags">
+                      {managementTags.map(renderTag)}
+                    </div>
+                  </div>
+                )}
                 {softwareTags.length > 0 && (
                   <div className="skill-category">
                     <h4>{t.softwareDev}</h4>
@@ -350,14 +360,6 @@ export function AboutView({lang, handleSelect, onTagClick}: AboutViewProps) {
                     <h4>{t.dataAI}</h4>
                     <div className="skill-tags">
                       {dataTags.map(renderTag)}
-                    </div>
-                  </div>
-                )}
-                {managementTags.length > 0 && (
-                  <div className="skill-category">
-                    <h4>{t.management}</h4>
-                    <div className="skill-tags">
-                      {managementTags.map(renderTag)}
                     </div>
                   </div>
                 )}

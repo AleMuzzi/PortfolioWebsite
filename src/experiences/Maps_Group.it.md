@@ -12,6 +12,7 @@ Settembre 2021 — Febbraio 2022
 
 ## Cosa ho fatto
 
+![maps_group_embeddings_pca.gif{width="400px"}{align="right"}{caption="Embeddings PCA"}](/experiences/maps_group_embeddings_pca.gif)
 ### **Semantic Intelligence & Sicurezza del Paziente**
 
 * **Guidato l'integrazione di un motore di ricerca semantico** nell'ecosistema SegnalER, evolvendo la piattaforma oltre la semplice ricerca per parole chiave verso una comprensione profonda del contesto delle segnalazioni d'incidente.

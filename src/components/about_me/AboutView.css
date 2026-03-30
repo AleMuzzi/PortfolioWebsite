@@ -119,6 +119,67 @@
     gap: 2.5rem;
 }
 
+.about-me-markdown blockquote {
+    border-left: 3px solid var(--accent);
+    padding: 1rem 1.5rem;
+    margin: 1rem 0;
+    background: rgba(124, 58, 237, 0.05);
+    border-radius: 0 8px 8px 0;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.about-me-markdown blockquote p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+.about-me-markdown h1 {
+    font-size: 2rem;
+    margin: 0 0 1.5rem 0;
+    color: var(--text-main);
+}
+
+.about-me-markdown h2 {
+    font-size: 1.5rem;
+    margin: 2rem 0 1rem 0;
+    color: var(--text-main);
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.about-me-markdown h3 {
+    font-size: 1.2rem;
+    margin: 1.5rem 0 0.75rem 0;
+    color: var(--accent);
+}
+
+.about-me-markdown p {
+    line-height: 1.7;
+    color: var(--text-main);
+}
+
+.about-me-markdown ul, .about-me-markdown ol {
+    padding-left: 1.5rem;
+    color: var(--text-main);
+}
+
+.about-me-markdown li {
+    margin: 0.5rem 0;
+}
+
+.about-me-markdown strong {
+    color: var(--text-main);
+    font-weight: 600;
+}
+
+.about-me-markdown code {
+    background: rgba(15, 23, 42, 0.6);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
 /* Intro Panel */
 .about-intro-panel {
     background: rgba(30, 41, 59, 0.4);

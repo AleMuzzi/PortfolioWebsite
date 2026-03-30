@@ -11,6 +11,7 @@ December 2025 — Present
 
 ## What I did
 
+![verses_logo.png{width="350px"}{align="right"}](/experiences/verses_logo.png)
 ### **Architectural Leadership & Strategic Vision**
 * **Promoted to Lead the Architecture Team** as a direct result of successfully bridging technical gaps across multiple departments, demonstrating the "high performer" qualities required for rapid career advancement.
 * **Serving as the Lead Architect** for the company’s flagship Active Inference framework, ensuring that all architectural solutions are engineered for maximum scalability and long-term efficiency.

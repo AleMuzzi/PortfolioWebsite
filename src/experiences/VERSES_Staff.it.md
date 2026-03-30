@@ -11,6 +11,7 @@ Dicembre 2025 — Presente
 
 ## Cosa ho fatto
 
+![verses_logo.png{width="350px"}{align="right"}](/experiences/verses_logo.png)
 ### **Leadership Architetturale e Visione Strategica**
 * **Promosso alla guida dell'Architecture Team** come risultato diretto della capacità di integrare con successo le competenze tecniche di diversi reparti, dimostrando le qualità di leadership necessarie per una rapida progressione di carriera.
 * **Responsabile come Lead Architect** del framework principale dell'azienda basato su Active Inference, assicurando che ogni soluzione architettonica sia progettata per la massima scalabilità ed efficienza a lungo termine.

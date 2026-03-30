@@ -120,7 +120,7 @@ export const translations = {
     domains: "Ambiti Specializzati",
     interests: "Interessi Professionali",
     interest1Title: "Ingegneria Multidisciplinare",
-    interest1Desc: "Unire software, elettronica e meccanica per creare sistemi coesi.",
+    interest1Desc: "Unire software, elettronica e meccanica per creare sistemi coesi ed esplorare approcci innovativi.",
     interest2Title: "Fabbricazione Digitale e Stampa 3D",
     interest2Desc: "Tecnologia FDM avanzata, costruzione di macchine personalizzate e design meccanico.",
     interest3Title: "Robotica e Automazione",
