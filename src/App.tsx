@@ -5,7 +5,7 @@ import { DetailsView } from './components/DetailsView';
 import { ExperienceView } from './components/ExperienceView';
 import { ProjectsGridView } from './components/ProjectsGridView';
 import { HomeView } from './components/HomeView';
-import { AboutView } from './components/AboutView';
+import { AboutView } from './components/about_me/AboutView';
 import { TagModal } from './components/TagModal';
 
 import './App.css';

@@ -239,7 +239,7 @@
   align-items: center;
   gap: 0.3rem;
   margin-top: 0.6rem;
-  color: var(--accent);
+  color: var(--accent-contrast);
   font-size: 0.75rem;
   font-weight: 600;
   opacity: 0;

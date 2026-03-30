@@ -47,6 +47,43 @@ interface MarkdownModule {
 
 const projectModules = import.meta.glob('./summaries/*.md', { query: '?raw', eager: true }) as Record<string, MarkdownModule>;
 const experienceModules = import.meta.glob('./experiences/*.md', { query: '?raw', eager: true }) as Record<string, MarkdownModule>;
+const aboutMeModules = import.meta.glob('./components/about_me/*.md', { query: '?raw', eager: true }) as Record<string, MarkdownModule>;
+
+export interface AboutMe {
+    id: string;
+    bio: string;
+    contentMarkdown: string;
+    lang: 'en' | 'it';
+}
+
+const aboutMeData: AboutMe[] = Object.entries(aboutMeModules).map(([filename, module]) => {
+    const lang = filename.endsWith('.it.md') ? 'it' : 'en';
+    const content = typeof module.default === 'string' ? module.default : '';
+    
+    const sections = content.split(/^##\s+/m);
+    let bio = '';
+    
+    sections.forEach(section => {
+        const lines = section.trim().split('\n');
+        const header = lines[0].trim().toLowerCase();
+        const body = lines.slice(1).join('\n').trim();
+        
+        if (header.includes('bio')) {
+            bio = body;
+        }
+    });
+    
+    return {
+        id: 'about-me',
+        bio,
+        contentMarkdown: content,
+        lang
+    };
+});
+
+export const getAboutMe = (lang: 'en' | 'it'): AboutMe | undefined => {
+    return aboutMeData.find(a => a.lang === lang);
+};
 
 function parseProject(filename: string, content: unknown): Project {
     const lang = filename.endsWith('.it.md') ? 'it' : 'en';

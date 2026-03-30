@@ -1,7 +1,9 @@
 import React, {useRef, useMemo} from 'react';
-import { trackEvent } from '../utils/analytics';
-import {translations, Language} from '../i18n';
-import {projects, experiences} from '../projectsData';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import { trackEvent } from '../../utils/analytics';
+import {translations, Language} from '../../i18n';
+import {projects, experiences, getAboutMe} from '../../projectsData';
 import './AboutView.css';
 
 // Parse period end date to timestamp (higher = more recent)
@@ -86,6 +88,7 @@ interface AboutViewProps {
 
 export function AboutView({lang, handleSelect, onTagClick}: AboutViewProps) {
   const t = translations[lang];
+  const aboutMe = getAboutMe(lang);
   const aboutMeRef = useRef<HTMLDivElement>(null);
   const skillsRef = useRef<HTMLDivElement>(null);
   const interestsRef = useRef<HTMLDivElement>(null);
@@ -111,6 +114,8 @@ export function AboutView({lang, handleSelect, onTagClick}: AboutViewProps) {
         const targetCategory = categoryMapping[category];
         if (targetCategory) {
           techs.forEach(tech => addTag(tech, targetCategory, date));
+        } else {
+          console.debug('[AboutView] Uncategorized tags:', techs, 'in category:', category);
         }
       });
     };
@@ -208,7 +213,13 @@ export function AboutView({lang, handleSelect, onTagClick}: AboutViewProps) {
 
         <div className="about-main-content">
           <section className="about-intro-panel">
-            <p className="bio">{t.bio}</p>
+            {aboutMe && aboutMe.contentMarkdown && (
+              <div className="about-me-markdown">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {aboutMe.contentMarkdown}
+                </ReactMarkdown>
+              </div>
+            )}
             <div className="about-contact-explicit">
               <a 
                 href="mailto:alessandromuzzi17@gmail.com" 

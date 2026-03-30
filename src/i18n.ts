@@ -1,7 +1,7 @@
 export const translations = {
   en: {
     heroTitle: "Alessandro Muzzi",
-    heroDesc: "<element style=\"font-size: clamp(1.1rem, 1.4vw, 1.35rem);\"><strong>Staff Software Engineer & Lead Architect</strong></element> known for <strong>'deep-dive' technical discipline</strong> and <strong>'podcast-quality' clarity</strong>.</br>I act as a pragmatic force multiplier, leveraging ADRs and mentorship to transform complex AI frameworks into reliable, scale-ready infrastructure.",
+    heroDesc: "<element style=\"font-size: clamp(1.1rem, 1.4vw, 1.35rem);\"><strong>Staff Software Engineer & Lead Architect</strong></element> known for <strong>'deep-dive' technical discipline</strong> and <strong>'podcast-quality' clarity</strong>.</br>I act as a pragmatic force multiplier, leveraging ADRs and constructive discussions to transform complex fragmented ecosystems into reliable, scale-ready infrastructure.",
     profileButton: "Profile & Skills",
     workTitle: "Work Experience",
     personalTitle: "Personal Projects",
@@ -96,7 +96,7 @@ export const translations = {
   },
   it: {
     heroTitle: "Alessandro Muzzi",
-    heroDesc: "<element style=\"font-size: clamp(1.1rem, 1.4vw, 1.35rem);\"><strong>Software Engineer e Chief Architect</strong></element> caratterizzato da un **solido rigore tecnico** e da una **spiccata capacità comunicativa**.</br>Agisco come un acceleratore di produttività per il team, sfruttando ADR e mentoring per trasformare framework AI complessi in infrastrutture solide e scalabili.",
+    heroDesc: "<element style=\"font-size: clamp(1.1rem, 1.4vw, 1.35rem);\"><strong>Software Engineer e Chief Architect</strong></element> caratterizzato da un <strong>solido rigore tecnico</strong> e da una <strong>spiccata capacità comunicativa</strong>.</br>Agisco come un acceleratore di produttività per il team, sfruttando ADR e discussioni costruttive per trasformare complessi ecosistemi frammentati in infrastrutture solide e scalabili.",
     profileButton: "Profilo e Competenze",
     workTitle: "Esperienza Lavorativa",
     personalTitle: "Progetti Personali",
