@@ -32,7 +32,7 @@ export const HomeView = ({ t, handleSelect, hasInteracted, setHasInteracted }: H
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentPanelIndex((prevIndex) => (prevIndex + 1) % panelImages.length);
-        }, 2000);
+        }, 1500);
         return () => clearInterval(interval);
     }, [panelImages.length]);
 

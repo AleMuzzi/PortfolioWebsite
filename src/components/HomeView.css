@@ -348,21 +348,36 @@
 
 @keyframes glowAnimation {
   0% {
-    filter: drop-shadow(0 0 5px var(--accent)) brightness(1.1);
+    filter: drop-shadow(0 0 5px var(--accent-contrast)) brightness(1.1);
     transform: scale(1);
   }
   60% {
-    filter: drop-shadow(0 0 25px var(--accent)) brightness(1.4);
+    filter: drop-shadow(0 0 25px var(--accent-contrast)) brightness(1.4);
     transform: scale(1.05);
   }
   100% {
-    filter: drop-shadow(0 0 5px var(--accent)) brightness(1.1);
+    filter: drop-shadow(0 0 5px var(--accent-contrast)) brightness(1.1);
     transform: scale(1);
   }
 }
 
+/*@keyframes glowAnimation {*/
+/*  0% {*/
+/*    filter: drop-shadow(0 0 5px var(--accent)) brightness(1.1);*/
+/*    transform: scale(1);*/
+/*  }*/
+/*  60% {*/
+/*    filter: drop-shadow(0 0 25px var(--accent)) brightness(1.4);*/
+/*    transform: scale(1.05);*/
+/*  }*/
+/*  100% {*/
+/*    filter: drop-shadow(0 0 5px var(--accent)) brightness(1.1);*/
+/*    transform: scale(1);*/
+/*  }*/
+/*}*/
+
 .clickable-item:not(.glowing):hover {
-  filter: drop-shadow(0 0 20px var(--accent)) brightness(1.2);
+  filter: drop-shadow(0 0 20px var(--accent-contrast)) brightness(1.2);
   z-index: 20;
   transform: scale(1.05);
 }
