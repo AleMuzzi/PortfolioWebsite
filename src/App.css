@@ -309,7 +309,9 @@ html, body::before {
   margin: 0 0 0.4rem;
   font-size: clamp(1.8rem, 4vw, 2.5rem);
   background: linear-gradient(to right, #fff, var(--accent));
+  background-clip: text;
   -webkit-background-clip: text;
+  color: transparent;
   -webkit-text-fill-color: transparent;
   display: flex;
   align-items: center;
@@ -434,7 +436,9 @@ html, body::before {
   font-size: 1.8rem;
   margin: 0 0 1.5rem;
   background: linear-gradient(to right, #fff, var(--accent));
+  background-clip: text;
   -webkit-background-clip: text;
+  color: transparent;
   -webkit-text-fill-color: transparent;
 }
 
