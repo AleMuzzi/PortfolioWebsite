@@ -1,4 +1,4 @@
-# Build stage
+# ─── Build stage ────────────────────────────────────────────────────────
 FROM node:20-alpine AS build
 
 WORKDIR /app
@@ -9,14 +9,23 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# Production stage
-FROM nginx:stable-alpine
+# ─── Production stage ────────────────────────────────────────────────────
+FROM node:20-alpine
 
-COPY --from=build --chown=nginx:nginx /app/dist /usr/share/nginx/html
+WORKDIR /app
 
-#RUN chown -R nginx:nginx /usr/share/nginx/html && \
-#    chmod -R 755 /usr/share/nginx/html
+# Install production deps + tsx for running the TypeScript server
+COPY package*.json ./
+RUN npm install --omit=dev && npm install tsx
 
-EXPOSE 80
+# Copy built frontend
+COPY --from=build /app/dist ./dist
 
-CMD ["nginx", "-g", "daemon off;"]
+# Copy server source
+COPY --from=build /app/server ./server
+
+EXPOSE 3001
+
+ENV NODE_ENV=production
+
+CMD ["tsx", "server/index.ts"]

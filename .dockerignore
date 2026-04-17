@@ -3,8 +3,5 @@ dist
 .git
 .gitignore
 *.md
-Dockerfile
-docker-compose.yml
-.dockerignore
-npm-debug.log
-.DS_Store
+server
+*.log

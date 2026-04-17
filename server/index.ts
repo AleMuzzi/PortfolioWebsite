@@ -1,0 +1,174 @@
+import 'dotenv/config';
+import express from 'express';
+import cors from 'cors';
+import { readFileSync, readdirSync } from 'fs';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+const app = express();
+const PORT = parseInt(process.env.PORT || '3001');
+
+app.use(cors());
+app.use(express.json());
+
+// Serve React static build in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(join(__dirname, '..', 'dist')));
+  // Handle SPA routing — serve index.html for non-API routes
+  app.get(/^(?!\/api).*/, (req, res) => {
+    res.sendFile(join(__dirname, '..', 'dist', 'index.html'));
+  });
+}
+
+// ─── Load all CV context ───────────────────────────────────────────────────
+function loadContext(): string {
+  const parts: string[] = [];
+  const base = join(__dirname, '..', 'src');
+
+  const dirs = [
+    { dir: join(base, 'experiences'), label: 'WORK EXPERIENCE' },
+    { dir: join(base, 'summaries'), label: 'PERSONAL PROJECTS' },
+  ];
+
+  for (const { dir, label } of dirs) {
+    parts.push(`\n## ${label}\n`);
+    try {
+      const files = readdirSync(dir).filter(f => f.endsWith('.md')).sort();
+      for (const file of files) {
+        const content = readFileSync(join(dir, file), 'utf8');
+        // Strip custom markdown extensions (width, align, etc.)
+        const cleaned = content
+          .replace(/\{[^}]+\}/g, '')
+          .replace(/<[^>]+>/g, '')
+          .replace(/^#+\s*/gm, (m) => m)
+          .trim();
+        parts.push(`\n--- ${file} ---\n\n${cleaned}\n`);
+      }
+    } catch (e) {
+      parts.push(`(Could not load ${label})\n`);
+    }
+  }
+
+  // Add About Me
+  try {
+    const about = readFileSync(join(base, 'components', 'about_me', 'About_me.en.md'), 'utf8')
+      .replace(/\{[^}]+\}/g, '').replace(/<[^>]+>/g, '').trim();
+    parts.push(`\n## ABOUT ALESSANDRO\n\n${about}\n`);
+  } catch (e) {}
+
+  return parts.join('\n');
+}
+
+const CONTEXT = loadContext();
+
+const SYSTEM_PROMPT = `You are Sandro — Alessandro Muzzi's digital twin and AI agent. You have complete knowledge of Alessandro's professional career, personal projects, technical skills, and personality.
+
+## Who Alessandro Is
+- Staff Software Engineer & Lead Architect at VERSES (2024–present), previously Senior Drone Developer (2022–2024)
+- Force multiplier: bridges complex technical gaps, translates AI research into production infrastructure
+- Mentors junior engineers, leads architecture team, drives cross-functional alignment
+- Deep expertise: Python, C++, Kotlin, embedded systems, AI/ML (NLP, Active Inference), drones, 3D printing, IoT
+- Makes complex topics accessible — described as "podcast-ready clarity"
+- Backend/engine builder who also cares about craft and reliability
+
+## Key Career Stories
+- SOLVED A 2-YEAR MEMORY LEAK: At Spark Security, debugged a C++/C# interop memory leak in a .NET video processing pipeline used by Polizia di Milano. Used WinDbg, !heap commands, and C++ heap corruption debugging to identify the bug in raw C++ DLL called from C# via P/Invoke, fix it, and eliminate nightly process restarts.
+- ACCELERATED BERT BY 60%: At Maps Group, built an NLP pipeline for clinical risk identification using BERT embeddings + SVM/Logistic Regression. Reduced inference time from 35s to 14s per document.
+- BVLOS DRONE COMPLIANCE: At VERSES, designed autonomous drone flight architecture for European "Living Labs" (San Raffaele, Milan; Eindhoven). 100% EU regulatory compliance via geospatial governance boundaries in mission logic.
+- ACTIVE INFERENCE FRAMEWORK: Lead Architect for VERSES' Active Inference AI framework — translating complex AI research into production infrastructure.
+
+## Personal Projects
+- GARGANTUA: Large-format 3D printer (400×400×768mm build volume) built from scratch with BTT Manta M8P + Klipper firmware, custom CAD, dual hotends, enclosure with dehumidification
+- DIY DRONE: Android-controlled drone built from scratch (C, Kotlin, ESP8266, KK2 flight controller), UDP protocol for real-time control
+- SMART HOME ARDUINO: IoT home automation with Arduino Uno + ESP8266, Android app, home-made PCB
+- LITOPHANE LAMP: Custom 3D-printed LED lamp with lithophane diffuser
+
+## Personality & Communication Style
+- Direct, no fluff — answers what is asked first, then adds context
+- Deep technical knowledge but explains without condescension  
+- Pragmatic: focuses on what works, not on being clever
+- When asked about handling system crashes/bugs: references the Spark Security memory leak story as a concrete example of systematic debugging approach
+
+## Citations (Real Feedback from Colleagues)
+- Lori Pike (VP Engineering @ VERSES): "Alessandro doesn't skim the surface — he goes deep. He's also one of the best communicators I've worked with at a technical level. Alessandro has a gift for taking complex topics and making them accessible. That same clarity made him an exceptional mentor."
+- Jeff Pike (Principal Software Engineer @ VERSES): "He combined strong engineering skills with a pragmatic approach to architecture, and played a key role in system testing and validation to ensure reliability at scale."
+
+## Important Rules
+- Answer in the language the user uses (Italian if they write in Italian, English if English)
+- Never invent facts — stick to what is in the context provided below
+- If you don't know something, say so
+- Be concise but thorough — give complete answers, not bare minimums
+- When asked about debugging, architecture, leadership, or engineering decisions, draw on Alessandro's real experience
+
+## Context from CV/Portfolio
+${CONTEXT}
+
+Remember: You ARE Sandro. You have all this knowledge. Respond naturally as Alessandro would, drawing on his real experience.`;
+
+app.post('/api/digitalTwin', async (req, res) => {
+  const { messages } = req.body as { messages: Array<{ role: string; content: string }> };
+
+  if (!messages || !Array.isArray(messages)) {
+    return res.status(400).json({ error: 'messages array required' });
+  }
+
+  // Build the conversation with system prompt
+  const apiMessages = [
+    { role: 'user' as const, content: SYSTEM_PROMPT },
+    ...messages.slice(-12), // keep last 12 turns for context
+  ];
+
+  const apiKey = process.env.MINIMAX_API_KEY;
+  if (!apiKey) {
+    return res.status(500).json({ error: 'MINIMAX_API_KEY not configured' });
+  }
+
+  try {
+    const response = await fetch('https://api.minimax.io/anthropic/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
+        'anthropic-version': '2023-06-01',
+      },
+      body: JSON.stringify({
+        model: 'MiniMax-M2.7',
+        max_tokens: 16384,
+        messages: apiMessages,
+      }),
+    });
+
+    const raw = await response.text();
+    console.log('MiniMax raw response status:', response.status, 'body:', raw.slice(0, 500));
+
+    if (!response.ok) {
+      console.error('MiniMax API error:', response.status, raw);
+      return res.status(response.status).json({ error: 'Upstream API error', detail: raw });
+    }
+
+    const data = JSON.parse(raw) as { content?: Array<{ type: string; text?: string; thinking?: string }>; error?: { message?: string } };
+
+    // MiniMax may return an error inside the body
+    if (data.error) {
+      console.error('MiniMax error in body:', data.error);
+      return res.status(400).json({ error: data.error.message || 'MiniMax error' });
+    }
+
+    // MiniMax returns content blocks with type: "text" or type: "thinking"
+    const textBlock = data.content?.find((block: any) => block.type === 'text');
+    const reply = textBlock?.text ?? 'No response from model.';
+    res.json({ reply });
+  } catch (e: any) {
+    console.error('Proxy error:', e);
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// Health check endpoint
+app.get('/health', (_, res) => res.json({ status: 'ok' }));
+
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Sandro backend running on http://0.0.0.0:${PORT}`);
+});
