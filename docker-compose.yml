@@ -6,9 +6,25 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - '30013:3001'
+      - '3001'
     environment:
       - NODE_ENV=production
       - MINIMAX_API_KEY=${MINIMAX_API_KEY}
       - PORT=3001
     restart: unless-stopped
+
+  caddy:
+    image: caddy:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"     # For automatic HTTP to HTTPS redirects
+      - "443:443"   # For secure HTTPS traffic
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile # Links the config file we just made
+      - caddy_data:/data                 # Saves your SSL certs so they don't wipe on restart
+      - caddy_config:/config
+
+  # Don't forget to declare the volumes at the bottom!
+  volumes:
+    caddy_data:
+    caddy_config:
