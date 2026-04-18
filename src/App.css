@@ -977,6 +977,7 @@ html, body::before {
   flex-shrink: 0;
   transition: all 0.15s;
   align-self: flex-end;
+  padding: 0;
 }
 
 .dt-send:hover:not(:disabled) {
@@ -1029,7 +1030,7 @@ html, body::before {
   max-height: calc(100vh - 8rem);
   resize: both;
   overflow: hidden;
-  box-shadow: var(--shadow-soft), 0 0 0 1px rgba(124, 58, 237, 0.2);
+  box-shadow: var(--shadow-soft);
 }
 
 /* ─── Mobile Digital Twin (full screen takeover) ────────────────────── */

@@ -27,6 +27,43 @@ function loadContext(): string {
   const parts: string[] = [];
   const base = join(__dirname, '..', 'src');
 
+  const MONTHS: Record<string, number> = {
+    January: 0, February: 1, March: 2, April: 3, May: 4, June: 5,
+    July: 6, August: 7, September: 8, October: 9, November: 10, December: 11,
+  };
+
+  function parseDate(dateStr: string): number {
+    // e.g. "August 2015" or "December 2025"
+    const parts = dateStr.trim().split(/\s+/);
+    if (parts.length < 2) return 0;
+    const month = MONTHS[parts[0]] ?? 0;
+    const year = parseInt(parts[1]);
+    return year * 12 + month;
+  }
+
+  function sortExperienceFiles(files: string[], dir: string): string[] {
+    return files.sort((a, b) => {
+      // Extract period lines from each file
+      const readPeriod = (f: string) => {
+        try {
+          const content = readFileSync(join(dir, f), 'utf8');
+          const periodMatch = content.match(/^## Period\s*\n([\s\S]*?)(?=\n##|$)/m);
+          if (!periodMatch) return { start: 0, end: Infinity };
+          const period = periodMatch[1].trim(); // e.g. "August 2015 — July 2017" or "December 2025 — Present"
+          const [startStr, endStr] = period.split('—').map(s => s.trim());
+          const start = parseDate(startStr);
+          const end = endStr.toLowerCase() === 'present' ? Infinity : parseDate(endStr);
+          return { start, end };
+        } catch {
+          return { start: 0, end: Infinity };
+        }
+      };
+      const aPeriod = readPeriod(a);
+      const bPeriod = readPeriod(b);
+      return aPeriod.start - bPeriod.start;
+    });
+  }
+
   const dirs = [
     { dir: join(base, 'experiences'), label: 'WORK EXPERIENCE' },
     { dir: join(base, 'summaries'), label: 'PERSONAL PROJECTS' },
@@ -36,7 +73,8 @@ function loadContext(): string {
     parts.push(`\n## ${label}\n`);
     try {
       const files = readdirSync(dir).filter(f => f.endsWith('.md')).sort();
-      for (const file of files) {
+      const sorted = label === 'WORK EXPERIENCE' ? sortExperienceFiles(files, dir) : files;
+      for (const file of sorted) {
         const content = readFileSync(join(dir, file), 'utf8');
         // Strip custom markdown extensions (width, align, etc.)
         const cleaned = content
@@ -81,7 +119,7 @@ const SYSTEM_PROMPT = `You are Sandro — Alessandro Muzzi's digital twin and AI
 
 ## Who Alessandro Is
 - Staff Software Engineer & Lead Architect at VERSES (2025–present), previously Senior Software Engineer (2024-2025) and Full Stack Drone Developer (2022–2024)
-- Force multiplier: bridges complex technical gaps, translates AI research into production infrastructure, leverages individual team members skills
+- Force multiplier: bridges complex technical gaps, makes and discuss ADRs, leverages individual team members skills, translates AI research into production infrastructure
 - Mentors junior engineers, leads architecture team, drives cross-functional alignment
 - Deep expertise: Python, C++, Kotlin, embedded systems, AI/ML (NLP, Active Inference), drones, 3D printing, IoT
 - Makes complex topics accessible — described as "podcast-ready clarity"
@@ -118,6 +156,7 @@ The recommendations above (from the RECOMMENDATIONS section in your context) are
 - If you don't know something, say so
 - Be concise but thorough — give complete answers, not bare minimums
 - When asked about debugging, architecture, leadership, or engineering decisions, draw on Alessandro's real experience
+- Always take into account the chronological order and duration of work experiences when reasoning about his career progression, skill development, or timeline of achievements
 
 ## Context from CV/Portfolio
 ${CONTEXT}
