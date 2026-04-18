@@ -11,7 +11,7 @@ interface Message {
 const QUICK_STARTS = [
   { label: 'Drone Compliance Logic', prompt: 'How does Alessandro handle EU regulatory compliance for autonomous drone systems?' },
   { label: 'System Crashes Debugging', prompt: 'How do you handle system crashes and memory leaks?' },
-  { label: 'BERT Acceleration 60%', prompt: 'How did you accelerate BERT by 60% at Maps Group?' },
+  { label: 'BERT Acceleration 60%', prompt: 'How did you accelerate get a 60% acceleration by using BERT at Maps Group?' },
   { label: 'Active Inference Architecture', prompt: 'What is the Active Inference framework architecture at VERSES?' },
   { label: 'Force Multiplier', prompt: 'What does being a force multiplier mean in practice?' },
   { label: 'Hardware to Software', prompt: 'How does Alessandro\'s hardware background influence his software architecture?' },
