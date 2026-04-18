@@ -476,7 +476,7 @@ function App() {
                     transition={{ duration: 0.2 }}
                     style={{ pointerEvents: 'auto' }}
                   >
-                    <DigitalTwin onClose={() => setShowDigitalTwin(false)} />
+                    <DigitalTwin />
                   </motion.div>
                 )}
               </AnimatePresence>

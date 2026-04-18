@@ -28,4 +28,4 @@ EXPOSE 3001
 
 ENV NODE_ENV=production
 
-CMD ["tsx", "server/index.ts"]
+CMD ["npx", "tsx", "server/index.ts"]

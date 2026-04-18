@@ -17,13 +17,25 @@ const QUICK_STARTS = [
   { label: 'Hardware to Software', prompt: 'How does Alessandro\'s hardware background influence his software architecture?' },
 ];
 
-export function DigitalTwin({ onClose }: { onClose?: () => void }) {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: 'assistant',
-      content: "Ciao! I'm **Sandro**, Alessandro's digital twin. I have full access to his career, projects, and technical experience. What would you like to know?",
-    },
-  ]);
+export function DigitalTwin() {
+  const [messages, setMessages] = useState<Message[]>(() => {
+    try {
+      const saved = localStorage.getItem('sandro_messages');
+      return saved ? JSON.parse(saved) : [
+        {
+          role: 'assistant',
+          content: "Ciao! I'm **Sandro**, Alessandro's digital twin. I have full access to his career, projects, and technical experience. What would you like to know?",
+        },
+      ];
+    } catch {
+      return [
+        {
+          role: 'assistant',
+          content: "Ciao! I'm **Sandro**, Alessandro's digital twin. I have full access to his career, projects, and technical experience. What would you like to know?",
+        },
+      ];
+    }
+  });
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -31,20 +43,10 @@ export function DigitalTwin({ onClose }: { onClose?: () => void }) {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
-  // Close on outside click
+  // Persist messages to localStorage on every change
   useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      if (panelRef.current && !panelRef.current.contains(e.target as Node)) {
-        onClose?.();
-      }
-    };
-    // Small delay so the click that opens the panel doesn't immediately close it
-    const id = setTimeout(() => document.addEventListener('mousedown', handleClick), 200);
-    return () => {
-      clearTimeout(id);
-      document.removeEventListener('mousedown', handleClick);
-    };
-  }, [onClose]);
+    localStorage.setItem('sandro_messages', JSON.stringify(messages));
+  }, [messages]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
