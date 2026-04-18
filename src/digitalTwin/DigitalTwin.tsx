@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -27,6 +29,22 @@ export function DigitalTwin({ onClose }: { onClose?: () => void }) {
   const [error, setError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  // Close on outside click
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (panelRef.current && !panelRef.current.contains(e.target as Node)) {
+        onClose?.();
+      }
+    };
+    // Small delay so the click that opens the panel doesn't immediately close it
+    const id = setTimeout(() => document.addEventListener('mousedown', handleClick), 200);
+    return () => {
+      clearTimeout(id);
+      document.removeEventListener('mousedown', handleClick);
+    };
+  }, [onClose]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -71,7 +89,7 @@ export function DigitalTwin({ onClose }: { onClose?: () => void }) {
   };
 
   return (
-    <div className="digital-twin">
+    <div className="digital-twin" ref={panelRef}>
       {/* Header */}
       <div className="dt-header">
         <div className="dt-avatar">
@@ -83,13 +101,6 @@ export function DigitalTwin({ onClose }: { onClose?: () => void }) {
           <span className="dt-name">Sandro</span>
           <span className="dt-subtitle">Alessandro's Digital Twin</span>
         </div>
-        {onClose && (
-          <button className="dt-close" onClick={onClose} aria-label="Close chat">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-            </svg>
-          </button>
-        )}
       </div>
 
       {/* Messages */}
@@ -104,9 +115,7 @@ export function DigitalTwin({ onClose }: { onClose?: () => void }) {
               className={`dt-msg dt-msg-${msg.role}`}
             >
               <div className="dt-msg-bubble">
-                {msg.content.split('\n').map((line, j) => (
-                  <p key={j} dangerouslySetInnerHTML={{ __html: line.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>') }} />
-                ))}
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
               </div>
             </motion.div>
           ))}
@@ -167,7 +176,7 @@ export function DigitalTwin({ onClose }: { onClose?: () => void }) {
           disabled={!input.trim() || isLoading}
           aria-label="Send"
         >
-          <svg viewBox="0 0 24 24" fill="currentColor">
+          <svg viewBox="0 0 24 24" fill="#ffffff" style={{ color: '#ffffff' }}>
             <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
           </svg>
         </button>
