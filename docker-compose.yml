@@ -24,7 +24,17 @@ services:
       - caddy_data:/data                 # Saves your SSL certs so they don't wipe on restart
       - caddy_config:/config
 
-  # Don't forget to declare the volumes at the bottom!
-  volumes:
-    caddy_data:
-    caddy_config:
+volumes:
+  caddy_data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /etc/caddy/caddy_data
+
+  caddy_config:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /etc/caddy/caddy_config
