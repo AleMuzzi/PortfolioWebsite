@@ -7,7 +7,7 @@ import { ProjectsGridView } from './components/ProjectsGridView';
 import { HomeView } from './components/HomeView';
 import { AboutView } from './components/about_me/AboutView';
 import { TagModal } from './components/TagModal';
-import { DigitalTwin } from './digitalTwin/DigitalTwin';
+import { DigitalTwin } from './components/DigitalTwin.tsx';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import './App.css';
@@ -476,7 +476,7 @@ function App() {
                     transition={{ duration: 0.2 }}
                     style={{ pointerEvents: 'auto' }}
                   >
-                    <DigitalTwin />
+                    <DigitalTwin onClose={() => setShowDigitalTwin(false)} />
                   </motion.div>
                 )}
               </AnimatePresence>

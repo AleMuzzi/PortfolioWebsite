@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import './DigitalTwin.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -17,7 +18,11 @@ const QUICK_STARTS = [
   { label: 'Hardware to Software', prompt: 'How does Alessandro\'s hardware background influence his software architecture?' },
 ];
 
-export function DigitalTwin() {
+interface DigitalTwinProps {
+  onClose?: () => void;
+}
+
+export function DigitalTwin({ onClose }: DigitalTwinProps) {
   const [messages, setMessages] = useState<Message[]>(() => {
     try {
       const saved = localStorage.getItem('sandro_messages');
@@ -103,6 +108,18 @@ export function DigitalTwin() {
           <span className="dt-name">Sandro</span>
           <span className="dt-subtitle">Alessandro's Digital Twin</span>
         </div>
+        {onClose && (
+          <button
+            className="dt-close"
+            onClick={onClose}
+            aria-label="Close"
+            style={{ marginLeft: 'auto' }}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M18 6 6 18M6 6l12 12" />
+            </svg>
+          </button>
+        )}
       </div>
 
       {/* Messages */}
