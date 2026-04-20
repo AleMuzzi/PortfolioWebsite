@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { trackEvent } from '../utils/analytics';
+import { trackTagModalOpen } from '../utils/analytics';
 import './TagModal.css';
 import { Project, Experience } from '../projectsData';
 
@@ -28,7 +28,7 @@ export const TagModal: React.FC<TagModalProps> = ({
     );
 
     useEffect(() => {
-        trackEvent('tags_modal_opened', { tag: tagName });
+        trackTagModalOpen(tagName);
     }, [tagName]);
 
     return (

@@ -1,5 +1,5 @@
 import {useState, useMemo, useEffect} from 'react';
-import { trackEvent } from '../utils/analytics';
+import { trackProjectClick, trackFilterModalOpen } from '../utils/analytics';
 import ReactMarkdown from 'react-markdown';
 import { Project } from '../projectsData';
 import { translations, Language } from '../i18n';
@@ -93,7 +93,7 @@ export function ProjectsGridView({
                                 className={`filter-icon-btn ${selectedTags.length > 0 ? 'has-filters' : ''}`}
                                 onClick={() => {
                                     setIsFilterModalOpen(true);
-                                    trackEvent('filter_modal_opened');
+                                    trackFilterModalOpen();
                                 }}
                                 title={t.filterByTags}
                             >
@@ -114,7 +114,7 @@ export function ProjectsGridView({
                                     onClick={() => {
                                         setLocalSelectedId(project.id);
                                         onProjectSelected?.(project.id);
-                                        trackEvent('project_selection', { project: project.name });
+                                        trackProjectClick(project.name, 'en');
                                     }}
                                 >
                                     <h3>{project.name}</h3>

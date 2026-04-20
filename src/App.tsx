@@ -21,10 +21,17 @@ import iot from './assets/iot.png';
 import verses_logo from './assets/verses_logo.png';
 
 import { init } from '@plausible-analytics/tracker'
-import { trackEvent } from './utils/analytics';
+import {
+  trackSection,
+  trackDigitalTwinOpen,
+  trackLanguageToggle,
+  trackMobileWarningDismissed,
+  trackScrollDepth,
+  trackSessionEnd,
+} from './utils/analytics';
 
 init({
-  domain: 'portfolio.casabrignuzzi.com.es',
+  domain: 'alessandromuzzi.icu',
   endpoint: 'https://plausible-tracker.casabrignuzzi.com.es/api/event',
   hashBasedRouting: true,
   captureOnLocalhost: true, // Useful for testing if your dev env is localhost
@@ -77,11 +84,11 @@ function App() {
         setShowMobileModal(true);
         // Prevent background scrolling
         document.body.style.overflow = 'hidden';
-        trackEvent('uses_mobile', { tier: 'uses_mobile' });
+
       } else if (small) {
         setShowSmallScreenModal(true);
         document.body.style.overflow = 'hidden';
-        trackEvent('uses_small_screen', { tier: 'startup' });
+
       }
 
       // Cleanup: re-enable scrolling if component unmounts
@@ -94,7 +101,7 @@ function App() {
       setShowMobileModal(false);
       setShowSmallScreenModal(false);
       setChatOnlyMobile(false);
-      trackEvent('proceeds_anyway', { tier: 'startup' });
+      trackMobileWarningDismissed();
       // Re-enable scrolling when dismissed
       document.body.style.overflow = 'unset';
     };
@@ -328,20 +335,21 @@ function App() {
         setSelectedType(type);
         setActiveTagName(null);
 
-        const source = pushState ? 'user_click' : 'navigation';
-
-        if (type === 'experience' && !id) {
-            trackEvent('page_visit', { page: 'work_experiences', source });
-        } else if (type === 'project' && !id) {
-            trackEvent('page_visit', { page: 'projects', source });
-        } else if (type === 'about') {
-            trackEvent('page_visit', { page: 'about_me', source });
-        } else if (type === 'home') {
-            trackEvent('page_visit', { page: 'home', source });
+        // Track first section seen in this session
+        const sectionMap: Record<string, string> = {
+          experience: 'work_experiences',
+          project: 'projects',
+          about: 'about_me',
+          home: 'home',
+        };
+        if (type && sectionMap[type]) {
+          trackSection(id ? `${sectionMap[type]}_detail` : sectionMap[type]);
         }
 
         if (pushState) {
-            window.history.pushState({ id, type }, '');
+            const hash = sectionMap[type ?? 'home'] ?? 'home';
+            const path = `#/${id ? `${hash}/${id}` : hash}`;
+            window.history.pushState({ id, type }, '', path);
         }
 
         // We reset scroll for other views immediately.
@@ -369,26 +377,81 @@ function App() {
         }
     }, [selectedType, selectedId]);
 
+    // ─── Mount: parse hash, set initial state & history, set up back/forward ──
     useEffect(() => {
-        // Initial state
-        window.history.replaceState({ id: selectedId, type: selectedType }, '');
+        const sectionMap: Record<string, string> = {
+            experience: 'work_experiences',
+            project: 'projects',
+            about: 'about_me',
+            home: 'home',
+        };
+        const reverseMap: Record<string, { type: 'project' | 'experience' | 'about' | 'home'; id: string | null }> = {
+            'projects':          { type: 'project',   id: null },
+            'work_experiences': { type: 'experience', id: null },
+            'about_me':         { type: 'about',      id: null },
+            'home':             { type: 'home',        id: null },
+        };
+
+        // Parse hash from URL directly (avoids stale closure)
+        const rawHash = window.location.hash.replace('#', '').replace('/', ''); // "#/work_experiences" → "work_experiences"
+        const parts = rawHash.split('/');
+        const section = parts[0];
+        const detailId = parts[1] ?? null;
+        const mapped = reverseMap[section];
+
+        const initType = mapped?.type ?? 'home';
+        const initId = mapped?.id ?? detailId;
+
+        // Set React state to match URL
+        setSelectedId(initId);
+        setSelectedType(initType);
+
+        // Set browser history to match
+        const initHash = sectionMap[initType];
+        const initPath = `#/${initId ? `${initHash}/${initId}` : initHash}`;
+        window.history.replaceState({ id: initId, type: initType }, '', initPath);
 
         const handlePopState = (event: PopStateEvent) => {
             if (event.state) {
+                const t = event.state.type as string;
+                const i = event.state.id as string | null;
+                const h = sectionMap[t ?? 'home'] ?? 'home';
+                window.history.replaceState({ id: i, type: t }, '', `#/${i ? `${h}/${i}` : h}`);
                 handleSelect(event.state.id, event.state.type, false);
             } else {
-                // Default to home if no state
                 handleSelect(null, 'home', false);
             }
         };
-
         window.addEventListener('popstate', handlePopState);
         return () => window.removeEventListener('popstate', handlePopState);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []); // intentionally empty — run once on mount only
+
+    // ─── Session tracking (scroll + unload) ────────────────────────────────────
+    useEffect(() => {
+        const onUnload = () => trackSessionEnd();
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'hidden') trackSessionEnd();
+        });
+        window.addEventListener('beforeunload', onUnload);
+
+        const onScroll = () => {
+            const scrolled = document.documentElement.scrollTop + window.innerHeight;
+            const total = document.documentElement.scrollHeight;
+            const pct = Math.round((scrolled / total) * 100);
+            trackScrollDepth(pct);
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        return () => {
+            window.removeEventListener('beforeunload', onUnload);
+            window.removeEventListener('scroll', onScroll);
+        };
     }, []);
 
     const toggleLanguage = () => {
         const newLang = lang === 'en' ? 'it' : 'en';
-        trackEvent('language_toggle', { language: newLang });
+        trackLanguageToggle(lang, newLang);
         setLang(prev => prev === 'en' ? 'it' : 'en');
     };
 
@@ -441,7 +504,7 @@ function App() {
                 {!isMobile && (
                   <button
                     className="robot-btn"
-                    onClick={() => setShowDigitalTwin(prev => !prev)}
+                    onClick={() => { setShowDigitalTwin(prev => !prev); trackDigitalTwinOpen('desktop_overlay'); }}
                     aria-label="Chat with Sandro"
                     title="Chat with Sandro"
                   >
@@ -513,7 +576,7 @@ function App() {
                                     handleSelect={handleSelect}
                                     onTagClick={(tagName) => setActiveTagName(tagName)}
                                     initialSelectedId={lastProjectId}
-                                    onProjectSelected={(id) => setLastProjectId(id)}
+                                    onProjectSelected={(id) => { setLastProjectId(id); handleSelect(id, 'project', true); }}
                                 />
                             ) : selectedType === 'about' ? (
                                 <AboutView 
