@@ -400,7 +400,14 @@ function App() {
         };
 
         window.addEventListener('hashchange', handleHashChange);
-        return () => window.removeEventListener('hashchange', handleHashChange);
+
+        // Expose for imperative call from ProjectsGridView card clicks
+        window.__handleProjectsHashChange = handleHashChange;
+
+        return () => {
+            window.removeEventListener('hashchange', handleHashChange);
+            delete window.__handleProjectsHashChange;
+        };
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

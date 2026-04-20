@@ -6,6 +6,13 @@ import { translations, Language } from '../i18n';
 import { FilterModal } from './FilterModal';
 import './ProjectsGridView.css';
 
+// Exposed for imperative hash navigation from ProjectsGridView
+declare global {
+  interface Window {
+    __handleProjectsHashChange?: () => void;
+  }
+}
+
 interface ProjectsGridViewProps {
     lang: Language;
     filteredProjects: Project[];
@@ -94,6 +101,8 @@ export function ProjectsGridView({
                             className="project-card"
                             onClick={() => {
                                 window.history.pushState({ id: project.id, type: 'project' }, '', `#/projects/${project.id}`);
+                                // pushState doesn't fire hashchange — sync React state immediately
+                                window.__handleProjectsHashChange?.();
                                 trackProjectClick(project.name, lang);
                             }}
                         >
