@@ -20,9 +20,10 @@ const QUICK_STARTS = [
 
 interface DigitalTwinProps {
   onClose?: () => void;
+  hideHeader?: boolean;
 }
 
-export function DigitalTwin({ onClose }: DigitalTwinProps) {
+export function DigitalTwin({ onClose, hideHeader }: DigitalTwinProps) {
   const [messages, setMessages] = useState<Message[]>(() => {
     try {
       const saved = localStorage.getItem('sandro_messages');
@@ -98,6 +99,7 @@ export function DigitalTwin({ onClose }: DigitalTwinProps) {
   return (
     <div className="digital-twin" ref={panelRef}>
       {/* Header */}
+      {!hideHeader && (
       <div className="dt-header">
         <div className="dt-avatar">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" xmlns="http://www.w3.org/2000/svg">
@@ -121,6 +123,7 @@ export function DigitalTwin({ onClose }: DigitalTwinProps) {
           </button>
         )}
       </div>
+      )}
 
       {/* Messages */}
       <div className="dt-messages">

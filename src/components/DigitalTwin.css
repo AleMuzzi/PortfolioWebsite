@@ -263,6 +263,7 @@
   background: var(--bg);
   display: flex;
   flex-direction: column;
+  pointer-events: auto;
 }
 
 .mobile-dt-topbar {
@@ -272,6 +273,9 @@
   padding: 14px 16px;
   border-bottom: 1px solid var(--border-subtle);
   background: rgba(124, 58, 237, 0.1);
+  position: relative;
+  z-index: 1000002;
+  pointer-events: auto;
 }
 
 .mobile-dt-topbar .dt-header { flex: 1; padding: 0; border: none; background: transparent; }
@@ -289,11 +293,27 @@
 
 .mobile-dt-back:hover { border-color: var(--accent); color: #c4b5fd; }
 
+.mobile-dt-lang {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 6px 12px;
+  color: var(--text-main);
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.mobile-dt-lang:hover { border-color: var(--accent); color: #c4b5fd; }
+
 .mobile-dt-body {
   flex: 1;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  pointer-events: auto;
 }
 
 .mobile-dt-body .digital-twin {
@@ -301,6 +321,7 @@
   border-radius: 0;
   max-height: none;
   height: 100%;
+  pointer-events: auto;
 }
 
 .mobile-dt-body .dt-messages {
