@@ -45,3 +45,4 @@ Aprile 2022 — Agosto 2024
 * **Comunicazione:** MQTT
 * **Robotica:** DJI SDK
 * **Competenze Chiave:** Operazioni BVLOS, Governance Geospaziale, UAM
+* **Infrastruttura:** Docker, Docker Compose, Pipeline CI/CD
