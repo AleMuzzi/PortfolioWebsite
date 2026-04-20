@@ -418,7 +418,7 @@ function App() {
                   </button>
                 </div>
                 <div className="mobile-dt-body">
-                  <DigitalTwin hideHeader />
+                  <DigitalTwin hideHeader isMobile={isMobile} lang={lang} />
                 </div>
               </div>
             )}
@@ -484,7 +484,7 @@ function App() {
                     transition={{ duration: 0.2 }}
                     style={{ pointerEvents: 'auto' }}
                   >
-                    <DigitalTwin onClose={() => setShowDigitalTwin(false)} />
+                    <DigitalTwin onClose={() => setShowDigitalTwin(false)} lang={lang} />
                   </motion.div>
                 )}
               </AnimatePresence>

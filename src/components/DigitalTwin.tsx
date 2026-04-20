@@ -3,45 +3,37 @@ import './DigitalTwin.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { translations, Language } from '../i18n';
 
 interface Message {
   role: 'user' | 'assistant';
   content: string;
 }
 
-const QUICK_STARTS = [
-  { label: 'Drone Compliance Logic', prompt: 'How does Alessandro handle EU regulatory compliance for autonomous drone systems?' },
-  { label: 'System Crashes Debugging', prompt: 'How do you handle system crashes and memory leaks?' },
-  { label: 'BERT Acceleration 60%', prompt: 'How did you accelerate get a 60% acceleration by using BERT at Maps Group?' },
-  { label: 'Active Inference Architecture', prompt: 'What is the Active Inference framework architecture at VERSES?' },
-  { label: 'Force Multiplier', prompt: 'What does being a force multiplier mean in practice?' },
-  { label: 'Hardware to Software', prompt: 'How does Alessandro\'s hardware background influence his software architecture?' },
-];
-
 interface DigitalTwinProps {
   onClose?: () => void;
   hideHeader?: boolean;
+  isMobile?: boolean;
+  lang: Language;
 }
 
-export function DigitalTwin({ onClose, hideHeader }: DigitalTwinProps) {
+export function DigitalTwin({ onClose, hideHeader, isMobile, lang }: DigitalTwinProps) {
+  const t = translations[lang];
+
+  const defaultMessage: Message = {
+    role: 'assistant',
+    content: isMobile ? t.dtMobileWelcome : t.dtDesktopWelcome,
+  };
+
   const [messages, setMessages] = useState<Message[]>(() => {
     try {
-      const saved = localStorage.getItem('sandro_messages');
-      return saved ? JSON.parse(saved) : [
-        {
-          role: 'assistant',
-          content: "Ciao! I'm **Sandro**, Alessandro's digital twin. I have full access to his career, projects, and technical experience. What would you like to know?",
-        },
-      ];
+      const saved = localStorage.getItem('sandro_messages_v2');
+      return saved ? JSON.parse(saved) : [defaultMessage];
     } catch {
-      return [
-        {
-          role: 'assistant',
-          content: "Ciao! I'm **Sandro**, Alessandro's digital twin. I have full access to his career, projects, and technical experience. What would you like to know?",
-        },
-      ];
+      return [defaultMessage];
     }
   });
+
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -49,9 +41,8 @@ export function DigitalTwin({ onClose, hideHeader }: DigitalTwinProps) {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
-  // Persist messages to localStorage on every change
   useEffect(() => {
-    localStorage.setItem('sandro_messages', JSON.stringify(messages));
+    localStorage.setItem('sandro_messages_v2', JSON.stringify(messages));
   }, [messages]);
 
   useEffect(() => {
@@ -81,8 +72,9 @@ export function DigitalTwin({ onClose, hideHeader }: DigitalTwinProps) {
       const data = await res.json() as { reply: string };
       setMessages(prev => [...prev, { role: 'assistant', content: data.reply }]);
     } catch (e: any) {
-      setError(e.message || 'Connection failed. Is the server running?');
-      setMessages(prev => [...prev, { role: 'assistant', content: `❌ Error: ${e.message}` }]);
+      const errorMsg = e.message || t.dtConnectionError;
+      setError(errorMsg);
+      setMessages(prev => [...prev, { role: 'assistant', content: `❌ Error: ${errorMsg}` }]);
     } finally {
       setIsLoading(false);
       inputRef.current?.focus();
@@ -96,6 +88,15 @@ export function DigitalTwin({ onClose, hideHeader }: DigitalTwinProps) {
     }
   };
 
+  const quickStarts = [
+    { label: t.dtQuickStart1Label, prompt: t.dtQuickStart1Prompt },
+    { label: t.dtQuickStart2Label, prompt: t.dtQuickStart2Prompt },
+    { label: t.dtQuickStart3Label, prompt: t.dtQuickStart3Prompt },
+    { label: t.dtQuickStart4Label, prompt: t.dtQuickStart4Prompt },
+    { label: t.dtQuickStart5Label, prompt: t.dtQuickStart5Prompt },
+    { label: t.dtQuickStart6Label, prompt: t.dtQuickStart6Prompt },
+  ];
+
   return (
     <div className="digital-twin" ref={panelRef}>
       {/* Header */}
@@ -103,12 +104,12 @@ export function DigitalTwin({ onClose, hideHeader }: DigitalTwinProps) {
       <div className="dt-header">
         <div className="dt-avatar">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0-3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
           </svg>
         </div>
         <div className="dt-title">
           <span className="dt-name">Sandro</span>
-          <span className="dt-subtitle">Alessandro's Digital Twin</span>
+          <span className="dt-subtitle">{t.dtSubtitle}</span>
         </div>
         {onClose && (
           <button
@@ -168,7 +169,7 @@ export function DigitalTwin({ onClose, hideHeader }: DigitalTwinProps) {
 
       {/* Quick starts */}
       <div className="dt-quickstarts">
-        {QUICK_STARTS.map(qs => (
+        {quickStarts.map(qs => (
           <button
             key={qs.label}
             className="dt-qs-btn"
@@ -188,7 +189,7 @@ export function DigitalTwin({ onClose, hideHeader }: DigitalTwinProps) {
           value={input}
           onChange={e => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Ask Sandro anything..."
+          placeholder={t.dtPlaceholder}
           rows={1}
           disabled={isLoading}
         />
