@@ -9,7 +9,6 @@ import book from '../assets/book.png';
 import solderingIron from '../assets/soldering_iron.png';
 import laptopCables from '../assets/laptop_cables.png';
 import './HomeView.css';
-import { TerminalModal } from './TerminalModal';
 
 interface HomeViewProps {
     t: any;
@@ -19,7 +18,6 @@ interface HomeViewProps {
 }
 
 export const HomeView = ({ t, handleSelect, hasInteracted, setHasInteracted }: HomeViewProps) => {
-    const [isTerminalOpen, setIsTerminalOpen] = useState(false);
     const [currentPanelIndex, setCurrentPanelIndex] = useState(0);
 
     const panelImages = [
@@ -88,7 +86,7 @@ export const HomeView = ({ t, handleSelect, hasInteracted, setHasInteracted }: H
                     <div className="printer-container">
                         <img src={printerWithRobot} alt="Printer with robot" className="printer-robot-img" />
                         
-                        <div className="printer-panel-item-easter-egg" onClick={() => setIsTerminalOpen(true)}>
+                        <div className="printer-panel-item-easter-egg" style={{cursor: "default"}}>
                             <img src={panelImages[currentPanelIndex]} alt="Printer Control Panel" />
                         </div>
 
@@ -122,12 +120,6 @@ export const HomeView = ({ t, handleSelect, hasInteracted, setHasInteracted }: H
                     </div>
                 </div>
             </div>
-
-            <TerminalModal 
-                isOpen={isTerminalOpen} 
-                onClose={() => setIsTerminalOpen(false)} 
-                t={t} 
-            />
         </article>
     );
 };
