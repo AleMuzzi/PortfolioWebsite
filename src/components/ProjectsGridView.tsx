@@ -1,41 +1,26 @@
-import {useState, useMemo, useEffect} from 'react';
+import { useState, useMemo } from 'react';
 import { trackProjectClick, trackFilterModalOpen } from '../utils/analytics';
 import ReactMarkdown from 'react-markdown';
 import { Project } from '../projectsData';
 import { translations, Language } from '../i18n';
-import { DetailsView } from './DetailsView';
 import { FilterModal } from './FilterModal';
 import './ProjectsGridView.css';
 
 interface ProjectsGridViewProps {
     lang: Language;
     filteredProjects: Project[];
-    handleSelect: (id: string | null, type: 'project' | 'experience' | 'about' | 'home' | null) => void;
     onTagClick?: (tagName: string) => void;
-    initialSelectedId?: string | null;
-    onProjectSelected?: (id: string) => void;
 }
 
 export function ProjectsGridView({
     lang,
     filteredProjects,
-    handleSelect,
     onTagClick,
-    initialSelectedId,
-    onProjectSelected,
 }: ProjectsGridViewProps) {
     const t = translations[lang];
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
-    const [localSelectedId, setLocalSelectedId] = useState<string | null>(
-        initialSelectedId ?? (filteredProjects.length > 0 ? filteredProjects[0].id : null)
-    );
-
-    useEffect(() => {
-        const fallbackId = filteredProjects.length > 0 ? filteredProjects[0].id : null;
-        setLocalSelectedId(initialSelectedId ?? fallbackId);
-    }, [initialSelectedId, filteredProjects]);
 
     const allTags = useMemo(() => {
         const tags = new Set<string>();
@@ -47,20 +32,20 @@ export function ProjectsGridView({
 
     const displayedProjects = useMemo(() => {
         return filteredProjects.filter(p => {
-            const matchesSearch = 
+            const matchesSearch =
                 p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 p.summary.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 p.technologies.some(tech => tech.toLowerCase().includes(searchQuery.toLowerCase()));
-            
-            const matchesTags = selectedTags.length === 0 || 
+
+            const matchesTags = selectedTags.length === 0 ||
                 selectedTags.every(tag => p.technologies.includes(tag));
-            
+
             return matchesSearch && matchesTags;
         });
     }, [filteredProjects, searchQuery, selectedTags]);
 
     const toggleTag = (tag: string) => {
-        setSelectedTags(prev => 
+        setSelectedTags(prev =>
             prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
         );
     };
@@ -69,110 +54,81 @@ export function ProjectsGridView({
         setSelectedTags([]);
     };
 
-    const selectedProject = filteredProjects.find(p => p.id === localSelectedId);
-
     return (
         <article className="projects-view">
             <div className="view-header">
-                <button className="back-button" onClick={() => handleSelect(null, 'home')}>←</button>
+                <button className="back-button" onClick={() => window.history.back()}>←</button>
                 <h2>{t.personalTitle}</h2>
             </div>
-            
-            <div className="projects-container">
-                <div className="projects-list-side">
-                    <div className="filters">
-                        <div className="search-bar-container">
-                            <input 
-                                type="text" 
-                                placeholder={t.searchPlaceholder} 
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                className="search-input"
-                            />
-                            <button 
-                                className={`filter-icon-btn ${selectedTags.length > 0 ? 'has-filters' : ''}`}
-                                onClick={() => {
-                                    setIsFilterModalOpen(true);
-                                    trackFilterModalOpen();
-                                }}
-                                title={t.filterByTags}
-                            >
-                                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                                    <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/>
-                                </svg>
-                                {selectedTags.length > 0 && <span className="filter-badge"></span>}
-                            </button>
-                        </div>
-                    </div>
 
-                    <div className="projects-list-wrapper">
-                        <div className="projects-list">
-                            {displayedProjects.map((project) => (
-                                <div 
-                                    key={project.id} 
-                                    className={`project-list-item ${localSelectedId === project.id ? 'active' : ''}`}
-                                    onClick={() => {
-                                        setLocalSelectedId(project.id);
-                                        onProjectSelected?.(project.id);
-                                        trackProjectClick(project.name, 'en');
-                                    }}
-                                >
-                                    <h3>{project.name}</h3>
-                                    <div className="project-summary">
-                                        <ReactMarkdown>
-                                            {project.summary || project.description || project.bodyMarkdown.split('\n')[0].replace(/[#*`[\\]]/g, '')}
-                                        </ReactMarkdown>
-                                    </div>
-
-                                    <div className="click-hint">
-                                        <span>{t.seeDetails}</span>
-                                        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
-                                            <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
-                                        </svg>
-                                    </div>
-
-                                    <div className="project-item-footer">
-                                        {project.technologies.slice(0, 3).map(tech => (
-                                            <span 
-                                                key={tech} 
-                                                className="tech-tag clickable-tag"
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    onTagClick?.(tech);
-                                                }}
-                                            >
-                                                {tech}
-                                            </span>
-                                        ))}
-                                        {project.technologies.length > 3 && (
-                                            <span className="tech-tag">+{project.technologies.length - 3}</span>
-                                        )}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+            <div className="projects-grid-container">
+                <div className="filters">
+                    <div className="search-bar-container">
+                        <input
+                            type="text"
+                            placeholder={t.searchPlaceholder}
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="search-input"
+                        />
+                        <button
+                            className={`filter-icon-btn ${selectedTags.length > 0 ? 'has-filters' : ''}`}
+                            onClick={() => {
+                                setIsFilterModalOpen(true);
+                                trackFilterModalOpen();
+                            }}
+                            title={t.filterByTags}
+                        >
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                                <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/>
+                            </svg>
+                            {selectedTags.length > 0 && <span className="filter-badge"></span>}
+                        </button>
                     </div>
                 </div>
 
-                <div className="projects-details-side">
-                    {selectedProject ? (
-                        <DetailsView
-                            selectedType="project"
-                            selectedProject={selectedProject}
-                            selectedExperience={null}
-                            lang={lang}
-                            handleSelect={() => setLocalSelectedId(null)}
-                            handleSelectExternal={(id, type) => handleSelect(id, type)}
-                            onTagClick={onTagClick}
-                        />
-                    ) : (
-                        <div className="no-selection">
-                            <p>{t.selectProjectHint}</p>
+                <div className="projects-grid">
+                    {displayedProjects.map((project) => (
+                        <div
+                            key={project.id}
+                            className="project-card"
+                            onClick={() => {
+                                window.history.pushState({ id: project.id, type: 'project' }, '', `#/projects/${project.id}`);
+                                trackProjectClick(project.name, lang);
+                            }}
+                        >
+                            <h3>{project.name}</h3>
+                            <div className="project-summary">
+                                <ReactMarkdown>
+                                    {project.summary || project.description || project.bodyMarkdown.split('\n')[0].replace(/[#*`[\]]/g, '')}
+                                </ReactMarkdown>
+                            </div>
+                            <div className="project-card-footer">
+                                <div className="tech-tags">
+                                    {project.technologies.slice(0, 3).map(tech => (
+                                        <span
+                                            key={tech}
+                                            className="tech-tag clickable-tag"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                onTagClick?.(tech);
+                                            }}
+                                        >
+                                            {tech}
+                                        </span>
+                                    ))}
+                                    {project.technologies.length > 3 && (
+                                        <span className="tech-tag">+{project.technologies.length - 3}</span>
+                                    )}
+                                </div>
+                                <span className="see-details-hint">{t.seeDetails} →</span>
+                            </div>
                         </div>
-                    )}
+                    ))}
                 </div>
             </div>
-            <FilterModal 
+
+            <FilterModal
                 isOpen={isFilterModalOpen}
                 onClose={() => setIsFilterModalOpen(false)}
                 allTags={allTags}

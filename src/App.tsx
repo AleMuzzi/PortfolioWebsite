@@ -34,20 +34,17 @@ init({
   domain: 'alessandromuzzi.icu',
   endpoint: 'https://plausible-tracker.casabrignuzzi.com.es/api/event',
   hashBasedRouting: true,
-  captureOnLocalhost: true, // Useful for testing if your dev env is localhost
+  captureOnLocalhost: true,
 })
 
-// --- LIST FOR BACKGROUND IMAGES ---
-// The code will map these images to timeline items based on their index.
-// Item 0 gets the 1st image, Item 1 gets the 2nd, etc.
 const workBackgrounds = [
-    verses_logo, // Index 0
-    active_inference_brain, // Index 0
-    dji_m300,     // Index 1
-    text_embeddings_visualization,    // Index 2
-    ptz_camera,           // Index 3
-    iot,            // Index 4
-    laptop,           // Index 5
+    verses_logo,
+    active_inference_brain,
+    dji_m300,
+    text_embeddings_visualization,
+    ptz_camera,
+    iot,
+    laptop,
 ];
 
 function isMobileDevice(): boolean {
@@ -58,7 +55,6 @@ function App() {
     const [lang, setLang] = useState<Language>('en');
     const [selectedId, setSelectedId] = useState<string | null>(null);
     const [selectedType, setSelectedType] = useState<'project' | 'experience' | 'about' | 'home' | null>('home');
-    const [lastProjectId, setLastProjectId] = useState<string | null>(null);
     const [activeTagName, setActiveTagName] = useState<string | null>(null);
     const [hasInteracted, setHasInteracted] = useState(false);
     const experienceScrollPos = useRef(0);
@@ -75,23 +71,18 @@ function App() {
     const [chatOnlyMobile, setChatOnlyMobile] = useState<boolean>(false);
 
     useEffect(() => {
-        // Check screen width
       const mobile = isMobileDevice();
       const small = window.innerWidth <= 1024;
       setIsMobile(mobile);
 
       if (mobile) {
         setShowMobileModal(true);
-        // Prevent background scrolling
         document.body.style.overflow = 'hidden';
-
       } else if (small) {
         setShowSmallScreenModal(true);
         document.body.style.overflow = 'hidden';
-
       }
 
-      // Cleanup: re-enable scrolling if component unmounts
       return () => {
         document.body.style.overflow = 'unset';
       };
@@ -102,24 +93,8 @@ function App() {
       setShowSmallScreenModal(false);
       setChatOnlyMobile(false);
       trackMobileWarningDismissed();
-      // Re-enable scrolling when dismissed
       document.body.style.overflow = 'unset';
     };
-
-    // Ensure lastProjectId always points to a valid project for the current language
-    useEffect(() => {
-        if (filteredProjects.length === 0) {
-            if (lastProjectId !== null) {
-                setLastProjectId(null);
-            }
-            return;
-        }
-
-        const exists = lastProjectId && filteredProjects.some(p => p.id === lastProjectId);
-        if (!exists) {
-            setLastProjectId(filteredProjects[0].id);
-        }
-    }, [filteredProjects, lastProjectId]);
 
     const educationPeriods = useMemo(() => {
         const schools = [
@@ -136,9 +111,8 @@ function App() {
                 bottomOffset: -210,
                 width: 360,
                 height: 100,
-                // --- MANUAL OVERRIDES (0% = Top of SVG, 100% = Bottom) ---
-                manualTop: 89,    // Where the branch starts on the spine (top Y)
-                manualBottom: 105  // Where the branch ends on the spine (bottom Y)
+                manualTop: 89,
+                manualBottom: 105
             },
             {
                 period: '2015 — 2019',
@@ -228,29 +202,19 @@ function App() {
         const trackToLabelMargin = 15;
 
         return educationPeriods.map((edu: any) => {
-            // --- UPDATED LOGIC START ---
-            // If manual overrides exist, use them. Otherwise, calculate based on years.
-            // Values are percentages (0-100).
-
-            // Calculate automatic positions based on years
             const autoTopPerc = getYearPosition(edu.endYear);
             const autoBottomPerc = getYearPosition(edu.startYear);
 
-            // Use manual override if provided, otherwise use automatic
             const finalTopPerc = edu.manualTop !== undefined ? edu.manualTop : autoTopPerc;
             const finalBottomPerc = edu.manualBottom !== undefined ? edu.manualBottom : autoBottomPerc;
 
-            // Convert percentage to pixels
             const topY = (finalTopPerc / 100) * svgHeight;
             const bottomY = (finalBottomPerc / 100) * svgHeight;
-            // --- UPDATED LOGIC END ---
 
             const yStart = Math.min(topY, bottomY);
             const yEnd = Math.max(topY, bottomY);
 
             const isRight = edu.side === 'right';
-
-            // The rest remains exactly the same to preserve UI
             const manualY = yEnd + edu.bottomOffset;
             const itemWidth = edu.width;
             const itemHeight = edu.height;
@@ -318,73 +282,56 @@ function App() {
     const selectedProject = selectedType === 'project' ? filteredProjects.find((p) => p.id === selectedId) : null;
     const selectedExperience = selectedType === 'experience' ? filteredExperiences.find((e) => e.id === selectedId) : null;
 
-    const handleSelect = (id: string | null, type: 'project' | 'experience' | 'about' | 'home' | null, pushState = true) => {
-        if (type !== 'home') {
-            setHasInteracted(true);
-        }
+    // --- Navigation helper (no-op when same state to avoid redundant history push) ---
+    const navigate = (id: string | null, type: 'project' | 'experience' | 'about' | 'home' | null) => {
+        if (type !== 'home') setHasInteracted(true);
 
-        // Save scroll position if we are in experience view and about to leave it
+        // Save scroll position when leaving experience list view
         if (selectedType === 'experience' && !selectedId) {
             const detailsElement = document.querySelector('.details');
-            if (detailsElement) {
-                experienceScrollPos.current = detailsElement.scrollTop;
-            }
+            if (detailsElement) experienceScrollPos.current = detailsElement.scrollTop;
         }
 
         setSelectedId(id);
         setSelectedType(type);
         setActiveTagName(null);
 
-        // Track first section seen in this session
         const sectionMap: Record<string, string> = {
           experience: 'work_experiences',
           project: 'projects',
           about: 'about_me',
           home: 'home',
         };
+
         if (type && sectionMap[type]) {
           trackSection(id ? `${sectionMap[type]}_detail` : sectionMap[type]);
         }
 
-        if (pushState) {
-            const hash = sectionMap[type ?? 'home'] ?? 'home';
-            const path = `#/${id ? `${hash}/${id}` : hash}`;
-            window.history.pushState({ id, type }, '', path);
-        }
+        const hash = sectionMap[type ?? 'home'] ?? 'home';
+        const path = `#/${id ? `${hash}/${id}` : hash}`;
+        window.history.pushState({ id, type }, '', path);
 
-        // We reset scroll for other views immediately.
-        // Restoration for experience is handled by useEffect.
+        // Reset scroll for non-experience views
         if (type !== 'experience' || id) {
             setTimeout(() => {
                 const detailsElement = document.querySelector('.details');
-                if (detailsElement) {
-                    detailsElement.scrollTo({ top: 0, behavior: 'auto' as ScrollBehavior });
-                }
+                if (detailsElement) detailsElement.scrollTo({ top: 0, behavior: 'auto' as ScrollBehavior });
             }, 0);
         }
     };
 
     useEffect(() => {
         if (selectedType === 'experience' && !selectedId) {
-            // Use a small delay to ensure the DOM is ready for scrolling
             const timer = setTimeout(() => {
                 const detailsElement = document.querySelector('.details');
-                if (detailsElement) {
-                    detailsElement.scrollTo({ top: experienceScrollPos.current, behavior: 'auto' });
-                }
+                if (detailsElement) detailsElement.scrollTo({ top: experienceScrollPos.current, behavior: 'auto' });
             }, 50);
             return () => clearTimeout(timer);
         }
     }, [selectedType, selectedId]);
 
-    // ─── Mount: parse hash, set initial state & history, set up back/forward ──
+    // ─── Mount: parse hash, set initial state & history, set up hashchange listener ──
     useEffect(() => {
-        const sectionMap: Record<string, string> = {
-            experience: 'work_experiences',
-            project: 'projects',
-            about: 'about_me',
-            home: 'home',
-        };
         const reverseMap: Record<string, { type: 'project' | 'experience' | 'about' | 'home'; id: string | null }> = {
             'projects':          { type: 'project',   id: null },
             'work_experiences': { type: 'experience', id: null },
@@ -392,40 +339,70 @@ function App() {
             'home':             { type: 'home',        id: null },
         };
 
-        // Parse hash from URL directly (avoids stale closure)
-        const rawHash = window.location.hash.replace('#', '').replace('/', ''); // "#/work_experiences" → "work_experiences"
-        const parts = rawHash.split('/');
-        const section = parts[0];
-        const detailId = parts[1] ?? null;
-        const mapped = reverseMap[section];
+        const sectionMap: Record<string, string> = {
+            experience: 'work_experiences',
+            project: 'projects',
+            about: 'about_me',
+            home: 'home',
+        };
 
-        const initType = mapped?.type ?? 'home';
-        const initId = mapped?.id ?? detailId;
+        const initFromHash = () => {
+            const raw = window.location.hash.replace('#', '').replace(/^\//, '');
+            const segments = raw.split('/');
+            const base = segments[0] || 'home';
+            const detailId = segments[1] || null;
+            const mapped = reverseMap[base];
 
-        // Set React state to match URL
-        setSelectedId(initId);
-        setSelectedType(initType);
+            const initType = mapped?.type ?? 'home';
+            const initId = mapped?.id ?? detailId;
 
-        // Set browser history to match
-        const initHash = sectionMap[initType];
-        const initPath = `#/${initId ? `${initHash}/${initId}` : initHash}`;
-        window.history.replaceState({ id: initId, type: initType }, '', initPath);
+            setSelectedId(initId);
+            setSelectedType(initType);
 
-        const handlePopState = (event: PopStateEvent) => {
-            if (event.state) {
-                const t = event.state.type as string;
-                const i = event.state.id as string | null;
-                const h = sectionMap[t ?? 'home'] ?? 'home';
-                window.history.replaceState({ id: i, type: t }, '', `#/${i ? `${h}/${i}` : h}`);
-                handleSelect(event.state.id, event.state.type, false);
-            } else {
-                handleSelect(null, 'home', false);
+            const initHash = sectionMap[initType];
+            const initPath = `#/${initId ? `${initHash}/${initId}` : initHash}`;
+            window.history.replaceState({ id: initId, type: initType }, '', initPath);
+        };
+
+        initFromHash();
+
+        const handleHashChange = () => {
+            const raw = window.location.hash.replace('#', '').replace(/^\//, '');
+            const segments = raw.split('/');
+            const base = segments[0] || 'home';
+            const detailId = segments[1] || null;
+            const mapped = reverseMap[base];
+
+            if (!mapped) {
+                setSelectedId(null);
+                setSelectedType('home');
+                return;
+            }
+
+            const { type } = mapped;
+            const id = mapped.id ?? detailId;
+
+            // Save/restore scroll for experience list
+            if (selectedType === 'experience' && !selectedId) {
+                const detailsElement = document.querySelector('.details');
+                if (detailsElement) experienceScrollPos.current = detailsElement.scrollTop;
+            }
+
+            setSelectedId(id);
+            setSelectedType(type);
+
+            if (type !== 'experience' || id) {
+                setTimeout(() => {
+                    const detailsElement = document.querySelector('.details');
+                    if (detailsElement) detailsElement.scrollTo({ top: 0, behavior: 'auto' as ScrollBehavior });
+                }, 0);
             }
         };
-        window.addEventListener('popstate', handlePopState);
-        return () => window.removeEventListener('popstate', handlePopState);
+
+        window.addEventListener('hashchange', handleHashChange);
+        return () => window.removeEventListener('hashchange', handleHashChange);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []); // intentionally empty — run once on mount only
+    }, []);
 
     // ─── Session tracking (scroll + unload) ────────────────────────────────────
     useEffect(() => {
@@ -465,7 +442,7 @@ function App() {
                   <div className="dt-header">
                     <div className="dt-avatar">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" xmlns="http://www.w3.org/2000/svg">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0-3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
                       </svg>
                     </div>
                     <div className="dt-title">
@@ -509,7 +486,7 @@ function App() {
                     title="Chat with Sandro"
                   >
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0-3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
                     </svg>
                   </button>
                 )}
@@ -524,7 +501,7 @@ function App() {
                         title="Chat with Sandro"
                     >
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" xmlns="http://www.w3.org/2000/svg">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0-3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
                     </svg>
                     </button>
                 )}
@@ -557,42 +534,37 @@ function App() {
                 <div className="details-wrapper">
                     <section className="details" aria-label="Content details">
                         {selectedType === 'home' ? (
-                            <HomeView t={t} handleSelect={handleSelect} hasInteracted={hasInteracted} setHasInteracted={setHasInteracted} />
-                        ) : !selectedId ? (
-                            selectedType === 'experience' ? (
-                                <ExperienceView
-                                    lang={lang}
-                                    svgHeight={svgHeight}
-                                    educationBranches={educationBranches}
-                                    workItems={workItems}
-                                    workBackgrounds={workBackgrounds}
-                                    handleSelect={handleSelect}
-                                    onTagClick={(tagName) => setActiveTagName(tagName)}
-                                />
-                            ) : selectedType === 'project' ? (
-                                <ProjectsGridView
-                                    lang={lang}
-                                    filteredProjects={filteredProjects}
-                                    handleSelect={handleSelect}
-                                    onTagClick={(tagName) => setActiveTagName(tagName)}
-                                    initialSelectedId={lastProjectId}
-                                    onProjectSelected={(id) => { setLastProjectId(id); handleSelect(id, 'project', true); }}
-                                />
-                            ) : selectedType === 'about' ? (
-                                <AboutView 
-                                    lang={lang} 
-                                    handleSelect={handleSelect} 
-                                    onTagClick={(tagName) => setActiveTagName(tagName)}
-                                />
-                            ) : null
+                            <HomeView t={t} handleSelect={navigate} hasInteracted={hasInteracted} setHasInteracted={setHasInteracted} />
+                        ) : selectedType === 'project' && !selectedId ? (
+                            <ProjectsGridView
+                                lang={lang}
+                                filteredProjects={filteredProjects}
+                                onTagClick={(tagName) => setActiveTagName(tagName)}
+                            />
+                        ) : selectedType === 'experience' && !selectedId ? (
+                            <ExperienceView
+                                lang={lang}
+                                svgHeight={svgHeight}
+                                educationBranches={educationBranches}
+                                workItems={workItems}
+                                workBackgrounds={workBackgrounds}
+                                handleSelect={navigate}
+                                onTagClick={(tagName) => setActiveTagName(tagName)}
+                            />
+                        ) : selectedType === 'about' && !selectedId ? (
+                            <AboutView
+                                lang={lang}
+                                handleSelect={navigate}
+                                onTagClick={(tagName) => setActiveTagName(tagName)}
+                            />
                         ) : (
                             <DetailsView
                                 selectedType={selectedType}
                                 selectedProject={selectedProject}
                                 selectedExperience={selectedExperience}
                                 lang={lang}
-                                handleSelect={handleSelect}
-                                handleSelectExternal={(id, type) => handleSelect(id, type)}
+                                handleSelect={navigate}
+                                handleSelectExternal={(id, type) => navigate(id, type)}
                                 onTagClick={(tagName) => setActiveTagName(tagName)}
                             />
                         )}
@@ -607,7 +579,7 @@ function App() {
                         projects={projects.filter(p => p.lang === lang)}
                         experiences={experiences.filter(e => e.lang === lang)}
                         onClose={() => setActiveTagName(null)}
-                        onItemClick={(id, type) => handleSelect(id, type)}
+                        onItemClick={(id, type) => navigate(id, type)}
                         t={t}
                     />
                 </div>
