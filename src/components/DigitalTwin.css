@@ -40,6 +40,29 @@
   color: var(--text-soft);
 }
 
+.dt-clear {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid var(--border-subtle);
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  transition: all 0.15s;
+  padding: 0;
+}
+
+.dt-clear:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #ef4444;
+}
+
+.dt-clear svg { width: 14px; height: 14px; }
+
 .dt-close {
   width: 28px;
   height: 28px;

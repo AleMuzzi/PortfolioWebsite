@@ -70,6 +70,42 @@ function App() {
     const [isMobile, setIsMobile] = useState<boolean>(false);
     const [chatOnlyMobile, setChatOnlyMobile] = useState<boolean>(false);
 
+    // Current page context for Sandro
+    const currentPage = useMemo(() => {
+        if (selectedType === 'home') return { type: 'home' as const };
+        if (selectedType === 'project') {
+            const project = filteredProjects.find(p => p.id === selectedId);
+            if (!project) return { type: 'project' as const };
+            return {
+                type: 'project' as const,
+                id: project.id,
+                name: project.name,
+                summary: project.summary,
+                description: project.description,
+                technologies: project.technologies,
+                bodyMarkdown: project.bodyMarkdown,
+                link: project.link,
+            };
+        }
+        if (selectedType === 'experience') {
+            const exp = filteredExperiences.find(e => e.id === selectedId);
+            if (!exp) return { type: 'experience' as const };
+            return {
+                type: 'experience' as const,
+                id: exp.id,
+                name: exp.name,
+                period: exp.period,
+                company: exp.company,
+                summary: exp.summary,
+                description: exp.details,
+                technologies: exp.technologies,
+                link: exp.companyUrl,
+            };
+        }
+        if (selectedType === 'about') return { type: 'about' as const, id: selectedId };
+        return { type: 'home' as const };
+    }, [selectedType, selectedId, filteredProjects, filteredExperiences]);
+
     useEffect(() => {
       const mobile = isMobileDevice();
       const small = window.innerWidth <= 1024;
@@ -463,7 +499,7 @@ function App() {
                   </button>
                 </div>
                 <div className="mobile-dt-body">
-                  <DigitalTwin hideHeader isMobile={isMobile} lang={lang} />
+                  <DigitalTwin hideHeader isMobile={isMobile} lang={lang} currentPage={currentPage} />
                 </div>
               </div>
             )}
@@ -529,7 +565,7 @@ function App() {
                     transition={{ duration: 0.2 }}
                     style={{ pointerEvents: 'auto' }}
                   >
-                    <DigitalTwin onClose={() => setShowDigitalTwin(false)} lang={lang} />
+                    <DigitalTwin onClose={() => setShowDigitalTwin(false)} lang={lang} currentPage={currentPage} />
                   </motion.div>
                 )}
               </AnimatePresence>

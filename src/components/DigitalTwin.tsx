@@ -15,9 +15,21 @@ interface DigitalTwinProps {
   hideHeader?: boolean;
   isMobile?: boolean;
   lang: Language;
+  currentPage?: {
+    type: 'home' | 'projects' | 'experiences' | 'about' | 'project' | 'experience';
+    id?: string | null;
+    name?: string;
+    summary?: string;
+    description?: string;
+    technologies?: string[];
+    bodyMarkdown?: string;
+    period?: string;
+    company?: string;
+    link?: string;
+  };
 }
 
-export function DigitalTwin({ onClose, hideHeader, isMobile, lang }: DigitalTwinProps) {
+export function DigitalTwin({ onClose, hideHeader, isMobile, lang, currentPage }: DigitalTwinProps) {
   const t = translations[lang];
 
   const defaultMessage: Message = {
@@ -49,6 +61,21 @@ export function DigitalTwin({ onClose, hideHeader, isMobile, lang }: DigitalTwin
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  // Reset to welcome message when switching language if only the welcome message exists
+  useEffect(() => {
+    const allWelcomeTexts = [
+      translations['en'].dtDesktopWelcome,
+      translations['en'].dtMobileWelcome,
+      translations['it'].dtDesktopWelcome,
+      translations['it'].dtMobileWelcome,
+    ];
+    const isOnlyWelcome = messages.length === 1 && messages[0].role === 'assistant' && allWelcomeTexts.includes(messages[0].content);
+    if (isOnlyWelcome) {
+      const newWelcome = isMobile ? t.dtMobileWelcome : t.dtDesktopWelcome;
+      setMessages([{ role: 'assistant', content: newWelcome }]);
+    }
+  }, [lang, isMobile]);
+
   const send = async (text: string) => {
     if (!text.trim() || isLoading) return;
     const userText = text.trim();
@@ -61,7 +88,7 @@ export function DigitalTwin({ onClose, hideHeader, isMobile, lang }: DigitalTwin
       const res = await fetch('/api/digitalTwin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: [...messages, { role: 'user' as const, content: userText }] }),
+        body: JSON.stringify({ messages: [...messages, { role: 'user' as const, content: userText }], currentPage }),
       });
 
       if (!res.ok) {
@@ -113,10 +140,21 @@ export function DigitalTwin({ onClose, hideHeader, isMobile, lang }: DigitalTwin
         </div>
         {onClose && (
           <button
+            className="dt-clear"
+            onClick={() => { setMessages([{ role: 'assistant', content: isMobile ? t.dtMobileWelcome : t.dtDesktopWelcome }]); localStorage.removeItem('sandro_messages_v2'); }}
+            aria-label="Clear chat"
+            title="Clear chat"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+            </svg>
+          </button>
+        )}
+        {onClose && (
+          <button
             className="dt-close"
             onClick={onClose}
             aria-label="Close"
-            style={{ marginLeft: 'auto' }}
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M18 6 6 18M6 6l12 12" />

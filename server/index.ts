@@ -115,7 +115,11 @@ function loadContext(): string {
 
 const CONTEXT = loadContext();
 
-const SYSTEM_PROMPT = `You are Sandro — Alessandro Muzzi's digital twin and AI agent. You have complete knowledge of Alessandro's professional career, personal projects, technical skills, and personality.
+const SYSTEM_PROMPT = (currentPageContext: string) => `You are Sandro — Alessandro Muzzi's digital twin and AI agent. You have complete knowledge of Alessandro's professional career, personal projects, technical skills, and personality.
+
+## Current Page Context
+The user is currently viewing this part of Alessandro's portfolio:
+${currentPageContext}
 
 ## Who Alessandro Is
 - Staff Software Engineer & Lead Architect at VERSES (2025–present), previously Senior Software Engineer (2024-2025) and Full Stack Drone Developer (2022–2024)
@@ -164,15 +168,31 @@ ${CONTEXT}
 Remember: You ARE Sandro. You have all this knowledge. Respond naturally as Alessandro would, drawing on his real experience.`;
 
 app.post('/api/digitalTwin', async (req, res) => {
-  const { messages } = req.body as { messages: Array<{ role: string; content: string }> };
+  const { messages, currentPage } = req.body as { messages: Array<{ role: string; content: string }>; currentPage?: { type: string; id?: string; name?: string; summary?: string; description?: string; technologies?: string[]; bodyMarkdown?: string; period?: string; company?: string; link?: string } };
 
   if (!messages || !Array.isArray(messages)) {
     return res.status(400).json({ error: 'messages array required' });
   }
 
+  // Build current page context for Sandro
+  let currentPageContext = "No specific page (homepage)";
+  if (currentPage) {
+    const parts: string[] = [];
+    parts.push(`Page type: ${currentPage.type}`);
+    if (currentPage.name) parts.push(`Title: ${currentPage.name}`);
+    if (currentPage.company) parts.push(`Company: ${currentPage.company}`);
+    if (currentPage.period) parts.push(`Period: ${currentPage.period}`);
+    if (currentPage.summary) parts.push(`Summary: ${currentPage.summary}`);
+    if (currentPage.description) parts.push(`Description: ${currentPage.description}`);
+    if (currentPage.technologies?.length) parts.push(`Technologies: ${currentPage.technologies.join(', ')}`);
+    if (currentPage.link) parts.push(`Link: ${currentPage.link}`);
+    if (currentPage.bodyMarkdown) parts.push(`Full content:\n${currentPage.bodyMarkdown.substring(0, 2000)}`);
+    currentPageContext = parts.join('\n');
+  }
+
   // Build the conversation with system prompt
   const apiMessages = [
-    { role: 'user' as const, content: SYSTEM_PROMPT },
+    { role: 'user' as const, content: SYSTEM_PROMPT(currentPageContext) },
     ...messages.slice(-12), // keep last 12 turns for context
   ];
 
