@@ -90,6 +90,7 @@ html, body::before {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   pointer-events: auto;
   position: relative;
@@ -364,6 +365,7 @@ html, body::before {
   color: var(--text-soft);
   text-align: center;
   background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9), #020617);
+  -webkit-user-select: none;
   user-select: none;
   flex-shrink: 0;
 }
@@ -392,6 +394,7 @@ html, body::before {
   position: fixed;
   inset: 0;
   background: rgba(2, 6, 23, 0.85);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
@@ -569,6 +572,7 @@ html, body::before {
     position: fixed;
     inset: 0;
     background: rgba(2, 6, 23, 0.7);
+    -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
     z-index: 999;
   }
@@ -665,6 +669,7 @@ html, body::before {
     width: 100vw;
     height: 100vh;
     background: rgba(15, 23, 42, 0.95); /* Slightly more opaque */
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     z-index: 999998; /* Higher z-index to stay above everything */
     display: flex;
@@ -762,6 +767,7 @@ html, body::before {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   pointer-events: auto;
   display: flex;

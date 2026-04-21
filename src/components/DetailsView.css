@@ -59,6 +59,7 @@
     border: 1px solid rgba(148, 163, 184, 0.1);
     border-radius: 16px;
     padding: 50px;
+    -webkit-backdrop-filter:
     backdrop-filter: blur(10px);
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
     
@@ -66,6 +67,8 @@
     overflow-y: auto;
     flex: 1;
     scrollbar-gutter: stable; /* Keep scrollbar space to avoid layout shift */
+    /* Safari < 16.4 fallback */
+    padding-right: 0.5rem;
     box-sizing: border-box; /* Ensure padding is included in width */
     max-height: 100%; /* Important to keep the card within view */
 }
