@@ -94,6 +94,10 @@ export const HomeView = ({ t, handleSelect, hasInteracted, setHasInteracted }: H
                             className={`clickable-item laptop-item ${!hasInteracted ? 'glowing' : ''}`}
                             onClick={() => handleItemClick('experience')}
                             onMouseEnter={handleMouseEnter}
+                            onKeyDown={(e) => e.key === 'Enter' && handleItemClick('experience')}
+                            role="button"
+                            tabIndex={0}
+                            aria-label={t.workTitle}
                         >
                             <img src={laptop} alt="Laptop" />
                             <span className="tooltip">{t.workTitle}</span>
@@ -105,6 +109,10 @@ export const HomeView = ({ t, handleSelect, hasInteracted, setHasInteracted }: H
                             className={`clickable-item soldering-iron-item ${!hasInteracted ? 'glowing' : ''}`}
                             onClick={() => handleItemClick('project')}
                             onMouseEnter={handleMouseEnter}
+                            onKeyDown={(e) => e.key === 'Enter' && handleItemClick('project')}
+                            role="button"
+                            tabIndex={0}
+                            aria-label={t.personalTitle}
                         >
                             <img src={solderingIron} alt="Soldering Iron" />
                             <span className="tooltip">{t.personalTitle}</span>
@@ -113,6 +121,10 @@ export const HomeView = ({ t, handleSelect, hasInteracted, setHasInteracted }: H
                             className={`clickable-item book-item ${!hasInteracted ? 'glowing' : ''}`}
                             onClick={() => handleItemClick('about')}
                             onMouseEnter={handleMouseEnter}
+                            onKeyDown={(e) => e.key === 'Enter' && handleItemClick('about')}
+                            role="button"
+                            tabIndex={0}
+                            aria-label={t.aboutTitle}
                         >
                             <img src={book} alt="Book" />
                             <span className="tooltip">{t.profileButton}</span>
