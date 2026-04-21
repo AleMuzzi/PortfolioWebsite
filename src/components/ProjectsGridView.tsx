@@ -101,31 +101,36 @@ export function ProjectsGridView({
                                 onSelect?.(project.id);
                             }}
                         >
-                            <h3>{project.name}</h3>
-                            <div className="project-summary">
-                                <ReactMarkdown>
-                                    {project.summary || project.description || project.bodyMarkdown.split('\n')[0].replace(/[#*`[\]]/g, '')}
-                                </ReactMarkdown>
+                            <div className="project-card-image">
+                                <img src={project.coverImage} alt={project.name} />
                             </div>
-                            <div className="project-card-footer">
-                                <div className="tech-tags">
-                                    {project.technologies.slice(0, 3).map(tech => (
-                                        <span
-                                            key={tech}
-                                            className="tech-tag clickable-tag"
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                onTagClick?.(tech);
-                                            }}
-                                        >
-                                            {tech}
-                                        </span>
-                                    ))}
-                                    {project.technologies.length > 3 && (
-                                        <span className="tech-tag">+{project.technologies.length - 3}</span>
-                                    )}
+                            <div className="project-card-content">
+                                <h3>{project.name}</h3>
+                                <div className="project-summary">
+                                    <ReactMarkdown>
+                                        {project.summary || project.description || project.bodyMarkdown.split('\n')[0].replace(/[#*`[\]]/g, '')}
+                                    </ReactMarkdown>
                                 </div>
-                                <span className="see-details-hint">{t.seeDetails} →</span>
+                                <div className="project-card-footer">
+                                    <div className="tech-tags">
+                                        {project.technologies.slice(0, 3).map(tech => (
+                                            <span
+                                                key={tech}
+                                                className="tech-tag clickable-tag"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    onTagClick?.(tech);
+                                                }}
+                                            >
+                                                {tech}
+                                            </span>
+                                        ))}
+                                        {project.technologies.length > 3 && (
+                                            <span className="tech-tag">+{project.technologies.length - 3}</span>
+                                        )}
+                                    </div>
+                                    <span className="see-details-hint">{t.seeDetails} →</span>
+                                </div>
                             </div>
                         </div>
                     ))}
