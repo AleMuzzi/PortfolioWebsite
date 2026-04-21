@@ -69,6 +69,7 @@ function App() {
     const [showDigitalTwin, setShowDigitalTwin] = useState<boolean>(false);
     const [isMobile, setIsMobile] = useState<boolean>(false);
     const [chatOnlyMobile, setChatOnlyMobile] = useState<boolean>(false);
+    const [showSandroIntro, setShowSandroIntro] = useState<boolean>(false);
 
     // Current page context for Sandro
     const currentPage = useMemo(() => {
@@ -467,6 +468,21 @@ function App() {
         };
     }, []);
 
+    // ─── Sandro intro tooltip ──────────────────────────────────────────────
+    useEffect(() => {
+        if (sessionStorage.getItem('sandro_intro_seen')) return;
+        const timer = setTimeout(() => setShowSandroIntro(true), 3000);
+        const dismiss = () => {
+            sessionStorage.setItem('sandro_intro_seen', '1');
+            setShowSandroIntro(false);
+        };
+        document.addEventListener('click', dismiss, { once: true });
+        return () => {
+            clearTimeout(timer);
+            document.removeEventListener('click', dismiss);
+        };
+    }, []);
+
     const toggleLanguage = () => {
         const newLang = lang === 'en' ? 'it' : 'en';
         trackLanguageToggle(lang, newLang);
@@ -552,6 +568,14 @@ function App() {
                   </button>
                 )}
             </div>
+
+            {/* ─── Sandro Intro Bubble ─────────────────────────────────────────── */}
+            {!isMobile && !showDigitalTwin && showSandroIntro && (
+              <div className="sandro-intro-bubble">
+                <span className="sandro-intro-arrow" />
+                Hi, I'm Sandro, Alessandro's digital twin. Feel free to ask me anything 😊
+              </div>
+            )}
 
             {/* --- DESKTOP DIGITAL TWIN OVERLAY --- */}
             {!isMobile && (
