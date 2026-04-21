@@ -13,12 +13,12 @@ import { AnimatePresence, motion } from 'framer-motion';
 import './App.css';
 
 import laptop from './assets/laptop.png';
-import dji_m300 from './assets/DJI_M300.png';
-import active_inference_brain from './assets/active_inference_brain.png';
-import text_embeddings_visualization from './assets/text_embeddings_visualization.png';
-import ptz_camera from './assets/ptz_camera.png';
-import iot from './assets/iot.png';
-import verses_logo from './assets/verses_logo.png';
+import dji_m300 from './assets/DJI_M300.webp';
+import active_inference_brain from './assets/active_inference_brain.webp';
+import text_embeddings_visualization from './assets/text_embeddings_visualization.webp';
+import ptz_camera from './assets/ptz_camera.webp';
+import iot from './assets/iot.webp';
+import verses_logo from './assets/verses_logo.webp';
 
 import { init } from '@plausible-analytics/tracker'
 import {

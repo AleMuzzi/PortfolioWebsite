@@ -105,7 +105,13 @@ export function ProjectsGridView({
                             }}
                         >
                             <div className="project-card-image">
-                                <img src={project.coverImage} alt={project.name} />
+                                <img
+                                    src={project.coverImage}
+                                    alt={project.name}
+                                    loading="lazy"
+                                    decoding="async"
+                                    style={{ background: 'rgba(15,23,42,0.8)' }}
+                                />
                             </div>
                             <div className="project-card-content">
                                 <h3>{project.name}</h3>

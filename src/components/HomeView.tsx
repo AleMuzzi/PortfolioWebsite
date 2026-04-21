@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
-import printerWithRobot from '../assets/printer_with_robot.png';
-import printerControlPanel0 from '../assets/printer_control_panel_0.png';
-import printerControlPanel25 from '../assets/printer_control_panel_25.png';
-import printerControlPanel50 from '../assets/printer_control_panel_50.png';
-import printerControlPanel75 from '../assets/printer_control_panel_75.png';
+import printerWithRobot from '../assets/printer_with_robot.webp';
+import printerControlPanel0 from '../assets/printer_control_panel_0.webp';
+import printerControlPanel25 from '../assets/printer_control_panel_25.webp';
+import printerControlPanel50 from '../assets/printer_control_panel_50.webp';
+import printerControlPanel75 from '../assets/printer_control_panel_75.webp';
 import laptop from '../assets/laptop.png';
-import book from '../assets/book.png';
-import solderingIron from '../assets/soldering_iron.png';
-import laptopCables from '../assets/laptop_cables.png';
+import book from '../assets/book.webp';
+import solderingIron from '../assets/soldering_iron.webp';
+import laptopCables from '../assets/laptop_cables.webp';
 import './HomeView.css';
 
 interface HomeViewProps {

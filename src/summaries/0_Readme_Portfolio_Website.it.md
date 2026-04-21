@@ -49,7 +49,9 @@ In production, the Express server runs the Vite build from its `dist/` folder an
 
 ## The Digital Twin
 
-The most distinctive feature is the **Digital Twin** ? an AI agent named "Sandro" that has full knowledge of my career, projects, skills, and personality. When the backend starts, it loads all markdown files from `src/summaries/` and `src/experiences/`, combines them into a comprehensive context prompt, and sends it to the MiniMax LLM API. The result is a conversational interface where visitors can ask Sandro about my background, experience, or projects in natural language.
+The most distinctive feature is the **Digital Twin** — an AI agent named "Sandro" that has full knowledge of my career, projects, skills, and personality. When the backend starts, it loads all markdown files from `src/summaries/` and `src/experiences/`, combines them into a comprehensive context prompt, and sends it to the MiniMax LLM API. The result is a conversational interface where visitors can ask Sandro about my background, experience, or projects in natural language.
+
+During navigation, Sandro remains **context aware** — he knows which page the user is currently viewing and can provide insights, summaries, and answer questions about the content displayed on screen. This creates a seamless experience where the AI companion can explain or expand upon anything the visitor encounters while browsing the portfolio.
 
 ## AI-Assisted Development
 
@@ -59,7 +61,7 @@ This project was built with heavy assistance from several AI tools, each evaluat
 - **Junie** (JetBrains): Evaluated as a coding assistant within the IDE. Useful for autocompletion and simple refactoring tasks.
 - **GitHub Copilot**: Used for inline code suggestions, particularly in TypeScript/React components. Performed well for repetitive patterns but struggled with non-obvious logic.
 - **Opencode**: Primary assistant for this project. Used for understanding the codebase, writing new components, debugging, and producing this very document. Its ability to read files, search codebases, and execute commands made it well-suited for a multi-file, complex project like this.
-- **Openclaw**: Explored for specialized tasks. An interesting emerging tool in the AI-assisted development space.
+- **Openclaw**: Explored for specialized tasks. An interesting emerging tool in the AI-assisted development space. Due to being relatively new technology and demanding in terms of permissions, Openclaw was run in a dedicated virtual machine.
 
 No single tool was a silver bullet ? the best results came from combining multiple tools and applying human judgment to validate and refine the output.
 
@@ -69,4 +71,5 @@ No single tool was a silver bullet ? the best results came from combining multip
 * **Frameworks:** React, Express
 * **Analytics:** Plausible Analytics
 * **AI:** MiniMax API (proxy), Digital Twin architecture
+* **AI-Assisted Development:** Gemini, Junie, GitHub Copilot, Opencode, Openclaw
 * **Infrastructure:** Docker, Docker Compose
