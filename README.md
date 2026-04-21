@@ -1,17 +1,24 @@
 # Alessandro Muzzi — Portfolio Website
 
-A dark-themed, space-aesthetic personal portfolio showcasing Alessandro's career as a Staff Software Engineer & Lead Architect. Features interactive home navigation, a projects grid, work experience timeline, and an AI-powered digital twin named **Sandro** built atop MiniMax.
+A dark-themed, space-aesthetic personal portfolio showcasing Alessandro's career as a Staff Software Engineer & Lead Architect. Built with React and TypeScript, it features interactive home navigation, a filterable projects grid, a work experience timeline, and an AI-powered digital twin named **Sandro** — a context-aware conversational agent built on top of MiniMax that can discuss any project or topic on the site in depth.
 
 ---
 
-## Lighthouse Scores
+## Index
 
-| Metric | Score |
-|--------|-------|
-| Performance | 100 |
-| Accessibility | 100 |
-| Best Practices | 100 |
-| SEO | 100 |
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Prerequisites](#prerequisites)
+- [Development Setup](#development-setup)
+- [Building](#building)
+- [Deploying](#deploying)
+- [Environment Variables Reference](#environment-variables-reference)
+- [The Digital Twin — Sandro](#the-digital-twin--sandro)
+- [AI-Assisted Development](#ai-assisted-development)
+- [Adding Projects](#adding-projects)
+- [Adding Work Experiences](#adding-work-experiences)
+- [Performance Notes](#performance-notes)
+- [Lighthouse Tips](#lighthouse-tips)
 
 ---
 
@@ -129,87 +136,12 @@ This runs `tsc -b && vite build`. The frontend build is output to `dist/`.
 ## Deploying
 
 The project has two parts that must be deployed together:
-1. **Frontend** — static React app (Vercel or Netlify)
-2. **Backend** — Express server that handles Sandro AI requests (Railway, Render, Fly.io, or the same Vercel/Netlify function)
+1. **Frontend** — static React app (any static host)
+2. **Backend** — Express server that handles Sandro AI requests (Railway, Render, Fly.io, etc.)
 
 > **Important:** The MiniMax API key must **never** be exposed in the frontend. All AI requests must go through the backend server.
 
-### Option A — Vercel
-
-#### Backend (Express → Railway or Render)
-
-1. Push the project to GitHub.
-2. Create a new **Railway** (or Render) project, connect your GitHub repo.
-3. Set the following environment variables in your backend host:
-
-   ```
-   MINIMAX_API_KEY=your_key_here
-   NODE_ENV=production
-   PORT=3001
-   ```
-
-4. Set the start command to: `npx tsx server/index.ts`
-5. Note the deployed URL (e.g. `https://your-backend.railway.app`).
-
-#### Frontend (Vercel)
-
-1. Log in to [Vercel](https://vercel.com) and import your GitHub repo.
-2. In **Project Settings → Environment Variables**, add:
-
-   ```
-   VITE_API_BASE_URL=https://your-backend.railway.app
-   ```
-
-3. Set the **Root Directory** to `PortfolioWebsite`.
-4. Set the **Build Command** to: `npm run build`
-5. Set the **Output Directory** to: `dist`
-6. Deploy.
-
-The frontend will now send `/api/digitalTwin` requests to your backend URL.
-
-#### Updating the Vercel proxy URL
-
-If your backend URL changes, update `VITE_API_BASE_URL` in Vercel project settings and redeploy.
-
----
-
-### Option B — Netlify
-
-Netlify Functions can handle the Sandro backend.
-
-#### 1. Move the server to `netlify/functions/`
-
-Create `netlify/functions/sandro.ts` and copy the relevant route code from `server/index.ts` into it.
-
-#### 2. Install `serverless-http`
-
-```bash
-npm install serverless-http dotenv
-```
-
-#### 3. Create `netlify/functions/sandro.ts`
-
-```ts
-import 'dotenv/config';
-import { handler } from '../../server/index'; // wrap the Express app
-import { Handler } from '@netlify/functions';
-
-export const main: Handler = handler as any;
-```
-
-#### 4. Set environment variables
-
-In **Netlify → Site Settings → Environment Variables**, add:
-
-```
-MINIMAX_API_KEY=your_key_here
-```
-
-#### 5. Set build environment variable for the frontend
-
-```
-VITE_API_BASE_URL=https://your-site.netlify.app/.netlify/functions
-```
+For full deployment instructions, see the [Portfolio Website readme](./src/summaries/0_Readme_Portfolio_Website.en.md).
 
 ---
 
@@ -224,12 +156,34 @@ VITE_API_BASE_URL=https://your-site.netlify.app/.netlify/functions
 
 ---
 
-## How Sandro Works
+## The Digital Twin — Sandro
 
-1. The frontend `DigitalTwin` component sends messages + the current page context to `/api/digitalTwin`.
-2. The Express backend prepends a detailed system prompt containing Alessandro's full CV (projects, experience, recommendations).
-3. The backend also injects the **current page context** (project name, description, technologies, etc.) into the system prompt, so Sandro can answer questions about whatever the user is currently viewing.
-4. The backend calls the MiniMax Messages API and returns the response to the frontend.
+The most distinctive feature of this portfolio is **Sandro**, an AI agent that has full knowledge of Alessandro's career, projects, skills, and personality. Visitors can chat with Sandro in natural language, asking about his background, experience, or any of the projects on display.
+
+### How It Works
+
+1. The frontend `DigitalTwin` component sends messages along with the current page context to `/api/digitalTwin`.
+2. The Express backend loads all markdown files from `src/summaries/` and `src/experiences/` at startup and injects them into a detailed system prompt.
+3. The backend also injects the **current page context** (project name, description, technologies, etc.) into the prompt on every request, so Sandro always knows what the user is looking at.
+4. Sandro can provide insights, summarize the current page, or answer questions about anything on screen — creating a seamless experience where the AI companion explains or expands upon whatever the visitor encounters.
+
+### Context Awareness
+
+During navigation, Sandro remains **context aware**. He knows which page the user is currently viewing and can tailor his responses accordingly. Whether the visitor is reading a project detail page, browsing the experience timeline, or reviewing a specific technology, Sandro can discuss it in depth without requiring the user to re-explain the context.
+
+---
+
+## AI-Assisted Development
+
+This project was built with heavy assistance from several AI tools, each evaluated for strengths and weaknesses throughout development:
+
+- **Gemini** (Google): Used for initial scaffolding, brainstorming architecture decisions, and generating boilerplate code. Good for rapid prototyping but sometimes produced generic or inconsistent output.
+- **Junie** (JetBrains): Evaluated as a coding assistant within the IDE. Useful for autocompletion and simple refactoring tasks.
+- **GitHub Copilot**: Used for inline code suggestions, particularly in TypeScript/React components. Performed well for repetitive patterns but struggled with non-obvious logic.
+- **Opencode**: Primary assistant for this project. Used for understanding the codebase, writing new components, debugging, and producing documentation. Its ability to read files, search codebases, and execute commands made it well-suited for a multi-file, complex project like this.
+- **Openclaw**: Explored for specialized tasks. An interesting emerging tool in the AI-assisted development space. Due to being relatively new technology and demanding in terms of permissions, Openclaw was run in a dedicated virtual machine.
+
+No single tool was a silver bullet — the best results came from combining multiple tools and applying human judgment to validate and refine the output.
 
 ---
 
