@@ -110,6 +110,24 @@ export const translations = {
     dtConnectionError: "Connection failed. Is the server running?",
     dtPlaceholder: "Ask Sandro anything...",
     dtSubtitle: "Alessandro's Digital Twin",
+    sandroNudgeProject: [
+        "Want to understand the architecture?",
+        "What were the biggest challenges?",
+        "How did you approach this technically?",
+        "Curious about the stack? Ask me.",
+    ],
+    sandroNudgeExperience: [
+        "Ask me about what I did here.",
+        "Click on the experiences to know more.",
+        "What tech stack did I use?",
+        "Curious about the team dynamics?",
+    ],
+    sandroNudgeAbout: [
+        "Want the 'deep-dive' version of this bio?",
+        "Ask me anything about Alessandro.",
+        "Curious about his background?",
+        "What drives him technically?",
+    ],
     },
   it: {
     heroTitle: "Alessandro Muzzi",
@@ -225,6 +243,24 @@ export const translations = {
     dtConnectionError: "Connessione fallita. Il server è attivo?",
     dtPlaceholder: "Chiedi a Sandro qualsiasi cosa...",
     dtSubtitle: "Il Gemello Digitale di Alessandro",
+    sandroNudgeProject: [
+        "Vuoi capire l'architettura?",
+        "Quali sono state le maggiori sfide?",
+        "Come hai affrontato questo tecnicamente?",
+        "Curioso sullo stack? Chiedimi.",
+    ],
+    sandroNudgeExperience: [
+        "Chiedimi cosa ho fatto qui.",
+        "Clicca sulle esperienze per saperne di più.",
+        "Quale stack tecnologico ho usato?",
+        "Curioso delle dinamiche di team?",
+    ],
+    sandroNudgeAbout: [
+        "Vuoi la versione completa di questa bio?",
+        "Chiedimi qualsiasi cosa su Alessandro.",
+        "Curioso del suo percorso?",
+        "Cosa lo motiva tecnicamente?",
+    ],
     }
 };
 
