@@ -69,13 +69,13 @@ export function trackExperienceClick(name: string, lang: string) {
 }
 
 /** Sandro message sent */
-export function trackSandroSend(messageLength: number) {
-  track('sandro_send', { message_length: messageLength });
+export function trackSandroSend(text: string) {
+  track('sandro_send', { text: text.substring(0, 500) });
 }
 
 /** Sandro response received */
-export function trackSandroResponse(ms: number, chars: number) {
-  track('sandro_response', { response_ms: ms, response_chars: chars });
+export function trackSandroResponse(ms: number, text: string) {
+  track('sandro_response', { response_ms: ms, response_text: text.substring(0, 1000) });
 }
 
 /** Sandro chat cleared */

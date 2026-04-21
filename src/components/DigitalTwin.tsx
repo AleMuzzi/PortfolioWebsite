@@ -85,7 +85,7 @@ export function DigitalTwin({ onClose, hideHeader, isMobile, lang, currentPage }
     setMessages(prev => [...prev, { role: 'user', content: userText }]);
     setIsLoading(true);
     const sendTimestamp = Date.now();
-    trackSandroSend(userText.length);
+    trackSandroSend(userText);
 
     try {
       const res = await fetch('/api/digitalTwin', {
@@ -100,7 +100,7 @@ export function DigitalTwin({ onClose, hideHeader, isMobile, lang, currentPage }
       }
 
       const data = await res.json() as { reply: string };
-      trackSandroResponse(Date.now() - sendTimestamp, data.reply.length);
+      trackSandroResponse(Date.now() - sendTimestamp, data.reply);
       setMessages(prev => [...prev, { role: 'assistant', content: data.reply }]);
     } catch (e: any) {
       const errorMsg = e.message || t.dtConnectionError;
