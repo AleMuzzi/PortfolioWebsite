@@ -6,23 +6,20 @@ import { translations, Language } from '../i18n';
 import { FilterModal } from './FilterModal';
 import './ProjectsGridView.css';
 
-// Exposed for imperative hash navigation from ProjectsGridView
-declare global {
-  interface Window {
-    __handleProjectsHashChange?: () => void;
-  }
-}
-
 interface ProjectsGridViewProps {
     lang: Language;
     filteredProjects: Project[];
     onTagClick?: (tagName: string) => void;
+    onBack?: () => void;
+    onSelect?: (id: string) => void;
 }
 
 export function ProjectsGridView({
     lang,
     filteredProjects,
     onTagClick,
+    onBack,
+    onSelect,
 }: ProjectsGridViewProps) {
     const t = translations[lang];
     const [searchQuery, setSearchQuery] = useState('');
@@ -64,7 +61,7 @@ export function ProjectsGridView({
     return (
         <article className="projects-view">
             <div className="view-header">
-                <button className="back-button" onClick={() => window.history.back()}>←</button>
+                <button className="back-button" onClick={onBack}>←</button>
                 <h2>{t.personalTitle}</h2>
             </div>
 
@@ -100,10 +97,8 @@ export function ProjectsGridView({
                             key={project.id}
                             className="project-card"
                             onClick={() => {
-                                window.history.pushState({ id: project.id, type: 'project' }, '', `#/projects/${project.id}`);
-                                // pushState doesn't fire hashchange — sync React state immediately
-                                window.__handleProjectsHashChange?.();
                                 trackProjectClick(project.name, lang);
+                                onSelect?.(project.id);
                             }}
                         >
                             <h3>{project.name}</h3>

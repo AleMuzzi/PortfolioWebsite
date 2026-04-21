@@ -400,13 +400,11 @@ function App() {
         };
 
         window.addEventListener('hashchange', handleHashChange);
-
-        // Expose for imperative call from ProjectsGridView card clicks
-        window.__handleProjectsHashChange = handleHashChange;
+        window.addEventListener('popstate', handleHashChange);
 
         return () => {
             window.removeEventListener('hashchange', handleHashChange);
-            delete window.__handleProjectsHashChange;
+            window.removeEventListener('popstate', handleHashChange);
         };
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -547,6 +545,8 @@ function App() {
                                 lang={lang}
                                 filteredProjects={filteredProjects}
                                 onTagClick={(tagName) => setActiveTagName(tagName)}
+                                onBack={() => navigate(null, 'home')}
+                                onSelect={(id) => navigate(id, 'project')}
                             />
                         ) : selectedType === 'experience' && !selectedId ? (
                             <ExperienceView
