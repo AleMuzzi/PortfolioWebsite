@@ -83,6 +83,7 @@ function App() {
     const [showSandroScanning, setShowSandroScanning] = useState<boolean>(false);
     const [sandroDotVisible, setSandroDotVisible] = useState<boolean>(false);
     const prevSelectedType = useRef<string | null>(null);
+    const scanCountRef = useRef<number>(0);
 
     // Current page context for Sandro
     const currentPage = useMemo(() => {
@@ -499,7 +500,14 @@ function App() {
     // ─── Sandro page nudge ────────────────────────────────────────────────
     useEffect(() => {
         const type = selectedType;
-        if (!type || type === 'home') return;
+        if (!type || type === 'home') {
+            setShowSandroScanning(false);
+            setShowSandroNudge(false);
+            setSandroDotVisible(false);
+            prevSelectedType.current = null;
+            scanCountRef.current = 0;
+            return;
+        }
 
         const pageKey = `${type}:${selectedId ?? 'list'}`;
         if (pageKey === prevSelectedType.current) return;
@@ -510,19 +518,21 @@ function App() {
             (type === 'project' && !selectedId) ||
             (type === 'experience' && !selectedId);
 
+        const currentScan = ++scanCountRef.current;
         setSandroDotVisible(false);
         setShowSandroNudge(false);
         setShowSandroScanning(true);
 
         const scanTimer = setTimeout(() => {
+            if (currentScan !== scanCountRef.current) return;
             setShowSandroScanning(false);
             if (showPill) {
                 setShowSandroNudge(true);
-                const nudgeTimer = setTimeout(() => {
+                setTimeout(() => {
+                    if (currentScan !== scanCountRef.current) return;
                     setShowSandroNudge(false);
                     setSandroDotVisible(true);
                 }, 3500);
-                return () => clearTimeout(nudgeTimer);
             }
         }, 1500);
 
