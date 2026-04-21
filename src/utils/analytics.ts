@@ -68,14 +68,49 @@ export function trackExperienceClick(name: string, lang: string) {
   track('experience_click', { experience: name, lang });
 }
 
-/** Tag filter modal opened */
-export function trackTagModalOpen(tag: string) {
-  track('tag_modal_open', { tag });
+/** Sandro message sent */
+export function trackSandroSend(messageLength: number) {
+  track('sandro_send', { message_length: messageLength });
+}
+
+/** Sandro response received */
+export function trackSandroResponse(ms: number, chars: number) {
+  track('sandro_response', { response_ms: ms, response_chars: chars });
+}
+
+/** Sandro chat cleared */
+export function trackSandroClear() {
+  track('sandro_clear');
+}
+
+/** Tag modal — item clicked (project or experience) */
+export function trackTagModalItemClick(name: string, type: 'project' | 'experience', tag: string) {
+  track('tag_modal_item_click', { name, item_type: type, tag });
 }
 
 /** Filter modal opened */
 export function trackFilterModalOpen() {
   track('filter_modal_open');
+}
+
+/** Filter modal — tag toggled */
+export function trackFilterTagToggle(tag: string, active: boolean) {
+  track('filter_tag_toggle', { tag, active });
+}
+
+/** Filter modal — clear all clicked */
+export function trackFilterClear() {
+  track('filter_clear');
+}
+
+/** Tag clicked on a project card (opens TagModal) */
+export function trackTagClick(tag: string, source: 'project_card' | 'experience_card') {
+  track('tag_click', { tag, source });
+}
+
+/** Tag modal opened */
+export function trackTagModalOpen(tag: string) {
+  track('tag_modal_open', { tag });
 }
 
 /** Contact link clicked — actionable conversion signal */

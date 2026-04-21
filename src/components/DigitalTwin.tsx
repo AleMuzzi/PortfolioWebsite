@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { translations, Language } from '../i18n';
+import { trackSandroClear, trackSandroSend, trackSandroResponse } from '../utils/analytics';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -83,6 +84,8 @@ export function DigitalTwin({ onClose, hideHeader, isMobile, lang, currentPage }
     setError(null);
     setMessages(prev => [...prev, { role: 'user', content: userText }]);
     setIsLoading(true);
+    const sendTimestamp = Date.now();
+    trackSandroSend(userText.length);
 
     try {
       const res = await fetch('/api/digitalTwin', {
@@ -97,6 +100,7 @@ export function DigitalTwin({ onClose, hideHeader, isMobile, lang, currentPage }
       }
 
       const data = await res.json() as { reply: string };
+      trackSandroResponse(Date.now() - sendTimestamp, data.reply.length);
       setMessages(prev => [...prev, { role: 'assistant', content: data.reply }]);
     } catch (e: any) {
       const errorMsg = e.message || t.dtConnectionError;
@@ -141,7 +145,11 @@ export function DigitalTwin({ onClose, hideHeader, isMobile, lang, currentPage }
         {onClose && (
           <button
             className="dt-clear"
-            onClick={() => { setMessages([{ role: 'assistant', content: isMobile ? t.dtMobileWelcome : t.dtDesktopWelcome }]); localStorage.removeItem('sandro_messages_v2'); }}
+            onClick={() => {
+              trackSandroClear();
+              setMessages([{ role: 'assistant', content: isMobile ? t.dtMobileWelcome : t.dtDesktopWelcome }]);
+              localStorage.removeItem('sandro_messages_v2');
+            }}
             aria-label="Clear chat"
             title="Clear chat"
           >

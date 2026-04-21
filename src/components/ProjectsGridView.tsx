@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { trackProjectClick, trackFilterModalOpen } from '../utils/analytics';
+import { trackProjectClick, trackFilterModalOpen, trackFilterTagToggle, trackFilterClear, trackTagClick } from '../utils/analytics';
 import ReactMarkdown from 'react-markdown';
 import { Project } from '../projectsData';
 import { translations, Language } from '../i18n';
@@ -49,12 +49,15 @@ export function ProjectsGridView({
     }, [filteredProjects, searchQuery, selectedTags]);
 
     const toggleTag = (tag: string) => {
+        const isActive = selectedTags.includes(tag);
         setSelectedTags(prev =>
             prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
         );
+        trackFilterTagToggle(tag, !isActive);
     };
 
     const clearFilters = () => {
+        trackFilterClear();
         setSelectedTags([]);
     };
 
@@ -119,6 +122,7 @@ export function ProjectsGridView({
                                                 className="tech-tag clickable-tag"
                                                 onClick={(e) => {
                                                     e.stopPropagation();
+                                                    trackTagClick(tech, 'project_card');
                                                     onTagClick?.(tech);
                                                 }}
                                             >
