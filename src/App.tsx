@@ -7,38 +7,53 @@ import { ProjectsGridView } from './components/ProjectsGridView';
 import { HomeView } from './components/HomeView';
 import { AboutView } from './components/about_me/AboutView';
 import { TagModal } from './components/TagModal';
+import { DigitalTwin } from './components/DigitalTwin.tsx';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import './App.css';
 
 import laptop from './assets/laptop.png';
-import dji_m300 from './assets/DJI_M300.png';
-import active_inference_brain from './assets/active_inference_brain.png';
-import text_embeddings_visualization from './assets/text_embeddings_visualization.png';
-import ptz_camera from './assets/ptz_camera.png';
-import iot from './assets/iot.png';
-import verses_logo from './assets/verses_logo.png';
+import dji_m300 from './assets/DJI_M300.webp';
+import active_inference_brain from './assets/active_inference_brain.webp';
+import text_embeddings_visualization from './assets/text_embeddings_visualization.webp';
+import ptz_camera from './assets/ptz_camera.webp';
+import iot from './assets/iot.webp';
+import verses_logo from './assets/verses_logo.webp';
 
 import { init } from '@plausible-analytics/tracker'
-import { trackEvent } from './utils/analytics';
+import {
+  trackSection,
+  trackDigitalTwinOpen,
+  trackLanguageToggle,
+  trackMobileWarningDismissed,
+  trackScrollDepth,
+  trackSessionEnd,
+} from './utils/analytics';
 
 init({
-  domain: 'portfolio.casabrignuzzi.com.es',
+  domain: 'alessandromuzzi.icu',
   endpoint: 'https://plausible-tracker.casabrignuzzi.com.es/api/event',
   hashBasedRouting: true,
-  captureOnLocalhost: true, // Useful for testing if your dev env is localhost
+  captureOnLocalhost: true,
 })
 
-// --- LIST FOR BACKGROUND IMAGES ---
-// The code will map these images to timeline items based on their index.
-// Item 0 gets the 1st image, Item 1 gets the 2nd, etc.
+function getSandroNudgeTip(type: string, lang: Language): string {
+    const key = type === 'experience' ? 'sandroNudgeExperience'
+                : type === 'about'     ? 'sandroNudgeAbout'
+                : 'sandroNudgeProject';
+    const arr = (translations[lang] as unknown as Record<string, string[]>)[key];
+    if (!arr?.length) return '';
+    return arr[Math.floor(Math.random() * arr.length)];
+}
+
 const workBackgrounds = [
-    verses_logo, // Index 0
-    active_inference_brain, // Index 0
-    dji_m300,     // Index 1
-    text_embeddings_visualization,    // Index 2
-    ptz_camera,           // Index 3
-    iot,            // Index 4
-    laptop,           // Index 5
+    verses_logo,
+    active_inference_brain,
+    dji_m300,
+    text_embeddings_visualization,
+    ptz_camera,
+    iot,
+    laptop,
 ];
 
 function isMobileDevice(): boolean {
@@ -49,7 +64,6 @@ function App() {
     const [lang, setLang] = useState<Language>('en');
     const [selectedId, setSelectedId] = useState<string | null>(null);
     const [selectedType, setSelectedType] = useState<'project' | 'experience' | 'about' | 'home' | null>('home');
-    const [lastProjectId, setLastProjectId] = useState<string | null>(null);
     const [activeTagName, setActiveTagName] = useState<string | null>(null);
     const [hasInteracted, setHasInteracted] = useState(false);
     const experienceScrollPos = useRef(0);
@@ -61,24 +75,65 @@ function App() {
 
     const [showMobileModal, setShowMobileModal] = useState<boolean>(false);
     const [showSmallScreenModal, setShowSmallScreenModal] = useState<boolean>(false);
+    const [showDigitalTwin, setShowDigitalTwin] = useState<boolean>(false);
+    const [isMobile, setIsMobile] = useState<boolean>(false);
+    const [chatOnlyMobile, setChatOnlyMobile] = useState<boolean>(false);
+    const [showSandroIntro, setShowSandroIntro] = useState<boolean>(false);
+    const [showSandroNudge, setShowSandroNudge] = useState<boolean>(false);
+    const [showSandroScanning, setShowSandroScanning] = useState<boolean>(false);
+    const [sandroDotVisible, setSandroDotVisible] = useState<boolean>(false);
+    const prevSelectedType = useRef<string | null>(null);
+    const scanCountRef = useRef<number>(0);
+
+    // Current page context for Sandro
+    const currentPage = useMemo(() => {
+        if (selectedType === 'home') return { type: 'home' as const };
+        if (selectedType === 'project') {
+            const project = filteredProjects.find(p => p.id === selectedId);
+            if (!project) return { type: 'project' as const };
+            return {
+                type: 'project' as const,
+                id: project.id,
+                name: project.name,
+                summary: project.summary,
+                description: project.description,
+                technologies: project.technologies,
+                bodyMarkdown: project.bodyMarkdown,
+                link: project.link,
+            };
+        }
+        if (selectedType === 'experience') {
+            const exp = filteredExperiences.find(e => e.id === selectedId);
+            if (!exp) return { type: 'experience' as const };
+            return {
+                type: 'experience' as const,
+                id: exp.id,
+                name: exp.name,
+                period: exp.period,
+                company: exp.company,
+                summary: exp.summary,
+                description: exp.details,
+                technologies: exp.technologies,
+                link: exp.companyUrl,
+            };
+        }
+        if (selectedType === 'about') return { type: 'about' as const, id: selectedId };
+        return { type: 'home' as const };
+    }, [selectedType, selectedId, filteredProjects, filteredExperiences]);
 
     useEffect(() => {
-        // Check screen width
-      if (isMobileDevice()) {
-        setShowMobileModal(true);
-        // Prevent background scrolling
-        document.body.style.overflow = 'hidden';
-        trackEvent('uses_mobile', { tier: 'uses_mobile' })
-        console.log("Passed here!")
-      }
+      const mobile = isMobileDevice();
+      const small = window.innerWidth <= 1024;
+      setIsMobile(mobile);
 
-      if(window.innerWidth <= 1024) {
+      if (mobile) {
+        setShowMobileModal(true);
+        document.body.style.overflow = 'hidden';
+      } else if (small) {
         setShowSmallScreenModal(true);
         document.body.style.overflow = 'hidden';
-        trackEvent('uses_small_screen', { tier: 'startup' })
       }
 
-      // Cleanup: re-enable scrolling if component unmounts
       return () => {
         document.body.style.overflow = 'unset';
       };
@@ -87,25 +142,10 @@ function App() {
     const handleCloseModal = () => {
       setShowMobileModal(false);
       setShowSmallScreenModal(false);
-      trackEvent('proceeds_anyway', { tier: 'startup' })
-      // Re-enable scrolling when dismissed
+      setChatOnlyMobile(false);
+      trackMobileWarningDismissed();
       document.body.style.overflow = 'unset';
     };
-
-    // Ensure lastProjectId always points to a valid project for the current language
-    useEffect(() => {
-        if (filteredProjects.length === 0) {
-            if (lastProjectId !== null) {
-                setLastProjectId(null);
-            }
-            return;
-        }
-
-        const exists = lastProjectId && filteredProjects.some(p => p.id === lastProjectId);
-        if (!exists) {
-            setLastProjectId(filteredProjects[0].id);
-        }
-    }, [filteredProjects, lastProjectId]);
 
     const educationPeriods = useMemo(() => {
         const schools = [
@@ -122,9 +162,8 @@ function App() {
                 bottomOffset: -210,
                 width: 360,
                 height: 100,
-                // --- MANUAL OVERRIDES (0% = Top of SVG, 100% = Bottom) ---
-                manualTop: 89,    // Where the branch starts on the spine (top Y)
-                manualBottom: 105  // Where the branch ends on the spine (bottom Y)
+                manualTop: 89,
+                manualBottom: 105
             },
             {
                 period: '2015 — 2019',
@@ -214,29 +253,19 @@ function App() {
         const trackToLabelMargin = 15;
 
         return educationPeriods.map((edu: any) => {
-            // --- UPDATED LOGIC START ---
-            // If manual overrides exist, use them. Otherwise, calculate based on years.
-            // Values are percentages (0-100).
-
-            // Calculate automatic positions based on years
             const autoTopPerc = getYearPosition(edu.endYear);
             const autoBottomPerc = getYearPosition(edu.startYear);
 
-            // Use manual override if provided, otherwise use automatic
             const finalTopPerc = edu.manualTop !== undefined ? edu.manualTop : autoTopPerc;
             const finalBottomPerc = edu.manualBottom !== undefined ? edu.manualBottom : autoBottomPerc;
 
-            // Convert percentage to pixels
             const topY = (finalTopPerc / 100) * svgHeight;
             const bottomY = (finalBottomPerc / 100) * svgHeight;
-            // --- UPDATED LOGIC END ---
 
             const yStart = Math.min(topY, bottomY);
             const yEnd = Math.max(topY, bottomY);
 
             const isRight = edu.side === 'right';
-
-            // The rest remains exactly the same to preserve UI
             const manualY = yEnd + edu.bottomOffset;
             const itemWidth = edu.width;
             const itemHeight = edu.height;
@@ -304,101 +333,264 @@ function App() {
     const selectedProject = selectedType === 'project' ? filteredProjects.find((p) => p.id === selectedId) : null;
     const selectedExperience = selectedType === 'experience' ? filteredExperiences.find((e) => e.id === selectedId) : null;
 
-    const handleSelect = (id: string | null, type: 'project' | 'experience' | 'about' | 'home' | null, pushState = true) => {
-        if (type !== 'home') {
-            setHasInteracted(true);
-        }
+    // --- Navigation helper (no-op when same state to avoid redundant history push) ---
+    const navigate = (id: string | null, type: 'project' | 'experience' | 'about' | 'home' | null) => {
+        if (type !== 'home') setHasInteracted(true);
 
-        // Save scroll position if we are in experience view and about to leave it
+        // Save scroll position when leaving experience list view
         if (selectedType === 'experience' && !selectedId) {
             const detailsElement = document.querySelector('.details');
-            if (detailsElement) {
-                experienceScrollPos.current = detailsElement.scrollTop;
-            }
+            if (detailsElement) experienceScrollPos.current = detailsElement.scrollTop;
         }
 
         setSelectedId(id);
         setSelectedType(type);
         setActiveTagName(null);
 
-        const source = pushState ? 'user_click' : 'navigation';
+        const sectionMap: Record<string, string> = {
+          experience: 'work_experiences',
+          project: 'projects',
+          about: 'about_me',
+          home: 'home',
+        };
 
-        if (type === 'experience' && !id) {
-            trackEvent('page_visit', { page: 'work_experiences', source });
-        } else if (type === 'project' && !id) {
-            trackEvent('page_visit', { page: 'projects', source });
-        } else if (type === 'about') {
-            trackEvent('page_visit', { page: 'about_me', source });
-        } else if (type === 'home') {
-            trackEvent('page_visit', { page: 'home', source });
+        if (type && sectionMap[type]) {
+          trackSection(id ? `${sectionMap[type]}_detail` : sectionMap[type]);
         }
 
-        if (pushState) {
-            window.history.pushState({ id, type }, '');
-        }
+        const hash = sectionMap[type ?? 'home'] ?? 'home';
+        const path = `#/${id ? `${hash}/${id}` : hash}`;
+        window.history.pushState({ id, type }, '', path);
 
-        // We reset scroll for other views immediately.
-        // Restoration for experience is handled by useEffect.
+        // Reset scroll for non-experience views
         if (type !== 'experience' || id) {
             setTimeout(() => {
                 const detailsElement = document.querySelector('.details');
-                if (detailsElement) {
-                    detailsElement.scrollTo({ top: 0, behavior: 'auto' as ScrollBehavior });
-                }
+                if (detailsElement) detailsElement.scrollTo({ top: 0, behavior: 'auto' as ScrollBehavior });
             }, 0);
         }
     };
 
     useEffect(() => {
         if (selectedType === 'experience' && !selectedId) {
-            // Use a small delay to ensure the DOM is ready for scrolling
             const timer = setTimeout(() => {
                 const detailsElement = document.querySelector('.details');
-                if (detailsElement) {
-                    detailsElement.scrollTo({ top: experienceScrollPos.current, behavior: 'auto' });
-                }
+                if (detailsElement) detailsElement.scrollTo({ top: experienceScrollPos.current, behavior: 'auto' });
             }, 50);
             return () => clearTimeout(timer);
         }
     }, [selectedType, selectedId]);
 
+    // ─── Mount: parse hash, set initial state & history, set up hashchange listener ──
     useEffect(() => {
-        // Initial state
-        window.history.replaceState({ id: selectedId, type: selectedType }, '');
+        const reverseMap: Record<string, { type: 'project' | 'experience' | 'about' | 'home'; id: string | null }> = {
+            'projects':          { type: 'project',   id: null },
+            'work_experiences': { type: 'experience', id: null },
+            'about_me':         { type: 'about',      id: null },
+            'home':             { type: 'home',        id: null },
+        };
 
-        const handlePopState = (event: PopStateEvent) => {
-            if (event.state) {
-                handleSelect(event.state.id, event.state.type, false);
-            } else {
-                // Default to home if no state
-                handleSelect(null, 'home', false);
+        const sectionMap: Record<string, string> = {
+            experience: 'work_experiences',
+            project: 'projects',
+            about: 'about_me',
+            home: 'home',
+        };
+
+        const initFromHash = () => {
+            const raw = window.location.hash.replace('#', '').replace(/^\//, '');
+            const segments = raw.split('/');
+            const base = segments[0] || 'home';
+            const detailId = segments[1] || null;
+            const mapped = reverseMap[base];
+
+            const initType = mapped?.type ?? 'home';
+            const initId = mapped?.id ?? detailId;
+
+            setSelectedId(initId);
+            setSelectedType(initType);
+
+            const initHash = sectionMap[initType];
+            const initPath = `#/${initId ? `${initHash}/${initId}` : initHash}`;
+            window.history.replaceState({ id: initId, type: initType }, '', initPath);
+        };
+
+        initFromHash();
+
+        const handleHashChange = () => {
+            const raw = window.location.hash.replace('#', '').replace(/^\//, '');
+            const segments = raw.split('/');
+            const base = segments[0] || 'home';
+            const detailId = segments[1] || null;
+            const mapped = reverseMap[base];
+
+            if (!mapped) {
+                setSelectedId(null);
+                setSelectedType('home');
+                return;
+            }
+
+            const { type } = mapped;
+            const id = mapped.id ?? detailId;
+
+            // Save/restore scroll for experience list
+            if (selectedType === 'experience' && !selectedId) {
+                const detailsElement = document.querySelector('.details');
+                if (detailsElement) experienceScrollPos.current = detailsElement.scrollTop;
+            }
+
+            setSelectedId(id);
+            setSelectedType(type);
+
+            if (type !== 'experience' || id) {
+                setTimeout(() => {
+                    const detailsElement = document.querySelector('.details');
+                    if (detailsElement) detailsElement.scrollTo({ top: 0, behavior: 'auto' as ScrollBehavior });
+                }, 0);
             }
         };
 
-        window.addEventListener('popstate', handlePopState);
-        return () => window.removeEventListener('popstate', handlePopState);
+        window.addEventListener('hashchange', handleHashChange);
+        window.addEventListener('popstate', handleHashChange);
+
+        return () => {
+            window.removeEventListener('hashchange', handleHashChange);
+            window.removeEventListener('popstate', handleHashChange);
+        };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    // ─── Session tracking (scroll + unload) ────────────────────────────────────
+    useEffect(() => {
+        const onUnload = () => trackSessionEnd();
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'hidden') trackSessionEnd();
+        });
+        window.addEventListener('beforeunload', onUnload);
+
+        const onScroll = () => {
+            const scrolled = document.documentElement.scrollTop + window.innerHeight;
+            const total = document.documentElement.scrollHeight;
+            const pct = Math.round((scrolled / total) * 100);
+            trackScrollDepth(pct);
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        return () => {
+            window.removeEventListener('beforeunload', onUnload);
+            window.removeEventListener('scroll', onScroll);
+        };
+    }, []);
+
+    // ─── Sandro intro tooltip ──────────────────────────────────────────────
+    useEffect(() => {
+        if (sessionStorage.getItem('sandro_intro_seen')) return;
+        const timer = setTimeout(() => setShowSandroIntro(true), 3000);
+        const dismiss = () => {
+            sessionStorage.setItem('sandro_intro_seen', '1');
+            setShowSandroIntro(false);
+        };
+        document.addEventListener('click', dismiss, { once: true });
+        return () => {
+            clearTimeout(timer);
+            document.removeEventListener('click', dismiss);
+        };
+    }, []);
+
+    // ─── Sandro page nudge ────────────────────────────────────────────────
+    useEffect(() => {
+        const type = selectedType;
+        if (!type || type === 'home') {
+            setShowSandroScanning(false);
+            setShowSandroNudge(false);
+            setSandroDotVisible(false);
+            prevSelectedType.current = null;
+            scanCountRef.current = 0;
+            return;
+        }
+
+        const pageKey = `${type}:${selectedId ?? 'list'}`;
+        if (pageKey === prevSelectedType.current) return;
+        prevSelectedType.current = pageKey;
+
+        const showPill =
+            (type === 'about') ||
+            (type === 'project' && !selectedId) ||
+            (type === 'experience' && !selectedId);
+
+        const currentScan = ++scanCountRef.current;
+        setSandroDotVisible(false);
+        setShowSandroNudge(false);
+        setShowSandroScanning(true);
+
+        const scanTimer = setTimeout(() => {
+            if (currentScan !== scanCountRef.current) return;
+            setShowSandroScanning(false);
+            if (showPill) {
+                setShowSandroNudge(true);
+                setTimeout(() => {
+                    if (currentScan !== scanCountRef.current) return;
+                    setShowSandroNudge(false);
+                    setSandroDotVisible(true);
+                }, 3500);
+            }
+        }, 1500);
+
+        return () => clearTimeout(scanTimer);
+    }, [selectedType, selectedId]);
+
+    // Dismiss dot when Digital Twin opens
+    useEffect(() => {
+        if (showDigitalTwin) {
+            setSandroDotVisible(false);
+        }
+    }, [showDigitalTwin]);
 
     const toggleLanguage = () => {
         const newLang = lang === 'en' ? 'it' : 'en';
-        trackEvent('language_toggle', { language: newLang });
+        trackLanguageToggle(lang, newLang);
         setLang(prev => prev === 'en' ? 'it' : 'en');
     };
 
     return (
         <div className={`app-root ${selectedType === 'home' ? 'is-home' : ''}`}>
 
-            {/* --- MOBILE MODAL --- */}
-            {(showMobileModal || showSmallScreenModal) && (
+            {/* --- MOBILE FULL-CHAT WITH SANDRO --- */}
+            {(showMobileModal || chatOnlyMobile) && !showSmallScreenModal && (
+              <div className="mobile-dt-root">
+                <div className="mobile-dt-topbar">
+                  <div className="dt-header">
+                    <div className="dt-avatar">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0-3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
+                      </svg>
+                    </div>
+                    <div className="dt-title">
+                      <span className="dt-name">Sandro</span>
+                      <span className="dt-subtitle">Alessandro's Digital Twin</span>
+                    </div>
+                  </div>
+                  <button className="mobile-dt-back" onClick={handleCloseModal}>
+                    ← Full Site
+                  </button>
+                  <button type="button" className="mobile-dt-lang" onClick={e => { e.stopPropagation(); toggleLanguage(); }}>
+                    {lang === 'en' ? '🇮🇹 IT' : '🇬🇧 EN'}
+                  </button>
+                </div>
+                <div className="mobile-dt-body">
+                  <DigitalTwin hideHeader isMobile={isMobile} lang={lang} currentPage={currentPage} />
+                </div>
+              </div>
+            )}
+
+            {/* --- SMALL SCREEN WARNING MODAL --- */}
+            {showSmallScreenModal && !chatOnlyMobile && (
               <div className="mobile-modal-overlay">
                 <div className="mobile-modal-content">
                   <div className="mobile-modal-icon">🖥️</div>
-                  <h2>{showMobileModal? t.mobileWarningTitle : t.smallScreenTitle}</h2>
-                  <p dangerouslySetInnerHTML={{ __html: showMobileModal? t.mobileWarningText : t.smallScreenText }}></p>
-                  <button
-                    className="mobile-modal-btn"
-                    onClick={handleCloseModal}
-                  >
+                  <h2>{t.smallScreenTitle}</h2>
+                  <p dangerouslySetInnerHTML={{ __html: t.smallScreenText }}></p>
+                  <button className="mobile-modal-btn" onClick={handleCloseModal}>
                     {t.mobileWarningButton}
                   </button>
                 </div>
@@ -406,51 +598,119 @@ function App() {
             )}
 
             <div className="header-actions-floating">
-                <button className="lang-toggle" onClick={toggleLanguage} aria-label="Toggle language">
-                    {lang === 'en' ? '🇮🇹 IT' : '🇬🇧 EN'}
-                </button>
+                {!isMobile && (
+                  <>
+                    {showSandroNudge && (
+                      <div className="sandro-nudge">
+                        {getSandroNudgeTip(selectedType!, lang)}
+                      </div>
+                    )}
+                    {sandroDotVisible && <div className="sandro-nudge-dot" />}
+                    <button
+                      className="robot-btn"
+                      onClick={() => { setShowDigitalTwin(prev => !prev); trackDigitalTwinOpen('desktop_overlay'); }}
+                      aria-label="Chat with Sandro"
+                      title="Chat with Sandro"
+                    >
+                      {showSandroScanning ? (
+                        <div className="sandro-scan-dots">
+                          <span className="sandro-scan-dot" />
+                          <span className="sandro-scan-dot" />
+                          <span className="sandro-scan-dot" />
+                        </div>
+                      ) : (
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" xmlns="http://www.w3.org/2000/svg">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
+                        </svg>
+                      )}
+                    </button>
+                  </>
+                )}
+                {isMobile && !(showMobileModal || chatOnlyMobile) && (
+                    <button
+                        className="robot-btn"
+                        onClick={() => {
+                            setChatOnlyMobile(true);
+                            document.body.style.overflow = 'hidden';
+                        }}
+                        aria-label="Chat with Sandro"
+                        title="Chat with Sandro"
+                    >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
+                    </svg>
+                    </button>
+                )}
+                {!(showMobileModal || chatOnlyMobile) && (
+                  <button className="lang-toggle" onClick={toggleLanguage} aria-label="Toggle language">
+                      {lang === 'en' ? '🇮🇹 IT' : '🇬🇧 EN'}
+                  </button>
+                )}
             </div>
+
+            {/* ─── Sandro Intro Bubble ─────────────────────────────────────────── */}
+            {!isMobile && !showDigitalTwin && showSandroIntro && (
+              <div className="sandro-intro-bubble">
+                <span className="sandro-intro-arrow" />
+                Hi, I'm Sandro, Alessandro's digital twin. Feel free to ask me anything 😊
+              </div>
+            )}
+
+            {/* --- DESKTOP DIGITAL TWIN OVERLAY --- */}
+            {!isMobile && (
+              <AnimatePresence>
+                {showDigitalTwin && (
+                  <motion.div
+                    className="dt-overlay"
+                    initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 20, scale: 0.95 }}
+                    transition={{ duration: 0.2 }}
+                    style={{ pointerEvents: 'auto' }}
+                  >
+                    <DigitalTwin onClose={() => setShowDigitalTwin(false)} lang={lang} currentPage={currentPage} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            )}
 
             <main className="layout">
                 <div className="details-wrapper">
                     <section className="details" aria-label="Content details">
                         {selectedType === 'home' ? (
-                            <HomeView t={t} handleSelect={handleSelect} hasInteracted={hasInteracted} setHasInteracted={setHasInteracted} />
-                        ) : !selectedId ? (
-                            selectedType === 'experience' ? (
-                                <ExperienceView
-                                    lang={lang}
-                                    svgHeight={svgHeight}
-                                    educationBranches={educationBranches}
-                                    workItems={workItems}
-                                    workBackgrounds={workBackgrounds}
-                                    handleSelect={handleSelect}
-                                    onTagClick={(tagName) => setActiveTagName(tagName)}
-                                />
-                            ) : selectedType === 'project' ? (
-                                <ProjectsGridView
-                                    lang={lang}
-                                    filteredProjects={filteredProjects}
-                                    handleSelect={handleSelect}
-                                    onTagClick={(tagName) => setActiveTagName(tagName)}
-                                    initialSelectedId={lastProjectId}
-                                    onProjectSelected={(id) => setLastProjectId(id)}
-                                />
-                            ) : selectedType === 'about' ? (
-                                <AboutView 
-                                    lang={lang} 
-                                    handleSelect={handleSelect} 
-                                    onTagClick={(tagName) => setActiveTagName(tagName)}
-                                />
-                            ) : null
+                            <HomeView t={t} handleSelect={navigate} hasInteracted={hasInteracted} setHasInteracted={setHasInteracted} />
+                        ) : selectedType === 'project' && !selectedId ? (
+                            <ProjectsGridView
+                                lang={lang}
+                                filteredProjects={filteredProjects}
+                                onTagClick={(tagName) => setActiveTagName(tagName)}
+                                onBack={() => navigate(null, 'home')}
+                                onSelect={(id) => navigate(id, 'project')}
+                            />
+                        ) : selectedType === 'experience' && !selectedId ? (
+                            <ExperienceView
+                                lang={lang}
+                                svgHeight={svgHeight}
+                                educationBranches={educationBranches}
+                                workItems={workItems}
+                                workBackgrounds={workBackgrounds}
+                                handleSelect={navigate}
+                                onTagClick={(tagName) => setActiveTagName(tagName)}
+                            />
+                        ) : selectedType === 'about' && !selectedId ? (
+                            <AboutView
+                                lang={lang}
+                                handleSelect={navigate}
+                                onTagClick={(tagName) => setActiveTagName(tagName)}
+                            />
                         ) : (
                             <DetailsView
                                 selectedType={selectedType}
                                 selectedProject={selectedProject}
                                 selectedExperience={selectedExperience}
                                 lang={lang}
-                                handleSelect={handleSelect}
-                                handleSelectExternal={(id, type) => handleSelect(id, type)}
+                                handleSelect={navigate}
+                                handleSelectExternal={(id, type) => navigate(id, type)}
                                 onTagClick={(tagName) => setActiveTagName(tagName)}
                             />
                         )}
@@ -465,7 +725,7 @@ function App() {
                         projects={projects.filter(p => p.lang === lang)}
                         experiences={experiences.filter(e => e.lang === lang)}
                         onClose={() => setActiveTagName(null)}
-                        onItemClick={(id, type) => handleSelect(id, type)}
+                        onItemClick={(id, type) => navigate(id, type)}
                         t={t}
                     />
                 </div>

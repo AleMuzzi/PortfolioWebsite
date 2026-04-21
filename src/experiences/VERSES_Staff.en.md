@@ -27,4 +27,4 @@ December 2025 — Present
 * **Languages:** Python, C++
 * **Management:** Team Leadership, Technical Mentoring, Cross-Functional Strategy
 * **Core Competencies:** Software Architecture, System Design, Active Inference, Full-Stack Development
-* **Infrastructure:** Docker, CI/CD Pipelines
+* **Infrastructure:** Docker, Docker Compose, CI/CD Pipelines

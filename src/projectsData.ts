@@ -24,6 +24,11 @@ export interface Project {
      */
     resources?: Resource[];
     lang: 'en' | 'it';
+    /**
+     * Cover image path resolved from public/summaries/cards based on project id.
+     * Undefined means no card image available.
+     */
+    coverImage?: string;
 }
 
 export interface Experience {
@@ -218,7 +223,8 @@ function parseProject(filename: string, content: unknown): Project {
         link: link || undefined,
         order,
         resources: resources.length > 0 ? resources : undefined,
-        lang
+        lang,
+        coverImage: `/summaries/cards/${id}.png`,
     };
 }
 

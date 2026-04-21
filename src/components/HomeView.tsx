@@ -1,15 +1,14 @@
 import { useState, useEffect } from 'react';
-import printerWithRobot from '../assets/printer_with_robot.png';
-import printerControlPanel0 from '../assets/printer_control_panel_0.png';
-import printerControlPanel25 from '../assets/printer_control_panel_25.png';
-import printerControlPanel50 from '../assets/printer_control_panel_50.png';
-import printerControlPanel75 from '../assets/printer_control_panel_75.png';
+import printerWithRobot from '../assets/printer_with_robot.webp';
+import printerControlPanel0 from '../assets/printer_control_panel_0.webp';
+import printerControlPanel25 from '../assets/printer_control_panel_25.webp';
+import printerControlPanel50 from '../assets/printer_control_panel_50.webp';
+import printerControlPanel75 from '../assets/printer_control_panel_75.webp';
 import laptop from '../assets/laptop.png';
-import book from '../assets/book.png';
-import solderingIron from '../assets/soldering_iron.png';
-import laptopCables from '../assets/laptop_cables.png';
+import book from '../assets/book.webp';
+import solderingIron from '../assets/soldering_iron.webp';
+import laptopCables from '../assets/laptop_cables.webp';
 import './HomeView.css';
-import { TerminalModal } from './TerminalModal';
 
 interface HomeViewProps {
     t: any;
@@ -19,7 +18,6 @@ interface HomeViewProps {
 }
 
 export const HomeView = ({ t, handleSelect, hasInteracted, setHasInteracted }: HomeViewProps) => {
-    const [isTerminalOpen, setIsTerminalOpen] = useState(false);
     const [currentPanelIndex, setCurrentPanelIndex] = useState(0);
 
     const panelImages = [
@@ -88,7 +86,7 @@ export const HomeView = ({ t, handleSelect, hasInteracted, setHasInteracted }: H
                     <div className="printer-container">
                         <img src={printerWithRobot} alt="Printer with robot" className="printer-robot-img" />
                         
-                        <div className="printer-panel-item-easter-egg" onClick={() => setIsTerminalOpen(true)}>
+                        <div className="printer-panel-item-easter-egg" style={{cursor: "default"}}>
                             <img src={panelImages[currentPanelIndex]} alt="Printer Control Panel" />
                         </div>
 
@@ -96,6 +94,10 @@ export const HomeView = ({ t, handleSelect, hasInteracted, setHasInteracted }: H
                             className={`clickable-item laptop-item ${!hasInteracted ? 'glowing' : ''}`}
                             onClick={() => handleItemClick('experience')}
                             onMouseEnter={handleMouseEnter}
+                            onKeyDown={(e) => e.key === 'Enter' && handleItemClick('experience')}
+                            role="button"
+                            tabIndex={0}
+                            aria-label={t.workTitle}
                         >
                             <img src={laptop} alt="Laptop" />
                             <span className="tooltip">{t.workTitle}</span>
@@ -107,6 +109,10 @@ export const HomeView = ({ t, handleSelect, hasInteracted, setHasInteracted }: H
                             className={`clickable-item soldering-iron-item ${!hasInteracted ? 'glowing' : ''}`}
                             onClick={() => handleItemClick('project')}
                             onMouseEnter={handleMouseEnter}
+                            onKeyDown={(e) => e.key === 'Enter' && handleItemClick('project')}
+                            role="button"
+                            tabIndex={0}
+                            aria-label={t.personalTitle}
                         >
                             <img src={solderingIron} alt="Soldering Iron" />
                             <span className="tooltip">{t.personalTitle}</span>
@@ -115,6 +121,10 @@ export const HomeView = ({ t, handleSelect, hasInteracted, setHasInteracted }: H
                             className={`clickable-item book-item ${!hasInteracted ? 'glowing' : ''}`}
                             onClick={() => handleItemClick('about')}
                             onMouseEnter={handleMouseEnter}
+                            onKeyDown={(e) => e.key === 'Enter' && handleItemClick('about')}
+                            role="button"
+                            tabIndex={0}
+                            aria-label={t.aboutTitle}
                         >
                             <img src={book} alt="Book" />
                             <span className="tooltip">{t.profileButton}</span>
@@ -122,12 +132,6 @@ export const HomeView = ({ t, handleSelect, hasInteracted, setHasInteracted }: H
                     </div>
                 </div>
             </div>
-
-            <TerminalModal 
-                isOpen={isTerminalOpen} 
-                onClose={() => setIsTerminalOpen(false)} 
-                t={t} 
-            />
         </article>
     );
 };

@@ -73,8 +73,13 @@ html, body::before {
   position: fixed;
   top: 1.5rem;
   right: 5vw;
-  z-index: 999999;
+  z-index: 1000001;
   pointer-events: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
 }
 
 .lang-toggle {
@@ -86,6 +91,7 @@ html, body::before {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   pointer-events: auto;
   position: relative;
@@ -360,6 +366,7 @@ html, body::before {
   color: var(--text-soft);
   text-align: center;
   background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9), #020617);
+  -webkit-user-select: none;
   user-select: none;
   flex-shrink: 0;
 }
@@ -388,6 +395,7 @@ html, body::before {
   position: fixed;
   inset: 0;
   background: rgba(2, 6, 23, 0.85);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
@@ -565,6 +573,7 @@ html, body::before {
     position: fixed;
     inset: 0;
     background: rgba(2, 6, 23, 0.7);
+    -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
     z-index: 999;
   }
@@ -661,6 +670,7 @@ html, body::before {
     width: 100vw;
     height: 100vh;
     background: rgba(15, 23, 42, 0.95); /* Slightly more opaque */
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     z-index: 999998; /* Higher z-index to stay above everything */
     display: flex;
@@ -736,4 +746,149 @@ html, body::before {
     background: #e9d5ff;
     transform: translateX(-100%);
     transition: transform 0.3s ease;
+}
+/* ─── Digital Twin Chat ─────────────────────────────────────────────── */
+.digital-twin {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ─── Sandro Intro Bubble ─────────────────────────────────────────── */
+.sandro-intro-bubble {
+  position: fixed;
+  top: calc(1.5rem - 3px);
+  right: calc(5vw + 145px);
+  z-index: 1000002;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(124, 58, 237, 0.4);
+  border-radius: 1rem;
+  padding: 10px 14px;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: #e2e8f0;
+  max-width: 220px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(124, 58, 237, 0.2);
+  animation: sandroIntroFadeIn 0.4s ease-out;
+  pointer-events: none;
+}
+
+.sandro-intro-arrow {
+  position: absolute;
+  top: 14px;
+  right: -8px;
+  width: 14px;
+  height: 14px;
+  background: rgba(15, 23, 42, 0.95);
+  border-left: 1px solid rgba(124, 58, 237, 0.4);
+  border-top: 1px solid rgba(124, 58, 237, 0.4);
+  transform: rotate(135deg);
+  border-radius: 2px;
+}
+
+@keyframes sandroIntroFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Sandro Nudge Pill ────────────────────────────────────────────── */
+.sandro-nudge {
+  position: relative;
+  background: rgba(15, 23, 42, 0.92);
+  border: 1px solid rgba(124, 58, 237, 0.45);
+  border-radius: 2rem;
+  padding: 6px 14px;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: #e2e8f0;
+  white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(124, 58, 237, 0.15);
+  animation: sandroNudgeSlide 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.1) forwards;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+
+.sandro-nudge-dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin-right: 6px;
+  flex-shrink: 0;
+  box-shadow: 0 0 8px var(--accent);
+  animation: sandroDotPulse 2s ease-in-out infinite;
+}
+
+@keyframes sandroNudgeSlide {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes sandroDotPulse {
+  0%, 100% { box-shadow: 0 0 6px var(--accent); transform: scale(1); }
+  50%       { box-shadow: 0 0 14px var(--accent); transform: scale(1.15); }
+}
+
+/* ─── Sandro Scanning Dots ──────────────────────────────────────────── */
+.sandro-scan-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.sandro-scan-dot {
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  animation: sandroScanBounce 1s infinite;
+}
+
+.sandro-scan-dot:nth-child(2) { animation-delay: 0.18s; }
+.sandro-scan-dot:nth-child(3) { animation-delay: 0.36s; }
+
+@keyframes sandroScanBounce {
+  0%, 80%, 100% { transform: scale(0.7); opacity: 0.5; }
+  40%            { transform: scale(1.0); opacity: 1.0; }
+}
+
+/* ─── Header Robot Button ──────────────────────────────────────────── */
+.robot-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.robot-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+}
+
+.robot-btn svg,
+.robot-btn .sandro-scan-dots {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
 }

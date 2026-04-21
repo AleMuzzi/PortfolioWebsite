@@ -40,3 +40,4 @@ April 2022 — August 2024
 * **Communication:** MQTT
 * **Robotics:** DJI SDK
 * **Core Expertise:** BVLOS Operations, Geospatial Governance, UAM
+* **Infrastructure:** Docker, Docker Compose, CI/CD Pipelines

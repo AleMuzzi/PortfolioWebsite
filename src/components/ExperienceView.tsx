@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { trackEvent } from '../utils/analytics';
+import { trackExperienceClick } from '../utils/analytics';
 import ReactMarkdown from 'react-markdown';
 import { Experience } from '../projectsData';
 import { translations, Language } from '../i18n';
@@ -86,7 +86,7 @@ export function ExperienceView({
                             style={{ top: `${exp.topPos}%` }}
                             onClick={() => {
                                 handleSelect(exp.id, 'experience');
-                                trackEvent('work_experience_selection', { experience: exp.name });
+                                trackExperienceClick(exp.name, 'en');
                             }}
                             role="button"
                             tabIndex={0}

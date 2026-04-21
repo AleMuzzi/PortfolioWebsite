@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { trackEvent } from '../utils/analytics';
+import { trackTagModalOpen, trackTagModalItemClick } from '../utils/analytics';
 import './TagModal.css';
 import { Project, Experience } from '../projectsData';
 
@@ -28,7 +28,7 @@ export const TagModal: React.FC<TagModalProps> = ({
     );
 
     useEffect(() => {
-        trackEvent('tags_modal_opened', { tag: tagName });
+        trackTagModalOpen(tagName);
     }, [tagName]);
 
     return (
@@ -47,7 +47,10 @@ export const TagModal: React.FC<TagModalProps> = ({
                             <div
                               key={exp.id}
                               className="tag-modal-card"
-                              onClick={() => onItemClick(exp.id, 'experience')}
+                              onClick={() => {
+                                trackTagModalItemClick(exp.name, 'experience', tagName);
+                                onItemClick(exp.id, 'experience');
+                              }}
                             >
                               <h5>{exp.name}</h5>
                               <p>{exp.company}</p>
@@ -64,7 +67,10 @@ export const TagModal: React.FC<TagModalProps> = ({
                                     <div
                                         key={project.id}
                                         className="tag-modal-card"
-                                        onClick={() => onItemClick(project.id, 'project')}
+                                        onClick={() => {
+                                          trackTagModalItemClick(project.name, 'project', tagName);
+                                          onItemClick(project.id, 'project');
+                                        }}
                                     >
                                         <h5>{project.name}</h5>
                                         <p>{project.summary}</p>

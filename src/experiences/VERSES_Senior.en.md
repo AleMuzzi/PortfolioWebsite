@@ -25,5 +25,5 @@ August 2024 — December 2025
 ## Technologies and Tools
 * **Languages:** Python, C++, TypeScript, Rust
 * **Core Skills:** Software Architecture, System Design, Active Inference, API Standardization, Full-Stack Development
-* **Infrastructure:** Docker, CI/CD Pipelines
+* **Infrastructure:** Docker, Docker Compose, CI/CD Pipelines
 * **Leadership:** Technical Mentoring, Cross-Functional Collaboration
