@@ -59,7 +59,13 @@ export function DigitalTwin({ onClose, hideHeader, isMobile, lang, currentPage }
   }, [messages]);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const last = messages[messages.length - 1];
+    if (!last || !panelRef.current) return;
+    if (last.role === 'user') {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      panelRef.current?.scrollBy({ top: 100, behavior: 'smooth' });
+    }
   }, [messages]);
 
   // Reset to welcome message when switching language if only the welcome message exists
