@@ -113,7 +113,7 @@ export function ProjectsGridView({
                                 </div>
                                 <div className="project-card-footer">
                                     <div className="tech-tags">
-                                        {project.technologies.slice(0, 3).map(tech => (
+                                        {project.technologies.slice(0, 5).map(tech => (
                                             <span
                                                 key={tech}
                                                 className="tech-tag clickable-tag"
@@ -125,8 +125,8 @@ export function ProjectsGridView({
                                                 {tech}
                                             </span>
                                         ))}
-                                        {project.technologies.length > 3 && (
-                                            <span className="tech-tag">+{project.technologies.length - 3}</span>
+                                        {project.technologies.length > 5 && (
+                                            <span className="tech-tag">+{project.technologies.length - 5}</span>
                                         )}
                                     </div>
                                     <span className="see-details-hint">{t.seeDetails} →</span>
