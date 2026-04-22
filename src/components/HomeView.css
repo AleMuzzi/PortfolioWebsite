@@ -218,13 +218,6 @@
 }
 
 @media (max-width: 1240px) {
-  /*TODO REVERT*/
-  /*.tooltip {*/
-  /*  opacity: 1 !important;*/
-  /*  visibility: visible !important;*/
-  /*  transform: translate(-50%, -20px) !important;*/
-  /*}*/
-
   .home-view {
     padding: 2rem 0;
     height: auto;
@@ -315,6 +308,20 @@
     margin: 0 auto;
     display: block;
   }
+
+  .clickable-item.glowing {
+    animation: mobileGlowAnimation 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 15px var(--accent-contrast)) brightness(1.15);
+    opacity: 0.85;
+  }
+
+  .tooltip {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translate(-50%, -70%) !important;
+    font-size: 0.7rem !important;
+    padding: 0.35rem 0.65rem !important;
+  }
 }
 
 .printer-container {
@@ -366,6 +373,18 @@
   100% {
     filter: drop-shadow(0 0 5px var(--accent-contrast)) brightness(1.1);
     transform: scale(1);
+  }
+}
+
+@keyframes mobileGlowAnimation {
+  0% {
+    filter: drop-shadow(0 0 8px var(--accent-contrast)) brightness(1.1);
+  }
+  60% {
+    filter: drop-shadow(0 0 20px var(--accent-contrast)) brightness(1.25);
+  }
+  100% {
+    filter: drop-shadow(0 0 8px var(--accent-contrast)) brightness(1.1);
   }
 }
 
