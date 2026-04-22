@@ -15,9 +15,10 @@ interface HomeViewProps {
     handleSelect: (id: string | null, type: 'project' | 'experience' | 'about' | 'home' | null) => void;
     hasInteracted: boolean;
     setHasInteracted: (value: boolean) => void;
+    isMobile?: boolean;
 }
 
-export const HomeView = ({ t, handleSelect, hasInteracted, setHasInteracted }: HomeViewProps) => {
+export const HomeView = ({ t, handleSelect, hasInteracted, setHasInteracted, isMobile }: HomeViewProps) => {
     const [currentPanelIndex, setCurrentPanelIndex] = useState(0);
 
     const panelImages = [
@@ -91,7 +92,7 @@ export const HomeView = ({ t, handleSelect, hasInteracted, setHasInteracted }: H
                         </div>
 
                         <div 
-                            className={`clickable-item laptop-item ${!hasInteracted ? 'glowing' : ''}`}
+                            className={`clickable-item laptop-item ${!hasInteracted || isMobile ? 'glowing' : ''}`}
                             onClick={() => handleItemClick('experience')}
                             onMouseEnter={handleMouseEnter}
                             onKeyDown={(e) => e.key === 'Enter' && handleItemClick('experience')}
@@ -106,7 +107,7 @@ export const HomeView = ({ t, handleSelect, hasInteracted, setHasInteracted }: H
                             <img src={laptopCables} alt="Laptop Cables" />
                         </div>
                         <div 
-                            className={`clickable-item soldering-iron-item ${!hasInteracted ? 'glowing' : ''}`}
+                            className={`clickable-item soldering-iron-item ${!hasInteracted || isMobile ? 'glowing' : ''}`}
                             onClick={() => handleItemClick('project')}
                             onMouseEnter={handleMouseEnter}
                             onKeyDown={(e) => e.key === 'Enter' && handleItemClick('project')}
@@ -118,7 +119,7 @@ export const HomeView = ({ t, handleSelect, hasInteracted, setHasInteracted }: H
                             <span className="tooltip">{t.personalTitle}</span>
                         </div>
                         <div 
-                            className={`clickable-item book-item ${!hasInteracted ? 'glowing' : ''}`}
+                            className={`clickable-item book-item ${!hasInteracted || isMobile ? 'glowing' : ''}`}
                             onClick={() => handleItemClick('about')}
                             onMouseEnter={handleMouseEnter}
                             onKeyDown={(e) => e.key === 'Enter' && handleItemClick('about')}
