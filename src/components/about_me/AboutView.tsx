@@ -224,12 +224,12 @@ export function AboutView({lang, handleSelect, onTagClick}: AboutViewProps) {
             )}
             <div className="about-contact-explicit">
               <a 
-                href="mailto:alessandromuzzi17@gmail.com" 
+                href="mailto:alessandromuzzi1717@gmail.com"
                 className="contact-item"
                 onClick={() => trackContactClick('email')}
               >
                 <span className="contact-icon">✉️</span>
-                <span className="contact-text">alessandromuzzi17@gmail.com</span>
+                <span className="contact-text">alessandromuzzi1717@gmail.com</span>
               </a>
               <a 
                 href="https://www.linkedin.com/in/alessandro-muzzi" 

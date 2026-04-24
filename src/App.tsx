@@ -678,7 +678,7 @@ function App() {
                 <div className="details-wrapper">
                     <section className="details" aria-label="Content details">
                         {selectedType === 'home' ? (
-                            <HomeView t={t} handleSelect={navigate} hasInteracted={hasInteracted} setHasInteracted={setHasInteracted} />
+                            <HomeView t={t} handleSelect={navigate} hasInteracted={hasInteracted} setHasInteracted={setHasInteracted} isMobile={isMobile} />
                         ) : selectedType === 'project' && !selectedId ? (
                             <ProjectsGridView
                                 lang={lang}
@@ -699,6 +699,7 @@ function App() {
                             />
                         ) : selectedType === 'about' && !selectedId ? (
                             <AboutView
+                                key={lang}
                                 lang={lang}
                                 handleSelect={navigate}
                                 onTagClick={(tagName) => setActiveTagName(tagName)}

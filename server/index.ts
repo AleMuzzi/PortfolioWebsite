@@ -144,7 +144,7 @@ This portfolio is hosted at **https://alessandromuzzi.icu** and uses hash-based 
 - You can answer questions about any content on the site using the context provided below.
 
 ## Contact Information
-- Email: alessandromuzzi17@gmail.com
+- Email: alessandromuzzi1717@gmail.com
 - LinkedIn: https://www.linkedin.com/in/alessandro-muzzi
 - GitHub: https://github.com/AleMuzzi
 

@@ -401,26 +401,271 @@
     }
     
     .about-side-menu ul {
-        flex-direction: row;
-        overflow-x: auto;
-        padding-bottom: 0.5rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+        overflow-x: hidden;
+        padding-bottom: 0;
     }
     
     .about-side-menu li {
-        white-space: nowrap;
+        white-space: normal;
+        text-align: center;
+        justify-content: center;
     }
 }
 
 @media (max-width: 768px) {
+    .profile-view {
+        max-width: 100%;
+        overflow-x: hidden;
+        box-sizing: border-box;
+    }
+
+    .about-container {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    .about-main-content {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    .about-me-markdown {
+        overflow-x: hidden;
+        word-wrap: break-word;
+    }
+
+    .about-me-markdown ul,
+    .about-me-markdown ol {
+        overflow-x: visible;
+        box-sizing: border-box;
+    }
+
     .interests-list {
         grid-template-columns: 1fr;
     }
     
     .about-intro-panel {
-        padding: 1.5rem;
+        padding: 1rem;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-wrap: break-word;
+        overflow-x: hidden;
     }
     
+    .about-intro-panel .about-me-markdown {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    .about-me-markdown {
+    
     .profile-view h2 {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
+    }
+
+    .about-me-markdown {
+        font-size: 0.9rem;
+    }
+
+    .about-me-markdown h1 {
+        font-size: 1.4rem;
+    }
+
+    .about-me-markdown h2 {
+        font-size: 1.2rem;
+    }
+
+    .about-me-markdown h3 {
+        font-size: 1rem;
+    }
+
+    .about-me-markdown p,
+    .about-me-markdown li {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    .about-contact-explicit {
+        gap: 0.6rem;
+    }
+
+    .contact-item {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.8rem;
+    }
+
+    .contact-text {
+        font-size: 0.8rem;
+    }
+
+    .about-main-content {
+        gap: 1.5rem;
+    }
+
+    .about-section h3 {
+        font-size: 1.2rem;
+    }
+
+    .skills-container {
+        gap: 1rem;
+    }
+
+    .skill-category h4 {
+        font-size: 0.85rem;
+    }
+
+    .skill-tags {
+        gap: 0.4rem;
+    }
+
+    .about-side-menu ul {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+        overflow-x: hidden;
+    }
+
+    .about-side-menu li {
+        padding: 0.6rem 0.5rem;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .menu-text {
+        font-size: 0.8rem;
+    }
+
+    .education-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-view {
+        padding: 0 0.5rem;
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+
+    .about-container {
+        max-width: 100%;
+        overflow-x: hidden;
+        padding-left: 0.25rem;
+        padding-right: 0.25rem;
+    }
+
+    .about-main-content {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    .about-side-menu ul {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.4rem;
+        overflow-x: hidden;
+    }
+
+    .about-side-menu li {
+        padding: 0.5rem 0.4rem;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .menu-icon {
+        font-size: 1rem;
+    }
+
+    .menu-text {
+        font-size: 0.75rem;
+    }
+
+    .about-intro-panel {
+        padding: 0.85rem;
+        border-radius: 12px;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-wrap: break-word;
+        overflow-x: hidden;
+    }
+
+    .about-me-markdown {
+        max-width: 100%;
+        overflow-x: hidden;
+        word-wrap: break-word;
+    }
+
+    .about-me-markdown blockquote {
+        padding: 0.75rem 1rem;
+        margin: 0.75rem 0;
+    }
+
+    .profile-view h2 {
+        font-size: 1.3rem;
+    }
+
+    .back-button {
+        width: 38px;
+        height: 38px;
+        font-size: 1rem;
+    }
+
+    .about-contact-explicit {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .contact-item {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .interests-list li {
+        padding: 1rem;
+    }
+
+    .interests-list li strong {
+        font-size: 0.95rem;
+    }
+
+    .edu-header {
+        flex-direction: column;
+        gap: 0.4rem;
+    }
+
+    .edu-header h4 {
+        font-size: 0.85rem;
+    }
+
+    .edu-period {
+        font-size: 0.65rem;
+        align-self: flex-start;
+    }
+
+    .edu-org, .edu-grade {
+        font-size: 0.8rem;
+    }
+
+    .education-item {
+        padding: 0.9rem;
+    }
+
+    .education-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .about-section {
+        max-width: 100%;
+        overflow-x: hidden;
+        box-sizing: border-box;
+    }
+
+    .about-section h3 {
+        font-size: 1.1rem;
+        word-wrap: break-word;
     }
 }
