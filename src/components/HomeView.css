@@ -323,6 +323,7 @@
     transform: translate(-50%, -20px) !important;
     font-size: 0.7rem !important;
     padding: 0.3rem 0.6rem !important;
+    pointer-events: auto !important;
   }
 }
 
