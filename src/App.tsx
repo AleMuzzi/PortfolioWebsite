@@ -699,6 +699,7 @@ function App() {
                             />
                         ) : selectedType === 'about' && !selectedId ? (
                             <AboutView
+                                key={lang}
                                 lang={lang}
                                 handleSelect={navigate}
                                 onTagClick={(tagName) => setActiveTagName(tagName)}
