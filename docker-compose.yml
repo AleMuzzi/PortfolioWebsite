@@ -13,28 +13,28 @@ services:
       - PORT=3001
     restart: unless-stopped
 
-#  caddy:
-#    image: caddy:latest
-#    restart: unless-stopped
-#    ports:
-#      - "80:80"     # For automatic HTTP to HTTPS redirects
-#      - "443:443"   # For secure HTTPS traffic
-#    volumes:
-#      - ../Caddyfile:/etc/caddy/Caddyfile # Links the config file we just made
-#      - caddy_data:/data                 # Saves your SSL certs so they don't wipe on restart
-#      - caddy_config:/config
-#
-#volumes:
-#  caddy_data:
-#    driver: local
-#    driver_opts:
-#      o: bind
-#      type: none
-#      device: ../etc/caddy/caddy_data
-#
-#  caddy_config:
-#    driver: local
-#    driver_opts:
-#      o: bind
-#      type: none
-#      device: ../etc/caddy/caddy_config
+  caddy:
+    image: caddy:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"     # For automatic HTTP to HTTPS redirects
+      - "443:443"   # For secure HTTPS traffic
+    volumes:
+      - ../Caddyfile:/etc/caddy/Caddyfile # Links the config file we just made
+      - caddy_data:/data                 # Saves your SSL certs so they don't wipe on restart
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ../etc/caddy/caddy_data
+
+  caddy_config:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ../etc/caddy/caddy_config
