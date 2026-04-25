@@ -181,7 +181,7 @@ function App() {
                 endYear: 2019,
                 side: 'left',
                 bottomOffset: -130,
-                width: 328,
+                width: 318,
                 height: 100,
                 manualTop: 64,
                 manualBottom: 89
@@ -197,7 +197,7 @@ function App() {
                 endYear: 2022,
                 side: 'left',
                 bottomOffset: -110,
-                width: 313,
+                width: 325,
                 height: 100,
                 manualTop: 46,
                 manualBottom: 63
