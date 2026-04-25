@@ -139,7 +139,7 @@ export function ProjectsGridView({
                                             <span className="tech-tag">+{project.technologies.length - 5}</span>
                                         )}
                                     </div>
-                                    <span className="see-details-hint">{t.seeDetails} →</span>
+                                    <span className="see-details-hint">{t.seeDetails}</span>
                                 </div>
                             </div>
                         </div>
