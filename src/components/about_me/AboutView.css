@@ -461,8 +461,9 @@
     }
 
     .about-me-markdown {
+    }
     
-    .profile-view h2 {
+    .about-me-markdown .profile-view h2 {
         font-size: 1.5rem;
     }
 
