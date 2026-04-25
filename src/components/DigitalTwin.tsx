@@ -156,8 +156,8 @@ export function DigitalTwin({ onClose, hideHeader, isMobile, lang, currentPage }
               setMessages([{ role: 'assistant', content: isMobile ? t.dtMobileWelcome : t.dtDesktopWelcome }]);
               localStorage.removeItem('sandro_messages_v2');
             }}
-            aria-label="Clear chat"
-            title="Clear chat"
+            aria-label={t.clearChat}
+            title={t.clearChat}
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
@@ -168,7 +168,7 @@ export function DigitalTwin({ onClose, hideHeader, isMobile, lang, currentPage }
           <button
             className="dt-close"
             onClick={onClose}
-            aria-label="Close"
+            aria-label={t.close}
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M18 6 6 18M6 6l12 12" />
@@ -249,7 +249,7 @@ export function DigitalTwin({ onClose, hideHeader, isMobile, lang, currentPage }
           className="dt-send"
           onClick={() => send(input)}
           disabled={!input.trim() || isLoading}
-          aria-label="Send"
+          aria-label={t.send}
         >
           <svg viewBox="0 0 24 24" fill="#ffffff" style={{ color: '#ffffff' }}>
             <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />

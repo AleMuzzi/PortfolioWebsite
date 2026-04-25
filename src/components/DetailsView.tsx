@@ -58,7 +58,7 @@ export function DetailsView({
                         const parts = item.name.split(separator);
                         roleName = parts[0];
                         if (!companyName) {
-                            companyName = parts.length > 1 ? parts[1] : 'Unknown Company';
+                            companyName = parts.length > 1 ? parts[1] : t.unknownCompany;
                         }
                     }
 
@@ -104,7 +104,7 @@ export function DetailsView({
                                             className="exp-chip chip-company clickable-chip"
                                         >
                                             <span style={{marginRight:'6px'}}>🔗</span>
-                                            View Project
+                                            {t.viewProject}
                                             <span style={{marginLeft:'6px', fontSize:'0.8em', opacity: 0.7}}>↗</span>
                                         </a>
                                     )}

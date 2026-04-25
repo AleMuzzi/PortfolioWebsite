@@ -60,8 +60,13 @@ function isMobileDevice(): boolean {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 
+function detectDefaultLanguage(): Language {
+  const langs = navigator.languages ?? [navigator.language ?? 'en'];
+  return langs.some(l => l.toLowerCase().startsWith('it')) ? 'it' : 'en';
+}
+
 function App() {
-    const [lang, setLang] = useState<Language>('en');
+    const [lang, setLang] = useState<Language>(detectDefaultLanguage);
     const [selectedId, setSelectedId] = useState<string | null>(null);
     const [selectedType, setSelectedType] = useState<'project' | 'experience' | 'about' | 'home' | null>('home');
     const [activeTagName, setActiveTagName] = useState<string | null>(null);
@@ -567,11 +572,11 @@ function App() {
                     </div>
                     <div className="dt-title">
                       <span className="dt-name">Sandro</span>
-                      <span className="dt-subtitle">Alessandro's Digital Twin</span>
+                      <span className="dt-subtitle">{t.dtSubtitle}</span>
                     </div>
                   </div>
                   <button className="mobile-dt-back" onClick={handleCloseModal}>
-                    ← Full Site
+                    ← {t.dtFullSite}
                   </button>
                   <button type="button" className="mobile-dt-lang" onClick={e => { e.stopPropagation(); toggleLanguage(); }}>
                     {lang === 'en' ? '🇮🇹 IT' : '🇬🇧 EN'}
@@ -609,8 +614,8 @@ function App() {
                     <button
                       className="robot-btn"
                       onClick={() => { setShowDigitalTwin(prev => !prev); trackDigitalTwinOpen('desktop_overlay'); }}
-                      aria-label="Chat with Sandro"
-                      title="Chat with Sandro"
+                      aria-label={t.chatWithSandro}
+                      title={t.chatWithSandro}
                     >
                       {showSandroScanning ? (
                         <div className="sandro-scan-dots">
@@ -633,8 +638,8 @@ function App() {
                             setChatOnlyMobile(true);
                             document.body.style.overflow = 'hidden';
                         }}
-                        aria-label="Chat with Sandro"
-                        title="Chat with Sandro"
+                        aria-label={t.chatWithSandro}
+                        title={t.chatWithSandro}
                     >
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
@@ -642,7 +647,7 @@ function App() {
                     </button>
                 )}
                 {!(showMobileModal || chatOnlyMobile) && (
-                  <button className="lang-toggle" onClick={toggleLanguage} aria-label="Toggle language">
+                  <button className="lang-toggle" onClick={toggleLanguage} aria-label={t.toggleLanguage}>
                       {lang === 'en' ? '🇮🇹 IT' : '🇬🇧 EN'}
                   </button>
                 )}
@@ -652,7 +657,7 @@ function App() {
             {!isMobile && !showDigitalTwin && showSandroIntro && (
               <div className="sandro-intro-bubble">
                 <span className="sandro-intro-arrow" />
-                Hi, I'm Sandro, Alessandro's digital twin. Feel free to ask me anything 😊
+                {t.sandroIntro}
               </div>
             )}
 
