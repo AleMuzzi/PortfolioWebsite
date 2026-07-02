@@ -13,9 +13,10 @@ export interface Project {
     technologies: string[];
     categorizedTech?: Record<string, string[]>;
     link?: string;
+    github?: string;
     /**
      * Optional numeric order extracted from the markdown filename.
-     * Example: `2_Readme_DIY_Drone.en.md` → order = 2.
+     * Example: `3_Readme_DIY_Drone.en.md` → order = 2.
      */
     order?: number;
     /**
@@ -104,7 +105,7 @@ function parseProject(filename: string, content: unknown): Project {
         };
     }
 
-    // Example filename: "2_Readme_DIY_Drone.en.md"
+    // Example filename: "3_Readme_DIY_Drone.en.md"
     const fileName = filename.split('/').pop()!;
 
     // Extract numeric prefix (order) if present at the beginning (e.g. "2_...")
@@ -137,6 +138,7 @@ function parseProject(filename: string, content: unknown): Project {
     let summary = '';
     let description = '';
     let link = '';
+    let github = '';
     let technologies: string[] = [];
     let categorizedTech: Record<string, string[]> = {};
     let bodyMarkdownParts: string[] = [];
@@ -154,6 +156,11 @@ function parseProject(filename: string, content: unknown): Project {
             const urlMatch = body.match(/(https?:\/\/[^\s]+)/);
             if (urlMatch) {
                 link = urlMatch[0];
+            }
+        } else if (header.includes('github')) {
+            const urlMatch = body.match(/(https?:\/\/[^\s]+)/);
+            if (urlMatch) {
+                github = urlMatch[0];
             }
         } else if (header.includes('resources') || header.includes('risorse')) {
             const resourceLines = body.split('\n').filter(line => line.trim().length > 0);
@@ -221,6 +228,7 @@ function parseProject(filename: string, content: unknown): Project {
         technologies: Array.from(new Set(technologies)),
         categorizedTech: Object.keys(categorizedTech).length > 0 ? categorizedTech : undefined,
         link: link || undefined,
+        github: github || undefined,
         order,
         resources: resources.length > 0 ? resources : undefined,
         lang,

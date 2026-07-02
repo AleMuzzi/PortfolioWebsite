@@ -185,6 +185,9 @@ Non posso dire che sia finita, perchè si tratta di un progetto in continua evol
 ![gargantua_printer_photo_2.jpg{width="400px"}](summaries/gargantua_printer_photo_2.jpg)
 ![gargantua_printer_photo_3.jpg{width="400px"}](summaries/gargantua_printer_photo_3.jpg)
 
+## GitHub
+https://github.com/AleMuzzi/Gargantua
+
 ## Technologies and tools
 - **Firmware:** Klipper
 - **Hardware:** BTT Manta M8P, BTT CB1, SSR

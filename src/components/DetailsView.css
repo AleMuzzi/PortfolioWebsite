@@ -17,6 +17,28 @@
 /* Ensure view-header doesn't shrink */
 .detail-view .view-header {
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.github-link {
+    color: #8b949e;
+    transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+    padding: 10px 14px;
+    margin-right: 10px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.05);
+    margin-left: auto;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.github-link:hover {
+    color: #f0f6fc;
+    background: rgba(255,255,255,0.1);
 }
 
 .detail-content {
@@ -101,13 +123,20 @@
 .exp-role {
     font-size: 2.5rem;
     font-weight: 700;
-    margin: 0 0 10px 0;
+    margin: 0;
     background: linear-gradient(to right, #f3e8ff, #c084fc);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
     -webkit-text-fill-color: transparent;
     line-height: 1.1;
+}
+
+.exp-title-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 10px;
 }
 
 .exp-meta-row {
