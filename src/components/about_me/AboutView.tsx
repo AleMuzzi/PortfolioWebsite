@@ -256,6 +256,26 @@ export function AboutView({lang, handleSelect, onTagClick}: AboutViewProps) {
                 <span className="contact-text">GitHub</span>
               </a>
             </div>
+            <div className="cv-downloads">
+              <a
+                href="/cv/Alessandro Muzzi CV (ita).pdf"
+                download
+                className="contact-item cv-download"
+                onClick={() => trackContactClick('cv-ita')}
+              >
+                <span className="contact-icon">📄</span>
+                <span className="contact-text">{t.downloadCVIta}</span>
+              </a>
+              <a
+                href="/cv/Alessandro Muzzi CV.pdf"
+                download
+                className="contact-item cv-download"
+                onClick={() => trackContactClick('cv-eng')}
+              >
+                <span className="contact-icon">📄</span>
+                <span className="contact-text">{t.downloadCVEng}</span>
+              </a>
+            </div>
           </section>
 
           <section ref={educationRef} className="about-section">

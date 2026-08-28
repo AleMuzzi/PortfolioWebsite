@@ -120,6 +120,9 @@ export const translations = {
     close: "Close",
     send: "Send",
     back: "Back",
+    downloadCV: "Download CV",
+    downloadCVIta: "Download CV (IT)",
+    downloadCVEng: "Download CV (EN)",
     sandroNudgeProject: [
         "Want to understand the architecture?",
         "What were the biggest challenges?",
@@ -263,6 +266,9 @@ export const translations = {
     close: "Chiudi",
     send: "Invia",
     back: "Indietro",
+    downloadCV: "Scarica CV",
+    downloadCVIta: "Scarica CV (IT)",
+    downloadCVEng: "Scarica CV (EN)",
     sandroNudgeProject: [
         "Vuoi capire l'architettura?",
         "Quali sono state le maggiori sfide?",

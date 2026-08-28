@@ -114,7 +114,7 @@ export function trackTagModalOpen(tag: string) {
 }
 
 /** Contact link clicked — actionable conversion signal */
-export function trackContactClick(platform: 'email' | 'linkedin' | 'github') {
+export function trackContactClick(platform: 'email' | 'linkedin' | 'github' | 'cv-ita' | 'cv-eng') {
   track('contact_click', { platform });
 }
 
