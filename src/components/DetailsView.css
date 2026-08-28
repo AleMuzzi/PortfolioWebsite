@@ -359,6 +359,46 @@
     color: #0ea5e9;
 }
 
+/* Mermaid diagrams */
+.project-body-markdown .mermaid,
+.project-description .mermaid {
+    display: flex;
+    justify-content: center;
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(148, 163, 184, 0.1);
+    border-radius: 12px;
+    padding: 1.25rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+.project-body-markdown .mermaid svg,
+.project-description .mermaid svg {
+    max-width: 100%;
+    height: auto;
+}
+
+.mermaid-loading,
+.mermaid-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px dashed rgba(148, 163, 184, 0.2);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin: 1rem 0;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.mermaid-error {
+    white-space: pre;
+    font-family: monospace;
+    color: #fca5a5;
+    overflow-x: auto;
+}
+
 /* Image alignment styles */
 .markdown-body .align-right {
     float: right;
@@ -392,6 +432,146 @@
     margin-top: 4px;
     font-style: italic
 }
+
+/* Markdown code blocks */
+.project-description pre:not(.mermaid),
+.project-body-markdown pre:not(.mermaid) {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(148, 163, 184, 0.15);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+    line-height: 1.5;
+    color: #e2e8f0;
+    white-space: pre;
+}
+
+.project-description pre:not(.mermaid) code,
+.project-body-markdown pre:not(.mermaid) code {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    font-size: 0.88em;
+    white-space: pre;
+}
+
+/* Markdown tables (GFM) */
+.project-description table,
+.project-body-markdown table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* Clear floats before section headers so they always start on their own line */
+.project-description h4,
+.project-body-markdown h4 {
+    clear: both;
+}
+
+/* 3-column tables: fixed layout with explicit column widths */
+.project-description table:has(th:nth-child(3)),
+.project-body-markdown table:has(th:nth-child(3)) {
+    table-layout: fixed;
+}
+
+/* 2-column tables: first column fits content, second takes the rest */
+.project-description table:not(:has(th:nth-child(3))) th:first-child,
+.project-description table:not(:has(th:nth-child(3))) td:first-child,
+.project-body-markdown table:not(:has(th:nth-child(3))) th:first-child,
+.project-body-markdown table:not(:has(th:nth-child(3))) td:first-child {
+    width: 1%;
+    white-space: nowrap;
+}
+
+.project-description table th,
+.project-body-markdown table th {
+    background: rgba(124, 58, 237, 0.18);
+    color: var(--text-main);
+    font-weight: 600;
+    text-align: left;
+    padding: 0.6rem 0.85rem;
+    border: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.project-description table td,
+.project-body-markdown table td {
+    padding: 0.55rem 0.85rem;
+    border: 1px solid rgba(148, 163, 184, 0.12);
+    color: var(--text-main);
+    vertical-align: top;
+    word-break: break-word;
+}
+
+.project-description table tbody tr:nth-child(even) td,
+.project-body-markdown table tbody tr:nth-child(even) td {
+    background: rgba(30, 41, 59, 0.35);
+}
+
+.project-description table tbody tr:hover td,
+.project-body-markdown table tbody tr:hover td {
+    background: rgba(124, 58, 237, 0.08);
+}
+
+.project-description table code,
+.project-body-markdown table code {
+    background: rgba(15, 23, 42, 0.6);
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.88em;
+    word-break: break-word;
+}
+
+/* Give the API endpoint column its natural (non-wrapping) width and let the
+   purpose column take the bulk of the space so descriptions read cleanly.
+   Only for 3-column tables (API tables). */
+.project-description table:has(th:nth-child(3)) th:first-child,
+.project-description table:has(th:nth-child(3)) td:first-child,
+.project-body-markdown table:has(th:nth-child(3)) th:first-child,
+.project-body-markdown table:has(th:nth-child(3)) td:first-child {
+    width: 34%;
+}
+
+.project-description table:has(th:nth-child(3)) th:nth-child(2),
+.project-description table:has(th:nth-child(3)) td:nth-child(2),
+.project-body-markdown table:has(th:nth-child(3)) th:nth-child(2),
+.project-body-markdown table:has(th:nth-child(3)) td:nth-child(2) {
+    width: 10%;
+}
+
+.project-description table:has(th:nth-child(3)) th:nth-child(3),
+.project-description table:has(th:nth-child(3)) td:nth-child(3),
+.project-body-markdown table:has(th:nth-child(3)) th:nth-child(3),
+.project-body-markdown table:has(th:nth-child(3)) td:nth-child(3) {
+    width: 56%;
+}
+
+.project-description table td:first-child code,
+.project-body-markdown table td:first-child code {
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .project-description table,
+    .project-body-markdown table {
+        display: block;
+        overflow-x: auto;
+        white-space: normal;
+        table-layout: auto;
+    }
+    .project-description table th,
+    .project-body-markdown table th,
+    .project-description table td,
+    .project-body-markdown table td {
+        width: auto !important;
+        white-space: nowrap;
+    }
+}
+
+
 
 /* On small screens, disable float to keep layout clean */
 @media (max-width: 768px) {

@@ -5,6 +5,7 @@ import './DetailsView.css';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from "rehype-raw";
 import {useEffect} from "react";
+import { Mermaid } from './Mermaid';
 
 interface DetailsViewProps {
     selectedType: 'project' | 'experience' | 'about' | 'home' | null;
@@ -131,6 +132,15 @@ export function DetailsView({
                             <div className="markdown-body exp-body">
                                 {(() => {
                                     const renderers = {
+                                        pre: ({node, children, ...props}: any) => {
+                                          const codeEl = (children as any)?.props;
+                                          const className = codeEl?.className as string | undefined;
+                                          if (className?.includes('language-mermaid')) {
+                                            const source = String(codeEl?.children ?? '').replace(/\n$/, '');
+                                            return <Mermaid source={source} />;
+                                          }
+                                          return <pre {...props}>{children}</pre>;
+                                        },
                                         img: ({node, ...props}: any) => {
                                             const alt = props.alt || '';
                                             const widthMatch = alt.match(/\{width="?(\d+%?|auto|[^"}]+)"?\}/);
