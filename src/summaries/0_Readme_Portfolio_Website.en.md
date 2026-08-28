@@ -22,7 +22,7 @@ The project follows a **client-server architecture** with a clear separation bet
 
 The frontend uses **framer-motion** for animations, **react-markdown** with `rehype-raw` and `remark-gfm` to render rich markdown (including custom extensions like `{width="400px"}` for images), and **Plausible Analytics** for privacy-friendly analytics.
 
-**Backend** is a lightweight Express 5 server (`server/index.ts`) running on port 3001. Its primary role is to serve as a proxy for the MiniMax API: it loads all CV context (experiences, projects, about me, recommendations) from markdown files at startup, injects it into a system prompt, and forwards chat messages from the Digital Twin to the MiniMax LLM API. It also handles SPA routing in production by serving the Vite build.
+**Backend** is a lightweight Express 5 server (`server/index.ts`) running on port 3001. Its primary role is to serve as a proxy for the AI: it loads all CV context (experiences, projects, about me, recommendations) from markdown files at startup, injects it into a system prompt, and forwards chat messages from the Digital Twin to a **Google Gemini** model via the Gemini API. It also handles SPA routing in production by serving the Vite build.
 
 The `src/summaries/` directory contains all project write-ups in both English and Italian. The server reads and concatenates these files, strips custom markdown extensions, and uses them as context for the AI.
 
@@ -49,7 +49,7 @@ In production, the Express server runs the Vite build from its `dist/` folder an
 
 ## The Digital Twin
 
-The most distinctive feature is the **Digital Twin** — an AI agent named "Sandro" that has full knowledge of my career, projects, skills, and personality. When the backend starts, it loads all markdown files from `src/summaries/` and `src/experiences/`, combines them into a comprehensive context prompt, and sends it to the MiniMax LLM API. The result is a conversational interface where visitors can ask Sandro about my background, experience, or projects in natural language.
+The most distinctive feature is the **Digital Twin** — an AI agent named "Sandro" that has full knowledge of my career, projects, skills, and personality. When the backend starts, it loads all markdown files from `src/summaries/` and `src/experiences/`, combines them into a comprehensive context prompt, and sends it to a **Google Gemini** model via the Gemini API. The result is a conversational interface where visitors can ask Sandro about my background, experience, or projects in natural language.
 
 During navigation, Sandro remains **context aware** — he knows which page the user is currently viewing and can provide insights, summaries, and answer questions about the content displayed on screen. This creates a seamless experience where the AI companion can explain or expand upon anything the visitor encounters while browsing the portfolio.
 
@@ -73,6 +73,6 @@ https://github.com/AleMuzzi/PortfolioWebsite
 * **Languages:** TypeScript
 * **Frameworks:** React, Express
 * **Analytics:** Plausible Analytics
-* **AI:** MiniMax API (proxy), Digital Twin architecture
+* **AI:** Google Gemini (proxy), Digital Twin architecture
 * **AI-Assisted Development:** Gemini, Junie, GitHub Copilot, Opencode, Openclaw
 * **Infrastructure:** Docker, Docker Compose

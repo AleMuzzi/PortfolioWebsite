@@ -22,7 +22,7 @@ Il **frontend** è una SPA (Single Page Application) in React 19 + TypeScript, r
 
 Il frontend utilizza **framer-motion** per le animazioni, **react-markdown** con `rehype-raw` e `remark-gfm` per il rendering di file Markdown avanzati (incluse estensioni personalizzate come `{width="400px"}` per le immagini) e **Plausible Analytics** per analisi che rispettano la privacy.
 
-**Il backend** è un server Express 5 leggero (`server/index.ts`) in esecuzione sulla porta 3001. Il suo ruolo principale è quello di fungere da proxy per l'API di MiniMax: carica tutto il contesto del CV (esperienze, progetti, informazioni personali, raccomandazioni) da file Markdown all'avvio, lo inserisce in un prompt di sistema e inoltra i messaggi di chat dal Digital Twin all'API di MiniMax LLM. Gestisce anche il routing delle SPA in produzione, servendo la build Vite.
+**Il backend** è un server Express 5 leggero (`server/index.ts`) in esecuzione sulla porta 3001. Il suo ruolo principale è quello di fungere da proxy per l'IA: carica tutto il contesto del CV (esperienze, progetti, informazioni personali, raccomandazioni) da file Markdown all'avvio, lo inserisce in un prompt di sistema e inoltra i messaggi di chat dal Digital Twin a un modello **Google Gemini** tramite l'API Gemini. Gestisce anche il routing delle SPA in produzione, servendo la build Vite.
 
 La directory `src/summaries/` contiene tutte le descrizioni dei progetti sia in inglese che in italiano. Il server legge e concatena questi file, rimuove le estensioni Markdown personalizzate e li utilizza come contesto per l'IA.
 
@@ -48,7 +48,7 @@ In produzione, il server Express esegue la build Vite dalla sua cartella `dist/`
 
 ## Il Gemello Digitale
 
-La caratteristica più distintiva è il **Gemello Digitale**: un agente IA chiamato "Sandro" che ha una conoscenza completa della mia carriera, dei miei progetti, delle mie competenze e della mia personalità. All'avvio del backend, vengono caricati tutti i file Markdown dalle cartelle `src/summaries/` e `src/experiences/`, combinati in un prompt contestuale completo e inviato all'API di MiniMax LLM. Il risultato è un'interfaccia conversazionale in cui i visitatori possono chiedere a Sandro informazioni sul mio background, sulla mia esperienza o sui miei progetti in linguaggio naturale.
+La caratteristica più distintiva è il **Gemello Digitale**: un agente IA chiamato "Sandro" che ha una conoscenza completa della mia carriera, dei miei progetti, delle mie competenze e della mia personalità. All'avvio del backend, vengono caricati tutti i file Markdown dalle cartelle `src/summaries/` e `src/experiences/`, combinati in un prompt contestuale completo e inviato a un modello **Google Gemini** tramite l'API Gemini. Il risultato è un'interfaccia conversazionale in cui i visitatori possono chiedere a Sandro informazioni sul mio background, sulla mia esperienza o sui miei progetti in linguaggio naturale.
 Durante la navigazione, Sandro rimane **consapevole del contesto**: sa quale pagina l'utente sta visualizzando e può fornire approfondimenti, riepiloghi e rispondere a domande sul contenuto visualizzato sullo schermo. Questo crea un'esperienza fluida in cui l'assistente IA può spiegare o approfondire qualsiasi elemento che il visitatore incontra durante la navigazione del portfolio.
 
 
@@ -72,6 +72,6 @@ https://github.com/AleMuzzi/PortfolioWebsite
 * **Linguaggi:** TypeScript
 * **Framework:** React, Express
 * **Analisi:** Plausible Analytics
-* **IA:** MiniMax API (proxy), architettura Digital Twin
+* **IA:** Google Gemini (proxy), architettura Digital Twin
 * **Sviluppo assistito dall'IA:** Gemini, Junie, GitHub Copilot, Opencode, Openclaw
 * **Infrastruttura:** Docker, Docker Compose

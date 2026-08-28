@@ -1,6 +1,6 @@
 # Alessandro Muzzi — Portfolio Website
 
-A dark-themed, space-aesthetic personal portfolio showcasing Alessandro's career as a Staff Software Engineer & Lead Architect. Built with React and TypeScript, it features interactive home navigation, a filterable projects grid, a work experience timeline, and an AI-powered digital twin named **Sandro** — a context-aware conversational agent built on top of MiniMax that can discuss any project or topic on the site in depth.
+A dark-themed, space-aesthetic personal portfolio showcasing Alessandro's career as a Staff Software Engineer & Lead Architect. Built with React and TypeScript, it features interactive home navigation, a filterable projects grid, a work experience timeline, and an AI-powered digital twin named **Sandro** — a context-aware conversational agent built on top of Google Gemini that can discuss any project or topic on the site in depth.
 
 ---
 
@@ -30,7 +30,7 @@ A dark-themed, space-aesthetic personal portfolio showcasing Alessandro's career
 | Styling | Plain CSS (no framework) |
 | Animations | Framer Motion |
 | Build | Vite |
-| AI Backend | Express.js proxy → MiniMax API |
+| AI Backend | Express.js proxy → Google Gemini API |
 
 ---
 
@@ -79,7 +79,7 @@ PortfolioWebsite/
 ## Prerequisites
 
 1. **Node.js ≥ 18**
-2. A [MiniMax](https://www.minimax.io/) account with an API key
+2. **A Google Gemini API key** — the Digital Twin (Sandro) calls Google's Gemini API. Get a free key from https://aistudio.google.com/apikey and set it as `GEMINI_API_KEY` (see below).
 
 ---
 
@@ -97,8 +97,12 @@ npm install
 Create a `.env` file in the project root:
 
 ```bash
-# Required for Sandro (Digital Twin AI chat)
-MINIMAX_API_KEY=your_minimax_api_key_here
+# Digital Twin AI (Sandro) uses Google Gemini — a Gemini API key is required.
+# Get one from https://aistudio.google.com/apikey
+GEMINI_API_KEY=your_gemini_api_key_here
+
+# Optional: Gemini model override (defaults to gemini-3.6-flash)
+# GEMINI_MODEL=gemini-3.6-flash
 
 # Server port (optional, defaults to 3001)
 PORT=3001
@@ -139,7 +143,7 @@ The project has two parts that must be deployed together:
 1. **Frontend** — static React app (any static host)
 2. **Backend** — Express server that handles Sandro AI requests (Railway, Render, Fly.io, etc.)
 
-> **Important:** The MiniMax API key must **never** be exposed in the frontend. All AI requests must go through the backend server.
+> **Note:** The Digital Twin (Sandro) calls Google's Gemini API. Ensure `GEMINI_API_KEY` is set in the backend environment so requests can go through the server proxy.
 
 For full deployment instructions, see the [Portfolio Website readme](./src/summaries/0_Readme_Portfolio_Website.en.md).
 
@@ -149,7 +153,8 @@ For full deployment instructions, see the [Portfolio Website readme](./src/summa
 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
-| `MINIMAX_API_KEY` | **Yes** | — | API key from [minimax.io](https://www.minimax.io/). Keep this **server-side only**. |
+| `GEMINI_API_KEY` | Yes | — | Google Gemini API key for the Digital Twin (Sandro). Get one from https://aistudio.google.com/apikey |
+| `GEMINI_MODEL` | No | `gemini-3.6-flash` | Gemini model to use for Sandro |
 | `PORT` | No | `3001` | Backend server port |
 | `NODE_ENV` | No | `development` | Set to `production` to serve React build |
 | `VITE_API_BASE_URL` | Yes (production) | — | Full URL of the deployed backend, e.g. `https://api.yoursite.com`. Used by the React app to route Sandro requests. |

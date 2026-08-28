@@ -9,6 +9,6 @@ services:
       - '3001'
     environment:
       - NODE_ENV=production
-      - MINIMAX_API_KEY=${MINIMAX_API_KEY}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
       - PORT=3001
     restart: unless-stopped

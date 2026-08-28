@@ -217,51 +217,67 @@ app.post('/api/digitalTwin', async (req, res) => {
     currentPageContext = parts.join('\n');
   }
 
-  // Build the conversation with system prompt
-  const apiMessages = [
-    { role: 'user' as const, content: SYSTEM_PROMPT(currentPageContext) },
-    ...messages.slice(-12), // keep last 12 turns for context
-  ];
-
-  const apiKey = process.env.MINIMAX_API_KEY;
+  // Gemini Interactions API: system_instruction carries the persona/context,
+  // input carries the current user message (recent turns folded in as a
+  // transcript, since the Interactions API exposes no separate history field).
+  const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    return res.status(500).json({ error: 'MINIMAX_API_KEY not configured' });
+    return res.status(500).json({ error: 'GEMINI_API_KEY not configured' });
   }
+  const model = process.env.GEMINI_MODEL || 'gemini-3.6-flash';
+
+  const recent = (messages ?? []).slice(-12) as Array<{ role: 'user' | 'assistant'; content: string }>;
+  const history = recent.slice(0, -1);
+  const userMsg = recent[recent.length - 1]?.content ?? '';
+  let transcript = '';
+  for (const m of history) {
+    transcript += (m.role === 'assistant' ? 'Sandro: ' : 'User: ') + m.content + '\n';
+  }
+  const input = transcript
+    ? `Conversation so far:\n${transcript}Current message from the visitor:\n${userMsg}`
+    : userMsg;
 
   try {
-    const response = await fetch('https://api.minimax.io/anthropic/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`,
-        'anthropic-version': '2023-06-01',
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/interactions?key=${encodeURIComponent(apiKey)}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model,
+          system_instruction: SYSTEM_PROMPT(currentPageContext),
+          input,
+        }),
       },
-      body: JSON.stringify({
-        model: 'MiniMax-M2.7',
-        max_tokens: 16384,
-        messages: apiMessages,
-      }),
-    });
+    );
 
     const raw = await response.text();
-    console.log('MiniMax raw response status:', response.status, 'body:', raw.slice(0, 500));
+    console.log('Gemini response status:', response.status, 'body:', raw.slice(0, 500));
 
     if (!response.ok) {
-      console.error('MiniMax API error:', response.status, raw);
+      console.error('Gemini API error:', response.status, raw);
       return res.status(response.status).json({ error: 'Upstream API error', detail: raw });
     }
 
-    const data = JSON.parse(raw) as { content?: Array<{ type: string; text?: string; thinking?: string }>; error?: { message?: string } };
+    const data = JSON.parse(raw) as {
+      steps?: Array<{
+        type?: string;
+        content?: Array<{ type?: string; text?: string }>;
+      }>;
+      error?: { message?: string };
+    };
 
-    // MiniMax may return an error inside the body
     if (data.error) {
-      console.error('MiniMax error in body:', data.error);
-      return res.status(400).json({ error: data.error.message || 'MiniMax error' });
+      console.error('Gemini error in body:', data.error);
+      return res.status(400).json({ error: data.error.message || 'Gemini error' });
     }
 
-    // MiniMax returns content blocks with type: "text" or type: "thinking"
-    const textBlock = data.content?.find((block: any) => block.type === 'text');
-    const reply = textBlock?.text ?? 'No response from model.';
+    const reply = (data.steps ?? [])
+      .filter((s) => s.type === 'model_output')
+      .flatMap((s) => s.content ?? [])
+      .map((p) => p.text ?? '')
+      .join('')
+      .trim() || 'No response from model.';
     res.json({ reply });
   } catch (e: any) {
     console.error('Proxy error:', e);
