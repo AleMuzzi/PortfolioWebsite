@@ -94,7 +94,7 @@ The system supports 4 plants: Habanero, Naga Morich, Carolina Reaper, and Rosmar
 
 On boot the servo runs a non-blocking calibration sweep (position auto-verify, fallback to software-only tracking if it fails). Firmware versioning is automated per build and exposed via `/health`, enabling OTA version checks from any client.
 
-![smart_sprinkler_plant_selector.jpg{width="700px"}{align="center"}{caption="Real-time ESP telemetry, weather context, cistern widget, and per-plant Bayesian probability bars"}](/summaries/smart_sprinkler_plant_selector.jpg)
+![smart_sprinkler_plant_selector.jpg{width="700px"}{align="center"}{caption="The four plants (Habanero, Naga Morich, Carolina Reaper, Rosmarino) with the 3D-printed rotary selector driven by the SG90 servo"}](/summaries/smart_sprinkler_plant_selector.jpg)
 
 #### BayesianSprinkler Server
 FastAPI server (port 8080) that manages the autonomous decision loop. It exposes the following endpoints:

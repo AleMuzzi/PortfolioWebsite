@@ -94,7 +94,7 @@ Il sistema supporta 4 piante: Habanero, Naga Morich, Carolina Reaper e Rosmarino
 
 All'avvio il servo esegue una calibrazione non bloccante (verifica automatica delle posizioni, con fallback al solo tracciamento software in caso di errore). Il versionamento del firmware è automatizzato per build ed esposto via `/health`, consentendo il controllo della versione OTA da qualsiasi client.
 
-![smart_sprinkler_plant_selector.jpg{width="700px"}{align="center"}{caption="Tab Dashboard — telemetria ESP in tempo reale, contesto meteo, widget cisterna e barre probabilità bayesiane per pianta"}](/summaries/smart_sprinkler_plant_selector.jpg)
+![smart_sprinkler_plant_selector.jpg{width="700px"}{align="center"}{caption="Le quattro piante (Habanero, Naga Morich, Carolina Reaper, Rosmarino) con il selettore rotante stampato in 3D azionato dal servo SG90"}](/summaries/smart_sprinkler_plant_selector.jpg)
 
 
 #### BayesianSprinkler Server
