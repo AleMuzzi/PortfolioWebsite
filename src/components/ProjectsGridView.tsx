@@ -25,6 +25,7 @@ export function ProjectsGridView({
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+    const [sortOrder, setSortOrder] = useState<'default' | 'most-recent' | 'least-recent'>('default');
 
     const allTags = useMemo(() => {
         const tags = new Set<string>();
@@ -35,7 +36,7 @@ export function ProjectsGridView({
     }, [filteredProjects]);
 
     const displayedProjects = useMemo(() => {
-        return filteredProjects.filter(p => {
+        const filtered = filteredProjects.filter(p => {
             const matchesSearch =
                 p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 p.summary.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -46,7 +47,15 @@ export function ProjectsGridView({
 
             return matchesSearch && matchesTags;
         });
-    }, [filteredProjects, searchQuery, selectedTags]);
+
+        if (sortOrder === 'default') return filtered;
+
+        return [...filtered].sort((a, b) => {
+            const au = a.updatedAt ?? 0;
+            const bu = b.updatedAt ?? 0;
+            return sortOrder === 'most-recent' ? bu - au : au - bu;
+        });
+    }, [filteredProjects, searchQuery, selectedTags, sortOrder]);
 
     const toggleTag = (tag: string) => {
         const isActive = selectedTags.includes(tag);
@@ -78,6 +87,17 @@ export function ProjectsGridView({
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className="search-input"
                         />
+                        <select
+                            className="sort-select"
+                            value={sortOrder}
+                            onChange={(e) => setSortOrder(e.target.value as 'default' | 'most-recent' | 'least-recent')}
+                            title={t.sortBy}
+                            aria-label={t.sortBy}
+                        >
+                            <option value="default">{t.sortDefault}</option>
+                            <option value="most-recent">{t.sortMostRecent}</option>
+                            <option value="least-recent">{t.sortLeastRecent}</option>
+                        </select>
                         <button
                             className={`filter-icon-btn ${selectedTags.length > 0 ? 'has-filters' : ''}`}
                             onClick={() => {
