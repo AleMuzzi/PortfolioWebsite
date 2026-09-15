@@ -183,6 +183,18 @@
 }
 
 /* Intro Panel */
+.profile-photo {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    float: right;
+    margin: 0 0 1.5rem 2rem;
+    border: 3px solid rgba(124, 58, 237, 0.4);
+    box-shadow: 0 0 25px rgba(124, 58, 237, 0.25), 0 10px 30px rgba(0, 0, 0, 0.35);
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
 .about-intro-panel {
     background: rgba(30, 41, 59, 0.4);
     border: 1px solid rgba(148, 163, 184, 0.1);
@@ -191,9 +203,6 @@
     -webkit-backdrop-filter:
     backdrop-filter: blur(10px);
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
 }
 
 .bio {
@@ -208,7 +217,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 1.2rem;
-    padding-top: 1.2rem;
+    padding: 1.2rem .6rem;
     border-top: 1px solid rgba(148, 163, 184, 0.1);
 }
 
@@ -256,6 +265,7 @@
     flex-wrap: wrap;
     gap: 1.2rem;
     padding-top: 1.2rem;
+    padding-left: .6rem;
     border-top: 1px solid rgba(148, 163, 184, 0.1);
 }
 
@@ -472,10 +482,17 @@
         overflow-wrap: break-word;
         overflow-x: hidden;
     }
+
+    .profile-photo {
+        width: 120px;
+        height: 120px;
+        margin: 1rem;
+    }
     
     .about-intro-panel .about-me-markdown {
         max-width: 100%;
-        overflow-x: hidden;
+        overflow: visible;
+        overflow-wrap: anywhere;
     }
 
     .about-me-markdown .profile-view h2 {
@@ -612,10 +629,21 @@
         overflow-x: hidden;
     }
 
+    .profile-photo {
+        width: 100px;
+        height: 100px;
+        margin: 0.75rem;
+    }
+
     .about-me-markdown {
         max-width: 100%;
         overflow-x: hidden;
         word-wrap: break-word;
+    }
+
+    .about-intro-panel .about-me-markdown {
+        overflow: visible;
+        overflow-wrap: anywhere;
     }
 
     .about-me-markdown blockquote {

@@ -215,6 +215,13 @@ export function AboutView({lang, handleSelect, onTagClick}: AboutViewProps) {
 
         <div className="about-main-content">
           <section className="about-intro-panel">
+            <img
+              src="/assets/Alle_profilo.png"
+              alt="Alessandro Muzzi"
+              className="profile-photo"
+              loading="lazy"
+              decoding="async"
+            />
             {aboutMe && aboutMe.contentMarkdown && (
               <div className="about-me-markdown">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
