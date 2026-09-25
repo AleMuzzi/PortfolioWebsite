@@ -1,11 +1,28 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import { readFileSync, readdirSync } from 'fs';
+import { readFileSync, readdirSync, appendFileSync, mkdirSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+// ─── Logger with daily file rotation ────────────────────────────────────────
+const LOG_DIR = join(__dirname, '..', 'logs');
+if (!existsSync(LOG_DIR)) mkdirSync(LOG_DIR, { recursive: true });
+
+function getLogFile(): string {
+  const d = new Date();
+  const date = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  return join(LOG_DIR, `server-${date}.log`);
+}
+
+function log(level: 'INFO' | 'WARN' | 'ERROR', ...args: unknown[]) {
+  const ts = new Date().toISOString();
+  const msg = `[${ts}] [${level}] ${args.join(' ')}`;
+  console[level === 'ERROR' ? 'error' : 'log'](msg);
+  try { appendFileSync(getLogFile(), msg + '\n'); } catch {}
+}
 
 const app = express();
 const PORT = parseInt(process.env.PORT || '3001');
@@ -17,7 +34,7 @@ app.use(express.json());
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(join(__dirname, '..', 'dist')));
   // Handle SPA routing — serve index.html for non-API routes
-  app.get(/^(?!\/api).*/, (req, res) => {
+  app.get(/^(?!\/api).*/, (_, res) => {
     res.sendFile(join(__dirname, '..', 'dist', 'index.html'));
   });
 }
@@ -256,7 +273,15 @@ app.post('/api/digitalTwin', async (req, res) => {
   if (!apiKey) {
     return res.status(500).json({ error: 'GEMINI_API_KEY not configured' });
   }
-  const model = process.env.GEMINI_MODEL || 'gemini-3.6-flash';
+  const FALLBACK_MODELS = [
+    process.env.GEMINI_MODEL || 'gemini-3.8-flash',
+    'gemini-3.6-flash',
+    'gemini-3.5-flash',
+    'gemini-3.1-flash-lite',
+    'gemini-3-flash-preview',
+    'gemini-4.5-flash',
+    'gemini-2-flash',
+  ];
 
   const recent = (messages ?? []).slice(-12) as Array<{ role: 'user' | 'assistant'; content: string }>;
   const history = recent.slice(0, -1);
@@ -269,26 +294,28 @@ app.post('/api/digitalTwin', async (req, res) => {
     ? `Conversation so far:\n${transcript}Current message from the visitor:\n${userMsg}`
     : userMsg;
 
-  try {
+  const systemInstruction = SYSTEM_PROMPT(currentPageContext);
+
+  async function callGemini(modelName: string): Promise<{ ok: true; reply: string } | { ok: false; status: number; body: string }> {
+    // @ts-ignore
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/interactions?key=${encodeURIComponent(apiKey)}`,
+      `https://generativelanguage.googleapis.com/v1beta/interactions?key=${encodeURIComponent(apiKey!)}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model,
-          system_instruction: SYSTEM_PROMPT(currentPageContext),
+          model: modelName,
+          system_instruction: systemInstruction,
           input,
         }),
       },
     );
 
     const raw = await response.text();
-    console.log('Gemini response status:', response.status, 'body:', raw.slice(0, 500));
 
     if (!response.ok) {
-      console.error('Gemini API error:', response.status, raw);
-      return res.status(response.status).json({ error: 'Upstream API error', detail: raw });
+      log('ERROR', `Gemini [${modelName}] HTTP ${response.status}:`, raw.slice(0, 300));
+      return { ok: false, status: response.status, body: raw };
     }
 
     const data = JSON.parse(raw) as {
@@ -300,8 +327,7 @@ app.post('/api/digitalTwin', async (req, res) => {
     };
 
     if (data.error) {
-      console.error('Gemini error in body:', data.error);
-      return res.status(400).json({ error: data.error.message || 'Gemini error' });
+      return { ok: false, status: 400, body: JSON.stringify(data.error) };
     }
 
     const reply = (data.steps ?? [])
@@ -310,9 +336,43 @@ app.post('/api/digitalTwin', async (req, res) => {
       .map((p) => p.text ?? '')
       .join('')
       .trim() || 'No response from model.';
-    res.json({ reply });
+
+    return { ok: true, reply };
+  }
+
+  try {
+    let lastError: { status: number; body: string } = { status: 500, body: 'All models failed' };
+    let usedFallback = false;
+
+    for (let i = 0; i < FALLBACK_MODELS.length; i++) {
+      const currentModel = FALLBACK_MODELS[i];
+      const result = await callGemini(currentModel);
+
+      if (result.ok) {
+        if (usedFallback) {
+          log('WARN', `Fallback succeeded with [${currentModel}]`);
+        } else {
+          log('INFO', `Gemini [${currentModel}] OK`);
+        }
+        return res.json({ reply: result.reply, ...(usedFallback && { fallback: true }) });
+      }
+
+      const errResult = result as { ok: false; status: number; body: string };
+      lastError = { status: errResult.status, body: errResult.body };
+      const isRetryable = errResult.status === 503 || errResult.status === 429;
+
+      if (isRetryable && i < FALLBACK_MODELS.length - 1) {
+        usedFallback = true;
+        log('WARN', `Gemini [${currentModel}] ${errResult.status} — retrying with ${FALLBACK_MODELS[i + 1]}`);
+        continue;
+      }
+
+      break;
+    }
+
+    return res.status(lastError.status).json({ error: 'Upstream API error', detail: lastError.body });
   } catch (e: any) {
-    console.error('Proxy error:', e);
+    log('ERROR', 'Proxy error:', e.message);
     res.status(500).json({ error: e.message });
   }
 });
@@ -321,5 +381,5 @@ app.post('/api/digitalTwin', async (req, res) => {
 app.get('/health', (_, res) => res.json({ status: 'ok' }));
 
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Sandro backend running on http://0.0.0.0:${PORT}`);
+  log('INFO', `Sandro backend running on http://0.0.0.0:${PORT}`);
 });

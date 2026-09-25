@@ -50,6 +50,9 @@ export function DigitalTwin({ onClose, hideHeader, isMobile, lang, currentPage }
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [fallbackNotice, setFallbackNotice] = useState<string | null>(null);
+  const [fallbackApplied, setFallbackApplied] = useState(false);
+  const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -57,6 +60,40 @@ export function DigitalTwin({ onClose, hideHeader, isMobile, lang, currentPage }
   useEffect(() => {
     localStorage.setItem('sandro_messages_v2', JSON.stringify(messages));
   }, [messages]);
+
+  // Fallback notice: first appears after ~5s (first model likely failed),
+  // then changes to a new random message every ~4s (each new fallback model)
+  const FALLBACK_MESSAGES = t.dtFallbackMessages;
+  const usedMessagesRef = useRef<string[]>([]);
+
+  useEffect(() => {
+    if (!isLoading) {
+      setFallbackNotice(null);
+      usedMessagesRef.current = [];
+      return;
+    }
+
+    // First notice after 5s
+    const first = setTimeout(() => {
+      const msg = FALLBACK_MESSAGES[0];
+      usedMessagesRef.current = [msg];
+      setFallbackNotice(msg);
+    }, 5000);
+
+    // Subsequent notices every 4s, picking randomly from unused messages,
+    // then recycling if all used
+    const interval = setInterval(() => {
+      const unused = FALLBACK_MESSAGES.filter(m => !usedMessagesRef.current.includes(m));
+      const pool = unused.length > 0 ? unused : FALLBACK_MESSAGES;
+      const msg = pool[Math.floor(Math.random() * pool.length)];
+      usedMessagesRef.current.push(msg);
+      // Keep only last 3 to allow recycling
+      if (usedMessagesRef.current.length > 3) usedMessagesRef.current.shift();
+      setFallbackNotice(msg);
+    }, 4000);
+
+    return () => { clearTimeout(first); clearInterval(interval); };
+  }, [isLoading, lang]);
 
   useEffect(() => {
     const last = messages[messages.length - 1];
@@ -105,8 +142,12 @@ export function DigitalTwin({ onClose, hideHeader, isMobile, lang, currentPage }
         throw new Error((data as any).error || `HTTP ${res.status}`);
       }
 
-      const data = await res.json() as { reply: string };
+      const data = await res.json() as { reply: string; fallback?: boolean };
       trackSandroResponse(Date.now() - sendTimestamp, data.reply);
+      if (data.fallback) {
+        setFallbackApplied(true);
+        setTimeout(() => setFallbackApplied(false), 4000);
+      }
       setMessages(prev => [...prev, { role: 'assistant', content: data.reply }]);
     } catch (e: any) {
       const errorMsg = e.message || t.dtConnectionError;
@@ -123,6 +164,14 @@ export function DigitalTwin({ onClose, hideHeader, isMobile, lang, currentPage }
       e.preventDefault();
       send(input);
     }
+  };
+
+  const copyToClipboard = async (text: string, idx: number) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedIdx(idx);
+      setTimeout(() => setCopiedIdx(null), 1500);
+    } catch {}
   };
 
   const quickStarts = [
@@ -191,9 +240,41 @@ export function DigitalTwin({ onClose, hideHeader, isMobile, lang, currentPage }
             >
               <div className="dt-msg-bubble">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
+                {msg.role === 'assistant' && (
+                  <button
+                    className="dt-copy-btn"
+                    onClick={() => copyToClipboard(msg.content, i)}
+                    title={copiedIdx === i ? t.copied : t.copyMessage}
+                  >
+                    {copiedIdx === i ? (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M20 6 9 17l-5-5" />
+                      </svg>
+                    ) : (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                      </svg>
+                    )}
+                  </button>
+                )}
               </div>
             </motion.div>
           ))}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {fallbackApplied && !isLoading && (
+            <motion.div
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              transition={{ duration: 0.2 }}
+              className="dt-fallback-applied"
+            >
+              ⚡ {t.dtFallbackApplied}
+            </motion.div>
+          )}
         </AnimatePresence>
 
         {isLoading && (
@@ -209,6 +290,20 @@ export function DigitalTwin({ onClose, hideHeader, isMobile, lang, currentPage }
             </div>
           </motion.div>
         )}
+
+        <AnimatePresence>
+          {fallbackNotice && (
+            <motion.div
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              transition={{ duration: 0.2 }}
+              className="dt-fallback-notice"
+            >
+              ⚡ {fallbackNotice}
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {error && (
           <div className="dt-error">
