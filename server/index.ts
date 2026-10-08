@@ -4,6 +4,7 @@ import cors from 'cors';
 import { readFileSync, readdirSync, appendFileSync, mkdirSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { getFallbackModels, getModelsInfo, startModelRefreshScheduler } from './gemini-models';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -273,15 +274,9 @@ app.post('/api/digitalTwin', async (req, res) => {
   if (!apiKey) {
     return res.status(500).json({ error: 'GEMINI_API_KEY not configured' });
   }
-  const FALLBACK_MODELS = [
-    process.env.GEMINI_MODEL || 'gemini-3.8-flash',
-    'gemini-3.6-flash',
-    'gemini-3.5-flash',
-    'gemini-3.1-flash-lite',
-    'gemini-3-flash-preview',
-    'gemini-4.5-flash',
-    'gemini-2-flash',
-  ];
+  // Model list is kept up to date by the daily refresh scheduler
+  // (see gemini-models.ts); GEMINI_MODEL always takes precedence.
+  const FALLBACK_MODELS = getFallbackModels(process.env.GEMINI_MODEL);
 
   const recent = (messages ?? []).slice(-12) as Array<{ role: 'user' | 'assistant'; content: string }>;
   const history = recent.slice(0, -1);
@@ -378,8 +373,10 @@ app.post('/api/digitalTwin', async (req, res) => {
 });
 
 // Health check endpoint
-app.get('/health', (_, res) => res.json({ status: 'ok' }));
+app.get('/health', (_, res) => res.json({ status: 'ok', models: getModelsInfo() }));
 
 app.listen(PORT, '0.0.0.0', () => {
   log('INFO', `Sandro backend running on http://0.0.0.0:${PORT}`);
+  // Daily cron: download the current Gemini model list from the API
+  startModelRefreshScheduler({ apiKey: process.env.GEMINI_API_KEY, log });
 });

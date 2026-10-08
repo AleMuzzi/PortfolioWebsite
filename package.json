@@ -13,6 +13,8 @@
     "predev:all": "npm run generate:mtimes",
     "prebuild": "npm run generate:mtimes",
     "lint": "eslint .",
+    "refresh:models": "tsx server/refresh-models.ts",
+    "test:server": "tsx --test server/gemini-models.test.ts",
     "preview": "vite preview"
   },
   "dependencies": {

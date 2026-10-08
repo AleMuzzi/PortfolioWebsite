@@ -101,7 +101,8 @@ Create a `.env` file in the project root:
 # Get one from https://aistudio.google.com/apikey
 GEMINI_API_KEY=your_gemini_api_key_here
 
-# Optional: Gemini model override (defaults to gemini-3.6-flash)
+# Optional: Gemini model override (always used as the primary model;
+# otherwise the server uses the model list it refreshes daily from the Gemini API)
 # GEMINI_MODEL=gemini-3.6-flash
 
 # Server port (optional, defaults to 3001)
@@ -124,6 +125,28 @@ npm run dev
 ```
 
 The frontend runs on `http://localhost:5173` and proxies `/api/*` requests to `http://localhost:3001`.
+
+---
+
+## Sandro model list auto-refresh
+
+The backend keeps Sandro's Gemini model list up to date automatically:
+
+- On startup (and then once a day) the server downloads the available models from
+  `GET https://generativelanguage.googleapis.com/v1beta/models`, keeps the chat-capable
+  **Flash / Flash-Lite** models (newest first, max 7) and persists them to
+  `server/gemini-models.json` (gitignored).
+- If the refresh fails, the previous list is kept; if no list was ever fetched, a built-in
+  default fallback list is used.
+- `GEMINI_MODEL`, when set, is always tried first.
+- Model list status is exposed at `GET /health` (`models.count`, `models.updatedAt`).
+
+Manual refresh and tests:
+
+```bash
+npm run refresh:models   # refresh the list immediately
+npm run test:server      # run the model list unit tests
+```
 
 ---
 
@@ -154,7 +177,7 @@ For full deployment instructions, see the [Portfolio Website readme](./src/summa
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
 | `GEMINI_API_KEY` | Yes | — | Google Gemini API key for the Digital Twin (Sandro). Get one from https://aistudio.google.com/apikey |
-| `GEMINI_MODEL` | No | `gemini-3.6-flash` | Gemini model to use for Sandro |
+| `GEMINI_MODEL` | No | newest discovered Flash model | Gemini model to use for Sandro (always tried first) |
 | `PORT` | No | `3001` | Backend server port |
 | `NODE_ENV` | No | `development` | Set to `production` to serve React build |
 | `VITE_API_BASE_URL` | Yes (production) | — | Full URL of the deployed backend, e.g. `https://api.yoursite.com`. Used by the React app to route Sandro requests. |
