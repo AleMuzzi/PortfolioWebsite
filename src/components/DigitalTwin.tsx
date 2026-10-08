@@ -61,10 +61,11 @@ export function DigitalTwin({ onClose, hideHeader, isMobile, lang, currentPage }
     localStorage.setItem('sandro_messages_v2', JSON.stringify(messages));
   }, [messages]);
 
-  // Fallback notice: first appears after ~5s (first model likely failed),
-  // then changes to a new random message every ~4s (each new fallback model)
+  // Fallback notice: first appears after ~8s (first model likely failed),
+  // then changes to a new random message every ~6s (each new fallback model)
   const FALLBACK_MESSAGES = t.dtFallbackMessages;
   const usedMessagesRef = useRef<string[]>([]);
+  const noticeShownRef = useRef(false);
 
   useEffect(() => {
     if (!isLoading) {
@@ -73,14 +74,14 @@ export function DigitalTwin({ onClose, hideHeader, isMobile, lang, currentPage }
       return;
     }
 
-    // First notice after 5s
+    // First notice after 8s
     const first = setTimeout(() => {
       const msg = FALLBACK_MESSAGES[0];
       usedMessagesRef.current = [msg];
       setFallbackNotice(msg);
-    }, 5000);
+    }, 8000);
 
-    // Subsequent notices every 4s, picking randomly from unused messages,
+    // Subsequent notices every 6s, picking randomly from unused messages,
     // then recycling if all used
     const interval = setInterval(() => {
       const unused = FALLBACK_MESSAGES.filter(m => !usedMessagesRef.current.includes(m));
@@ -90,10 +91,20 @@ export function DigitalTwin({ onClose, hideHeader, isMobile, lang, currentPage }
       // Keep only last 3 to allow recycling
       if (usedMessagesRef.current.length > 3) usedMessagesRef.current.shift();
       setFallbackNotice(msg);
-    }, 4000);
+    }, 6000);
 
     return () => { clearTimeout(first); clearInterval(interval); };
   }, [isLoading, lang]);
+
+  // Scroll to bottom when the yellow notice first appears so it is fully visible
+  useEffect(() => {
+    if (fallbackNotice && !noticeShownRef.current) {
+      noticeShownRef.current = true;
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    } else if (!fallbackNotice) {
+      noticeShownRef.current = false;
+    }
+  }, [fallbackNotice]);
 
   useEffect(() => {
     const last = messages[messages.length - 1];
