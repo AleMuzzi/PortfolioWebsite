@@ -30,6 +30,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # src/md-mtimes.json is gitignored and required by tsc (src/projectsData.ts)
+      - name: Generate md mtime manifest
+        run: npm run generate:mtimes
+
       - name: Lint
         run: npm run lint
 
